@@ -1,0 +1,30 @@
+buildscript {
+    ext.kotlin_version = '1.2.61'
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+    }
+}
+
+allprojects {
+    group = 'com.github.icarohs7'
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+subprojects {
+    apply plugin: 'com.github.dcendents.android-maven'
+}
+
+project('connectivity').version = 'v0.1.0'
+project('telephony').version = 'v0.1.0'
+project('userinterface').version = 'v0.1.0'
+project('versioncontrol').version = 'v0.1.0'
