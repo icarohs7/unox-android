@@ -27,11 +27,11 @@ package com.github.icarohs7.userinterface.providers
 import android.support.v7.app.AppCompatActivity
 
 interface NotificationProvider {
-    fun emitNotification(
+    fun <T : AppCompatActivity> emitNotification(
             title: String,
             message: String,
             iconResource: Int,
             bigMessage: String,
-            destinationActivity: Class<AppCompatActivity>
+            destinationActivity: Class<T>
     )
 }

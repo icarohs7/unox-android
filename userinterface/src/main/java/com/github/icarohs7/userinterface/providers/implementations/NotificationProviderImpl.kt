@@ -55,12 +55,12 @@ internal class NotificationProviderImpl(
                 .setAutoCancel(true)
     }
 
-    override fun emitNotification(
+    override fun <T : AppCompatActivity> emitNotification(
             title: String,
             message: String,
             iconResource: Int,
             bigMessage: String,
-            destinationActivity: Class<AppCompatActivity>
+            destinationActivity: Class<T>
     ) {
         createNotificationChannel()
         val notificationStyle = NotificationCompat.BigTextStyle().bigText(bigMessage)
