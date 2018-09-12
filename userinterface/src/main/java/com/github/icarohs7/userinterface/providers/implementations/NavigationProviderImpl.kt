@@ -22,25 +22,20 @@
  * SOFTWARE.
  */
 
-@file:JvmName("UserInterfaceModule")
-@file:JvmMultifileClass
-
-package com.github.icarohs7.userinterface.toplevel
+package com.github.icarohs7.userinterface.providers.implementations
 
 import android.content.Context
+import android.content.Intent
+import android.support.v7.app.AppCompatActivity
 import com.github.icarohs7.userinterface.providers.NavigationProvider
-import com.github.icarohs7.userinterface.providers.NotificationProvider
-import com.github.icarohs7.userinterface.providers.UIProvider
-import com.github.icarohs7.userinterface.providers.implementations.NavigationProviderImpl
-import com.github.icarohs7.userinterface.providers.implementations.NotificationProviderImpl
-import com.github.icarohs7.userinterface.providers.implementations.UIProviderImpl
 
-fun getUIProvider(): UIProvider = UIProviderImpl()
+internal class NavigationProviderImpl(private val context: Context) : NavigationProvider {
+    override fun <T : AppCompatActivity> gotoActivity(activity: Class<T>) {
+        val intent = Intent(context, activity)
+        context.startActivity(intent)
+    }
 
-fun getNavigationProvider(context: Context): NavigationProvider = NavigationProviderImpl(context)
-
-@JvmOverloads
-fun getNotificationProvider(
-        context: Context,
-        channelId: String = "standardchannelid"
-): NotificationProvider = NotificationProviderImpl(context, channelId)
+    override fun <T : AppCompatActivity> getActivityLaunchIntent(activity: Class<T>): Intent {
+        return Intent(context, activity)
+    }
+}

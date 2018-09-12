@@ -22,25 +22,16 @@
  * SOFTWARE.
  */
 
-@file:JvmName("UserInterfaceModule")
-@file:JvmMultifileClass
+package com.github.icarohs7.userinterface.providers
 
-package com.github.icarohs7.userinterface.toplevel
+import android.support.v7.app.AppCompatActivity
 
-import android.content.Context
-import com.github.icarohs7.userinterface.providers.NavigationProvider
-import com.github.icarohs7.userinterface.providers.NotificationProvider
-import com.github.icarohs7.userinterface.providers.UIProvider
-import com.github.icarohs7.userinterface.providers.implementations.NavigationProviderImpl
-import com.github.icarohs7.userinterface.providers.implementations.NotificationProviderImpl
-import com.github.icarohs7.userinterface.providers.implementations.UIProviderImpl
-
-fun getUIProvider(): UIProvider = UIProviderImpl()
-
-fun getNavigationProvider(context: Context): NavigationProvider = NavigationProviderImpl(context)
-
-@JvmOverloads
-fun getNotificationProvider(
-        context: Context,
-        channelId: String = "standardchannelid"
-): NotificationProvider = NotificationProviderImpl(context, channelId)
+interface NotificationProvider {
+    fun emitNotification(
+            title: String,
+            message: String,
+            iconResource: Int,
+            bigMessage: String,
+            destinationActivity: Class<AppCompatActivity>
+    )
+}
