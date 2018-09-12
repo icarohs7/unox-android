@@ -38,7 +38,6 @@ buildscript {
     }
 }
 
-apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.palantir.git-version'
 
 allprojects {
@@ -56,6 +55,10 @@ subprojects {
 
     android {
         compileSdkVersion 27
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
     }
 
     task sourcesJar(type: Jar) {

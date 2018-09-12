@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-@file:JvmName("VersionControlName")
+@file:JvmName("VersionControlModule")
 @file:JvmMultifileClass
 
 package com.github.icarohs7.versioncontrol.toplevel
