@@ -6,7 +6,7 @@ https://jitpack.io/#icarohs7/unox-android)
 ## Description
 Set of android libraries
 
-## How to use
+## Adding to the project
 ````groovy
 repositories {
     maven { url 'https://jitpack.io' }
@@ -22,3 +22,5 @@ dependencies {
     implementation "com.github.icarohs7.unox-android:connectivity:$unoxandroid_version"
 }
 ````
+## How to use
+TODO instructions
