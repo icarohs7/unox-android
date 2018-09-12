@@ -26,9 +26,19 @@ package com.github.icarohs7.providers
 
 import com.github.icarohs7.connectivity.callbacks.HttpOnSuccessListener
 import com.github.icarohs7.entities.VersionMetadata
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 
 interface VersionControlProvider {
     var installedVersionProvider: (suspend () -> String)?
     var remoteVersionProvider: (suspend () -> String)?
     fun compareVersions(callback: HttpOnSuccessListener<VersionMetadata>)
+
+    fun localVersion(callback: HttpOnSuccessListener<String>) {
+        launch(UI) { callback.onSuccess(installedVersionProvider?.invoke() ?: "") }
+    }
+
+    fun remoteVersion(callback: HttpOnSuccessListener<String>) {
+        launch(UI) { callback.onSuccess(remoteVersionProvider?.invoke() ?: "") }
+    }
 }
