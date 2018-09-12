@@ -30,12 +30,12 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
 interface VersionControlProvider {
-    var installedVersionProvider: (suspend () -> String)?
+    var localVersionProvider: (suspend () -> String)?
     var remoteVersionProvider: (suspend () -> String)?
     fun compareVersions(callback: HttpOnSuccessListener<VersionMetadata>)
 
     fun localVersion(callback: HttpOnSuccessListener<String>) {
-        launch(UI) { callback.onSuccess(installedVersionProvider?.invoke() ?: "") }
+        launch(UI) { callback.onSuccess(localVersionProvider?.invoke() ?: "") }
     }
 
     fun remoteVersion(callback: HttpOnSuccessListener<String>) {

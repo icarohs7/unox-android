@@ -32,15 +32,15 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
 internal object VersionControlProviderImpl : VersionControlProvider {
-    override var installedVersionProvider: (suspend () -> String)? = null
+    override var localVersionProvider: (suspend () -> String)? = null
     override var remoteVersionProvider: (suspend () -> String)? = null
 
     override fun compareVersions(callback: HttpOnSuccessListener<VersionMetadata>) {
-        installedVersionProvider ?: fail()
+        localVersionProvider ?: fail()
         remoteVersionProvider ?: fail()
 
         launch(UI) {
-            val actual = installedVersionProvider!!()
+            val actual = localVersionProvider!!()
             val remote = remoteVersionProvider!!()
             val outdated = remote isMoreRecentThan actual
 
