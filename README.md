@@ -51,6 +51,7 @@ TelephonyModule
 Module to manage local vs remote versions of an app
 
 * Initial Setup
+
 First, define the functions that will provide the local and remote versions of the application <br/>
 Define just once, the module is a Singleton and will save the definition as long as the app isn't destroyed
 ```kotlin
