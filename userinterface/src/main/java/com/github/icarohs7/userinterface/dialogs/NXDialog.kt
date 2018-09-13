@@ -30,11 +30,12 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import com.github.icarohs7.userinterface.R
 import kotlinx.android.synthetic.main.dialog_nx.button
+import kotlinx.android.synthetic.main.dialog_nx.imageView
 import kotlinx.android.synthetic.main.dialog_nx.root_nx
-import kotlinx.android.synthetic.main.dialog_nx.view.imageView
-import kotlinx.android.synthetic.main.dialog_nx.view.textView
-import kotlinx.android.synthetic.main.dialog_nx.view.textView2
+import kotlinx.android.synthetic.main.dialog_nx.textView
+import kotlinx.android.synthetic.main.dialog_nx.textView2
 import org.jetbrains.anko.backgroundColorResource
+import org.jetbrains.anko.textColorResource
 
 internal class NXDialog(
         context: Context,
@@ -43,18 +44,21 @@ internal class NXDialog(
         val icon: Drawable?,
         val backgroundColorResource: Int,
         val buttonText: String,
+        val buttonTextColorResource: Int,
+        val buttonColorResource: Int,
         val buttonCallback: Runnable,
         val dismissCallback: Runnable
 ) : Dialog(context) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.dialog_nx)
-        val root = root_nx
-        root.textView.text = title
-        root.textView2.text = message
-        root.imageView.setImageDrawable(icon)
-        root.backgroundColorResource = backgroundColorResource
+        textView.text = title
+        textView2.text = message
+        imageView.setImageDrawable(icon)
+        root_nx.backgroundColorResource = backgroundColorResource
         button.text = buttonText
+        button.textColorResource = buttonTextColorResource
+        button.backgroundColorResource = buttonColorResource
         button.setOnClickListener {
             buttonCallback.run()
             dismiss()
