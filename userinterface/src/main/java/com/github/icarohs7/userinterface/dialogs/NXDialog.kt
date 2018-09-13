@@ -42,6 +42,7 @@ internal class NXDialog(
         val message: String,
         val icon: Drawable?,
         val backgroundColorResource: Int,
+        val buttonText: String,
         val buttonCallback: Runnable,
         val dismissCallback: Runnable
 ) : Dialog(context) {
@@ -49,10 +50,11 @@ internal class NXDialog(
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.dialog_nx)
         val root = root_nx
-        root.imageView.setImageDrawable(icon)
-        root.backgroundColorResource = backgroundColorResource
         root.textView.text = title
         root.textView2.text = message
+        root.imageView.setImageDrawable(icon)
+        root.backgroundColorResource = backgroundColorResource
+        button.text = buttonText
         button.setOnClickListener {
             buttonCallback.run()
             dismiss()

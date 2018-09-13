@@ -24,6 +24,5 @@
 
 <resources>
     <string name="app_name">userinterface</string>
-    <string name="continuar">Continuar</string>
     <string name="nxdialog_icon_content">dialog icon</string>
 </resources>

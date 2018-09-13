@@ -32,6 +32,7 @@ class NXDialogBuilder(private val context: Context) {
     lateinit var message: String
     var icon: Drawable? = null
     var backgroundResource = android.R.color.white
+    var buttonText = "Continue"
     var buttonCallback = Runnable {}
     var dismissCallback = Runnable {}
 
@@ -42,6 +43,7 @@ class NXDialogBuilder(private val context: Context) {
                 message = message,
                 icon = icon,
                 backgroundColorResource = backgroundResource,
+                buttonText = buttonText,
                 buttonCallback = buttonCallback,
                 dismissCallback = dismissCallback
         ).show()
