@@ -39,10 +39,10 @@ import java.util.ArrayList
 
 internal class PhoneCallProviderImpl : PhoneCallProvider {
 
-    override fun callNumber(phoneNumber: String, askingMessage: String, onDenyMessage: String, context: Context) {
+    override fun callNumber(context: Context, phoneNumber: String, askingMessage: String, onDenyMessage: String) {
         val callback = object : PermissionHandler() {
             override fun onGranted() {
-                makeCall(phoneNumber, context)
+                makeCall(context, phoneNumber)
             }
 
             override fun onDenied(context: Context, deniedPermissions: ArrayList<String>) {
@@ -53,7 +53,7 @@ internal class PhoneCallProviderImpl : PhoneCallProvider {
         Permissions.check(context, Manifest.permission.CALL_PHONE, askingMessage, callback)
     }
 
-    private fun makeCall(phoneNumber: String, context: Context) {
+    private fun makeCall(context: Context, phoneNumber: String) {
         val callIntent = Intent(Intent.ACTION_CALL)
         callIntent.data = Uri.parse("tel:$phoneNumber")
 

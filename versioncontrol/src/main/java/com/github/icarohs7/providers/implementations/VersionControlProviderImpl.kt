@@ -25,7 +25,6 @@
 package com.github.icarohs7.providers.implementations
 
 import android.util.Log
-import com.github.icarohs7.connectivity.callbacks.HttpOnSuccessListener
 import com.github.icarohs7.entities.VersionMetadata
 import com.github.icarohs7.providers.VersionControlProvider
 import kotlinx.coroutines.experimental.android.UI
@@ -35,7 +34,7 @@ internal object VersionControlProviderImpl : VersionControlProvider {
     override var localVersionProvider: (suspend () -> String)? = null
     override var remoteVersionProvider: (suspend () -> String)? = null
 
-    override fun compareVersions(callback: HttpOnSuccessListener<VersionMetadata>) {
+    override fun compareVersions(callback: (VersionMetadata) -> Unit) {
         localVersionProvider ?: fail()
         remoteVersionProvider ?: fail()
 
@@ -45,10 +44,11 @@ internal object VersionControlProviderImpl : VersionControlProvider {
             val outdated = remote isMoreRecentThan actual
 
             Log.i("versions", "actual: $actual, latest: $remote")
-            callback.onSuccess(VersionMetadata(
-                    oldVersion = actual,
-                    newVersion = remote,
-                    isAppUpdated = !outdated))
+            callback(
+                    VersionMetadata(
+                            oldVersion = actual,
+                            newVersion = remote,
+                            isAppUpdated = !outdated))
         }
     }
 

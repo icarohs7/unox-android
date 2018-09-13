@@ -22,9 +22,11 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.connectivity.callbacks
+package com.github.icarohs7.userinterface.callbacks;
+
+import com.github.icarohs7.userinterface.dialogs.NXDialogBuilder;
 
 @FunctionalInterface
-interface HttpOnSuccessListener<T> {
-    fun onSuccess(response: T)
+public interface NXDialogBuilderHandler {
+    void handle(NXDialogBuilder builder);
 }

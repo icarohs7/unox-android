@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.connectivity.callbacks
+package com.github.icarohs7.connectivity.callbacks;
 
 @FunctionalInterface
-interface HttpOnFailureListener {
-    fun onFailure(e: Throwable)
+public interface HttpOnSuccessListener<T> {
+    void onSuccess(T response);
 }

@@ -22,15 +22,9 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.userinterface.providers
+package com.github.icarohs7.connectivity.callbacks;
 
-import android.content.Context
-import com.github.icarohs7.userinterface.callbacks.NXDialogBuilderHandler
-import com.github.icarohs7.userinterface.dialogs.NXDialogBuilder
-
-interface UIProvider {
-    fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
-
-    fun nxDialog(context: Context, fn: NXDialogBuilderHandler) =
-            nxDialog(context) { fn.handle(this) }
+@FunctionalInterface
+public interface HttpOnFailureListener {
+    void onFailure(Throwable e);
 }
