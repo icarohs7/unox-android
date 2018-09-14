@@ -45,14 +45,33 @@ internal class NotificationProviderImpl(
 ) : NotificationProvider {
 
     private var notificationId = 0
-    private val builder: NotificationCompat.Builder by lazy {
-        NotificationCompat
+
+    override fun emitNotification(
+            title: String,
+            message: String,
+            iconResource: Int,
+            bigMessage: String,
+            onClickPendingIntent: PendingIntent
+    ) {
+        createNotificationChannel()
+        val notificationStyle = NotificationCompat.BigTextStyle().bigText(bigMessage)
+
+        val notification = NotificationCompat
                 .Builder(context, channelId)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setDefaults(NotificationCompat.DEFAULT_VIBRATE)
                 .setDefaults(NotificationCompat.DEFAULT_SOUND)
                 .setVibrate(longArrayOf(200, 1000))
                 .setAutoCancel(true)
+                .setSmallIcon(iconResource)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setStyle(notificationStyle)
+                .setContentIntent(onClickPendingIntent)
+                .build()
+
+        val notificationManager = NotificationManagerCompat.from(context)
+        notificationManager.notify(notificationId++, notification)
     }
 
     override fun <T : AppCompatActivity> emitNotification(
@@ -62,21 +81,14 @@ internal class NotificationProviderImpl(
             bigMessage: String,
             destinationActivity: Class<T>
     ) {
-        createNotificationChannel()
-        val notificationStyle = NotificationCompat.BigTextStyle().bigText(bigMessage)
-        val pendingIntent = getPendingIntentToActivity(destinationActivity)
-
-        val notification = builder
-                .setSmallIcon(iconResource)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setStyle(notificationStyle)
-                .setContentIntent(pendingIntent)
-                .build()
-
-        val notificationManager = NotificationManagerCompat.from(context)
-        notificationManager.notify(notificationId++, notification)
+        emitNotification(
+                title,
+                message,
+                iconResource,
+                bigMessage,
+                getPendingIntentToActivity(destinationActivity))
     }
+
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

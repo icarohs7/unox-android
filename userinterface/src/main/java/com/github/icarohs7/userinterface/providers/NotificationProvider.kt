@@ -24,9 +24,18 @@
 
 package com.github.icarohs7.userinterface.providers
 
+import android.app.PendingIntent
 import android.support.v7.app.AppCompatActivity
 
 interface NotificationProvider {
+    fun emitNotification(
+            title: String,
+            message: String,
+            iconResource: Int,
+            bigMessage: String,
+            onClickPendingIntent: PendingIntent
+    )
+
     fun <T : AppCompatActivity> emitNotification(
             title: String,
             message: String,
