@@ -22,12 +22,10 @@
  * SOFTWARE.
  */
 
-@file:JvmName("UserInterfaceModule")
-@file:JvmMultifileClass
+package com.github.icarohs7.versioncontrol.entities
 
-package com.github.icarohs7.userinterface.toplevel
-
-import com.github.icarohs7.userinterface.providers.UIProvider
-import com.github.icarohs7.userinterface.providers.implementations.UIProviderImpl
-
-fun getUIProvider(): UIProvider = UIProviderImpl()
+data class VersionMetadata(
+        val oldVersion: String,
+        val newVersion: String,
+        val isAppUpdated: Boolean
+)

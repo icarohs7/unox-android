@@ -22,11 +22,11 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.providers.implementations
+package com.github.icarohs7.versioncontrol.providers.implementations
 
 import android.util.Log
-import com.github.icarohs7.entities.VersionMetadata
-import com.github.icarohs7.providers.VersionControlProvider
+import com.github.icarohs7.versioncontrol.entities.VersionMetadata
+import com.github.icarohs7.versioncontrol.providers.VersionControlProvider
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 

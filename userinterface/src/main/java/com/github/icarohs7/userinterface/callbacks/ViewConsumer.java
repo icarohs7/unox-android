@@ -22,11 +22,11 @@
  * SOFTWARE.
  */
 
-@file:JvmName("TelephonyModule")
-@file:JvmMultifileClass
-package com.github.icarohs7.telephony.toplevel
+package com.github.icarohs7.userinterface.callbacks;
 
-import com.github.icarohs7.telephony.providers.PhoneCallProvider
-import com.github.icarohs7.telephony.providers.implementations.PhoneCallProviderImpl
+import android.view.View;
 
-fun getTelephonyProvider(): PhoneCallProvider = PhoneCallProviderImpl()
+@FunctionalInterface
+public interface ViewConsumer {
+    void accept(View view);
+}

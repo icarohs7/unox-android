@@ -22,35 +22,12 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.providers
+@file:JvmName("TelephonyModule")
+@file:JvmMultifileClass
 
-import com.github.icarohs7.connectivity.callbacks.HttpOnSuccessListener
-import com.github.icarohs7.entities.VersionMetadata
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
+package com.github.icarohs7.telephony
 
-interface VersionControlProvider {
-    var localVersionProvider: (suspend () -> String)?
-    var remoteVersionProvider: (suspend () -> String)?
+import com.github.icarohs7.telephony.providers.PhoneCallProvider
+import com.github.icarohs7.telephony.providers.implementations.PhoneCallProviderImpl
 
-    //Kotlin Versions
-    fun compareVersions(callback: (VersionMetadata) -> Unit)
-
-    fun localVersion(callback: (String) -> Unit) {
-        launch(UI) { callback(localVersionProvider?.invoke() ?: "") }
-    }
-
-    fun remoteVersion(callback: (String) -> Unit) {
-        launch(UI) { callback(remoteVersionProvider?.invoke() ?: "") }
-    }
-
-    //Java Versions
-    fun compareVersions(callback: HttpOnSuccessListener<VersionMetadata>) =
-            compareVersions { callback.onSuccess(it) }
-
-    fun localVersion(callback: HttpOnSuccessListener<String>) =
-            localVersion { callback.onSuccess(it) }
-
-    fun remoteVersion(callback: HttpOnSuccessListener<String>) =
-            remoteVersion { callback.onSuccess(it) }
-}
+fun telephonyProvider(): PhoneCallProvider = PhoneCallProviderImpl()

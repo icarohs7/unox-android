@@ -22,12 +22,17 @@
  * SOFTWARE.
  */
 
-@file:JvmName("VersionControlModule")
+@file:JvmName("NotificationModule")
 @file:JvmMultifileClass
 
-package com.github.icarohs7.versioncontrol.toplevel
+package com.github.icarohs7.notification
 
-import com.github.icarohs7.providers.VersionControlProvider
-import com.github.icarohs7.providers.implementations.VersionControlProviderImpl
+import android.content.Context
+import com.github.icarohs7.notification.providers.NotificationProvider
+import com.github.icarohs7.notification.providers.implementations.NotificationProviderImpl
 
-fun getVersionControlProvider(): VersionControlProvider = VersionControlProviderImpl
+@JvmOverloads
+fun notificationProvider(
+        context: Context,
+        channelId: String = "standardchannelid"
+): NotificationProvider = NotificationProviderImpl(context, channelId)

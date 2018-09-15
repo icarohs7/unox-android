@@ -22,13 +22,12 @@
  * SOFTWARE.
  */
 
-@file:JvmName("NavigationModule")
+@file:JvmName("VersionControlModule")
 @file:JvmMultifileClass
 
-package com.github.icarohs7.navigation.toplevel
+package com.github.icarohs7.versioncontrol
 
-import android.content.Context
-import com.github.icarohs7.navigation.providers.NavigationProvider
-import com.github.icarohs7.navigation.providers.implementations.NavigationProviderImpl
+import com.github.icarohs7.versioncontrol.providers.VersionControlProvider
+import com.github.icarohs7.versioncontrol.providers.implementations.VersionControlProviderImpl
 
-fun getNavigationProvider(context: Context): NavigationProvider = NavigationProviderImpl(context)
+fun versionControlProvider(): VersionControlProvider = VersionControlProviderImpl
