@@ -22,12 +22,20 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.userinterface.providers
+package com.github.icarohs7;
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import org.junit.Test;
 
-interface NavigationProvider {
-    fun <T : AppCompatActivity> gotoActivity(activity: Class<T>)
-    fun <T : AppCompatActivity> getActivityLaunchIntent(activity: Class<T>): Intent
+import static org.junit.Assert.assertEquals;
+
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ */
+public class ExampleUnitTest {
+    @Test
+    public void addition_isCorrect() {
+        assertEquals(4, 2 + 2);
+    }
 }

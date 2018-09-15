@@ -22,4 +22,13 @@
  * SOFTWARE.
  */
 
-include ':telephony', ':userinterface', ':versioncontrol', ':connectivity', ':notification', ':navigation'
+@file:JvmName("NavigationModule")
+@file:JvmMultifileClass
+
+package com.github.icarohs7.navigation.toplevel
+
+import android.content.Context
+import com.github.icarohs7.navigation.providers.NavigationProvider
+import com.github.icarohs7.navigation.providers.implementations.NavigationProviderImpl
+
+fun getNavigationProvider(context: Context): NavigationProvider = NavigationProviderImpl(context)

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.userinterface.providers.implementations
+package com.github.icarohs7.notification.providers.implementations
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -32,13 +32,9 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v7.app.AppCompatActivity
-import com.github.icarohs7.userinterface.providers.NotificationProvider
-import com.github.icarohs7.userinterface.toplevel.getNavigationProvider
+import com.github.icarohs7.navigation.toplevel.getNavigationProvider
+import com.github.icarohs7.notification.providers.NotificationProvider
 
-/**
- * @author Icaro Temponi
- * @since 09/09/2018
- */
 internal class NotificationProviderImpl(
         private val context: Context,
         private val channelId: String = "standardnotificationchannel"

@@ -22,4 +22,17 @@
  * SOFTWARE.
  */
 
-include ':telephony', ':userinterface', ':versioncontrol', ':connectivity', ':notification', ':navigation'
+@file:JvmName("NotificationModule")
+@file:JvmMultifileClass
+
+package com.github.icarohs7.notification.toplevel
+
+import android.content.Context
+import com.github.icarohs7.notification.providers.NotificationProvider
+import com.github.icarohs7.notification.providers.implementations.NotificationProviderImpl
+
+@JvmOverloads
+fun getNotificationProvider(
+        context: Context,
+        channelId: String = "standardchannelid"
+): NotificationProvider = NotificationProviderImpl(context, channelId)

@@ -22,4 +22,20 @@
  * SOFTWARE.
  */
 
-include ':telephony', ':userinterface', ':versioncontrol', ':connectivity', ':notification', ':navigation'
+package com.github.icarohs7.navigation.providers.implementations
+
+import android.content.Context
+import android.content.Intent
+import android.support.v7.app.AppCompatActivity
+import com.github.icarohs7.navigation.providers.NavigationProvider
+
+internal class NavigationProviderImpl(private val context: Context) : NavigationProvider {
+    override fun <T : AppCompatActivity> gotoActivity(activity: Class<T>) {
+        val intent = Intent(context, activity)
+        context.startActivity(intent)
+    }
+
+    override fun <T : AppCompatActivity> getActivityLaunchIntent(activity: Class<T>): Intent {
+        return Intent(context, activity)
+    }
+}

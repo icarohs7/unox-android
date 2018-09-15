@@ -22,25 +22,29 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.userinterface.providers
+package com.github.icarohs7;
 
-import android.app.PendingIntent
-import android.support.v7.app.AppCompatActivity
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-interface NotificationProvider {
-    fun emitNotification(
-            title: String,
-            message: String,
-            iconResource: Int,
-            bigMessage: String,
-            onClickPendingIntent: PendingIntent
-    )
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.runner.AndroidJUnit4;
 
-    fun <T : AppCompatActivity> emitNotification(
-            title: String,
-            message: String,
-            iconResource: Int,
-            bigMessage: String,
-            destinationActivity: Class<T>
-    )
+import static org.junit.Assert.assertEquals;
+
+/**
+ * Instrumented test, which will execute on an Android device.
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ */
+@RunWith(AndroidJUnit4.class)
+public class ExampleInstrumentedTest {
+    @Test
+    public void useAppContext() {
+        // Context of the app under test.
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        assertEquals("com.github.icarohs7.test", appContext.getPackageName());
+    }
 }
