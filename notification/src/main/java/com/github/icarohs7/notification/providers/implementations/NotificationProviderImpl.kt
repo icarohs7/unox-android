@@ -49,25 +49,14 @@ internal class NotificationProviderImpl(
             bigMessage: String,
             onClickPendingIntent: PendingIntent
     ) {
-        createNotificationChannel()
-        val notificationStyle = NotificationCompat.BigTextStyle().bigText(bigMessage)
 
-        val notification = NotificationCompat
-                .Builder(context, channelId)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setDefaults(NotificationCompat.DEFAULT_VIBRATE)
-                .setDefaults(NotificationCompat.DEFAULT_SOUND)
-                .setVibrate(longArrayOf(200, 1000))
-                .setAutoCancel(true)
-                .setSmallIcon(iconResource)
+        val builder = defaultBuilder(bigMessage)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setStyle(notificationStyle)
+                .setSmallIcon(iconResource)
                 .setContentIntent(onClickPendingIntent)
-                .build()
 
-        val notificationManager = NotificationManagerCompat.from(context)
-        notificationManager.notify(notificationId++, notification)
+        emitNotification(builder)
     }
 
     override fun <T : AppCompatActivity> emitNotification(
@@ -85,6 +74,18 @@ internal class NotificationProviderImpl(
                 getPendingIntentToActivity(destinationActivity))
     }
 
+    override fun buildNotification(bigMessage: String, fn: NotificationCompat.Builder.() -> Unit) {
+        val builder = defaultBuilder(bigMessage)
+        builder.fn()
+        emitNotification(builder)
+    }
+
+    private fun emitNotification(builder: NotificationCompat.Builder) {
+        createNotificationChannel()
+        val notification = builder.build()
+        val notificationManager = NotificationManagerCompat.from(context)
+        notificationManager.notify(notificationId++, notification)
+    }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -101,5 +102,18 @@ internal class NotificationProviderImpl(
     private fun getPendingIntentToActivity(activityClass: Class<out AppCompatActivity>): PendingIntent {
         val intent = navigationProvider(context).getActivityLaunchIntent(activityClass)
         return PendingIntent.getActivity(context, 0, intent, 0)
+    }
+
+    private fun defaultBuilder(bigMessage: String): NotificationCompat.Builder {
+        val notificationStyle = NotificationCompat.BigTextStyle().bigText(bigMessage)
+
+        return NotificationCompat
+                .Builder(context, channelId)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setDefaults(NotificationCompat.DEFAULT_VIBRATE)
+                .setDefaults(NotificationCompat.DEFAULT_SOUND)
+                .setVibrate(longArrayOf(200, 1000))
+                .setAutoCancel(true)
+                .setStyle(notificationStyle)
     }
 }

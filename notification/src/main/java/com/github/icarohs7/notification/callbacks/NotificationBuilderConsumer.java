@@ -22,32 +22,10 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.notification.providers
+package com.github.icarohs7.notification.callbacks;
 
-import android.app.PendingIntent
-import android.support.v4.app.NotificationCompat
-import android.support.v7.app.AppCompatActivity
-import com.github.icarohs7.notification.callbacks.NotificationBuilderConsumer
+import android.support.v4.app.NotificationCompat;
 
-interface NotificationProvider {
-    fun emitNotification(
-            title: String,
-            message: String,
-            iconResource: Int,
-            bigMessage: String,
-            onClickPendingIntent: PendingIntent
-    )
-
-    fun buildNotification(bigMessage: String = "", fn: NotificationCompat.Builder.() -> Unit)
-
-    fun <T : AppCompatActivity> emitNotification(
-            title: String,
-            message: String,
-            iconResource: Int,
-            bigMessage: String,
-            destinationActivity: Class<T>
-    )
-
-    fun buildNotification(bigMessage: String, fn: NotificationBuilderConsumer): Unit =
-            buildNotification(bigMessage) { fn.accept(this) }
+public interface NotificationBuilderConsumer {
+    void accept(NotificationCompat.Builder builder);
 }
