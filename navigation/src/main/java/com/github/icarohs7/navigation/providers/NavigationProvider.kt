@@ -29,5 +29,6 @@ import android.support.v7.app.AppCompatActivity
 
 interface NavigationProvider {
     fun <T : AppCompatActivity> gotoActivity(activity: Class<T>)
+    fun <T : AppCompatActivity> gotoActivityAfterDelay(activity: Class<T>, delay: Int)
     fun <T : AppCompatActivity> getActivityLaunchIntent(activity: Class<T>): Intent
 }

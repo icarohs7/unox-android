@@ -26,6 +26,7 @@ package com.github.icarohs7.navigation.providers.implementations
 
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import com.github.icarohs7.navigation.providers.NavigationProvider
 
@@ -33,6 +34,10 @@ internal class NavigationProviderImpl(private val context: Context) : Navigation
     override fun <T : AppCompatActivity> gotoActivity(activity: Class<T>) {
         val intent = Intent(context, activity)
         context.startActivity(intent)
+    }
+
+    override fun <T : AppCompatActivity> gotoActivityAfterDelay(activity: Class<T>, delay: Int) {
+        Handler().postDelayed({ gotoActivity(activity) }, delay.toLong())
     }
 
     override fun <T : AppCompatActivity> getActivityLaunchIntent(activity: Class<T>): Intent {
