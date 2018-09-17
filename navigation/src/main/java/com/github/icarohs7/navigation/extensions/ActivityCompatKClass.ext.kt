@@ -22,12 +22,12 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.navigation.providers
+package com.github.icarohs7.navigation.extensions
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
+import kotlin.reflect.KClass
 
-interface NavigationProvider {
-    fun <T : AppCompatActivity> gotoActivity(activity: Class<T>)
-    fun <T : AppCompatActivity> getActivityLaunchIntent(activity: Class<T>): Intent
-}
+fun <T : AppCompatActivity> Context.navigateTo(destination: KClass<T>) =
+        startActivity(Intent(this, destination.java))
