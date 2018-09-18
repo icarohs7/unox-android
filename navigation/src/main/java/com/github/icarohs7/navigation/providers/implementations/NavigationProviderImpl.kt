@@ -32,7 +32,8 @@ import com.github.icarohs7.navigation.providers.NavigationProvider
 import spencerstudios.com.bungeelib.Bungee
 
 internal class NavigationProviderImpl(private val context: Context) : NavigationProvider {
-    override fun <T : AppCompatActivity> gotoActivity(activity: Class<T>) {
+    @Suppress("NOTHING_TO_INLINE", "OVERRIDE_BY_INLINE")
+    override inline fun <T : AppCompatActivity> gotoActivity(activity: Class<T>) {
         val intent = Intent(context, activity)
         context.startActivity(intent)
         executeAnimation(context)
@@ -42,7 +43,8 @@ internal class NavigationProviderImpl(private val context: Context) : Navigation
         return Intent(context, activity)
     }
 
-    private fun executeAnimation(context: Context) {
+    @Suppress("NOTHING_TO_INLINE")
+    private inline fun executeAnimation(context: Context) {
         when (NavigationModuleSettings.animationType) {
 
             NavigationModuleSettings.Animation.SPLIT -> Bungee.split(context)

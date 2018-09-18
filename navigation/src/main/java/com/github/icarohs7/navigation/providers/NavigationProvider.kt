@@ -26,10 +26,8 @@ package com.github.icarohs7.navigation.providers
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
-import com.github.icarohs7.navigation.NavigationModuleSettings
 
 interface NavigationProvider {
     fun <T : AppCompatActivity> gotoActivity(activity: Class<T>)
     fun <T : AppCompatActivity> getActivityLaunchIntent(activity: Class<T>): Intent
-    fun settings() = NavigationModuleSettings
 }
