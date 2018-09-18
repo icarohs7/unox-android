@@ -27,15 +27,56 @@ package com.github.icarohs7.navigation.providers.implementations
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
+import com.github.icarohs7.navigation.NavigationModuleSettings
 import com.github.icarohs7.navigation.providers.NavigationProvider
+import spencerstudios.com.bungeelib.Bungee
 
 internal class NavigationProviderImpl(private val context: Context) : NavigationProvider {
     override fun <T : AppCompatActivity> gotoActivity(activity: Class<T>) {
         val intent = Intent(context, activity)
         context.startActivity(intent)
+        executeAnimation(context)
     }
 
     override fun <T : AppCompatActivity> getActivityLaunchIntent(activity: Class<T>): Intent {
         return Intent(context, activity)
+    }
+
+    private fun executeAnimation(context: Context) {
+        when (NavigationModuleSettings.animationType) {
+
+            NavigationModuleSettings.Animation.SPLIT -> Bungee.split(context)
+
+            NavigationModuleSettings.Animation.SHRINK -> Bungee.shrink(context)
+
+            NavigationModuleSettings.Animation.CARD -> Bungee.card(context)
+
+            NavigationModuleSettings.Animation.INOUT -> Bungee.inAndOut(context)
+
+            NavigationModuleSettings.Animation.SWIPE_LEFT -> Bungee.swipeLeft(context)
+
+            NavigationModuleSettings.Animation.SWIPE_RIGHT -> Bungee.swipeRight(context)
+
+            NavigationModuleSettings.Animation.SLIDE_UP -> Bungee.slideUp(context)
+
+            NavigationModuleSettings.Animation.SLIDE_DOWN -> Bungee.slideDown(context)
+
+            NavigationModuleSettings.Animation.SLIDE_LEFT -> Bungee.slideLeft(context)
+
+            NavigationModuleSettings.Animation.SLIDE_RIGHT -> Bungee.slideRight(context)
+
+            NavigationModuleSettings.Animation.FADE -> Bungee.fade(context)
+
+            NavigationModuleSettings.Animation.ZOOM -> Bungee.zoom(context)
+
+            NavigationModuleSettings.Animation.WINDMILL -> Bungee.windmill(context)
+
+            NavigationModuleSettings.Animation.SPIN -> Bungee.spin(context)
+
+            NavigationModuleSettings.Animation.DIAGONAL -> Bungee.diagonal(context)
+
+            NavigationModuleSettings.Animation.NO_ANIMATION -> Unit
+
+        }
     }
 }

@@ -22,3 +22,6 @@
  * SOFTWARE.
  */
 
+dependencies {
+    implementation 'com.github.Binary-Finery:Bungee:master-SNAPSHOT'
+}

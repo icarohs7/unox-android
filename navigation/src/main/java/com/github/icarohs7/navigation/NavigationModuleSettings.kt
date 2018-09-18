@@ -22,14 +22,27 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.navigation.providers
+package com.github.icarohs7.navigation
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
-import com.github.icarohs7.navigation.NavigationModuleSettings
+object NavigationModuleSettings {
+    var animationType: Animation = Animation.NO_ANIMATION
 
-interface NavigationProvider {
-    fun <T : AppCompatActivity> gotoActivity(activity: Class<T>)
-    fun <T : AppCompatActivity> getActivityLaunchIntent(activity: Class<T>): Intent
-    fun settings() = NavigationModuleSettings
+    enum class Animation {
+        SPLIT,
+        SHRINK,
+        CARD,
+        INOUT,
+        SWIPE_LEFT,
+        SWIPE_RIGHT,
+        SLIDE_UP,
+        SLIDE_DOWN,
+        SLIDE_LEFT,
+        SLIDE_RIGHT,
+        FADE,
+        ZOOM,
+        WINDMILL,
+        SPIN,
+        DIAGONAL,
+        NO_ANIMATION;
+    }
 }
