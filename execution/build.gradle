@@ -22,4 +22,13 @@
  * SOFTWARE.
  */
 
-include ':telephony', ':userinterface', ':versioncontrol', ':connectivity', ':notification', ':navigation', ':execution'
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}
+
+dependencies {
+    //Anko
+    implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
+}

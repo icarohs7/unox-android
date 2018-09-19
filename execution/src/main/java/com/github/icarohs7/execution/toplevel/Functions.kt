@@ -22,4 +22,15 @@
  * SOFTWARE.
  */
 
-include ':telephony', ':userinterface', ':versioncontrol', ':connectivity', ':notification', ':navigation', ':execution'
+package com.github.icarohs7.execution.toplevel
+
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
+import org.jetbrains.anko.coroutines.experimental.bg
+
+fun runAfterDelay(delay: Int, fn: () -> Unit) {
+    launch(UI) {
+        bg { Thread.sleep(delay.toLong()) }.await()
+        fn()
+    }
+}
