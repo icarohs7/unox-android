@@ -44,7 +44,7 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
 
 inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
         destination: T,
-        containerId: Int = NavigationModuleSettings.activityContainer[this::class.simpleName] ?: 0
+        containerId: Int = masterContainer ?: activityContainer[this::class.simpleName] ?: 0
 ) {
 
     fragmentTransaction { replace(containerId, destination) }
