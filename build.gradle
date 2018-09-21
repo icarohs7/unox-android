@@ -43,7 +43,8 @@ apply plugin: 'com.palantir.git-version'
 //External libraries versions
 ext.anko_version = '0.10.5'
 ext.runtimepermissionlib_version = '3.7'
-ext.supportlibrary_version = '1.1.3'
+ext.supportlibrary_version = '27.1.1'
+ext.constraintlayout_version = '1.1.3'
 
 // Common settings over projects
 allprojects {

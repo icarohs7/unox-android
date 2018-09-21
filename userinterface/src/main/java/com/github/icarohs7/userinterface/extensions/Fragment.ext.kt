@@ -22,12 +22,22 @@
  * SOFTWARE.
  */
 
-dependencies {
-    //Support libraries
-    implementation "com.android.support:support-v4:$supportlibrary_version"
-    implementation "com.android.support.constraint:constraint-layout:$constraintlayout_version"
+package com.github.icarohs7.userinterface.extensions
 
-    //Anko
-    implementation "org.jetbrains.anko:anko-commons:$anko_version"
-    implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
+import android.content.Context
+import android.support.v4.app.Fragment
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+
+fun Fragment.hideKeyboard(containerId: Int) {
+    activity ?: return
+    inputMethodManager()?.hideSoftInputFromWindow(activity?.findViewById<View>(containerId)?.windowToken, 0)
+}
+
+fun Fragment.hideKeyboard(container: View) {
+    inputMethodManager()?.hideSoftInputFromWindow(container.windowToken, 0)
+}
+
+private fun Fragment.inputMethodManager(): InputMethodManager? {
+    return activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
 }
