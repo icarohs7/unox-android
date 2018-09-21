@@ -37,5 +37,5 @@ fun runAfterDelay(delay: Int, fn: () -> Unit) {
     }
 }
 
-internal fun onUi(fn: () -> Unit) =
+fun onUi(fn: () -> Unit) =
         Handler(Looper.getMainLooper()).post(fn)

@@ -21,4 +21,4 @@ dependencies {
 ````
 ## How to use
 
-Most modules have interfaces describing it's functions
+Most modules have interfaces describing their functions
