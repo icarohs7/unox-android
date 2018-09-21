@@ -24,13 +24,18 @@
 
 package com.github.icarohs7.execution.toplevel
 
-import kotlinx.coroutines.experimental.android.UI
+import android.os.Handler
+import android.os.Looper
+import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.coroutines.experimental.bg
 
 fun runAfterDelay(delay: Int, fn: () -> Unit) {
-    launch(UI) {
+    launch(CommonPool) {
         bg { Thread.sleep(delay.toLong()) }.await()
-        fn()
+        onUi(fn)
     }
 }
+
+internal fun onUi(fn: () -> Unit) =
+        Handler(Looper.getMainLooper()).post(fn)
