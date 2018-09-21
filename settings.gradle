@@ -22,4 +22,4 @@
  * SOFTWARE.
  */
 
-include ':telephony', ':userinterface', ':versioncontrol', ':connectivity', ':notification', ':navigation', ':execution', ':animation'
+include ':telephony', ':userinterface', ':versioncontrol', ':connectivity', ':notification', ':navigation', ':execution', ':animation', ':adapter'

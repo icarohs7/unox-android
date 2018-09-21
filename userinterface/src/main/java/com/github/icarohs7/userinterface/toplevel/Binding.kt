@@ -22,18 +22,17 @@
  * SOFTWARE.
  */
 
-android {
-    dataBinding {
-        enabled = true
-    }
-}
+package com.github.icarohs7.userinterface.toplevel
 
-dependencies {
-    //Support libraries
-    implementation "com.android.support:support-v4:$supportlibrary_version"
-    implementation "com.android.support.constraint:constraint-layout:$constraintlayout_version"
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
+import android.view.LayoutInflater
+import android.view.ViewGroup
 
-    //Anko
-    implementation "org.jetbrains.anko:anko-commons:$anko_version"
-    implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
-}
+fun <T : ViewDataBinding> getBinding(inflater: LayoutInflater, layoutId: Int, parent: ViewGroup? = null): T =
+        DataBindingUtil.inflate(
+                inflater,
+                layoutId,
+                parent,
+                false
+        )

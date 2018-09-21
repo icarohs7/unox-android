@@ -22,6 +22,4 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-    <string name="app_name">execution</string>
-</resources>
+<resources />

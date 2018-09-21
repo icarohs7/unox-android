@@ -19,6 +19,8 @@ dependencies {
     implementation "com.github.icarohs7.unox-android:<moduleName>:$unoxandroid_version"
 }
 ````
+### List of modules [here](https://github.com/icarohs7/unox-android/tree/master/settings.gradle)
+
 ## How to use
 
 Most modules have interfaces describing their functions

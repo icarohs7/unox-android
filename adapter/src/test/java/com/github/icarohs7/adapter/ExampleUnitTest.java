@@ -22,18 +22,20 @@
  * SOFTWARE.
  */
 
-android {
-    dataBinding {
-        enabled = true
+package com.github.icarohs7.adapter;
+
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ */
+public class ExampleUnitTest {
+    @Test
+    public void addition_isCorrect() {
+        assertEquals(4, 2 + 2);
     }
-}
-
-dependencies {
-    //Support libraries
-    implementation "com.android.support:support-v4:$supportlibrary_version"
-    implementation "com.android.support.constraint:constraint-layout:$constraintlayout_version"
-
-    //Anko
-    implementation "org.jetbrains.anko:anko-commons:$anko_version"
-    implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
 }

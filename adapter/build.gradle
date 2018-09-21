@@ -29,11 +29,6 @@ android {
 }
 
 dependencies {
-    //Support libraries
-    implementation "com.android.support:support-v4:$supportlibrary_version"
-    implementation "com.android.support.constraint:constraint-layout:$constraintlayout_version"
-
-    //Anko
-    implementation "org.jetbrains.anko:anko-commons:$anko_version"
-    implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
+    implementation "com.android.support:recyclerview-v7:$supportlibrary_version"
+    implementation "android.arch.lifecycle:livedata:$lifecycle_version"
 }
