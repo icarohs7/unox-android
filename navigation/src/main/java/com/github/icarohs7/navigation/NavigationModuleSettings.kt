@@ -27,6 +27,14 @@ package com.github.icarohs7.navigation
 object NavigationModuleSettings {
     var animationType: Animation = Animation.NO_ANIMATION
 
+    var masterContainer: Int? = null
+    var activityContainer: MutableMap<String, Int> = mutableMapOf()
+
+    var enterAnim = R.anim.zoom_enter
+    var exitAnim = R.anim.zoom_exit
+    var popEnterAnim = R.anim.zoom_enter
+    var popExitAnim = R.anim.zoom_exit
+
     enum class Animation {
         SPLIT,
         SHRINK,
