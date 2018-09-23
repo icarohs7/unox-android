@@ -26,7 +26,7 @@ package com.github.icarohs7.navigation.providers.implementations
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.github.icarohs7.navigation.NavigationModuleSettings
 import com.github.icarohs7.navigation.providers.NavigationProvider
 import spencerstudios.com.bungeelib.Bungee

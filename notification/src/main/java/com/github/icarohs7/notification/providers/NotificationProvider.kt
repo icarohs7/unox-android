@@ -25,8 +25,8 @@
 package com.github.icarohs7.notification.providers
 
 import android.app.PendingIntent
-import android.support.v4.app.NotificationCompat
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import com.github.icarohs7.notification.callbacks.NotificationBuilderConsumer
 
 interface NotificationProvider {

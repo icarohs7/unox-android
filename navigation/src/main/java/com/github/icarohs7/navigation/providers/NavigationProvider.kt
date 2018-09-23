@@ -25,7 +25,7 @@
 package com.github.icarohs7.navigation.providers
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 interface NavigationProvider {
     fun <T : AppCompatActivity> gotoActivity(activity: Class<T>)

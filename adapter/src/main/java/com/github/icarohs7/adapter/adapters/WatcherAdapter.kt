@@ -24,14 +24,14 @@
 
 package com.github.icarohs7.adapter.adapters
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 
 abstract class WatcherAdapter<T, DB : ViewDataBinding> : RecyclerView.Adapter<WatcherAdapter.WatcherViewHolder<DB>>() {
     open val observer = Observer<List<T>> { newList -> calculateChanges(newList ?: emptyList()) }

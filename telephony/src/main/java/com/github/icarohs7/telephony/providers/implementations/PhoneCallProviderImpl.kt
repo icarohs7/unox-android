@@ -30,7 +30,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.support.v4.app.ActivityCompat
+import androidx.core.app.ActivityCompat
 import com.github.icarohs7.telephony.providers.PhoneCallProvider
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions

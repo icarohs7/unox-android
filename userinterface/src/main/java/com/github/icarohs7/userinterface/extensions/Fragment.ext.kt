@@ -25,9 +25,9 @@
 package com.github.icarohs7.userinterface.extensions
 
 import android.content.Context
-import android.support.v4.app.Fragment
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
 
 fun Fragment.hideKeyboard(containerId: Int) {
     activity ?: return

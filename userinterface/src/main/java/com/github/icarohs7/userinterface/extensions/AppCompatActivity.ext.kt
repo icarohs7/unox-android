@@ -25,9 +25,9 @@
 package com.github.icarohs7.userinterface.extensions
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 
 fun AppCompatActivity.hideKeyboard(containerId: Int) {
     inputMethodManager()?.hideSoftInputFromWindow(findViewById<View>(containerId)?.windowToken, 0)

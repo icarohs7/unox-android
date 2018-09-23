@@ -24,7 +24,8 @@
 
 package com.github.icarohs7.notification.callbacks;
 
-import android.support.v4.app.NotificationCompat;
+
+import androidx.core.app.NotificationCompat;
 
 public interface NotificationBuilderConsumer {
     void accept(NotificationCompat.Builder builder);

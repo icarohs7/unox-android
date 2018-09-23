@@ -25,7 +25,7 @@
 package com.github.icarohs7.navigation.extensions
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.github.icarohs7.navigation.navigationProvider
 import kotlin.reflect.KClass
 
