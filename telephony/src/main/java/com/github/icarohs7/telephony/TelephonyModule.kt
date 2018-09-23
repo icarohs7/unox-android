@@ -22,9 +22,6 @@
  * SOFTWARE.
  */
 
-@file:JvmName("TelephonyModule")
-@file:JvmMultifileClass
-
 package com.github.icarohs7.telephony
 
 import com.github.icarohs7.telephony.providers.PhoneCallProvider

@@ -34,5 +34,4 @@ fun <T : ViewDataBinding> getBinding(inflater: LayoutInflater, layoutId: Int, pa
                 inflater,
                 layoutId,
                 parent,
-                false
-        )
+                false)

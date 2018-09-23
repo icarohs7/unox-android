@@ -22,9 +22,6 @@
  * SOFTWARE.
  */
 
-@file:JvmName("VersionControlModule")
-@file:JvmMultifileClass
-
 package com.github.icarohs7.versioncontrol
 
 import com.github.icarohs7.versioncontrol.providers.VersionControlProvider

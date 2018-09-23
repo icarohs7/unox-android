@@ -28,7 +28,6 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import com.github.icarohs7.userinterface.callbacks.ViewConsumer
 
 fun EditText.onEnterPressedListener(fn: (v: View) -> Unit) {
     this.setOnKeyListener { v, keyCode, event ->
@@ -57,23 +56,5 @@ private fun EditText.onImeAction(action: Int, fn: (v: View) -> Unit) {
         } else {
             false
         }
-    }
-}
-
-//For Javalanders
-object EditTextUtils {
-    @JvmStatic
-    fun setEditTextOnEnterPressedListener(editText: EditText, listener: ViewConsumer) {
-        editText.onEnterPressedListener { listener.accept(it) }
-    }
-
-    @JvmStatic
-    fun setEditTextOnNextPressedListener(editText: EditText, listener: ViewConsumer) {
-        editText.onNextPressedListener { listener.accept(it) }
-    }
-
-    @JvmStatic
-    fun setEditTextOnDonePressedListener(editText: EditText, listener: ViewConsumer) {
-        editText.onDonePressedListener { listener.accept(it) }
     }
 }

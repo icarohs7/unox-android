@@ -27,6 +27,7 @@ package com.github.icarohs7.navigation.extensions
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.transaction
 import com.github.icarohs7.navigation.NavigationModuleSettings
 import com.github.icarohs7.navigation.NavigationModuleSettings.activityContainer
 import com.github.icarohs7.navigation.NavigationModuleSettings.masterContainer
@@ -36,7 +37,7 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
         containerId: Int = masterContainer ?: activityContainer[this::class.simpleName] ?: 0
 ) {
 
-    fragmentTransaction {
+    fragmentTransactionAnimated {
         replace(containerId, destination)
         addToBackStack("fragment")
     }
@@ -47,18 +48,16 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
         containerId: Int = masterContainer ?: activityContainer[this::class.simpleName] ?: 0
 ) {
 
-    fragmentTransaction { replace(containerId, destination) }
+    fragmentTransactionAnimated { replace(containerId, destination) }
 }
 
-fun AppCompatActivity.fragmentTransaction(fn: FragmentTransaction.() -> Unit) {
-    val transaction = this.supportFragmentManager.beginTransaction()
-
-    transaction.setCustomAnimations(
-            NavigationModuleSettings.enterAnim,
-            NavigationModuleSettings.exitAnim,
-            NavigationModuleSettings.popEnterAnim,
-            NavigationModuleSettings.popExitAnim)
-
-    transaction.fn()
-    transaction.commit()
+fun AppCompatActivity.fragmentTransactionAnimated(fn: FragmentTransaction.() -> Unit) {
+    supportFragmentManager.transaction {
+        setCustomAnimations(
+                NavigationModuleSettings.enterAnim,
+                NavigationModuleSettings.exitAnim,
+                NavigationModuleSettings.popEnterAnim,
+                NavigationModuleSettings.popExitAnim)
+        fn()
+    }
 }

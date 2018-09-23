@@ -24,20 +24,18 @@
 
 package com.github.icarohs7.userinterface.extensions
 
-import android.content.Context
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import org.jetbrains.anko.inputMethodManager
 
 fun Fragment.hideKeyboard(containerId: Int) {
-    activity ?: return
-    inputMethodManager()?.hideSoftInputFromWindow(activity?.findViewById<View>(containerId)?.windowToken, 0)
+    requireActivity()
+            .inputMethodManager
+            .hideSoftInputFromWindow(requireActivity().findViewById<View>(containerId)?.windowToken, 0)
 }
 
 fun Fragment.hideKeyboard(container: View) {
-    inputMethodManager()?.hideSoftInputFromWindow(container.windowToken, 0)
-}
-
-private fun Fragment.inputMethodManager(): InputMethodManager? {
-    return activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+    requireActivity()
+            .inputMethodManager
+            .hideSoftInputFromWindow(container.windowToken, 0)
 }

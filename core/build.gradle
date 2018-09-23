@@ -22,11 +22,13 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.userinterface.providers
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}
 
-import android.content.Context
-import com.github.icarohs7.userinterface.dialogs.NXDialogBuilder
-
-interface UIProvider {
-    fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
+dependencies {
+    //Anko
+    implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
 }

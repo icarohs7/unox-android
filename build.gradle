@@ -55,7 +55,7 @@ allprojects {
     }
 }
 
-subprojects {
+subprojects { proj ->
     apply plugin: 'com.github.dcendents.android-maven'
     apply plugin: 'com.android.library'
     apply plugin: 'kotlin-android'
@@ -89,6 +89,11 @@ subprojects {
 
     dependencies {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+        //Core module
+        if (proj.name != 'core') {
+            implementation project(':core')
+        }
 
         //AndroidX
         implementation 'androidx.appcompat:appcompat:1.0.0'

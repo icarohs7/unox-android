@@ -23,6 +23,12 @@
  */
 
 dependencies {
+    //Fragment-ktx
+    implementation 'androidx.fragment:fragment-ktx:1.0.0'
+
+    //Bungee
     implementation 'com.github.Binary-Finery:Bungee:master-SNAPSHOT'
+
+    //Kotlin Reflection API
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }

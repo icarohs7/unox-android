@@ -22,11 +22,20 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.userinterface.providers
+package com.github.icarohs7.core;
 
-import android.content.Context
-import com.github.icarohs7.userinterface.dialogs.NXDialogBuilder
+import org.junit.Test;
 
-interface UIProvider {
-    fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
+import static org.junit.Assert.assertEquals;
+
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ */
+public class ExampleUnitTest {
+    @Test
+    public void addition_isCorrect() {
+        assertEquals(4, 2 + 2);
+    }
 }

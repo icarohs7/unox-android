@@ -25,9 +25,10 @@
 package com.github.icarohs7.versioncontrol.providers.implementations
 
 import android.util.Log
+import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.versioncontrol.entities.VersionMetadata
 import com.github.icarohs7.versioncontrol.providers.VersionControlProvider
-import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 
 internal object VersionControlProviderImpl : VersionControlProvider {
@@ -35,20 +36,19 @@ internal object VersionControlProviderImpl : VersionControlProvider {
     override var remoteVersionProvider: (suspend () -> String)? = null
 
     override fun compareVersions(callback: (VersionMetadata) -> Unit) {
-        localVersionProvider ?: fail()
-        remoteVersionProvider ?: fail()
-
-        launch(UI) {
-            val actual = localVersionProvider!!()
-            val remote = remoteVersionProvider!!()
+        launch(CommonPool) {
+            val actual = requireNotNull(localVersionProvider) { "Please define the local version provider" }()
+            val remote = requireNotNull(remoteVersionProvider) { "Please define the remote version provider" }()
             val outdated = remote isMoreRecentThan actual
 
             Log.i("versions", "actual: $actual, latest: $remote")
-            callback(
-                    VersionMetadata(
-                            oldVersion = actual,
-                            newVersion = remote,
-                            isAppUpdated = !outdated))
+            onUi {
+                callback(
+                        VersionMetadata(
+                                oldVersion = actual,
+                                newVersion = remote,
+                                isAppUpdated = !outdated))
+            }
         }
     }
 
@@ -69,9 +69,5 @@ internal object VersionControlProviderImpl : VersionControlProvider {
         }
 
         return false
-    }
-
-    private fun fail() {
-        throw Exception("Please define the version providers for local and remote versions")
     }
 }

@@ -22,11 +22,9 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.userinterface.providers
+package com.github.icarohs7.core.settings
 
-import android.content.Context
-import com.github.icarohs7.userinterface.dialogs.NXDialogBuilder
-
-interface UIProvider {
-    fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
-}
+/**
+ * Object with settings for all libraries
+ */
+object UnoxAndroidSettings

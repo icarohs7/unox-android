@@ -24,19 +24,14 @@
 
 package com.github.icarohs7.userinterface.extensions
 
-import android.content.Context
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import org.jetbrains.anko.inputMethodManager
 
 fun AppCompatActivity.hideKeyboard(containerId: Int) {
-    inputMethodManager()?.hideSoftInputFromWindow(findViewById<View>(containerId)?.windowToken, 0)
+    inputMethodManager.hideSoftInputFromWindow(findViewById<View>(containerId)?.windowToken, 0)
 }
 
 fun AppCompatActivity.hideKeyboard(container: View) {
-    inputMethodManager()?.hideSoftInputFromWindow(container.windowToken, 0)
-}
-
-private fun AppCompatActivity.inputMethodManager(): InputMethodManager? {
-    return getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(container.windowToken, 0)
 }

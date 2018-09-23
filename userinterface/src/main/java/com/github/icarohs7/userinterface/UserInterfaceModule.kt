@@ -21,10 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-@file:JvmName("UserInterfaceModule")
-@file:JvmMultifileClass
-
 package com.github.icarohs7.userinterface
 
 import com.github.icarohs7.userinterface.providers.UIProvider

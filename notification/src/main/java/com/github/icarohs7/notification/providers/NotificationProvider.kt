@@ -27,7 +27,6 @@ package com.github.icarohs7.notification.providers
 import android.app.PendingIntent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
-import com.github.icarohs7.notification.callbacks.NotificationBuilderConsumer
 
 interface NotificationProvider {
     fun emitNotification(
@@ -47,7 +46,4 @@ interface NotificationProvider {
             bigMessage: String,
             destinationActivity: Class<T>
     )
-
-    fun buildNotification(bigMessage: String, fn: NotificationBuilderConsumer): Unit =
-            buildNotification(bigMessage) { fn.accept(this) }
 }

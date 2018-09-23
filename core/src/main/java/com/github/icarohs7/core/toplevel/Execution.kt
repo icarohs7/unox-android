@@ -22,11 +22,20 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.userinterface.providers
+package com.github.icarohs7.core.toplevel
 
-import android.content.Context
-import com.github.icarohs7.userinterface.dialogs.NXDialogBuilder
+import android.os.Handler
+import android.os.Looper
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.launch
+import org.jetbrains.anko.coroutines.experimental.bg
 
-interface UIProvider {
-    fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
+fun runAfterDelay(delay: Int, fn: () -> Unit) {
+    launch(CommonPool) {
+        bg { Thread.sleep(delay.toLong()) }.await()
+        onUi(fn)
+    }
 }
+
+fun onUi(fn: () -> Unit) =
+        Handler(Looper.getMainLooper()).post(fn)

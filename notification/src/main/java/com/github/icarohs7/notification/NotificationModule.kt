@@ -22,9 +22,6 @@
  * SOFTWARE.
  */
 
-@file:JvmName("NotificationModule")
-@file:JvmMultifileClass
-
 package com.github.icarohs7.notification
 
 import android.content.Context

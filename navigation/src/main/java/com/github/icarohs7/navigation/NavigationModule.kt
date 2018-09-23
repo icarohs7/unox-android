@@ -22,9 +22,6 @@
  * SOFTWARE.
  */
 
-@file:JvmName("NavigationModule")
-@file:JvmMultifileClass
-
 package com.github.icarohs7.navigation
 
 import android.content.Context

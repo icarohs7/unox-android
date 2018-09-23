@@ -29,6 +29,10 @@ import android.animation.Animator.AnimatorListener
 import android.view.View
 import android.view.ViewPropertyAnimator
 
+fun View.animateTo(duration: Long = 500L, callback: () -> Unit = {}, fn: ViewPropertyAnimator.() -> Unit) {
+    buildAnimation(duration, callback) { fn() }
+}
+
 fun View.animateScaleIn(duration: Long = 500L, callback: () -> Unit = {}) {
     buildAnimation(duration, callback) {
         scaleX(1f)

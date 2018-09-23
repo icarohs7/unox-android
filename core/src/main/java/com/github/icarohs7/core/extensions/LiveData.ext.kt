@@ -22,11 +22,17 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.userinterface.providers
+package com.github.icarohs7.core.extensions
 
-import android.content.Context
-import com.github.icarohs7.userinterface.dialogs.NXDialogBuilder
+import androidx.lifecycle.LiveData
 
-interface UIProvider {
-    fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
+private fun <T, M : LiveData<T>> M.valueTransaction(failOnNullValue: Boolean = false, fn: T.() -> Unit) {
+    if (this.value == null) {
+        when (failOnNullValue) {
+            true -> throw IllegalStateException("Live data value must not be null")
+            false -> return
+        }
+    }
+
+    this.value!!.fn()
 }
