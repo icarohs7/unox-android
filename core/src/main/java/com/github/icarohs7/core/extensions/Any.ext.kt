@@ -28,3 +28,6 @@ import androidx.lifecycle.MutableLiveData
 
 fun <T> T?.asLiveData() =
         MutableLiveData<T>().also { it.value = this }
+
+val Any?.TAG: String
+    get() = this?.let { obj -> obj::class.simpleName } ?: "null"

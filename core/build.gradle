@@ -31,4 +31,7 @@ kotlin {
 dependencies {
     //Anko
     implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
+
+    //Kotlin Reflection API
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
