@@ -26,7 +26,7 @@ package com.github.icarohs7.core.extensions
 
 import androidx.lifecycle.LiveData
 
-private fun <T, M : LiveData<T>> M.valueTransaction(failOnNullValue: Boolean = false, fn: T.() -> Unit) {
+fun <T, M : LiveData<T>> M.valueTransaction(failOnNullValue: Boolean = false, fn: T.() -> Unit) {
     if (this.value == null) {
         when (failOnNullValue) {
             true -> throw IllegalStateException("Live data value must not be null")
