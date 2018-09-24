@@ -24,10 +24,10 @@
 
 package com.github.icarohs7.adapter.adapters
 
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil

@@ -24,10 +24,10 @@
 
 package com.github.icarohs7.userinterface.toplevel
 
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 
 fun <T : ViewDataBinding> getBinding(inflater: LayoutInflater, layoutId: Int, parent: ViewGroup? = null): T =
         DataBindingUtil.inflate(

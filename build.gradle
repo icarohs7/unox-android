@@ -23,7 +23,7 @@
  */
 
 buildscript {
-    ext.kotlin_version = '1.2.70'
+    ext.kotlin_version = '1.2.71'
 
     repositories {
         google()
@@ -31,7 +31,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'gradle.plugin.com.palantir.gradle.gitversion:gradle-git-version:0.11.0'
@@ -48,7 +48,6 @@ ext.spinkit_version = '1.1.0'
 // Common settings over projects
 allprojects {
     group = 'com.github.icarohs7'
-    version = gitVersion().toString().find('(\\d\\.\\d\\.\\d)')
     repositories {
         google()
         jcenter()
@@ -70,9 +69,9 @@ subprojects { proj ->
             minSdkVersion 21
             targetSdkVersion 28
             versionCode 1
-            versionName "1.0"
+            versionName gitVersion().toString().find('(\\d\\.\\d\\.\\d)')
 
-            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         }
 
@@ -106,8 +105,8 @@ subprojects { proj ->
 
         //Test
         testImplementation 'junit:junit:4.12'
-        androidTestImplementation 'com.android.support.test:runner:1.0.2'
-        androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+        androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
     }
 
     task sourcesJar(type: Jar) {
