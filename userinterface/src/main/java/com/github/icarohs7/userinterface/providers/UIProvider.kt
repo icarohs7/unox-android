@@ -33,6 +33,7 @@ import com.github.icarohs7.userinterface.databinding.FragmentBaseWithoutheaderBi
 import com.github.icarohs7.userinterface.databinding.PartialFullscreenImageBinding
 import com.github.icarohs7.userinterface.databinding.PartialFullscreenMessageBinding
 import com.github.icarohs7.userinterface.databinding.PartialLabelTextBinding
+import com.github.icarohs7.userinterface.databinding.PartialLoadingBinding
 import com.github.icarohs7.userinterface.databinding.PartialSwipeRecyclerBinding
 import com.github.icarohs7.userinterface.dialogs.NXDialogBuilder
 import com.github.icarohs7.userinterface.toplevel.getBinding
@@ -87,6 +88,12 @@ interface UIProvider {
             return getBinding(
                     context.layoutInflater,
                     R.layout.activity_base)
+        }
+
+        fun loadingSpinner(context: Context): PartialLoadingBinding {
+            return getBinding(
+                    context.layoutInflater,
+                    R.layout.partial_loading)
         }
 
     }
