@@ -25,8 +25,69 @@
 package com.github.icarohs7.userinterface.providers
 
 import android.content.Context
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.icarohs7.userinterface.R
+import com.github.icarohs7.userinterface.databinding.ActivityBaseBinding
+import com.github.icarohs7.userinterface.databinding.FragmentBaseWithheaderBinding
+import com.github.icarohs7.userinterface.databinding.FragmentBaseWithoutheaderBinding
+import com.github.icarohs7.userinterface.databinding.PartialFullscreenImageBinding
+import com.github.icarohs7.userinterface.databinding.PartialFullscreenMessageBinding
+import com.github.icarohs7.userinterface.databinding.PartialLabelTextBinding
+import com.github.icarohs7.userinterface.databinding.PartialSwipeRecyclerBinding
 import com.github.icarohs7.userinterface.dialogs.NXDialogBuilder
+import com.github.icarohs7.userinterface.toplevel.getBinding
+import org.jetbrains.anko.layoutInflater
 
 interface UIProvider {
     fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
+
+    object Bindings {
+
+        fun textLabel(context: Context): PartialLabelTextBinding {
+            return getBinding(
+                    context.layoutInflater,
+                    R.layout.partial_label_text)
+        }
+
+        fun swipeRecycler(context: Context): PartialSwipeRecyclerBinding {
+            val binding = getBinding<PartialSwipeRecyclerBinding>(
+                    context.layoutInflater,
+                    R.layout.partial_swipe_recycler)
+
+            binding.recyclerPartial.layoutManager = LinearLayoutManager(context)
+
+            return binding
+        }
+
+        fun fullscreenMessage(context: Context): PartialFullscreenMessageBinding {
+            return getBinding(
+                    context.layoutInflater,
+                    R.layout.partial_fullscreen_message)
+        }
+
+        fun fullscreenImage(context: Context): PartialFullscreenImageBinding {
+            return getBinding(
+                    context.layoutInflater,
+                    R.layout.partial_fullscreen_image)
+        }
+
+        fun containerWithHeader(context: Context): FragmentBaseWithheaderBinding {
+            return getBinding(
+                    context.layoutInflater,
+                    R.layout.fragment_base_withheader)
+        }
+
+        fun containerWithoutHeader(context: Context): FragmentBaseWithoutheaderBinding {
+            return getBinding(
+                    context.layoutInflater,
+                    R.layout.fragment_base_withoutheader)
+        }
+
+        fun activityBase(context: Context): ActivityBaseBinding {
+            return getBinding(
+                    context.layoutInflater,
+                    R.layout.activity_base)
+        }
+
+    }
 }

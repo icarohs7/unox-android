@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2018 Icaro R D Temponi
@@ -22,4 +22,18 @@
   ~ SOFTWARE.
   -->
 
-<resources />
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="280dp"
+            android:layout_height="280dp" />
+
+    </LinearLayout>
+</layout>
