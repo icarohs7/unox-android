@@ -34,7 +34,6 @@
 
         <com.github.ybq.android.spinkit.SpinKitView
             android:id="@+id/progress_spinner"
-            style="@style/SpinKitStyle"
             android:layout_width="150dp"
             android:layout_height="150dp"
             app:SpinKit_Color="@color/colorAccent" />

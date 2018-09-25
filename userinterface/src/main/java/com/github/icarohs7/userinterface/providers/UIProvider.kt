@@ -25,6 +25,7 @@
 package com.github.icarohs7.userinterface.providers
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.icarohs7.userinterface.R
 import com.github.icarohs7.userinterface.databinding.ActivityBaseBinding
@@ -37,6 +38,8 @@ import com.github.icarohs7.userinterface.databinding.PartialLoadingBinding
 import com.github.icarohs7.userinterface.databinding.PartialSwipeRecyclerBinding
 import com.github.icarohs7.userinterface.dialogs.NXDialogBuilder
 import com.github.icarohs7.userinterface.toplevel.getBinding
+import com.github.ybq.android.spinkit.sprite.Sprite
+import com.github.ybq.android.spinkit.style.FadingCircle
 import org.jetbrains.anko.layoutInflater
 
 interface UIProvider {
@@ -44,10 +47,13 @@ interface UIProvider {
 
     object Bindings {
 
-        fun textLabel(context: Context): PartialLabelTextBinding {
-            return getBinding(
+        fun textLabel(context: Context, label: String = "", text: String = ""): PartialLabelTextBinding {
+            val binding = getBinding<PartialLabelTextBinding>(
                     context.layoutInflater,
                     R.layout.partial_label_text)
+            binding.label = label
+            binding.text = text
+            return binding
         }
 
         fun swipeRecycler(context: Context): PartialSwipeRecyclerBinding {
@@ -60,16 +66,28 @@ interface UIProvider {
             return binding
         }
 
-        fun fullscreenMessage(context: Context): PartialFullscreenMessageBinding {
-            return getBinding(
+        fun fullscreenMessage(context: Context, message: String = ""): PartialFullscreenMessageBinding {
+            val binding = getBinding<PartialFullscreenMessageBinding>(
                     context.layoutInflater,
                     R.layout.partial_fullscreen_message)
+            binding.text = message
+            return binding
         }
 
-        fun fullscreenImage(context: Context): PartialFullscreenImageBinding {
-            return getBinding(
+        fun fullscreenImage(context: Context, drawable: Drawable): PartialFullscreenImageBinding {
+            val binding = getBinding<PartialFullscreenImageBinding>(
                     context.layoutInflater,
                     R.layout.partial_fullscreen_image)
+            binding.imgLogo.setImageDrawable(drawable)
+            return binding
+        }
+
+        fun fullscreenImage(context: Context, drawableRes: Int): PartialFullscreenImageBinding {
+            val binding = getBinding<PartialFullscreenImageBinding>(
+                    context.layoutInflater,
+                    R.layout.partial_fullscreen_image)
+            binding.imgLogo.setImageResource(drawableRes)
+            return binding
         }
 
         fun containerWithHeader(context: Context): FragmentBaseWithheaderBinding {
@@ -90,10 +108,16 @@ interface UIProvider {
                     R.layout.activity_base)
         }
 
-        fun loadingSpinner(context: Context): PartialLoadingBinding {
-            return getBinding(
-                    context.layoutInflater,
-                    R.layout.partial_loading)
+        fun loadingSpinner(
+                context: Context,
+                message: String = "",
+                drawable: Sprite = FadingCircle()
+        ): PartialLoadingBinding {
+
+            val binding = getBinding<PartialLoadingBinding>(context.layoutInflater, R.layout.partial_loading)
+            binding.txtDescription.text = message
+            binding.progressSpinner.setIndeterminateDrawable(drawable)
+            return binding
         }
 
     }
