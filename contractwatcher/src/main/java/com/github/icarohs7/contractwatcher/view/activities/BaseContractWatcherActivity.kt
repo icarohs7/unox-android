@@ -22,16 +22,26 @@
  * SOFTWARE.
  */
 
-android {
-    dataBinding {
-        enabled = true
+package com.github.icarohs7.contractwatcher.view.activities
+
+import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
+import com.github.icarohs7.contractwatcher.R
+import com.github.icarohs7.userinterface.databinding.ActivityBaseBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
+
+open class BaseContractWatcherActivity : ContractWatcherActivity() {
+    lateinit var binding: ActivityBaseBinding
+
+    override var bottomNavigationView: BottomNavigationView? = binding.baseactBottomnav
+    override var drawerLayout: DrawerLayout? = binding.baseactDrawerLayout
+    override var sideNavigationView: NavigationView? = binding.baseactSidenav
+    override var toolbar: Toolbar? = binding.baseactToolbar
+    override var toolbarOpenDrawerMenuItemDrawableId: Int? = R.drawable.ic_menu
+
+    override fun onSetContentView() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_base)
     }
-}
-
-dependencies {
-    //AndroidX
-    implementation 'com.google.android.material:material:1.0.0'
-
-    //Sibling projects
-    implementation project(':userinterface')
 }
