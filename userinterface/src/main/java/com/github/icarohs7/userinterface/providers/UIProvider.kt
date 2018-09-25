@@ -31,6 +31,7 @@ import com.github.icarohs7.userinterface.R
 import com.github.icarohs7.userinterface.databinding.ActivityBaseBinding
 import com.github.icarohs7.userinterface.databinding.FragmentBaseWithheaderBinding
 import com.github.icarohs7.userinterface.databinding.FragmentBaseWithoutheaderBinding
+import com.github.icarohs7.userinterface.databinding.PartialCaptionImageBinding
 import com.github.icarohs7.userinterface.databinding.PartialFullscreenImageBinding
 import com.github.icarohs7.userinterface.databinding.PartialFullscreenMessageBinding
 import com.github.icarohs7.userinterface.databinding.PartialLabelTextBinding
@@ -87,6 +88,24 @@ interface UIProvider {
                     context.layoutInflater,
                     R.layout.partial_fullscreen_image)
             binding.imgLogo.setImageResource(drawableRes)
+            return binding
+        }
+
+        fun captionImage(context: Context, caption: String = "", drawable: Drawable): PartialCaptionImageBinding {
+            val binding = getBinding<PartialCaptionImageBinding>(
+                    context.layoutInflater,
+                    R.layout.partial_fullscreen_image)
+            binding.caption = caption
+            binding.imgImage.setImageDrawable(drawable)
+            return binding
+        }
+
+        fun captionImage(context: Context, caption: String = "", drawableRes: Int): PartialCaptionImageBinding {
+            val binding = getBinding<PartialCaptionImageBinding>(
+                    context.layoutInflater,
+                    R.layout.partial_fullscreen_image)
+            binding.caption = caption
+            binding.imgImage.setImageResource(drawableRes)
             return binding
         }
 
