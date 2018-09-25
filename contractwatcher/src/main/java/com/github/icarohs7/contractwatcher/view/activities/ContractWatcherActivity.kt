@@ -25,7 +25,6 @@
 package com.github.icarohs7.contractwatcher.view.activities
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.MenuItem
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
@@ -53,8 +52,8 @@ abstract class ContractWatcherActivity : AppCompatActivity(), NavigationView.OnN
     abstract fun onSetContentView()
 
     @CallSuper
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         onSetContentView()
         initSideNavigation()
         initBottomNavigation()
