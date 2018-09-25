@@ -22,15 +22,14 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.telephony;
+package com.github.icarohs7.contractwatcher;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import android.content.Context;
-
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.runner.AndroidJUnit4;
 
 import static org.junit.Assert.assertEquals;
 
@@ -46,6 +45,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.github.icarohs7.unox_android_telephony.test", appContext.getPackageName());
+        assertEquals("com.github.icarohs7.contractwatcher.test", appContext.getPackageName());
     }
 }

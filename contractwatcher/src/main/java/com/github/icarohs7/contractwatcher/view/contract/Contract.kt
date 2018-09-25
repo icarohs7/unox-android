@@ -22,30 +22,15 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.telephony;
+package com.github.icarohs7.contractwatcher.view.contract
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import android.content.Context;
-
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
-
-import static org.junit.Assert.assertEquals;
+import androidx.appcompat.app.AppCompatActivity
 
 /**
- * Instrumented test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * @property menuItemId Id of the menu item resource that should be selected whenever the contract is run
+ * @property navigateAction Action to be executed when the contract is run
  */
-@RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
-    @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
-
-        assertEquals("com.github.icarohs7.unox_android_telephony.test", appContext.getPackageName());
-    }
-}
+data class Contract(
+        val menuItemId: Int = 0,
+        val navigateAction: AppCompatActivity.() -> Unit
+)

@@ -27,7 +27,7 @@ package com.github.icarohs7.core.extensions
 import android.os.Bundle
 import android.os.Parcelable
 
-operator fun <T> Bundle.plusAssign(pair: Pair<String, T>): Unit {
+operator fun <T> Bundle.plusAssign(pair: Pair<String, T>) {
     try {
         val bundle = Bundle() + pair
         this.putAll(bundle)

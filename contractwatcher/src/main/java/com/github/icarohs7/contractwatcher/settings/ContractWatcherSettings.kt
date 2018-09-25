@@ -22,30 +22,21 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.telephony;
+package com.github.icarohs7.contractwatcher.settings
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import android.content.Context;
-
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
-
-import static org.junit.Assert.assertEquals;
+import com.github.icarohs7.contractwatcher.view.contract.ContractDealer
 
 /**
- * Instrumented test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Global settings of the module, define before using
  */
-@RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
-    @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
+object ContractWatcherSettings {
+    /**
+     * Instance of the ContractDealer used in the application
+     */
+    lateinit var AppContractDealer: ContractDealer
 
-        assertEquals("com.github.icarohs7.unox_android_telephony.test", appContext.getPackageName());
-    }
+    /**
+     * If the app should crash when finding null value for Contract's Live Data
+     */
+    var failNullLiveData: Boolean = false
 }
