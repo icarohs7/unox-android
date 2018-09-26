@@ -43,5 +43,5 @@ fun onUi(fn: () -> Unit) =
 fun noReturn(fn: () -> Unit) =
         fn()
 
-suspend fun noReturn(fn: suspend () -> Unit) =
+suspend fun noReturnSusp(fn: suspend () -> Unit) =
         fn()
