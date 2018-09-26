@@ -44,6 +44,8 @@ apply plugin: 'com.palantir.git-version'
 ext.anko_version = '0.10.5'
 ext.runtimepermissionlib_version = '3.7'
 ext.spinkit_version = '1.1.0'
+ext.klaxon_version = '3.0.1'
+ext.fuel_version = '1.15.0'
 
 // Common settings over projects
 allprojects {
