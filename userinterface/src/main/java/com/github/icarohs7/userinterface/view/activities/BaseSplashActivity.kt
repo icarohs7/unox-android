@@ -29,6 +29,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.github.icarohs7.animation.extensions.animateScaleIn
+import com.github.icarohs7.core.extensions.ifTrue
 import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.core.toplevel.runAfterDelay
 import com.github.icarohs7.userinterface.R
@@ -47,7 +48,7 @@ import kotlinx.coroutines.experimental.launch
 abstract class BaseSplashActivity<T> : AppCompatActivity() {
 
     protected lateinit var root: PartialSmallCenterContainerBinding
-    private lateinit var backgroundTask: Deferred<T?>
+    private var backgroundTask: Deferred<T?> = async(CommonPool) { null }
 
     /**
      * Called when the binding is set and waiting content
@@ -64,16 +65,27 @@ abstract class BaseSplashActivity<T> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setupBindings()
         addContentToRoot(root.centerContainer)
-        beforeBackgroundTaskStart()
-        backgroundTask = startBackgroundOperations()
+        verifyIfWillDoBackgroundWork()
         runAnimations()
         waitBackgroundOperationsAndProceed()
     }
 
     /**
-     * Called just before the background task start
+     * Called to check if there will be background work
      */
-    open fun beforeBackgroundTaskStart() {
+    private fun verifyIfWillDoBackgroundWork() {
+        val willDo = confirmIfShouldDoBackgroundWorkBeforeStarting()
+        willDo ifTrue {
+            backgroundTask = startBackgroundOperations()
+        }
+    }
+
+    /**
+     * Called just before the background task start, if true
+     * the background work will start
+     */
+    open fun confirmIfShouldDoBackgroundWorkBeforeStarting(): Boolean {
+        return true
     }
 
     /**
