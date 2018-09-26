@@ -25,19 +25,18 @@
 package com.github.icarohs7.userinterface.view.activities
 
 import android.os.Bundle
-import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.github.icarohs7.animation.extensions.animateScaleIn
 import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.core.toplevel.runAfterDelay
 import com.github.icarohs7.userinterface.R
-import com.github.icarohs7.userinterface.databinding.PartialCaptionImageBinding
+import com.github.icarohs7.userinterface.databinding.PartialSmallCenterContainerBinding
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
-import org.jetbrains.anko.textColorResource
 
 /**
  * Base splash activity with support for background work
@@ -47,19 +46,18 @@ import org.jetbrains.anko.textColorResource
  */
 abstract class BaseSplashActivity<T> : AppCompatActivity() {
 
-    protected lateinit var root: PartialCaptionImageBinding
+    protected lateinit var root: PartialSmallCenterContainerBinding
     private lateinit var backgroundTask: Deferred<T?>
-
-    /**
-     * Operation applied to the imageview to load the
-     * image of the splash
-     */
-    abstract val addRootLogo: (ImageView) -> Unit
 
     /**
      * Caption shown below the splash image
      */
     abstract val caption: String
+
+    /**
+     * Called when the binding is set and waiting content
+     */
+    abstract fun addContentToRoot(contentContainer: LinearLayout)
 
     /**
      * Called after the end of the heavy background operation
@@ -92,10 +90,8 @@ abstract class BaseSplashActivity<T> : AppCompatActivity() {
     }
 
     private fun setupBindings() {
-        root = DataBindingUtil.setContentView(this, R.layout.partial_caption_image)
-        root.caption = caption
-        root.txtCaption.textColorResource = R.color.colorPrimaryDark
-        addRootLogo(root.imgImage)
+        root = DataBindingUtil.setContentView(this, R.layout.partial_small_center_container)
+        addContentToRoot(root.centerContainer)
     }
 
     /**
@@ -103,11 +99,17 @@ abstract class BaseSplashActivity<T> : AppCompatActivity() {
      * an scaleIn with 600ms animation times
      */
     open fun runAnimations() {
-        root.root.scaleX = 0f
-        root.root.scaleY = 0f
-        root.root.animateScaleIn(600L)
+        val content = root.centerContainer
+
+        content.scaleX = 0f
+        content.scaleY = 0f
+        content.animateScaleIn(600L)
     }
 
+    /**
+     * Wait the background work to be done and then run the
+     * function changeToNextScreen with the result
+     */
     private fun waitBackgroundOperationsAndProceed() {
         runAfterDelay(2000) {
             afterAnimationTimeout()

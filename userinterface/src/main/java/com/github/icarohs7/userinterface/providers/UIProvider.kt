@@ -32,10 +32,10 @@ import com.github.icarohs7.userinterface.databinding.ActivityBaseBinding
 import com.github.icarohs7.userinterface.databinding.FragmentBaseWithheaderBinding
 import com.github.icarohs7.userinterface.databinding.FragmentBaseWithoutheaderBinding
 import com.github.icarohs7.userinterface.databinding.PartialCaptionImageBinding
-import com.github.icarohs7.userinterface.databinding.PartialFullscreenImageBinding
 import com.github.icarohs7.userinterface.databinding.PartialFullscreenMessageBinding
 import com.github.icarohs7.userinterface.databinding.PartialLabelTextBinding
 import com.github.icarohs7.userinterface.databinding.PartialLoadingBinding
+import com.github.icarohs7.userinterface.databinding.PartialSmallCenterContainerBinding
 import com.github.icarohs7.userinterface.databinding.PartialSwipeRecyclerBinding
 import com.github.icarohs7.userinterface.dialogs.NXDialogBuilder
 import com.github.icarohs7.userinterface.toplevel.getBinding
@@ -75,26 +75,16 @@ interface UIProvider {
             return binding
         }
 
-        fun fullscreenImage(context: Context, drawable: Drawable): PartialFullscreenImageBinding {
-            val binding = getBinding<PartialFullscreenImageBinding>(
+        fun centerContainer(context: Context): PartialSmallCenterContainerBinding {
+            return getBinding(
                     context.layoutInflater,
-                    R.layout.partial_fullscreen_image)
-            binding.imgLogo.setImageDrawable(drawable)
-            return binding
-        }
-
-        fun fullscreenImage(context: Context, drawableRes: Int): PartialFullscreenImageBinding {
-            val binding = getBinding<PartialFullscreenImageBinding>(
-                    context.layoutInflater,
-                    R.layout.partial_fullscreen_image)
-            binding.imgLogo.setImageResource(drawableRes)
-            return binding
+                    R.layout.partial_small_center_container)
         }
 
         fun captionImage(context: Context, caption: String = "", drawable: Drawable): PartialCaptionImageBinding {
             val binding = getBinding<PartialCaptionImageBinding>(
                     context.layoutInflater,
-                    R.layout.partial_fullscreen_image)
+                    R.layout.partial_small_center_container)
             binding.caption = caption
             binding.imgImage.setImageDrawable(drawable)
             return binding
@@ -103,7 +93,7 @@ interface UIProvider {
         fun captionImage(context: Context, caption: String = "", drawableRes: Int): PartialCaptionImageBinding {
             val binding = getBinding<PartialCaptionImageBinding>(
                     context.layoutInflater,
-                    R.layout.partial_fullscreen_image)
+                    R.layout.partial_small_center_container)
             binding.caption = caption
             binding.imgImage.setImageResource(drawableRes)
             return binding
