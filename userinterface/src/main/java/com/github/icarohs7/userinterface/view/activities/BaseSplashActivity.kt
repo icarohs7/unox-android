@@ -50,11 +50,6 @@ abstract class BaseSplashActivity<T> : AppCompatActivity() {
     private lateinit var backgroundTask: Deferred<T?>
 
     /**
-     * Caption shown below the splash image
-     */
-    abstract val caption: String
-
-    /**
      * Called when the binding is set and waiting content
      */
     abstract fun addContentToRoot(contentContainer: LinearLayout)
@@ -68,6 +63,7 @@ abstract class BaseSplashActivity<T> : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupBindings()
+        addContentToRoot(root.centerContainer)
         beforeBackgroundTaskStart()
         backgroundTask = startBackgroundOperations()
         runAnimations()
@@ -91,7 +87,6 @@ abstract class BaseSplashActivity<T> : AppCompatActivity() {
 
     private fun setupBindings() {
         root = DataBindingUtil.setContentView(this, R.layout.partial_small_center_container)
-        addContentToRoot(root.centerContainer)
     }
 
     /**
