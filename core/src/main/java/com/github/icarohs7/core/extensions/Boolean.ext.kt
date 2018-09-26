@@ -24,12 +24,12 @@
 
 package com.github.icarohs7.core.extensions
 
-infix fun Boolean.ifTrue(fn: () -> Unit): Boolean {
+inline infix fun Boolean.ifTrue(fn: () -> Unit): Boolean {
     if (this) fn()
     return this
 }
 
-infix fun Boolean.ifFalse(fn: () -> Unit): Boolean {
+inline infix fun Boolean.ifFalse(fn: () -> Unit): Boolean {
     if (!this) fn()
     return this
 }
