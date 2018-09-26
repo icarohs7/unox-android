@@ -29,13 +29,14 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.github.icarohs7.animation.extensions.animateScaleIn
+import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.core.toplevel.runAfterDelay
 import com.github.icarohs7.userinterface.R
 import com.github.icarohs7.userinterface.databinding.PartialCaptionImageBinding
+import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
-import org.jetbrains.anko.coroutines.experimental.bg
 import org.jetbrains.anko.textColorResource
 
 /**
@@ -69,9 +70,16 @@ abstract class BaseSplashActivity<T> : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupBindings()
+        beforeBackgroundTaskStart()
         backgroundTask = startBackgroundOperations()
         runAnimations()
         waitBackgroundOperationsAndProceed()
+    }
+
+    /**
+     * Called just before the background task start
+     */
+    open fun beforeBackgroundTaskStart() {
     }
 
     /**
@@ -80,7 +88,7 @@ abstract class BaseSplashActivity<T> : AppCompatActivity() {
      * next screen
      */
     open fun startBackgroundOperations(): Deferred<T?> {
-        return bg { null }
+        return async(CommonPool) { null }
     }
 
     private fun setupBindings() {
@@ -102,10 +110,17 @@ abstract class BaseSplashActivity<T> : AppCompatActivity() {
 
     private fun waitBackgroundOperationsAndProceed() {
         runAfterDelay(2000) {
-            launch(UI) {
+            afterAnimationTimeout()
+            launch(CommonPool) {
                 val bgTaskResult = backgroundTask.await()
-                changeToNextScreen(bgTaskResult)
+                onUi { changeToNextScreen(bgTaskResult) }
             }
         }
+    }
+
+    /**
+     * Called 2 seconds after the splash image is shown
+     */
+    open fun afterAnimationTimeout() {
     }
 }

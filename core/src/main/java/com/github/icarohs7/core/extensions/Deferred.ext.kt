@@ -22,23 +22,16 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.core.toplevel
+package com.github.icarohs7.core.extensions
 
-import android.os.Handler
-import android.os.Looper
+import com.github.icarohs7.core.toplevel.onUi
 import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.launch
-import org.jetbrains.anko.coroutines.experimental.bg
 
-fun runAfterDelay(delay: Int, fn: () -> Unit) {
+fun <T> Deferred<T>.onResponse(fn: (T) -> Unit) {
     launch(CommonPool) {
-        bg { Thread.sleep(delay.toLong()) }.await()
-        onUi(fn)
+        val response = this@onResponse.await()
+        onUi { fn(response) }
     }
 }
-
-fun onUi(fn: () -> Unit) =
-        Handler(Looper.getMainLooper()).post(fn)
-
-fun noReturn(fn: () -> Unit) =
-        fn()
