@@ -47,7 +47,7 @@ import org.jetbrains.anko.textColorResource
  */
 abstract class BaseSplashActivity<T> : AppCompatActivity() {
 
-    private lateinit var root: PartialCaptionImageBinding
+    protected lateinit var root: PartialCaptionImageBinding
     private lateinit var backgroundTask: Deferred<T?>
 
     /**
