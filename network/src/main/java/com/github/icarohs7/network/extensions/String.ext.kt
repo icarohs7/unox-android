@@ -50,7 +50,8 @@ inline fun <reified T> String.httpGetObjectAsync(
                                     .httpGet(query)
                                     .body(body)
                                     .awaitStringResult()
-                                    .getOrElse("")))
+                                    .getOrElse("")
+                                    .trim()))
         } catch (e: Exception) {
             null
         }
@@ -74,7 +75,8 @@ inline fun <reified T> String.httpGetArrayAsync(
                                     .httpGet(query)
                                     .body(body)
                                     .awaitStringResult()
-                                    .getOrElse("")))!!
+                                    .getOrElse("")
+                                    .trim()))!!
         } catch (e: Exception) {
             emptyList<T>()
         }
@@ -98,7 +100,8 @@ inline fun <reified T> String.httpPostObjectAsync(
                                     .httpPost(query)
                                     .body(body)
                                     .awaitStringResult()
-                                    .getOrElse("")))
+                                    .getOrElse("")
+                                    .trim()))
         } catch (e: Exception) {
             null
         }
@@ -122,7 +125,8 @@ inline fun <reified T> String.httpPostArrayAsync(
                                     .httpPost(query)
                                     .body(body)
                                     .awaitStringResult()
-                                    .getOrElse("")))!!
+                                    .getOrElse("")
+                                    .trim()))!!
         } catch (e: Exception) {
             emptyList<T>()
         }
