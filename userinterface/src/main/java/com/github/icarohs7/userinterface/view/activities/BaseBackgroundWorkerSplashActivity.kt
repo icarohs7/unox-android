@@ -45,7 +45,7 @@ import kotlinx.coroutines.experimental.launch
  * return of the task, you can also use Unit or anything
  * you want if not doing background work
  */
-abstract class BaseSplashActivity<T> : AppCompatActivity() {
+abstract class BaseBackgroundWorkerSplashActivity<T> : AppCompatActivity() {
 
     protected lateinit var root: PartialSmallCenterContainerBinding
     private var backgroundTask: Deferred<T?> = async(CommonPool) { null }

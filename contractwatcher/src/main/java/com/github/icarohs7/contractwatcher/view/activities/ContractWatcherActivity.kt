@@ -28,22 +28,20 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
+import com.github.icarohs7.contractwatcher.entities.ActivityResources
 import com.github.icarohs7.contractwatcher.settings.ContractWatcherSettings
 import com.github.icarohs7.contractwatcher.view.contract.Contract
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 abstract class ContractWatcherActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     val contractDealer = ContractWatcherSettings.AppContractDealer
+    val navigationResources = ActivityResources()
 
-    open var sideNavigationView: NavigationView? = null
-    open var bottomNavigationView: BottomNavigationView? = null
-    open var toolbar: Toolbar? = null
-    open var toolbarOpenDrawerMenuItemDrawableId: Int? = null
-    open var drawerLayout: DrawerLayout? = null
+    /**
+     * Called first when the activity is started to define the navigationResources used, like menus, title, etc
+     */
+    abstract fun onDefineActivityResources(): ActivityResources.() -> Unit
 
     /**
      * Called when the activity is created, content view should be
@@ -54,11 +52,10 @@ abstract class ContractWatcherActivity : AppCompatActivity(), NavigationView.OnN
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        onDefineActivityResources()(navigationResources)
         onSetContentView()
-        initSideNavigation()
-        initBottomNavigation()
-        initToolbar()
-        savedInstanceState?.also { state -> recoverStateWhenExistent(state) }
+        loadNavigationResources()
+        savedInstanceState?.also(::recoverStateWhenExistent)
         observeContractChanges()
         observeFragmentStackChanges()
         afterInitialSetup()
@@ -67,7 +64,7 @@ abstract class ContractWatcherActivity : AppCompatActivity(), NavigationView.OnN
     /**
      * Called whenever an item in your options menu is selected
      */
-    override fun onOptionsItemSelected(item: MenuItem) = drawerLayout?.let { drawer ->
+    override fun onOptionsItemSelected(item: MenuItem) = navigationResources.drawerLayout?.let { drawer ->
         if (item.itemId == android.R.id.home) {
             drawer.openDrawer(androidx.core.view.GravityCompat.START)
             true
@@ -80,33 +77,10 @@ abstract class ContractWatcherActivity : AppCompatActivity(), NavigationView.OnN
      * Called when an item menu is selected
      */
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
-        drawerLayout?.closeDrawers()
+        navigationResources.drawerLayout?.closeDrawers()
         val contract = contractDealer.findContractByMenuItemId(menuItem.itemId)
         executeContract(contract)
         return true
-    }
-
-    /**
-     * Side navigation menu (drawer) initialization process
-     */
-    open fun initSideNavigation() = sideNavigationView?.also { navView ->
-        navView.setNavigationItemSelectedListener(this)
-    }
-
-    /**
-     * Bottom navigation view initialization process
-     */
-    open fun initBottomNavigation() = bottomNavigationView?.also { bottomNav ->
-        bottomNav.setOnNavigationItemSelectedListener(::onNavigationItemSelected)
-    }
-
-    /**
-     * Toolbar initialization process
-     */
-    open fun initToolbar() = toolbar?.also { toolbar ->
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        toolbarOpenDrawerMenuItemDrawableId?.let(supportActionBar!!::setHomeAsUpIndicator)
     }
 
     /**
@@ -133,7 +107,7 @@ abstract class ContractWatcherActivity : AppCompatActivity(), NavigationView.OnN
      */
     open fun checkMenuItem(menuItemId: Int) {
         try {
-            sideNavigationView?.apply { setCheckedItem(menuItemId) }
+            navigationResources.sideNavigationView?.setCheckedItem(menuItemId)
         } catch (e: IllegalArgumentException) {
         }
     }
@@ -152,4 +126,45 @@ abstract class ContractWatcherActivity : AppCompatActivity(), NavigationView.OnN
     private fun observeFragmentStackChanges() {
         supportFragmentManager.addOnBackStackChangedListener(contractDealer::popMenuItem)
     }
+
+    /**
+     * Load the resources defined
+     */
+    private fun loadNavigationResources() {
+        val res = navigationResources
+
+        //Bottom navigation
+        res.bottomNavigationView
+                ?.setOnNavigationItemSelectedListener(::onNavigationItemSelected)
+
+        res.bottomNavigationMenuRes?.let {
+            res.bottomNavigationView?.inflateMenu(it)
+        }
+
+        //Side navigation
+        res.sideNavigationView
+                ?.setNavigationItemSelectedListener(this)
+
+        res.sideNavigationHeaderRes?.let {
+            res.sideNavigationView?.inflateHeaderView(it)
+        }
+
+        res.sideNavigationMenuRes?.let {
+            res.sideNavigationView?.inflateMenu(it)
+        }
+
+        //Toolbar
+        res.toolbarTitle?.let {
+            supportActionBar?.title = it
+        }
+
+        setSupportActionBar(res.toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        res.toolbarOpenDrawerMenuItemDrawableId?.let {
+            supportActionBar?.setHomeAsUpIndicator(it)
+        }
+    }
+
 }

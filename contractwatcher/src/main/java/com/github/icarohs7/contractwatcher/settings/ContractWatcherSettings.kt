@@ -25,6 +25,12 @@
 package com.github.icarohs7.contractwatcher.settings
 
 import com.github.icarohs7.contractwatcher.view.contract.ContractDealer
+import com.github.icarohs7.core.settings.UnoxAndroidSettings
+
+
+fun UnoxAndroidSettings.startContractWatcher(builder: ContractWatcherSettings.() -> Unit) {
+    builder(ContractWatcherSettings)
+}
 
 /**
  * Global settings of the module, define before using

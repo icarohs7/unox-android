@@ -22,20 +22,30 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.network;
+package com.github.icarohs7.userinterface.view.fragments
 
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.fragment.app.Fragment
+import com.github.icarohs7.userinterface.providers.UIProvider
 
 /**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Base fragment with a single container filling the screen
  */
-public class ExampleUnitTest {
-    @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+abstract class BaseFragmentFull : Fragment() {
+    protected lateinit var contentView: FrameLayout
+
+    abstract fun onBindingCreated(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val rootBinding = UIProvider.Bindings.containerWithoutHeader(requireContext())
+
+        contentView = rootBinding.baseNoheaderContainer
+
+        onBindingCreated(inflater, container, savedInstanceState)
+        return rootBinding.root
     }
 }

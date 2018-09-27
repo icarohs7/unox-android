@@ -22,30 +22,33 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.contractwatcher.view.activities
+package com.github.icarohs7.userinterface.view.fragments
 
-import androidx.annotation.CallSuper
-import androidx.databinding.DataBindingUtil
-import com.github.icarohs7.contractwatcher.R
-import com.github.icarohs7.contractwatcher.entities.ActivityResources
-import com.github.icarohs7.userinterface.databinding.ActivityBaseBinding
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.fragment.app.Fragment
+import com.github.icarohs7.userinterface.providers.UIProvider
+import com.google.android.material.card.MaterialCardView
 
-open class BaseContractWatcherActivity : ContractWatcherActivity() {
-    lateinit var binding: ActivityBaseBinding
+/**
+ * Base fragment with a card header and a body
+ */
+abstract class BaseFragmentWHeader : Fragment() {
+    protected lateinit var headerView: MaterialCardView
+    protected lateinit var contentView: FrameLayout
 
-    @CallSuper
-    override fun onSetContentView() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_base)
-    }
+    abstract fun onBindingCreated(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
 
-    @CallSuper
-    override fun onDefineActivityResources(): ActivityResources.() -> Unit {
-        return {
-            bottomNavigationView = binding.baseactBottomnav
-            drawerLayout = binding.baseactDrawerLayout
-            sideNavigationView = binding.baseactSidenav
-            toolbar = binding.baseactToolbar
-            toolbarOpenDrawerMenuItemDrawableId = R.drawable.ic_menu
-        }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val rootBinding = UIProvider.Bindings.containerWithHeader(requireContext())
+
+        headerView = rootBinding.baseHeaderHeader
+        contentView = rootBinding.baseHeaderContainer
+
+        onBindingCreated(inflater, container, savedInstanceState)
+        return rootBinding.root
     }
 }

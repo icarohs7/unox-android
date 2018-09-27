@@ -22,30 +22,21 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.contractwatcher.view.activities
+package com.github.icarohs7.contractwatcher.entities
 
-import androidx.annotation.CallSuper
-import androidx.databinding.DataBindingUtil
-import com.github.icarohs7.contractwatcher.R
-import com.github.icarohs7.contractwatcher.entities.ActivityResources
-import com.github.icarohs7.userinterface.databinding.ActivityBaseBinding
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
-open class BaseContractWatcherActivity : ContractWatcherActivity() {
-    lateinit var binding: ActivityBaseBinding
-
-    @CallSuper
-    override fun onSetContentView() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_base)
-    }
-
-    @CallSuper
-    override fun onDefineActivityResources(): ActivityResources.() -> Unit {
-        return {
-            bottomNavigationView = binding.baseactBottomnav
-            drawerLayout = binding.baseactDrawerLayout
-            sideNavigationView = binding.baseactSidenav
-            toolbar = binding.baseactToolbar
-            toolbarOpenDrawerMenuItemDrawableId = R.drawable.ic_menu
-        }
-    }
+class ActivityResources internal constructor() {
+    var sideNavigationView: NavigationView? = null
+    var sideNavigationMenuRes: Int? = null
+    var sideNavigationHeaderRes: Int? = null
+    var bottomNavigationView: BottomNavigationView? = null
+    var bottomNavigationMenuRes: Int? = null
+    var toolbarTitle: String? = null
+    var toolbar: Toolbar? = null
+    var toolbarOpenDrawerMenuItemDrawableId: Int? = null
+    var drawerLayout: DrawerLayout? = null
 }

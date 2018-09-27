@@ -24,6 +24,12 @@
 
 package com.github.icarohs7.navigation
 
+import com.github.icarohs7.core.settings.UnoxAndroidSettings
+
+fun UnoxAndroidSettings.startNavigationModule(builder: NavigationModuleSettings.() -> Unit) {
+    builder(NavigationModuleSettings)
+}
+
 object NavigationModuleSettings {
     var animationType: Animation = Animation.NO_ANIMATION
 

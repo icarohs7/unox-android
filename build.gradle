@@ -72,20 +72,18 @@ subprojects { proj ->
             targetSdkVersion 28
             versionCode 1
             versionName gitVersion().toString().find('(\\d\\.\\d\\.\\d)')
-
-            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        }
-
-        compileOptions {
-            sourceCompatibility JavaVersion.VERSION_1_8
-            targetCompatibility JavaVersion.VERSION_1_8
         }
 
         buildTypes {
             release {
                 minifyEnabled false
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+        }
+
+        testOptions {
+            unitTests.all {
+                useJUnitPlatform()
             }
         }
     }
@@ -106,9 +104,7 @@ subprojects { proj ->
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
         //Test
-        testImplementation 'junit:junit:4.12'
-        androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-        androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+        testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.1.7'
     }
 
     task sourcesJar(type: Jar) {
