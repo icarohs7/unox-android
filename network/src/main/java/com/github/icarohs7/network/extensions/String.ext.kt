@@ -26,10 +26,10 @@ package com.github.icarohs7.network.extensions
 
 import awaitStringResult
 import com.beust.klaxon.Klaxon
+import com.github.icarohs7.core.toplevel.NXBGPOOL
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.getOrElse
-import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 
@@ -42,7 +42,7 @@ inline fun <reified T> String.httpGetObjectAsync(
         noinline jsonTransformationBeforeParsing: (String) -> String = { it }
 ): Deferred<T?> {
 
-    return async(CommonPool) {
+    return async(NXBGPOOL) {
         try {
             Klaxon().parse<T>(
                     jsonTransformationBeforeParsing(
@@ -67,7 +67,7 @@ inline fun <reified T> String.httpGetArrayAsync(
         noinline jsonTransformationBeforeParsing: (String) -> String = { it }
 ): Deferred<List<T>> {
 
-    return async(CommonPool) {
+    return async(NXBGPOOL) {
         try {
             Klaxon().parseArray<T>(
                     jsonTransformationBeforeParsing(
@@ -92,7 +92,7 @@ inline fun <reified T> String.httpPostObjectAsync(
         noinline jsonTransformationBeforeParsing: (String) -> String = { it }
 ): Deferred<T?> {
 
-    return async(CommonPool) {
+    return async(NXBGPOOL) {
         try {
             Klaxon().parse<T>(
                     jsonTransformationBeforeParsing(
@@ -117,7 +117,7 @@ inline fun <reified T> String.httpPostArrayAsync(
         noinline jsonTransformationBeforeParsing: (String) -> String = { it }
 ): Deferred<List<T>> {
 
-    return async(CommonPool) {
+    return async(NXBGPOOL) {
         try {
             Klaxon().parseArray<T>(
                     jsonTransformationBeforeParsing(

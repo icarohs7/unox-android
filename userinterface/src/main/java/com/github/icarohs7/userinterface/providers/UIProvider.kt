@@ -32,6 +32,7 @@ import com.github.icarohs7.userinterface.databinding.ActivityBaseBinding
 import com.github.icarohs7.userinterface.databinding.FragmentBaseWithheaderBinding
 import com.github.icarohs7.userinterface.databinding.FragmentBaseWithoutheaderBinding
 import com.github.icarohs7.userinterface.databinding.PartialCaptionImageBinding
+import com.github.icarohs7.userinterface.databinding.PartialCenterAndBottomConteinerBinding
 import com.github.icarohs7.userinterface.databinding.PartialFullscreenMessageBinding
 import com.github.icarohs7.userinterface.databinding.PartialLabelTextBinding
 import com.github.icarohs7.userinterface.databinding.PartialLoadingBinding
@@ -79,6 +80,12 @@ interface UIProvider {
             return getBinding(
                     context.layoutInflater,
                     R.layout.partial_small_center_container)
+        }
+
+        fun centerAndBottomContainer(context: Context): PartialCenterAndBottomConteinerBinding {
+            return getBinding(
+                    context.layoutInflater,
+                    R.layout.partial_center_and_bottom_conteiner)
         }
 
         fun captionImage(context: Context, caption: String = "", drawable: Drawable): PartialCaptionImageBinding {

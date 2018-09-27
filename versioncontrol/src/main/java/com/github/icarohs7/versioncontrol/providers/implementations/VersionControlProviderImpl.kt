@@ -25,10 +25,10 @@
 package com.github.icarohs7.versioncontrol.providers.implementations
 
 import android.util.Log
+import com.github.icarohs7.core.toplevel.NXBGPOOL
 import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.versioncontrol.entities.VersionMetadata
 import com.github.icarohs7.versioncontrol.providers.VersionControlProvider
-import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 
 internal object VersionControlProviderImpl : VersionControlProvider {
@@ -36,7 +36,7 @@ internal object VersionControlProviderImpl : VersionControlProvider {
     override var remoteVersionProvider: (suspend () -> String)? = null
 
     override fun compareVersions(callback: (VersionMetadata) -> Unit) {
-        launch(CommonPool) {
+        launch(NXBGPOOL) {
             val actual = requireNotNull(localVersionProvider) { "Please define the local version provider" }()
             val remote = requireNotNull(remoteVersionProvider) { "Please define the remote version provider" }()
             val outdated = remote isMoreRecentThan actual

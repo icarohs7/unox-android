@@ -28,8 +28,7 @@
         android:id="@+id/basefragment_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:padding="8dp">
+        android:gravity="center">
 
         <FrameLayout
             android:id="@+id/base_noheader_container"

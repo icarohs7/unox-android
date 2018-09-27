@@ -25,16 +25,15 @@
 package com.github.icarohs7.userinterface.view.activities
 
 import android.os.Bundle
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.github.icarohs7.animation.extensions.animateScaleIn
 import com.github.icarohs7.core.extensions.ifTrue
+import com.github.icarohs7.core.toplevel.NXBGPOOL
 import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.core.toplevel.runAfterDelay
 import com.github.icarohs7.userinterface.R
-import com.github.icarohs7.userinterface.databinding.PartialSmallCenterContainerBinding
-import kotlinx.coroutines.experimental.CommonPool
+import com.github.icarohs7.userinterface.databinding.PartialCenterAndBottomConteinerBinding
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
@@ -47,13 +46,13 @@ import kotlinx.coroutines.experimental.launch
  */
 abstract class BaseBackgroundWorkerSplashActivity<T> : AppCompatActivity() {
 
-    protected lateinit var root: PartialSmallCenterContainerBinding
-    private var backgroundTask: Deferred<T?> = async(CommonPool) { null }
+    protected lateinit var root: PartialCenterAndBottomConteinerBinding
+    private var backgroundTask: Deferred<T?> = async(NXBGPOOL) { null }
 
     /**
      * Called when the binding is set and waiting content
      */
-    abstract fun addContentToRoot(contentContainer: LinearLayout)
+    abstract fun onBindingCreated(binding: PartialCenterAndBottomConteinerBinding)
 
     /**
      * Called after the end of the heavy background operation
@@ -64,7 +63,7 @@ abstract class BaseBackgroundWorkerSplashActivity<T> : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupBindings()
-        addContentToRoot(root.centerContainer)
+        onBindingCreated(root)
         verifyIfWillDoBackgroundWork()
         runAnimations()
         waitBackgroundOperationsAndProceed()
@@ -94,7 +93,7 @@ abstract class BaseBackgroundWorkerSplashActivity<T> : AppCompatActivity() {
      * next screen
      */
     open fun startBackgroundOperations(): Deferred<T?> {
-        return async(CommonPool) { null }
+        return async(NXBGPOOL) { null }
     }
 
     private fun setupBindings() {
@@ -120,7 +119,7 @@ abstract class BaseBackgroundWorkerSplashActivity<T> : AppCompatActivity() {
     private fun waitBackgroundOperationsAndProceed() {
         runAfterDelay(2000) {
             afterAnimationTimeout()
-            launch(CommonPool) {
+            launch(NXBGPOOL) {
                 val bgTaskResult = backgroundTask.await()
                 onUi { changeToNextScreen(bgTaskResult) }
             }

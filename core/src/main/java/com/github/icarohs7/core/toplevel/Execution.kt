@@ -26,7 +26,6 @@ package com.github.icarohs7.core.toplevel
 
 import android.os.Handler
 import android.os.Looper
-import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.newFixedThreadPoolContext
 import org.jetbrains.anko.coroutines.experimental.bg
@@ -37,7 +36,7 @@ import org.jetbrains.anko.coroutines.experimental.bg
 val NXBGPOOL = newFixedThreadPoolContext(2 * Runtime.getRuntime().availableProcessors(), "unox")
 
 fun runAfterDelay(delay: Int, fn: () -> Unit) {
-    launch(CommonPool) {
+    launch(NXBGPOOL) {
         bg { Thread.sleep(delay.toLong()) }.await()
         onUi(fn)
     }

@@ -25,10 +25,10 @@
 package com.github.icarohs7.network
 
 import com.beust.klaxon.Json
+import com.github.icarohs7.core.toplevel.NXBGPOOL
 import com.github.icarohs7.network.extensions.httpGetObjectAsync
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
-import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 
 class StringExtTest : StringSpec() {
@@ -41,7 +41,7 @@ class StringExtTest : StringSpec() {
         )
 
         "should make get requests" {
-            launch(CommonPool) { url.httpGetObjectAsync<Todo>().await() shouldBe expectedObject }
+            launch(NXBGPOOL) { url.httpGetObjectAsync<Todo>().await() shouldBe expectedObject }
         }
     }
 

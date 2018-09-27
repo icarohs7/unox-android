@@ -24,13 +24,13 @@
 
 package com.github.icarohs7.core.extensions
 
+import com.github.icarohs7.core.toplevel.NXBGPOOL
 import com.github.icarohs7.core.toplevel.onUi
-import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.launch
 
 fun <T> Deferred<T>.onResponse(fn: (T) -> Unit) {
-    launch(CommonPool) {
+    launch(NXBGPOOL) {
         val response = this@onResponse.await()
         onUi { fn(response) }
     }

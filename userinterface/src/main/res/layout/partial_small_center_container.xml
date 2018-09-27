@@ -30,7 +30,7 @@
         android:layout_height="match_parent"
         android:gravity="center">
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/center_container"
             android:layout_width="280dp"
             android:layout_height="280dp"
