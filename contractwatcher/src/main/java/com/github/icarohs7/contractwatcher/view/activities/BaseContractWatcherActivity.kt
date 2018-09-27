@@ -38,7 +38,6 @@ open class BaseContractWatcherActivity : ContractWatcherActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_base)
     }
 
-    @CallSuper
     override fun onDefineActivityResources(): ActivityResources.() -> Unit {
         return {
             bottomNavigationView = binding.baseactBottomnav
