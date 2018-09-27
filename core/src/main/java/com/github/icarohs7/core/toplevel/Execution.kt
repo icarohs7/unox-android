@@ -28,7 +28,13 @@ import android.os.Handler
 import android.os.Looper
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.newFixedThreadPoolContext
 import org.jetbrains.anko.coroutines.experimental.bg
+
+/**
+ * Coroutine pool with 1 thread to each core available for the JVM
+ */
+val NXBGPOOL = newFixedThreadPoolContext(2 * Runtime.getRuntime().availableProcessors(), "unox")
 
 fun runAfterDelay(delay: Int, fn: () -> Unit) {
     launch(CommonPool) {
