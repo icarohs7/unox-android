@@ -52,8 +52,8 @@ abstract class ContractWatcherActivity : AppCompatActivity(), NavigationView.OnN
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        onDefineActivityResources()(navigationResources)
         onSetContentView()
+        onDefineActivityResources()(navigationResources)
         loadNavigationResources()
         savedInstanceState?.also(::recoverStateWhenExistent)
         observeContractChanges()
