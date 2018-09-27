@@ -24,43 +24,13 @@
 
 package com.github.icarohs7.userinterface.extensions
 
-import android.view.View
-import android.widget.FrameLayout
-import androidx.core.view.isVisible
-import com.github.icarohs7.animation.extensions.animateFadeIn
-import com.github.icarohs7.animation.extensions.animateFadeOut
-import com.github.icarohs7.animation.extensions.animateScaleIn
-import com.github.icarohs7.animation.extensions.animateScaleOut
+import android.view.ViewGroup
+import androidx.core.view.forEach
+import androidx.core.view.isGone
 
 /**
- * Hides all children of the frame layout and show
- * the parameterized child
+ * Set all children of the ViewGroup to Gone
  */
-fun FrameLayout.showChild(child: View) {
-    this.hideChildren()
-    child.isVisible = true
-}
-
-/**
- * Fade and hide all children of the frame layout,
- * then show the parameterized child and fadeIn
- */
-fun FrameLayout.fadeInChild(child: View) {
-    this.animateFadeOut {
-        this.hideChildren()
-        showChild(child)
-        this.animateFadeIn()
-    }
-}
-
-/**
- * Scale out and hide all children of the frame layout,
- * then show the parameterized child and ScaleIn
- */
-fun FrameLayout.scaleInChild(child: View) {
-    this.animateScaleOut {
-        this.hideChildren()
-        showChild(child)
-        this.animateScaleIn()
-    }
+fun ViewGroup.hideChildren() {
+    this.forEach { child -> child.isGone = true }
 }
