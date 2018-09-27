@@ -39,7 +39,7 @@ fun <T> T?.asLiveData() =
  * properties or the value of the annotation [Label] and the values
  * being the values of the properties
  */
-inline fun <reified T : Any> T.toMap(): Map<String, String> {
+inline fun <reified T : Any> T.mapOfProperties(): Map<String, String> {
     val map = mutableMapOf<String, String>()
     val clazz = T::class
     clazz.memberProperties.forEach { prop ->

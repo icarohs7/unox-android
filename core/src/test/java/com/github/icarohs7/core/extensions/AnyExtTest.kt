@@ -32,7 +32,7 @@ class AnyExtTest : StringSpec() {
     init {
         "should convert a class to a map" {
             val x = TestClass("a", 1, "b")
-            val xMap = x.toMap()
+            val xMap = x.mapOfProperties()
             println(xMap)
             xMap shouldBe mapOf(
                     "foo" to "a",
@@ -41,7 +41,7 @@ class AnyExtTest : StringSpec() {
             )
 
             val y = TestClass("x", 0, "p")
-            val yMap = y.toMap()
+            val yMap = y.mapOfProperties()
             yMap shouldBe mapOf(
                     "foo" to "x",
                     "bar" to "0",
