@@ -22,20 +22,33 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.core;
+package com.github.icarohs7.core.extensions
 
-import org.junit.Test;
+import com.github.icarohs7.core.annotations.Label
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
 
-import static org.junit.Assert.assertEquals;
+class AnyExtTest : StringSpec() {
+    init {
+        "should convert a class to a map" {
+            val x = TestClass("a", 1, "b")
+            val xMap = x.toMap()
+            println(xMap)
+            xMap shouldBe mapOf(
+                    "foo" to "a",
+                    "bar" to "1",
+                    "hi" to "b"
+            )
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
-public class ExampleUnitTest {
-    @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+            val y = TestClass("x", 0, "p")
+            val yMap = y.toMap()
+            yMap shouldBe mapOf(
+                    "foo" to "x",
+                    "bar" to "0",
+                    "hi" to "p"
+            )
+        }
     }
+
+    data class TestClass(val foo: String, val bar: Int, @Label("hi") val baz: String)
 }
