@@ -22,10 +22,11 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.userinterface.dialogs
+package com.github.icarohs7.userinterface.view.dialogs
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.view.View
 
 class NXDialogBuilder(private val context: Context) {
     lateinit var title: String
@@ -37,6 +38,7 @@ class NXDialogBuilder(private val context: Context) {
     var buttonColorResource = android.R.color.white
     var buttonCallback = Runnable {}
     var dismissCallback = Runnable {}
+    var customView: View? = null
 
     fun build() {
         NXDialog(
@@ -49,7 +51,8 @@ class NXDialogBuilder(private val context: Context) {
                 buttonTextColorResource = buttonTextColorResource,
                 buttonColorResource = buttonColorResource,
                 buttonCallback = buttonCallback,
-                dismissCallback = dismissCallback
+                dismissCallback = dismissCallback,
+                customView = customView
         ).show()
     }
 }

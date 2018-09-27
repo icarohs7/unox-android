@@ -22,12 +22,14 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.userinterface.dialogs
+package com.github.icarohs7.userinterface.view.dialogs
 
 import android.app.Dialog
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.View
+import androidx.core.view.plusAssign
 import com.github.icarohs7.userinterface.R
 import kotlinx.android.synthetic.main.dialog_nx.button
 import kotlinx.android.synthetic.main.dialog_nx.imageView
@@ -47,21 +49,27 @@ internal class NXDialog(
         val buttonTextColorResource: Int,
         val buttonColorResource: Int,
         val buttonCallback: Runnable,
-        val dismissCallback: Runnable
+        val dismissCallback: Runnable,
+        val customView: View?
 ) : Dialog(context) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.dialog_nx)
-        textView.text = title
-        textView2.text = message
-        imageView.setImageDrawable(icon)
-        root_nx.backgroundColorResource = backgroundColorResource
-        button.text = buttonText
-        button.textColorResource = buttonTextColorResource
-        button.backgroundColorResource = buttonColorResource
-        button.setOnClickListener {
-            buttonCallback.run()
-            dismiss()
+        if (customView != null) {
+            root_nx.removeAllViews()
+            root_nx += customView
+        } else {
+            textView.text = title
+            textView2.text = message
+            imageView.setImageDrawable(icon)
+            root_nx.backgroundColorResource = backgroundColorResource
+            button.text = buttonText
+            button.textColorResource = buttonTextColorResource
+            button.backgroundColorResource = buttonColorResource
+            button.setOnClickListener {
+                buttonCallback.run()
+                dismiss()
+            }
         }
     }
 

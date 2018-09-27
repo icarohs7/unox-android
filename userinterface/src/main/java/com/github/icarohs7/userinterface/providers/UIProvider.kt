@@ -37,8 +37,8 @@ import com.github.icarohs7.userinterface.databinding.PartialLabelTextBinding
 import com.github.icarohs7.userinterface.databinding.PartialLoadingBinding
 import com.github.icarohs7.userinterface.databinding.PartialSmallCenterContainerBinding
 import com.github.icarohs7.userinterface.databinding.PartialSwipeRecyclerBinding
-import com.github.icarohs7.userinterface.dialogs.NXDialogBuilder
 import com.github.icarohs7.userinterface.toplevel.getBinding
+import com.github.icarohs7.userinterface.view.dialogs.NXDialogBuilder
 import com.github.ybq.android.spinkit.sprite.Sprite
 import com.github.ybq.android.spinkit.style.FadingCircle
 import org.jetbrains.anko.layoutInflater

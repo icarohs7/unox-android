@@ -28,13 +28,13 @@
         android:id="@+id/basefragment_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:gravity="center"
+        android:padding="8dp">
 
         <FrameLayout
             android:id="@+id/base_noheader_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </layout>
