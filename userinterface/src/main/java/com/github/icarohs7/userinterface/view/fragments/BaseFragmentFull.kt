@@ -30,19 +30,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
+import com.github.icarohs7.userinterface.databinding.FragmentBaseWithoutheaderBinding
 import com.github.icarohs7.userinterface.providers.UIProvider
 
 /**
  * Base fragment with a single container filling the screen
  */
 abstract class BaseFragmentFull : Fragment() {
+    protected lateinit var rootBinding: FragmentBaseWithoutheaderBinding
     protected lateinit var contentView: FrameLayout
 
     abstract fun onBindingCreated(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootBinding = UIProvider.Bindings.containerWithoutHeader(requireContext())
-
+        rootBinding = UIProvider.Bindings.containerWithoutHeader(requireContext())
         contentView = rootBinding.baseNoheaderContainer
 
         onBindingCreated(inflater, container, savedInstanceState)

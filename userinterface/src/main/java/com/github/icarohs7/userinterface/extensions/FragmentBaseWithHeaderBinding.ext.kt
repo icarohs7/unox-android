@@ -27,6 +27,7 @@ package com.github.icarohs7.userinterface.extensions
 import android.widget.ProgressBar
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.userinterface.databinding.FragmentBaseWithheaderBinding
 
 /**
@@ -48,9 +49,9 @@ fun FragmentBaseWithheaderBinding.loadingTransaction(fn: (ProgressBar) -> Unit) 
  */
 suspend fun FragmentBaseWithheaderBinding.loadingTransactionAsync(fn: suspend (ProgressBar) -> Unit) {
     try {
-        this.progressBar.isVisible = true
+        onUi { this.progressBar.isVisible = true }
         fn(this.progressBar)
     } finally {
-        this.progressBar.isGone = true
+        onUi { this.progressBar.isGone = true }
     }
 }
