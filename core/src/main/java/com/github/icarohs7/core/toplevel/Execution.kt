@@ -26,14 +26,15 @@ package com.github.icarohs7.core.toplevel
 
 import android.os.Handler
 import android.os.Looper
+import com.github.icarohs7.core.settings.UnoxAndroidSettings
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.newFixedThreadPoolContext
 import org.jetbrains.anko.coroutines.experimental.bg
 
 /**
- * Coroutine pool with 1 thread to each core available for the JVM
+ * Coroutine pool used on the library
  */
-val NXBGPOOL = newFixedThreadPoolContext(2 * Runtime.getRuntime().availableProcessors(), "unox")
+val NXBGPOOL by lazy { newFixedThreadPoolContext(UnoxAndroidSettings.NXBGPOOL_NUMBER_OF_THREADS, "unox") }
 
 fun runAfterDelay(delay: Int, fn: () -> Unit) {
     launch(NXBGPOOL) {
