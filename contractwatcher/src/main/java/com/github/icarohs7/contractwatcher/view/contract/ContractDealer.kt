@@ -24,6 +24,7 @@
 
 package com.github.icarohs7.contractwatcher.view.contract
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.icarohs7.contractwatcher.settings.ContractWatcherSettings
 import com.github.icarohs7.core.extensions.asLiveData
@@ -85,7 +86,7 @@ abstract class ContractDealer {
     /**
      * Utility to easily push values to the stack
      */
-    private operator fun <T> MutableLiveData<Stack<T>>.plusAssign(value: T) {
+    private operator fun <T> LiveData<Stack<T>>.plusAssign(value: T) {
         valueTransaction(failOnNullValue = ContractWatcherSettings.failNullLiveData) {
             push(value)
         }

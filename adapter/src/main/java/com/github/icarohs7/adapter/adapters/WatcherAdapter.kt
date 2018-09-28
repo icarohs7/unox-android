@@ -28,7 +28,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -58,7 +58,7 @@ abstract class WatcherAdapter<T, DB : ViewDataBinding> : RecyclerView.Adapter<Wa
     /**
      * Function called to return the LiveData of the list
      */
-    abstract fun dataFactory(): MutableLiveData<List<T>>
+    abstract fun dataFactory(): LiveData<List<T>>
 
     /**
      * Function converting an list item to an actual view
