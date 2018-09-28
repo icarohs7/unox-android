@@ -97,7 +97,7 @@ abstract class BaseBackgroundWorkerSplashActivity<T> : AppCompatActivity() {
     }
 
     private fun setupBindings() {
-        root = DataBindingUtil.setContentView(this, R.layout.partial_small_center_container)
+        root = DataBindingUtil.setContentView(this, R.layout.partial_center_and_bottom_conteiner)
     }
 
     /**
