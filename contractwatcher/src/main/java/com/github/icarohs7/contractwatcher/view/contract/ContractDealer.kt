@@ -27,8 +27,8 @@ package com.github.icarohs7.contractwatcher.view.contract
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.icarohs7.contractwatcher.settings.ContractWatcherSettings
-import com.github.icarohs7.core.extensions.asLiveData
 import com.github.icarohs7.core.extensions.valueTransaction
+import com.github.icarohs7.core.toplevel.mutableLiveDataOf
 import java.util.EmptyStackException
 import java.util.Stack
 
@@ -51,7 +51,7 @@ abstract class ContractDealer {
     /**
      * Stack storing menu changes and observing the loadedContract
      */
-    private val menuItemStack = Stack<Int>().asLiveData()
+    private val menuItemStack = mutableLiveDataOf(Stack<Int>())
 
     init {
         loadedContract.observeForever { contract -> menuItemStack += contract.menuItemId }

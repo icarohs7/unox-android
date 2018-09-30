@@ -41,7 +41,7 @@ abstract class WatcherAdapter<T, DB : ViewDataBinding> : RecyclerView.Adapter<Wa
     /**
      * The observer watching the changes on the list
      */
-    open val observer = Observer<List<T>> { newList -> calculateChanges(newList ?: emptyList()) }
+    open val observer = Observer<List<T>> { notifyDataSetChanged() }
 
     /**
      * Override to choose what operations should be performed on the list before showing it
