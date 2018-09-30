@@ -46,8 +46,16 @@ inline fun <reified T : Any> T.mapOfProperties(): Map<String, String> {
         val label = prop.findAnnotation<Label>()?.value ?: prop.name
         map += label to prop.get(this).toString()
     }
+
     return map
 }
+
+/**
+ * Function used to chain operations in a idiomatic way, as:
+ * doThis() ASWELL doThat() ASWELL doAnotherThing()
+ */
+@Suppress("FunctionName")
+infix fun Any?.ASWELL(other: Any?) = Unit
 
 /**
  * Extension property returning the simple name of the class

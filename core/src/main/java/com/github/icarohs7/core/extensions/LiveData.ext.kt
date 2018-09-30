@@ -24,8 +24,13 @@
 
 package com.github.icarohs7.core.extensions
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 
+/**
+ * Execute a transaction with the value of a LiveData
+ */
 fun <T, M : LiveData<T>> M.valueTransaction(failOnNullValue: Boolean = false, fn: T.() -> Unit) {
     if (this.value == null) {
         when (failOnNullValue) {
@@ -35,4 +40,18 @@ fun <T, M : LiveData<T>> M.valueTransaction(failOnNullValue: Boolean = false, fn
     }
 
     this.value!!.fn()
+}
+
+/**
+ * Observe a LiveData ignoring null values,
+ */
+fun <T> LiveData<T>.nonNullObserve(owner: LifecycleOwner, observer: (t: T) -> Unit) {
+    this.observe(owner, Observer { it?.let(observer) })
+}
+
+/**
+ * Forever observe a LiveData ignoring null values,
+ */
+fun <T> LiveData<T>.nonNullObserveForever(observer: (t: T) -> Unit) {
+    this.observeForever { it?.let(observer) }
 }
