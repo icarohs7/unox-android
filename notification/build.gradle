@@ -23,6 +23,6 @@
  */
 
 dependencies {
-    //Navigation module
+    //Sibling modules
     implementation project(':navigation')
 }

@@ -24,12 +24,13 @@
 
 package com.github.icarohs7.core.toplevel
 
-import android.os.Handler
-import android.os.Looper
 import com.github.icarohs7.core.settings.UnoxAndroidSettings
+import kotlinx.coroutines.experimental.CoroutineScope
+import kotlinx.coroutines.experimental.android.Main
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.newFixedThreadPoolContext
-import org.jetbrains.anko.coroutines.experimental.bg
 
 /**
  * Coroutine pool used on the library
@@ -39,9 +40,9 @@ val NXBGPOOL by lazy { newFixedThreadPoolContext(UnoxAndroidSettings.NXBGPOOL_NU
 /**
  * Run a function on the UI Thread after some time
  */
-fun runAfterDelay(delay: Int, fn: () -> Unit) {
-    launch(NXBGPOOL) {
-        bg { Thread.sleep(delay.toLong()) }.await()
+fun runAfterDelay(delayTime: Int, fn: suspend (CoroutineScope) -> Unit) {
+    onBgNoReturn {
+        delay(delayTime.toLong())
         onUi(fn)
     }
 }
@@ -49,8 +50,22 @@ fun runAfterDelay(delay: Int, fn: () -> Unit) {
 /**
  * Run a function on the UI Thread
  */
-fun onUi(fn: () -> Unit) =
-        Handler(Looper.getMainLooper()).post(fn)
+fun onUi(fn: suspend (CoroutineScope) -> Unit) =
+        CoroutineScope(kotlinx.coroutines.experimental.Dispatchers.Main).launch { fn(this) }
+
+/**
+ * Run a function on the background coroutine context and
+ * returns the deferred
+ */
+fun <T> onBg(fn: suspend (CoroutineScope) -> T) =
+        CoroutineScope(NXBGPOOL).async { fn(this) }
+
+/**
+ * Run a function on the background coroutine context and
+ * returns the job, use for fire and forget operations
+ */
+fun onBgNoReturn(fn: suspend (CoroutineScope) -> Unit) =
+        CoroutineScope(NXBGPOOL).launch { fn(this) }
 
 /**
  * Run a function and ignore the returning value,

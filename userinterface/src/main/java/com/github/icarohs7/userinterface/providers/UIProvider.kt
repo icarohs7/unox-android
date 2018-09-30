@@ -94,7 +94,7 @@ interface UIProvider {
         fun captionImage(context: Context, caption: String = "", drawable: Drawable): PartialCaptionImageBinding {
             val binding = getBinding<PartialCaptionImageBinding>(
                     context.layoutInflater,
-                    R.layout.partial_small_center_container)
+                    R.layout.partial_caption_image)
             binding.caption = caption
             binding.imgImage.setImageDrawable(drawable)
             return binding
@@ -103,7 +103,7 @@ interface UIProvider {
         fun captionImage(context: Context, caption: String = "", drawableRes: Int): PartialCaptionImageBinding {
             val binding = getBinding<PartialCaptionImageBinding>(
                     context.layoutInflater,
-                    R.layout.partial_small_center_container)
+                    R.layout.partial_caption_image)
             binding.caption = caption
             binding.imgImage.setImageResource(drawableRes)
             return binding

@@ -24,21 +24,19 @@
 
 package com.github.icarohs7.versioncontrol.providers
 
+import com.github.icarohs7.core.toplevel.onBg
 import com.github.icarohs7.versioncontrol.entities.VersionMetadata
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.Deferred
 
 interface VersionControlProvider {
-    var localVersionProvider: (suspend () -> String)?
-    var remoteVersionProvider: (suspend () -> String)?
+    var localVersionProvider: (suspend () -> String)
+    var remoteVersionProvider: (suspend () -> String)
 
-    fun compareVersions(callback: (VersionMetadata) -> Unit)
+    val localVersion: Deferred<String>
+        get() = onBg { localVersionProvider() }
 
-    fun localVersion(callback: (String) -> Unit) {
-        launch(UI) { callback(localVersionProvider?.invoke() ?: "") }
-    }
+    val remoteVersion: Deferred<String>
+        get() = onBg { remoteVersionProvider() }
 
-    fun remoteVersion(callback: (String) -> Unit) {
-        launch(UI) { callback(remoteVersionProvider?.invoke() ?: "") }
-    }
+    fun compareVersions(): Deferred<VersionMetadata>
 }

@@ -29,14 +29,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.github.icarohs7.animation.extensions.animateScaleIn
 import com.github.icarohs7.core.extensions.ifTrue
-import com.github.icarohs7.core.toplevel.NXBGPOOL
+import com.github.icarohs7.core.toplevel.onBg
+import com.github.icarohs7.core.toplevel.onBgNoReturn
+import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.core.toplevel.runAfterDelay
 import com.github.icarohs7.userinterface.R
 import com.github.icarohs7.userinterface.databinding.PartialCenterAndBottomConteinerBinding
 import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.launch
 
 /**
  * Base splash activity with support for background work
@@ -48,7 +47,7 @@ import kotlinx.coroutines.experimental.launch
 abstract class BaseBackgroundWorkerSplashActivity<T>(protected val animationTimeout: Int = 2000) : AppCompatActivity() {
 
     protected lateinit var root: PartialCenterAndBottomConteinerBinding
-    private var backgroundTask: Deferred<T?> = async(NXBGPOOL) { null }
+    private var backgroundTask: Deferred<T?> = onBg { null }
 
     /**
      * Called when the binding is set and waiting content
@@ -92,7 +91,7 @@ abstract class BaseBackgroundWorkerSplashActivity<T>(protected val animationTime
      * next screen
      */
     open fun startBackgroundOperations(): Deferred<T?> {
-        return async(NXBGPOOL) { null }
+        return onBg { null }
     }
 
     private fun setupBindings() {
@@ -116,11 +115,11 @@ abstract class BaseBackgroundWorkerSplashActivity<T>(protected val animationTime
      * function changeToNextScreen with the result
      */
     private fun waitBackgroundOperationsAndProceed() {
-        runAfterDelay(animationTimeout) {
+        runAfterDelay(animationTimeout) { _ ->
             afterAnimationTimeout()
-            launch(NXBGPOOL) {
+            onBgNoReturn { _ ->
                 val bgTaskResult = backgroundTask.await()
-                launch(UI) { changeToNextScreen(bgTaskResult) }
+                onUi { changeToNextScreen(bgTaskResult) }
             }
         }
     }

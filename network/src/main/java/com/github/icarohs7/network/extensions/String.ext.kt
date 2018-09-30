@@ -26,12 +26,11 @@ package com.github.icarohs7.network.extensions
 
 import awaitStringResult
 import com.beust.klaxon.Klaxon
-import com.github.icarohs7.core.toplevel.NXBGPOOL
+import com.github.icarohs7.core.toplevel.onBg
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.getOrElse
 import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.async
 
 /**
  * Get request with embedded parsing of objects
@@ -42,12 +41,11 @@ inline fun <reified T> String.httpGetObjectAsync(
         noinline jsonTransformationBeforeParsing: (String) -> String = { it }
 ): Deferred<T?> {
 
-    return async(NXBGPOOL) {
+    return onBg {
         try {
             Klaxon().parse<T>(
                     jsonTransformationBeforeParsing(
-                            this@httpGetObjectAsync
-                                    .httpGet(query)
+                            this.httpGet(query)
                                     .body(body)
                                     .awaitStringResult()
                                     .getOrElse("")
@@ -67,7 +65,7 @@ inline fun <reified T> String.httpGetArrayAsync(
         noinline jsonTransformationBeforeParsing: (String) -> String = { it }
 ): Deferred<List<T>> {
 
-    return async(NXBGPOOL) {
+    return onBg {
         try {
             Klaxon().parseArray<T>(
                     jsonTransformationBeforeParsing(
@@ -92,7 +90,7 @@ inline fun <reified T> String.httpPostObjectAsync(
         noinline jsonTransformationBeforeParsing: (String) -> String = { it }
 ): Deferred<T?> {
 
-    return async(NXBGPOOL) {
+    return onBg {
         try {
             Klaxon().parse<T>(
                     jsonTransformationBeforeParsing(
@@ -117,7 +115,7 @@ inline fun <reified T> String.httpPostArrayAsync(
         noinline jsonTransformationBeforeParsing: (String) -> String = { it }
 ): Deferred<List<T>> {
 
-    return async(NXBGPOOL) {
+    return onBg {
         try {
             Klaxon().parseArray<T>(
                     jsonTransformationBeforeParsing(

@@ -22,16 +22,16 @@
  * SOFTWARE.
  */
 
+dependencies {
+    //AndroidX
+    implementation "com.google.android.material:material:$materialdesign_version"
+
+    //Sibling projects
+    implementation project(':userinterface')
+}
+
 android {
     dataBinding {
         enabled = true
     }
-}
-
-dependencies {
-    //AndroidX
-    implementation 'com.google.android.material:material:1.0.0'
-
-    //Sibling projects
-    implementation project(':userinterface')
 }

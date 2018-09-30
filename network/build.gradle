@@ -23,14 +23,11 @@
  */
 
 dependencies {
-    //Anko
-    implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
-
     //Klaxon
-    api "com.beust:klaxon:$klaxon_version"
+    implementation "com.beust:klaxon:$klaxon_version"
 
     //Fuel
-    api "com.github.kittinunf.fuel:fuel-coroutines:$fuel_version"
+    implementation "com.github.kittinunf.fuel:fuel-coroutines:$fuel_version"
 }
 
 kotlin {

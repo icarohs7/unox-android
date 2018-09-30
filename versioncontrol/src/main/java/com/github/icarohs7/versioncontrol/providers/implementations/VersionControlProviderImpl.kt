@@ -25,30 +25,27 @@
 package com.github.icarohs7.versioncontrol.providers.implementations
 
 import android.util.Log
-import com.github.icarohs7.core.toplevel.NXBGPOOL
-import com.github.icarohs7.core.toplevel.onUi
+import com.github.icarohs7.core.toplevel.onBg
 import com.github.icarohs7.versioncontrol.entities.VersionMetadata
 import com.github.icarohs7.versioncontrol.providers.VersionControlProvider
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.Deferred
 
 internal object VersionControlProviderImpl : VersionControlProvider {
-    override var localVersionProvider: (suspend () -> String)? = null
-    override var remoteVersionProvider: (suspend () -> String)? = null
+    override lateinit var localVersionProvider: (suspend () -> String)
+    override lateinit var remoteVersionProvider: (suspend () -> String)
 
-    override fun compareVersions(callback: (VersionMetadata) -> Unit) {
-        launch(NXBGPOOL) {
-            val actual = requireNotNull(localVersionProvider) { "Please define the local version provider" }()
-            val remote = requireNotNull(remoteVersionProvider) { "Please define the remote version provider" }()
+    override fun compareVersions(): Deferred<VersionMetadata> {
+        ::localVersionProvider.isInitialized
+        return onBg { _ ->
+            val actual = localVersionProvider()
+            val remote = remoteVersionProvider()
             val outdated = remote isMoreRecentThan actual
 
             Log.i("versions", "actual: $actual, latest: $remote")
-            onUi {
-                callback(
-                        VersionMetadata(
-                                oldVersion = actual,
-                                newVersion = remote,
-                                isAppUpdated = !outdated))
-            }
+            VersionMetadata(
+                    oldVersion = actual,
+                    newVersion = remote,
+                    isAppUpdated = !outdated)
         }
     }
 

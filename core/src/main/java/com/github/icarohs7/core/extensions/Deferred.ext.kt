@@ -24,14 +24,17 @@
 
 package com.github.icarohs7.core.extensions
 
-import com.github.icarohs7.core.toplevel.NXBGPOOL
+import com.github.icarohs7.core.toplevel.onBgNoReturn
 import com.github.icarohs7.core.toplevel.onUi
 import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.launch
 
+/**
+ * Invoke a function when the coroutine finishes
+ * its execution, parameterizing the returning value
+ */
 fun <T> Deferred<T>.onResponse(fn: (T) -> Unit) {
-    launch(NXBGPOOL) {
-        val response = this@onResponse.await()
+    onBgNoReturn { _ ->
+        val response = this.await()
         onUi { fn(response) }
     }
 }

@@ -22,14 +22,14 @@
  * SOFTWARE.
  */
 
+dependencies {
+    //AndroidX
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+}
+
 android {
     dataBinding {
         enabled = true
     }
-}
-
-dependencies {
-    //AndroidX
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata:2.0.0'
 }
