@@ -30,11 +30,11 @@ import androidx.databinding.DataBindingUtil
 import com.github.icarohs7.animation.extensions.animateScaleIn
 import com.github.icarohs7.core.extensions.ifTrue
 import com.github.icarohs7.core.toplevel.NXBGPOOL
-import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.core.toplevel.runAfterDelay
 import com.github.icarohs7.userinterface.R
 import com.github.icarohs7.userinterface.databinding.PartialCenterAndBottomConteinerBinding
 import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 
@@ -43,8 +43,9 @@ import kotlinx.coroutines.experimental.launch
  * while showing the splash, with [T] being the type of
  * return of the task, you can also use Unit or anything
  * you want if not doing background work
+ * @property animationTimeout How long the splash image will be shown in miliseconds
  */
-abstract class BaseBackgroundWorkerSplashActivity<T> : AppCompatActivity() {
+abstract class BaseBackgroundWorkerSplashActivity<T>(protected val animationTimeout: Int = 2000) : AppCompatActivity() {
 
     protected lateinit var root: PartialCenterAndBottomConteinerBinding
     private var backgroundTask: Deferred<T?> = async(NXBGPOOL) { null }
@@ -74,9 +75,7 @@ abstract class BaseBackgroundWorkerSplashActivity<T> : AppCompatActivity() {
      */
     private fun verifyIfWillDoBackgroundWork() {
         val willDo = confirmIfShouldDoBackgroundWorkBeforeStarting()
-        willDo ifTrue {
-            backgroundTask = startBackgroundOperations()
-        }
+        willDo ifTrue { backgroundTask = startBackgroundOperations() }
     }
 
     /**
@@ -109,7 +108,7 @@ abstract class BaseBackgroundWorkerSplashActivity<T> : AppCompatActivity() {
 
         content.scaleX = 0f
         content.scaleY = 0f
-        content.animateScaleIn(600L)
+        content.animateScaleIn((animationTimeout / 4).toLong())
     }
 
     /**
@@ -117,11 +116,11 @@ abstract class BaseBackgroundWorkerSplashActivity<T> : AppCompatActivity() {
      * function changeToNextScreen with the result
      */
     private fun waitBackgroundOperationsAndProceed() {
-        runAfterDelay(2000) {
+        runAfterDelay(animationTimeout) {
             afterAnimationTimeout()
             launch(NXBGPOOL) {
                 val bgTaskResult = backgroundTask.await()
-                onUi { changeToNextScreen(bgTaskResult) }
+                launch(UI) { changeToNextScreen(bgTaskResult) }
             }
         }
     }

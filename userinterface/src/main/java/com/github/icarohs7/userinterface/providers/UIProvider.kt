@@ -47,6 +47,9 @@ import org.jetbrains.anko.layoutInflater
 interface UIProvider {
     fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
 
+    /**
+     * Bindings for the layout templates
+     */
     object Bindings {
 
         fun textLabel(context: Context, label: String = "", text: String = ""): PartialLabelTextBinding {

@@ -36,6 +36,9 @@ import org.jetbrains.anko.coroutines.experimental.bg
  */
 val NXBGPOOL by lazy { newFixedThreadPoolContext(UnoxAndroidSettings.NXBGPOOL_NUMBER_OF_THREADS, "unox") }
 
+/**
+ * Run a function on the UI Thread after some time
+ */
 fun runAfterDelay(delay: Int, fn: () -> Unit) {
     launch(NXBGPOOL) {
         bg { Thread.sleep(delay.toLong()) }.await()
@@ -43,11 +46,22 @@ fun runAfterDelay(delay: Int, fn: () -> Unit) {
     }
 }
 
+/**
+ * Run a function on the UI Thread
+ */
 fun onUi(fn: () -> Unit) =
         Handler(Looper.getMainLooper()).post(fn)
 
+/**
+ * Run a function and ignore the returning value,
+ * instead returning Unit
+ */
 fun noReturn(fn: () -> Unit) =
         fn()
 
+/**
+ * Run a suspend function and ignore the returning
+ * value, instead returning Unit
+ */
 suspend fun noReturnSusp(fn: suspend () -> Unit) =
         fn()

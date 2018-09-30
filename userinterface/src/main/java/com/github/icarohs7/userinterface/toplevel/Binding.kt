@@ -29,6 +29,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
+/**
+ * Inflates and return a binding of the determined type with the parameterized layout
+ */
 fun <T : ViewDataBinding> getBinding(inflater: LayoutInflater, layoutId: Int, parent: ViewGroup? = null): T =
         DataBindingUtil.inflate(
                 inflater,

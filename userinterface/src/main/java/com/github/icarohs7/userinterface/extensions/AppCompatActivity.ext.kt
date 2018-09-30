@@ -28,10 +28,17 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import org.jetbrains.anko.inputMethodManager
 
+/**
+ * Dismisses the soft keyboard
+ */
 fun AppCompatActivity.hideKeyboard(containerId: Int) {
     inputMethodManager.hideSoftInputFromWindow(findViewById<View>(containerId)?.windowToken, 0)
 }
 
+
+/**
+ * Dismisses the soft keyboard
+ */
 fun AppCompatActivity.hideKeyboard(container: View) {
     inputMethodManager.hideSoftInputFromWindow(container.windowToken, 0)
 }

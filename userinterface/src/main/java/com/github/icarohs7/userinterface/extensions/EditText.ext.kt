@@ -29,6 +29,9 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 
+/**
+ * Run a function when the enter is pressed on the soft keyboard
+ */
 fun EditText.onEnterPressedListener(fn: (v: View) -> Unit) {
     this.setOnKeyListener { v, keyCode, event ->
         if ((event.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
@@ -40,10 +43,20 @@ fun EditText.onEnterPressedListener(fn: (v: View) -> Unit) {
     }
 }
 
+/**
+ * When the ime options of the edit text is set to next,
+ * runs this function when the enter is pressed on the
+ * soft keyboard
+ */
 fun EditText.onNextPressedListener(fn: (v: View) -> Unit) {
     this.onImeAction(EditorInfo.IME_ACTION_NEXT, fn)
 }
 
+/**
+ * When the ime options of the edit text is set to done,
+ * runs this function when the enter is pressed on the
+ * soft keyboard
+ */
 fun EditText.onDonePressedListener(fn: (v: View) -> Unit) {
     this.onImeAction(EditorInfo.IME_ACTION_DONE, fn)
 }

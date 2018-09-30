@@ -28,12 +28,18 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import org.jetbrains.anko.inputMethodManager
 
+/**
+ * Dismisses the soft keyboard
+ */
 fun Fragment.hideKeyboard(containerId: Int) {
     requireActivity()
             .inputMethodManager
             .hideSoftInputFromWindow(requireActivity().findViewById<View>(containerId)?.windowToken, 0)
 }
 
+/**
+ * Dismisses the soft keyboard
+ */
 fun Fragment.hideKeyboard(container: View) {
     requireActivity()
             .inputMethodManager

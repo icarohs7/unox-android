@@ -29,6 +29,9 @@ import com.github.icarohs7.userinterface.providers.UIProvider
 import com.github.icarohs7.userinterface.view.dialogs.NXDialogBuilder
 
 internal class UIProviderImpl : UIProvider {
+    /**
+     * Builds and show a nxDialog
+     */
     override fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit) {
         val builder = NXDialogBuilder(context)
         builder.fn()
