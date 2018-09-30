@@ -32,7 +32,7 @@ import kotlin.reflect.full.memberProperties
  * Wraps an object in a LiveData
  */
 fun <T> T?.asLiveData() =
-        MutableLiveData<T>().also { it.value = this }
+        MutableLiveData<T>().also { it.postValue(this) }
 
 /**
  * Return a map representation with the keys being the name of the

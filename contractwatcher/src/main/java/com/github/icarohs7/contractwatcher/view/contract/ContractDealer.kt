@@ -55,7 +55,7 @@ abstract class ContractDealer {
 
     init {
         loadedContract.observeForever { contract -> menuItemStack += contract.menuItemId }
-        menuItemStack.observeForever { stack -> ignoreEmptyStack { selectedMenuItemId.value = stack.peek() } }
+        menuItemStack.observeForever { stack -> ignoreEmptyStack { selectedMenuItemId.postValue(stack.peek()) } }
     }
 
     /**
@@ -70,7 +70,7 @@ abstract class ContractDealer {
         if (async) {
             loadedContract.postValue(contract)
         } else {
-            loadedContract.value = contract
+            loadedContract.postValue(contract)
         }
     }
 
