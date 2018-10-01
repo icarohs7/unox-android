@@ -55,3 +55,8 @@ infix fun Any?.ASWELL(other: Any?) = Unit
  */
 val Any?.TAG: String
     get() = this?.let { obj -> obj::class.simpleName } ?: "null"
+
+/**
+ * Ignore the value of the caller and return [Unit]
+ */
+fun Any?.ignoreResult(): Unit = Unit
