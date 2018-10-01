@@ -29,6 +29,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
+/**
+ * Class used to store the resources of an Activity,
+ * namely the Views and Resources for the sideNavigation(drawer),
+ * bottomNavigation and toolbar
+ */
 class ActivityResources internal constructor() {
     var sideNavigationView: NavigationView? = null
     var sideNavigationMenuRes: Int? = null

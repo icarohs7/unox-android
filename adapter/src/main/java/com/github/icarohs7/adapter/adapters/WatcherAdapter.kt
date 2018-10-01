@@ -41,7 +41,7 @@ abstract class WatcherAdapter<T, DB : ViewDataBinding> : RecyclerView.Adapter<Wa
     /**
      * The observer watching the changes on the list
      */
-    open val observer = Observer<List<T>> { notifyDataSetChanged() }
+    open val observer = Observer<List<T>> { newList -> calculateChanges(newList ?: emptyList()) }
 
     /**
      * Override to choose what operations should be performed on the list before showing it
@@ -112,11 +112,16 @@ abstract class WatcherAdapter<T, DB : ViewDataBinding> : RecyclerView.Adapter<Wa
      * Called to update the list with the minimum amount of work
      */
     private fun calculateChanges(newList: List<T>) {
-        val oldList = dataFilter(dataFactory().value ?: emptyList())
-        val diffResult = DiffUtil.calculateDiff(diffCallback(oldList, newList))
+        val oldList = dataFactory().value ?: emptyList()
+        val filteredOldList = dataFilter(oldList)
+        val filteredNewList = dataFilter(newList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback(filteredOldList, filteredNewList))
         diffResult.dispatchUpdatesTo(this)
     }
 
+    /**
+     * Viewholder for the adapter
+     */
     class WatcherViewHolder<DB : ViewDataBinding>(val binding: DB) : RecyclerView.ViewHolder(binding.root)
 
     /**

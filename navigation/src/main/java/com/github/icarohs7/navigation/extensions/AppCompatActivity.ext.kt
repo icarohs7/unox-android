@@ -32,6 +32,9 @@ import com.github.icarohs7.navigation.NavigationModuleSettings
 import com.github.icarohs7.navigation.NavigationModuleSettings.activityContainer
 import com.github.icarohs7.navigation.NavigationModuleSettings.masterContainer
 
+/**
+ * Load a fragment adding it to the backstack
+ */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
         destination: T,
         containerId: Int = masterContainer ?: activityContainer[this::class.simpleName] ?: 0
@@ -43,6 +46,9 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
     }
 }
 
+/**
+ * Load a fragment without adding it to the backstack
+ */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
         destination: T,
         containerId: Int = masterContainer ?: activityContainer[this::class.simpleName] ?: 0
@@ -51,6 +57,10 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
     fragmentTransactionAnimated { replace(containerId, destination) }
 }
 
+/**
+ * Execute a fragment transaction with an animation, defined by
+ * the [NavigationModuleSettings]
+ */
 fun AppCompatActivity.fragmentTransactionAnimated(fn: FragmentTransaction.() -> Unit) {
     supportFragmentManager.transaction {
         setCustomAnimations(

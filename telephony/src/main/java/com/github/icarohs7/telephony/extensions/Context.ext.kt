@@ -32,6 +32,9 @@ import androidx.core.content.getSystemService
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 
+/**
+ * Return the phoneNumber of the user's primary phone line
+ */
 val Context.phoneNumber: String
     get() {
         var phone = ""

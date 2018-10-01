@@ -30,6 +30,10 @@ import com.github.icarohs7.contractwatcher.R
 import com.github.icarohs7.contractwatcher.entities.ActivityResources
 import com.github.icarohs7.userinterface.databinding.ActivityBaseBinding
 
+/**
+ * Base Activity implementing the Contract Watcher architecture,
+ * using the [R.layout.activity_base] layout
+ */
 open class BaseContractWatcherActivity : ContractWatcherActivity() {
     lateinit var binding: ActivityBaseBinding
 

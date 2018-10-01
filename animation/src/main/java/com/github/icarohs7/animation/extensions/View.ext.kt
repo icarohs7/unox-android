@@ -29,10 +29,17 @@ import android.animation.Animator.AnimatorListener
 import android.view.View
 import android.view.ViewPropertyAnimator
 
+/**
+ * Animate a view with a custom animation, duration and onEnding callback
+ */
 fun View.animateTo(duration: Long = 500L, callback: () -> Unit = {}, fn: ViewPropertyAnimator.() -> Unit) {
     buildAnimation(duration, callback) { fn() }
 }
 
+/**
+ * Animate a view with a scale in animation and a customizable duration
+ * and onEnding callback
+ */
 fun View.animateScaleIn(duration: Long = 500L, callback: () -> Unit = {}) {
     buildAnimation(duration, callback) {
         scaleX(1f)
@@ -40,6 +47,10 @@ fun View.animateScaleIn(duration: Long = 500L, callback: () -> Unit = {}) {
     }
 }
 
+/**
+ * Animate a view with a scale out animation and a customizable duration
+ * and onEnding callback
+ */
 fun View.animateScaleOut(duration: Long = 500L, callback: () -> Unit = {}) {
     buildAnimation(duration, callback) {
         scaleX(0f)
@@ -47,6 +58,10 @@ fun View.animateScaleOut(duration: Long = 500L, callback: () -> Unit = {}) {
     }
 }
 
+/**
+ * Toggles the scale of the view according to the first parameter,
+ * when true it will [animateScaleIn], else will [animateScaleOut]
+ */
 fun View.animateToggleScale(show: Boolean, duration: Long = 500L, callback: () -> Unit = {}) {
     if (show) {
         this.animateScaleIn(duration, callback)
@@ -55,18 +70,30 @@ fun View.animateToggleScale(show: Boolean, duration: Long = 500L, callback: () -
     }
 }
 
+/**
+ * Animate a view with a fade in animation and a customizable duration
+ * and onEnding callback
+ */
 fun View.animateFadeIn(duration: Long = 500L, callback: () -> Unit = {}) {
     buildAnimation(duration, callback) {
         alpha(1f)
     }
 }
 
+/**
+ * Animate a view with a fade out animation and a customizable duration
+ * and onEnding callback
+ */
 fun View.animateFadeOut(duration: Long = 500L, callback: () -> Unit = {}) {
     buildAnimation(duration, callback) {
         alpha(0f)
     }
 }
 
+/**
+ * Toggles the fading of the view according to the first parameter,
+ * when true it will [animateFadeIn], else will [animateFadeOut]
+ */
 fun View.animateToggleFade(show: Boolean, duration: Long = 500L, callback: () -> Unit = {}) {
     if (show) {
         this.animateFadeIn(duration, callback)
@@ -83,6 +110,10 @@ private fun View.buildAnimation(duration: Long, listener: () -> Unit, fn: ViewPr
             .fn()
 }
 
+/**
+ * Base implementation of the animatorListener, ignoring all
+ * callbacks except onAnimationEnd
+ */
 private fun animatorListener(callback: () -> Unit): AnimatorListener {
     return object : AnimatorListener {
         override fun onAnimationRepeat(animation: Animator?) {

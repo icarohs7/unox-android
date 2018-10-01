@@ -29,5 +29,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.icarohs7.navigation.navigationProvider
 import kotlin.reflect.KClass
 
+/**
+ * Navigate from an activity to another
+ */
 fun <T : AppCompatActivity> Context.navigateTo(destination: KClass<T>) =
         navigationProvider(this).gotoActivity(destination.java)

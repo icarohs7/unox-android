@@ -29,6 +29,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 
 interface NotificationProvider {
+    /**
+     * Show a notification to the user
+     */
     fun emitNotification(
             title: String,
             message: String,
@@ -37,8 +40,14 @@ interface NotificationProvider {
             onClickPendingIntent: PendingIntent
     )
 
+    /**
+     * Use a builder to show a notification to the user
+     */
     fun buildNotification(bigMessage: String = "", fn: NotificationCompat.Builder.() -> Unit)
 
+    /**
+     * Show a notification to the user
+     */
     fun <T : AppCompatActivity> emitNotification(
             title: String,
             message: String,

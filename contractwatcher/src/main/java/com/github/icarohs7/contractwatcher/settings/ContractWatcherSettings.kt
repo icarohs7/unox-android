@@ -28,6 +28,9 @@ import com.github.icarohs7.contractwatcher.view.contract.ContractDealer
 import com.github.icarohs7.core.settings.UnoxAndroidSettings
 
 
+/**
+ * Builder used to setup the innitial settings for the contract watcher module
+ */
 fun UnoxAndroidSettings.startContractWatcher(builder: ContractWatcherSettings.() -> Unit) {
     builder(ContractWatcherSettings)
 }

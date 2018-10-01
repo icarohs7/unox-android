@@ -27,5 +27,10 @@ package com.github.icarohs7.telephony.providers
 import android.content.Context
 
 interface PhoneCallProvider {
+    /**
+     * Make a phone calling to the parameterized phone number and, when needing to
+     * as permission, uses the asking and on deny messages when asking the permission
+     * and when the permission is denied, respectively
+     */
     fun callNumber(context: Context, phoneNumber: String, askingMessage: String, onDenyMessage: String)
 }

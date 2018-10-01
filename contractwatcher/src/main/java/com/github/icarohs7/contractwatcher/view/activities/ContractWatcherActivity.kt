@@ -34,6 +34,10 @@ import com.github.icarohs7.contractwatcher.settings.ContractWatcherSettings
 import com.github.icarohs7.contractwatcher.view.contract.Contract
 import com.google.android.material.navigation.NavigationView
 
+/**
+ * Activity that listens to a LiveData of contracts and when it changes,
+ * selects the menu item tied to it and runs the action in it
+ */
 abstract class ContractWatcherActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     val contractDealer = ContractWatcherSettings.AppContractDealer
     val navigationResources = ActivityResources()

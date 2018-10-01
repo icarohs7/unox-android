@@ -71,12 +71,13 @@ fun onBgNoReturn(fn: suspend (CoroutineScope) -> Unit) =
  * Run a function and ignore the returning value,
  * instead returning Unit
  */
-fun noReturn(fn: () -> Unit) =
+inline fun noReturn(fn: () -> Unit) =
         fn()
 
 /**
  * Run a suspend function and ignore the returning
  * value, instead returning Unit
  */
-suspend fun noReturnSusp(fn: suspend () -> Unit) =
+@Suppress("REDUNDANT_INLINE_SUSPEND_FUNCTION_TYPE")
+suspend inline fun noReturnSusp(fn: suspend () -> Unit) =
         fn()

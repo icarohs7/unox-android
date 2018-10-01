@@ -30,10 +30,24 @@ fun UnoxAndroidSettings.startNavigationModule(builder: NavigationModuleSettings.
     builder(NavigationModuleSettings)
 }
 
+/**
+ * Settings used at the navigation module
+ */
 object NavigationModuleSettings {
+    /**
+     * Animation used at the transition between activities
+     */
     var animationType: Animation = Animation.NO_ANIMATION
 
+    /**
+     * Container used to home the fragments loaded
+     */
     var masterContainer: Int? = null
+
+    /**
+     * Map used when multiple activities have multiples containers,
+     * each storing a pair with their simple name and the conteiner layoutId
+     */
     var activityContainer: MutableMap<String, Int> = mutableMapOf()
 
     var enterAnim = R.anim.zoom_enter
@@ -41,6 +55,9 @@ object NavigationModuleSettings {
     var popEnterAnim = R.anim.zoom_enter
     var popExitAnim = R.anim.zoom_exit
 
+    /**
+     * Animations available at the [animationType]
+     */
     enum class Animation {
         SPLIT,
         SHRINK,

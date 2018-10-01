@@ -27,6 +27,9 @@ package com.github.icarohs7.core.extensions
 import android.os.Bundle
 import android.os.Parcelable
 
+/**
+ * Add a pair to a Bundle, with side effects
+ */
 operator fun <T> Bundle.plusAssign(pair: Pair<String, T>) {
     try {
         val bundle = Bundle() + pair
@@ -35,6 +38,10 @@ operator fun <T> Bundle.plusAssign(pair: Pair<String, T>) {
     }
 }
 
+/**
+ * Creates a new bundle with the contents of the first plus
+ * the pair added, without modifying the former
+ */
 operator fun <T> Bundle.plus(pair: Pair<String, T>): Bundle {
     val newBundle = Bundle()
     val (key, valueToAdd) = pair
