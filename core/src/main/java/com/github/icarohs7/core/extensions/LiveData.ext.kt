@@ -59,11 +59,31 @@ fun <T> LiveData<T>.nonNullObserveForever(observer: (t: T) -> Unit) {
 
 /**
  * Merges 2 [LiveData] objects and emit notifications when any of
- * them change
+ * them change, storing the latest value emitted
  */
 infix fun <T> LiveData<T>.mergedWith(other: LiveData<T>): LiveData<T> {
     val mediator = MediatorLiveData<T>()
+
     mediator.addSource(this, mediator::postValue)
     mediator.addSource(other, mediator::postValue)
+
     return mediator
 }
+
+/**
+ * Merges 2 [LiveData] objects of lists and emit notifications when any of
+ * them change, and stores the merging result of the lists with distinct elements
+ */
+infix fun <T> LiveData<List<T>>.mergedElementsWith(other: LiveData<List<T>>): LiveData<List<T>> {
+    val mediator = MediatorLiveData<List<T>>()
+
+    // Lambda merging 2 lists and returning a list without repeated elements
+    val distinct2 = { l1: List<T>?, l2: List<T>? -> ((l1 ?: emptyList()) + (l2 ?: emptyList())).distinct() }
+
+    mediator.addSource(this) { newThis -> mediator.postValue(distinct2(newThis, other.value)) }
+    mediator.addSource(other) { newOther -> mediator.postValue(distinct2(newOther, this.value)) }
+
+    mediator.postValue(distinct2(this.value, other.value))
+    return mediator
+}
+
