@@ -78,7 +78,7 @@ infix fun <T> LiveData<List<T>>.mergedElementsWith(other: LiveData<List<T>>): Li
     val mediator = MediatorLiveData<List<T>>()
 
     // Lambda merging 2 lists and returning a list without repeated elements
-    val union = { l1: List<T>?, l2: List<T>? -> l1?.union(l2 ?: emptyList())?.toList() }
+    val union = { l1: List<T>?, l2: List<T>? -> (l1 ?: emptyList()).union(l2 ?: emptyList()).toList() }
 
     mediator.addSource(this) { newThis -> mediator.postValue(union(newThis, other.value)) }
     mediator.addSource(other) { newOther -> mediator.postValue(union(newOther, this.value)) }

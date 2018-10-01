@@ -45,3 +45,22 @@ fun Fragment.hideKeyboard(container: View) {
             .inputMethodManager
             .hideSoftInputFromWindow(container.windowToken, 0)
 }
+
+/**
+ * Get the list of arguments of the fragment and return it as
+ * a list of pairs
+ */
+val Fragment.argumentList: List<Pair<String, Any>>
+    get() {
+        return arguments
+                ?.keySet()
+                ?.mapNotNull { key ->
+                    val value = arguments?.get(key)
+                    if (value != null) {
+                        key to value
+                    } else {
+                        null
+                    }
+                }
+                ?: emptyList()
+    }
