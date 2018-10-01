@@ -44,6 +44,13 @@ inline fun <reified T : Any> T.mapOfProperties(): Map<String, String> {
 }
 
 /**
+ * Chain a infix lambda to an operator, returning itself,
+ * with side effects, e.g: mutableListOf<Int>() CHAIN { add(2) }
+ */
+@Suppress("FunctionName")
+infix fun <T> T.CHAIN(fn: T.() -> Unit) = this.also(fn)
+
+/**
  * Function used to chain operations in a idiomatic way, as:
  * doThis() ASWELL doThat() ASWELL doAnotherThing()
  */
