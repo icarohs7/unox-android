@@ -26,6 +26,7 @@ package com.github.icarohs7.core.extensions
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 
 /**
@@ -54,4 +55,15 @@ fun <T> LiveData<T>.nonNullObserve(owner: LifecycleOwner, observer: (t: T) -> Un
  */
 fun <T> LiveData<T>.nonNullObserveForever(observer: (t: T) -> Unit) {
     this.observeForever { it?.let(observer) }
+}
+
+/**
+ * Merges 2 [LiveData] objects and emit notifications when any of
+ * them change
+ */
+infix fun <T> LiveData<T>.mergedWith(other: LiveData<T>): LiveData<T> {
+    val mediator = MediatorLiveData<T>()
+    mediator.addSource(this, mediator::postValue)
+    mediator.addSource(other, mediator::postValue)
+    return mediator
 }
