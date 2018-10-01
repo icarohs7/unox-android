@@ -47,8 +47,8 @@ fun Fragment.hideKeyboard(container: View) {
 }
 
 /**
- * Get the list of arguments of the fragment and return it as
- * a list of pairs
+ * Get the list of arguments of the [Fragment] and return it as
+ * a list of [Pair]
  */
 val Fragment.argumentList: List<Pair<String, Any>>
     get() {
@@ -64,3 +64,22 @@ val Fragment.argumentList: List<Pair<String, Any>>
                 }
                 ?: emptyList()
     }
+
+/**
+ * Return a [Map] containing the arguments passed to the [Fragment]
+ */
+val Fragment.argumentMap: Map<String, Any>
+    get() = argumentList.toMap()
+
+/**
+ * Get the list of arguments of the [Fragment] and return them as
+ * a list of [String] pairs
+ */
+val Fragment.argumentStringList: List<Pair<String, String>>
+    get() = argumentList.map { it.first to it.second.toString() }
+
+/**
+ * Return a [Map] containing the arguments passed to the [Fragment] as [String]
+ */
+val Fragment.argumentStringMap: Map<String, String>
+    get() = argumentStringList.toMap()
