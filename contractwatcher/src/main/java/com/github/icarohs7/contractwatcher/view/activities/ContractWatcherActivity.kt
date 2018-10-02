@@ -61,7 +61,6 @@ abstract class ContractWatcherActivity : AppCompatActivity(), NavigationView.OnN
         loadNavigationResources()
         savedInstanceState?.also(::recoverStateWhenExistent)
         observeContractChanges()
-        observeFragmentStackChanges()
         afterInitialSetup()
     }
 
@@ -103,6 +102,7 @@ abstract class ContractWatcherActivity : AppCompatActivity(), NavigationView.OnN
      * Called whenever the contract of the dealer changes
      */
     open fun executeContract(contract: Contract) {
+        checkMenuItem(contract.menuItemId)
         contract.navigateAction(this)
     }
 
@@ -121,14 +121,6 @@ abstract class ContractWatcherActivity : AppCompatActivity(), NavigationView.OnN
      */
     private fun observeContractChanges() {
         contractDealer.loadedContract.observe(this, Observer(::executeContract))
-        contractDealer.selectedMenuItemId.observe(this, Observer(::checkMenuItem))
-    }
-
-    /**
-     * Activity starts to observe the fragment stack and pop menu items as the fragments are popped from the backstack
-     */
-    private fun observeFragmentStackChanges() {
-        supportFragmentManager.addOnBackStackChangedListener(contractDealer::popMenuItem)
     }
 
     /**

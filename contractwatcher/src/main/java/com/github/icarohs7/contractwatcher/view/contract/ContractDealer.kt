@@ -24,13 +24,7 @@
 
 package com.github.icarohs7.contractwatcher.view.contract
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.icarohs7.contractwatcher.settings.ContractWatcherSettings
-import com.github.icarohs7.core.extensions.valueTransaction
-import com.github.icarohs7.core.toplevel.mutableLiveDataOf
-import java.util.EmptyStackException
-import java.util.Stack
 
 /**
  * Implement this class in a singleton to store the navigation state
@@ -41,22 +35,6 @@ abstract class ContractDealer {
      * Value observed by the activity
      */
     val loadedContract = MutableLiveData<Contract>()
-
-    /**
-     * Value observing the menu stack and storing the Id of the Menu Item corresponding to the screen currently loaded,
-     * also observing the stack and reflecting changes
-     */
-    val selectedMenuItemId = MutableLiveData<Int>()
-
-    /**
-     * Stack storing menu changes and observing the loadedContract
-     */
-    private val menuItemStack = mutableLiveDataOf(Stack<Int>())
-
-    init {
-        loadedContract.observeForever { contract -> menuItemStack += contract.menuItemId }
-        menuItemStack.observeForever { stack -> ignoreEmptyStack { selectedMenuItemId.postValue(stack.peek()) } }
-    }
 
     /**
      * Return a contract identified by its menuId
@@ -71,34 +49,6 @@ abstract class ContractDealer {
             loadedContract.postValue(contract)
         } else {
             loadedContract.postValue(contract)
-        }
-    }
-
-    /**
-     * Remove the topmost item from the menu stack, notifying the stack's observers
-     */
-    internal fun popMenuItem() {
-        menuItemStack.valueTransaction(failOnNullValue = ContractWatcherSettings.failNullLiveData) {
-            ignoreEmptyStack { pop() }
-        }
-    }
-
-    /**
-     * Utility to easily push values to the stack
-     */
-    private operator fun <T> LiveData<Stack<T>>.plusAssign(value: T) {
-        valueTransaction(failOnNullValue = ContractWatcherSettings.failNullLiveData) {
-            push(value)
-        }
-    }
-
-    /**
-     * Function to ignore emptyStackExceptions
-     */
-    private inline fun ignoreEmptyStack(fn: () -> Unit) {
-        try {
-            fn()
-        } catch (e: EmptyStackException) {
         }
     }
 }
