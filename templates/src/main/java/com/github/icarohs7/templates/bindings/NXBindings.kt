@@ -31,9 +31,9 @@ import com.github.icarohs7.templates.R
 import com.github.icarohs7.templates.databinding.ActivityBaseBinding
 import com.github.icarohs7.templates.databinding.FragmentBaseWithheaderBinding
 import com.github.icarohs7.templates.databinding.FragmentBaseWithoutheaderBinding
-import com.github.icarohs7.templates.databinding.PartialButtonBinding
 import com.github.icarohs7.templates.databinding.PartialCaptionImageBinding
 import com.github.icarohs7.templates.databinding.PartialCenterAndBottomConteinerBinding
+import com.github.icarohs7.templates.databinding.PartialFormFieldBinding
 import com.github.icarohs7.templates.databinding.PartialFullscreenMessageBinding
 import com.github.icarohs7.templates.databinding.PartialLabelTextBinding
 import com.github.icarohs7.templates.databinding.PartialLoadingBinding
@@ -163,10 +163,12 @@ object NXBindings {
     }
 
     /**
-     * Binding with a linear layout wrapping a single button
+     * Text input layout with a text input edit text
      */
-    fun button(context: Context): PartialButtonBinding {
-        return context.inflateBinding(R.layout.partial_button)
+    fun formField(context: Context, label: String = ""): PartialFormFieldBinding {
+        val binding = context.inflateBinding<PartialFormFieldBinding>(R.layout.partial_form_field)
+        binding.label = label
+        return binding
     }
 
 }

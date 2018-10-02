@@ -35,8 +35,8 @@ import com.github.icarohs7.userinterface.databinding.DialogNxBinding
 
 @Suppress("MemberVisibilityCanBePrivate")
 class NXDialogBuilder(private val context: Context) {
-    lateinit var title: String
-    lateinit var message: String
+    var title: String = "Info"
+    var message: String = "Lorem Ipsum"
     var icon: Drawable? = null
     var backgroundResource = android.R.color.white
     var buttonText = "Continue"
