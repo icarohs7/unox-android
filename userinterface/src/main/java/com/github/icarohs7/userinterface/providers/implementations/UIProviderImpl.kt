@@ -25,7 +25,7 @@
 package com.github.icarohs7.userinterface.providers.implementations
 
 import android.content.Context
-import com.github.icarohs7.userinterface.providers.UIProvider
+import com.github.icarohs7.userinterface.providers.abstractions.UIProvider
 import com.github.icarohs7.userinterface.view.dialogs.NXDialogBuilder
 
 internal class UIProviderImpl : UIProvider {

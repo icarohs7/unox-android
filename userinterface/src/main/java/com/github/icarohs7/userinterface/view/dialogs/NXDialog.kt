@@ -30,12 +30,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.plusAssign
-import com.github.icarohs7.userinterface.R
-import kotlinx.android.synthetic.main.dialog_nx.button
-import kotlinx.android.synthetic.main.dialog_nx.imageView
-import kotlinx.android.synthetic.main.dialog_nx.root_nx
-import kotlinx.android.synthetic.main.dialog_nx.textView
-import kotlinx.android.synthetic.main.dialog_nx.textView2
+import com.github.icarohs7.userinterface.databinding.DialogNxBinding
 import org.jetbrains.anko.backgroundColorResource
 import org.jetbrains.anko.textColorResource
 
@@ -50,23 +45,28 @@ internal class NXDialog(
         val buttonColorResource: Int,
         val buttonCallback: Runnable,
         val dismissCallback: Runnable,
-        val customView: View?
+        val customView: View?,
+        var binding: DialogNxBinding
 ) : Dialog(context) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setContentView(R.layout.dialog_nx)
+        setupView(customView)
+        setContentView(binding.root)
+    }
+
+    private fun setupView(customView: View?) {
         if (customView != null) {
-            root_nx.removeAllViews()
-            root_nx += customView
+            binding.constraintLayout.removeAllViews()
+            binding.constraintLayout += customView
         } else {
-            textView.text = title
-            textView2.text = message
-            imageView.setImageDrawable(icon)
-            root_nx.backgroundColorResource = backgroundColorResource
-            button.text = buttonText
-            button.textColorResource = buttonTextColorResource
-            button.backgroundColorResource = buttonColorResource
-            button.setOnClickListener {
+            binding.txtTitle.text = title
+            binding.txtMessage.text = message
+            binding.imgLargeIcon.setImageDrawable(icon)
+            binding.constraintLayout.backgroundColorResource = backgroundColorResource
+            binding.btnConfirm.text = buttonText
+            binding.btnConfirm.textColorResource = buttonTextColorResource
+            binding.btnConfirm.backgroundColorResource = buttonColorResource
+            binding.btnConfirm.setOnClickListener { _ ->
                 buttonCallback.run()
                 dismiss()
             }

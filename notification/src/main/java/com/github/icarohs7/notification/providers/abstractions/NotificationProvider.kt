@@ -22,12 +22,37 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.navigation.providers
+package com.github.icarohs7.notification.providers.abstractions
 
-import android.content.Intent
+import android.app.PendingIntent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 
-interface NavigationProvider {
-    fun <T : AppCompatActivity> gotoActivity(activity: Class<T>)
-    fun <T : AppCompatActivity> getActivityLaunchIntent(activity: Class<T>): Intent
+interface NotificationProvider {
+    /**
+     * Show a notification to the user
+     */
+    fun emitNotification(
+            title: String,
+            message: String,
+            iconResource: Int,
+            bigMessage: String,
+            onClickPendingIntent: PendingIntent
+    )
+
+    /**
+     * Use a builder to show a notification to the user
+     */
+    fun buildNotification(bigMessage: String = "", fn: NotificationCompat.Builder.() -> Unit)
+
+    /**
+     * Show a notification to the user
+     */
+    fun <T : AppCompatActivity> emitNotification(
+            title: String,
+            message: String,
+            iconResource: Int,
+            bigMessage: String,
+            destinationActivity: Class<T>
+    )
 }

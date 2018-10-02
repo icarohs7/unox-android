@@ -41,3 +41,9 @@ android {
         enabled = true
     }
 }
+
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}

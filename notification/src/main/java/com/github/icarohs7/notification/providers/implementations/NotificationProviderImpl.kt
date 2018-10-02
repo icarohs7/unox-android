@@ -33,7 +33,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.github.icarohs7.navigation.navigationProvider
-import com.github.icarohs7.notification.providers.NotificationProvider
+import com.github.icarohs7.notification.providers.abstractions.NotificationProvider
 
 internal class NotificationProviderImpl(
         private val context: Context,

@@ -24,7 +24,7 @@
 
 package com.github.icarohs7.telephony
 
-import com.github.icarohs7.telephony.providers.PhoneCallProvider
+import com.github.icarohs7.telephony.providers.abstractions.PhoneCallProvider
 import com.github.icarohs7.telephony.providers.implementations.PhoneCallProviderImpl
 
 fun telephonyProvider(): PhoneCallProvider = PhoneCallProviderImpl()

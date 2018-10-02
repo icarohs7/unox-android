@@ -31,7 +31,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.core.app.ActivityCompat
-import com.github.icarohs7.telephony.providers.PhoneCallProvider
+import com.github.icarohs7.telephony.providers.abstractions.PhoneCallProvider
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 import org.jetbrains.anko.longToast

@@ -23,7 +23,7 @@
  */
 package com.github.icarohs7.userinterface
 
-import com.github.icarohs7.userinterface.providers.UIProvider
+import com.github.icarohs7.userinterface.providers.abstractions.UIProvider
 import com.github.icarohs7.userinterface.providers.implementations.UIProviderImpl
 
 fun uiProvider(): UIProvider = UIProviderImpl()

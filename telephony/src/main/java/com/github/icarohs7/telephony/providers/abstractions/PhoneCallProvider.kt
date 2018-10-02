@@ -22,36 +22,15 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.userinterface.extensions
+package com.github.icarohs7.telephony.providers.abstractions
 
-import android.widget.ProgressBar
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
-import com.github.icarohs7.core.toplevel.onUi
-import com.github.icarohs7.templates.databinding.FragmentBaseWithoutheaderBinding
+import android.content.Context
 
-/**
- * Execute a function, showing the progress bar before starting and hiding
- * it when finished
- */
-fun FragmentBaseWithoutheaderBinding.loadingTransaction(fn: (ProgressBar) -> Unit) {
-    try {
-        this.progressBar.isVisible = true
-        fn(this.progressBar)
-    } finally {
-        this.progressBar.isGone = true
-    }
-}
-
-/**
- * Execute a suspending function, showing the progress bar before starting and
- * hiding it when finished
- */
-suspend fun FragmentBaseWithoutheaderBinding.loadingTransactionAsync(fn: suspend (ProgressBar) -> Unit) {
-    try {
-        onUi { this.progressBar.isVisible = true }
-        fn(this.progressBar)
-    } finally {
-        onUi { this.progressBar.isGone = true }
-    }
+interface PhoneCallProvider {
+    /**
+     * Make a phone calling to the parameterized phone number and, when needing to
+     * as permission, uses the asking and on deny messages when asking the permission
+     * and when the permission is denied, respectively
+     */
+    fun callNumber(context: Context, phoneNumber: String, askingMessage: String, onDenyMessage: String)
 }

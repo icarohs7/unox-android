@@ -28,7 +28,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.github.icarohs7.navigation.NavigationModuleSettings
-import com.github.icarohs7.navigation.providers.NavigationProvider
+import com.github.icarohs7.navigation.providers.abstractions.NavigationProvider
 import spencerstudios.com.bungeelib.Bungee
 
 internal class NavigationProviderImpl(private val context: Context) : NavigationProvider {

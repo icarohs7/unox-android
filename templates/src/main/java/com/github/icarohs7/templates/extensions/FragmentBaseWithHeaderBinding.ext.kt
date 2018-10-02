@@ -22,21 +22,36 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.versioncontrol.providers
+package com.github.icarohs7.templates.extensions
 
-import com.github.icarohs7.core.toplevel.onBg
-import com.github.icarohs7.versioncontrol.entities.VersionMetadata
-import kotlinx.coroutines.experimental.Deferred
+import android.widget.ProgressBar
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
+import com.github.icarohs7.core.toplevel.onUi
+import com.github.icarohs7.templates.databinding.FragmentBaseWithheaderBinding
 
-interface VersionControlProvider {
-    var localVersionProvider: (suspend () -> String)
-    var remoteVersionProvider: (suspend () -> String)
+/**
+ * Execute a function, showing the progress bar before starting and hiding
+ * it when finished
+ */
+fun FragmentBaseWithheaderBinding.loadingTransaction(fn: (ProgressBar) -> Unit) {
+    try {
+        this.progressBar.isVisible = true
+        fn(this.progressBar)
+    } finally {
+        this.progressBar.isGone = true
+    }
+}
 
-    val localVersion: Deferred<String>
-        get() = onBg { localVersionProvider() }
-
-    val remoteVersion: Deferred<String>
-        get() = onBg { remoteVersionProvider() }
-
-    fun compareVersions(): Deferred<VersionMetadata>
+/**
+ * Execute a suspending function, showing the progress bar before starting and
+ * hiding it when finished
+ */
+suspend fun FragmentBaseWithheaderBinding.loadingTransactionAsync(fn: suspend (ProgressBar) -> Unit) {
+    try {
+        onUi { this.progressBar.isVisible = true }
+        fn(this.progressBar)
+    } finally {
+        onUi { this.progressBar.isGone = true }
+    }
 }

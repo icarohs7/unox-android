@@ -22,37 +22,36 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.notification.providers
+package com.github.icarohs7.templates.extensions
 
-import android.app.PendingIntent
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
+import android.widget.ProgressBar
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
+import com.github.icarohs7.core.toplevel.onUi
+import com.github.icarohs7.templates.databinding.FragmentBaseWithoutheaderBinding
 
-interface NotificationProvider {
-    /**
-     * Show a notification to the user
-     */
-    fun emitNotification(
-            title: String,
-            message: String,
-            iconResource: Int,
-            bigMessage: String,
-            onClickPendingIntent: PendingIntent
-    )
+/**
+ * Execute a function, showing the progress bar before starting and hiding
+ * it when finished
+ */
+fun FragmentBaseWithoutheaderBinding.loadingTransaction(fn: (ProgressBar) -> Unit) {
+    try {
+        this.progressBar.isVisible = true
+        fn(this.progressBar)
+    } finally {
+        this.progressBar.isGone = true
+    }
+}
 
-    /**
-     * Use a builder to show a notification to the user
-     */
-    fun buildNotification(bigMessage: String = "", fn: NotificationCompat.Builder.() -> Unit)
-
-    /**
-     * Show a notification to the user
-     */
-    fun <T : AppCompatActivity> emitNotification(
-            title: String,
-            message: String,
-            iconResource: Int,
-            bigMessage: String,
-            destinationActivity: Class<T>
-    )
+/**
+ * Execute a suspending function, showing the progress bar before starting and
+ * hiding it when finished
+ */
+suspend fun FragmentBaseWithoutheaderBinding.loadingTransactionAsync(fn: suspend (ProgressBar) -> Unit) {
+    try {
+        onUi { this.progressBar.isVisible = true }
+        fn(this.progressBar)
+    } finally {
+        onUi { this.progressBar.isGone = true }
+    }
 }

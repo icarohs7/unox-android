@@ -24,10 +24,16 @@
 
 package com.github.icarohs7.userinterface.view.dialogs
 
+import android.app.Dialog
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
+import com.github.icarohs7.core.extensions.CHAIN
+import com.github.icarohs7.templates.extensions.inflateBinding
+import com.github.icarohs7.userinterface.R
+import com.github.icarohs7.userinterface.databinding.DialogNxBinding
 
+@Suppress("MemberVisibilityCanBePrivate")
 class NXDialogBuilder(private val context: Context) {
     lateinit var title: String
     lateinit var message: String
@@ -39,6 +45,7 @@ class NXDialogBuilder(private val context: Context) {
     var buttonCallback = Runnable {}
     var dismissCallback = Runnable {}
     var customView: View? = null
+    val dialogView = context.inflateBinding<DialogNxBinding>(R.layout.dialog_nx)
 
     fun build() {
         NXDialog(
@@ -52,7 +59,7 @@ class NXDialogBuilder(private val context: Context) {
                 buttonColorResource = buttonColorResource,
                 buttonCallback = buttonCallback,
                 dismissCallback = dismissCallback,
-                customView = customView
-        ).show()
+                customView = customView,
+                binding = dialogView) CHAIN Dialog::show
     }
 }

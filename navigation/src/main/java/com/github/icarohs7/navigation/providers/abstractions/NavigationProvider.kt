@@ -22,11 +22,12 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.userinterface.providers
+package com.github.icarohs7.navigation.providers.abstractions
 
-import android.content.Context
-import com.github.icarohs7.userinterface.view.dialogs.NXDialogBuilder
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 
-interface UIProvider {
-    fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
+interface NavigationProvider {
+    fun <T : AppCompatActivity> gotoActivity(activity: Class<T>)
+    fun <T : AppCompatActivity> getActivityLaunchIntent(activity: Class<T>): Intent
 }

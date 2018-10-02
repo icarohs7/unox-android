@@ -22,15 +22,11 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.telephony.providers
+package com.github.icarohs7.userinterface.providers.abstractions
 
 import android.content.Context
+import com.github.icarohs7.userinterface.view.dialogs.NXDialogBuilder
 
-interface PhoneCallProvider {
-    /**
-     * Make a phone calling to the parameterized phone number and, when needing to
-     * as permission, uses the asking and on deny messages when asking the permission
-     * and when the permission is denied, respectively
-     */
-    fun callNumber(context: Context, phoneNumber: String, askingMessage: String, onDenyMessage: String)
+interface UIProvider {
+    fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
 }

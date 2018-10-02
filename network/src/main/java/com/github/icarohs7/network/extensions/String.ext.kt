@@ -38,22 +38,17 @@ import kotlinx.coroutines.experimental.Deferred
 inline fun <reified T> String.httpGetObjectAsync(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
-        noinline jsonTransformationBeforeParsing: (String) -> String = { it }
+        noinline jsonTransformBeforeParse: (String) -> String = { it }
 ): Deferred<T?> {
 
     return onBg {
-        try {
-            Klaxon().parse<T>(
-                    jsonTransformationBeforeParsing(
-                            this.httpGet(query)
-                                    .body(body)
-                                    .awaitStringResult()
-                                    .getOrElse("")
-                                    .trim()))
-        } catch (e: Exception) {
-            null
-        }
+        this.httpGet(query)
+                .body(body)
+                .awaitStringResult()
+                .getOrElse("")
+                .parseJsonToObj<T>(jsonTransformBeforeParse)
     }
+
 }
 
 /**
@@ -62,22 +57,15 @@ inline fun <reified T> String.httpGetObjectAsync(
 inline fun <reified T> String.httpGetArrayAsync(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
-        noinline jsonTransformationBeforeParsing: (String) -> String = { it }
+        noinline jsonTransformBeforeParse: (String) -> String = { it }
 ): Deferred<List<T>> {
 
     return onBg {
-        try {
-            Klaxon().parseArray<T>(
-                    jsonTransformationBeforeParsing(
-                            this@httpGetArrayAsync
-                                    .httpGet(query)
-                                    .body(body)
-                                    .awaitStringResult()
-                                    .getOrElse("")
-                                    .trim()))!!
-        } catch (e: Exception) {
-            emptyList<T>()
-        }
+        this.httpGet(query)
+                .body(body)
+                .awaitStringResult()
+                .getOrElse("")
+                .parseJsonToArray<T>(jsonTransformBeforeParse)
     }
 }
 
@@ -87,22 +75,15 @@ inline fun <reified T> String.httpGetArrayAsync(
 inline fun <reified T> String.httpPostObjectAsync(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
-        noinline jsonTransformationBeforeParsing: (String) -> String = { it }
+        noinline jsonTransformBeforeParse: (String) -> String = { it }
 ): Deferred<T?> {
 
     return onBg {
-        try {
-            Klaxon().parse<T>(
-                    jsonTransformationBeforeParsing(
-                            this@httpPostObjectAsync
-                                    .httpPost(query)
-                                    .body(body)
-                                    .awaitStringResult()
-                                    .getOrElse("")
-                                    .trim()))
-        } catch (e: Exception) {
-            null
-        }
+        this.httpPost(query)
+                .body(body)
+                .awaitStringResult()
+                .getOrElse("")
+                .parseJsonToObj<T>(jsonTransformBeforeParse)
     }
 }
 
@@ -112,21 +93,36 @@ inline fun <reified T> String.httpPostObjectAsync(
 inline fun <reified T> String.httpPostArrayAsync(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
-        noinline jsonTransformationBeforeParsing: (String) -> String = { it }
+        noinline jsonTransformBeforeParse: (String) -> String = { it }
 ): Deferred<List<T>> {
 
     return onBg {
-        try {
-            Klaxon().parseArray<T>(
-                    jsonTransformationBeforeParsing(
-                            this@httpPostArrayAsync
-                                    .httpPost(query)
-                                    .body(body)
-                                    .awaitStringResult()
-                                    .getOrElse("")
-                                    .trim()))!!
-        } catch (e: Exception) {
-            emptyList<T>()
-        }
+        this.httpPost(query)
+                .body(body)
+                .awaitStringResult()
+                .getOrElse("")
+                .parseJsonToArray<T>(jsonTransformBeforeParse)
+    }
+}
+
+/**
+ * Parse a json object to a Kotlin object or return null in case of error parsing
+ */
+inline fun <reified T> String.parseJsonToObj(jsonTransformBeforeParse: (String) -> String = { it.trim() }): T? {
+    return try {
+        Klaxon().parse(jsonTransformBeforeParse(this))
+    } catch (e: Exception) {
+        null
+    }
+}
+
+/**
+ * Parse a json array to a Kotlin list or return an empty list in case of error parsing
+ */
+inline fun <reified T> String.parseJsonToArray(jsonTransformBeforeParse: (String) -> String = { it.trim() }): List<T> {
+    return try {
+        Klaxon().parseArray(jsonTransformBeforeParse(this))!!
+    } catch (e: Exception) {
+        emptyList()
     }
 }

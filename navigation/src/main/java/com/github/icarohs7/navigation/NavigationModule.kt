@@ -25,7 +25,7 @@
 package com.github.icarohs7.navigation
 
 import android.content.Context
-import com.github.icarohs7.navigation.providers.NavigationProvider
+import com.github.icarohs7.navigation.providers.abstractions.NavigationProvider
 import com.github.icarohs7.navigation.providers.implementations.NavigationProviderImpl
 
 fun navigationProvider(context: Context): NavigationProvider = NavigationProviderImpl(context)

@@ -27,7 +27,7 @@ package com.github.icarohs7.versioncontrol.providers.implementations
 import android.util.Log
 import com.github.icarohs7.core.toplevel.onBg
 import com.github.icarohs7.versioncontrol.entities.VersionMetadata
-import com.github.icarohs7.versioncontrol.providers.VersionControlProvider
+import com.github.icarohs7.versioncontrol.providers.abstractions.VersionControlProvider
 import kotlinx.coroutines.experimental.Deferred
 
 internal object VersionControlProviderImpl : VersionControlProvider {

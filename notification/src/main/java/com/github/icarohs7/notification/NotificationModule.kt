@@ -25,7 +25,7 @@
 package com.github.icarohs7.notification
 
 import android.content.Context
-import com.github.icarohs7.notification.providers.NotificationProvider
+import com.github.icarohs7.notification.providers.abstractions.NotificationProvider
 import com.github.icarohs7.notification.providers.implementations.NotificationProviderImpl
 
 @JvmOverloads
