@@ -22,34 +22,20 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.core.extensions
+package com.github.icarohs7.templates;
 
-import com.github.icarohs7.core.annotations.Label
-import org.junit.Test
-import se.lovef.assert.v1.shouldEqual
+import org.junit.Test;
 
-class AnyExtTest {
+import static org.junit.Assert.assertEquals;
+
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ */
+public class ExampleUnitTest {
     @Test
-    fun `should convert a class to a map`() {
-        val firstObj = TestClass("a", 1, "b")
-        val firstMap = firstObj.mapOfProperties()
-        val firstMapExpected = mapOf(
-                "foo" to "a",
-                "bar" to "1",
-                "hi" to "b"
-        )
-        firstMap shouldEqual firstMapExpected
-
-        val secondObj = TestClass("x", 0, "p")
-        val secondMap = secondObj.mapOfProperties()
-        val secondMapExpected = mapOf(
-                "foo" to "x",
-                "bar" to "0",
-                "hi" to "p"
-        )
-        secondMap shouldEqual secondMapExpected
+    public void addition_isCorrect() {
+        assertEquals(4, 2 + 2);
     }
-
-
-    data class TestClass(val foo: String, val bar: Int, @Label("hi") val baz: String)
 }

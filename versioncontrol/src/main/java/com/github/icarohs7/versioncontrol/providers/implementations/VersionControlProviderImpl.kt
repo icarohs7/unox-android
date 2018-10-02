@@ -35,7 +35,6 @@ internal object VersionControlProviderImpl : VersionControlProvider {
     override lateinit var remoteVersionProvider: (suspend () -> String)
 
     override fun compareVersions(): Deferred<VersionMetadata> {
-        ::localVersionProvider.isInitialized
         return onBg { _ ->
             val actual = localVersionProvider()
             val remote = remoteVersionProvider()

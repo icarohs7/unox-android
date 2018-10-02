@@ -33,8 +33,8 @@ import com.github.icarohs7.core.toplevel.onBg
 import com.github.icarohs7.core.toplevel.onBgNoReturn
 import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.core.toplevel.runAfterDelay
+import com.github.icarohs7.templates.databinding.PartialCenterAndBottomConteinerBinding
 import com.github.icarohs7.userinterface.R
-import com.github.icarohs7.userinterface.databinding.PartialCenterAndBottomConteinerBinding
 import kotlinx.coroutines.experimental.Deferred
 
 /**

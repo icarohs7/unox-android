@@ -23,20 +23,10 @@
  */
 
 dependencies {
-    //AndroidX
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
-    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
-    implementation "com.google.android.material:material:$materialdesign_version"
-
-    //Anko
-    implementation "org.jetbrains.anko:anko-commons:$anko_version"
-    implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
-
-    //SpinKit
-    implementation "com.github.ybq:Android-SpinKit:$spinkit_version"
 
     //Sibling modules
     implementation project(':animation')
+    api project(':templates')
 }
 
 android {

@@ -22,19 +22,22 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.userinterface.toplevel
+dependencies {
+    //SpinKit
+    api "com.github.ybq:Android-SpinKit:$spinkit_version"
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
+    //Anko
+    api "org.jetbrains.anko:anko-commons:$anko_version"
+    api "org.jetbrains.anko:anko-sdk25:$anko_version"
 
-/**
- * Inflates and return a binding of the determined type with the parameterized layout
- */
-fun <T : ViewDataBinding> getBinding(inflater: LayoutInflater, layoutId: Int, parent: ViewGroup? = null): T =
-        DataBindingUtil.inflate(
-                inflater,
-                layoutId,
-                parent,
-                false)
+    //AndroidX
+    api "androidx.recyclerview:recyclerview:$recyclerview_version"
+    api "com.google.android.material:material:$materialdesign_version"
+    api "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+}
+
+android {
+    dataBinding {
+        enabled = true
+    }
+}

@@ -30,8 +30,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
-import com.github.icarohs7.userinterface.databinding.FragmentBaseWithoutheaderBinding
-import com.github.icarohs7.userinterface.providers.UIProvider
+import com.github.icarohs7.templates.bindings.NXBindings
+import com.github.icarohs7.templates.databinding.FragmentBaseWithoutheaderBinding
 
 /**
  * Base fragment with a single container filling the screen
@@ -43,8 +43,8 @@ abstract class BaseFragmentFull : Fragment() {
     abstract fun onBindingCreated(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootBinding = UIProvider.Bindings.containerWithoutHeader(requireContext())
-        contentView = rootBinding.baseNoheaderContainer
+        rootBinding = NXBindings.containerWithoutHeader(requireContext())
+        contentView = rootBinding.container
 
         onBindingCreated(inflater, container, savedInstanceState)
         return rootBinding.root

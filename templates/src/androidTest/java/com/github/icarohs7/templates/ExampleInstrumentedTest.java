@@ -22,34 +22,29 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.core.extensions
+package com.github.icarohs7.templates;
 
-import com.github.icarohs7.core.annotations.Label
-import org.junit.Test
-import se.lovef.assert.v1.shouldEqual
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-class AnyExtTest {
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.runner.AndroidJUnit4;
+
+import static org.junit.Assert.assertEquals;
+
+/**
+ * Instrumented test, which will execute on an Android device.
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ */
+@RunWith(AndroidJUnit4.class)
+public class ExampleInstrumentedTest {
     @Test
-    fun `should convert a class to a map`() {
-        val firstObj = TestClass("a", 1, "b")
-        val firstMap = firstObj.mapOfProperties()
-        val firstMapExpected = mapOf(
-                "foo" to "a",
-                "bar" to "1",
-                "hi" to "b"
-        )
-        firstMap shouldEqual firstMapExpected
+    public void useAppContext() {
+        // Context of the app under test.
+        Context appContext = InstrumentationRegistry.getTargetContext();
 
-        val secondObj = TestClass("x", 0, "p")
-        val secondMap = secondObj.mapOfProperties()
-        val secondMapExpected = mapOf(
-                "foo" to "x",
-                "bar" to "0",
-                "hi" to "p"
-        )
-        secondMap shouldEqual secondMapExpected
+        assertEquals("com.github.icarohs7.templates.test", appContext.getPackageName());
     }
-
-
-    data class TestClass(val foo: String, val bar: Int, @Label("hi") val baz: String)
 }

@@ -27,11 +27,12 @@ package com.github.icarohs7.network
 import com.beust.klaxon.Json
 import com.github.icarohs7.core.toplevel.onBgNoReturn
 import com.github.icarohs7.network.extensions.httpGetObjectAsync
-import io.kotlintest.shouldBe
-import io.kotlintest.specs.StringSpec
+import org.junit.Test
+import se.lovef.assert.v1.shouldEqual
 
-class StringExtTest : StringSpec() {
-    init {
+class StringExtTest {
+    @Test
+    fun shouldMakeAGetRequest() {
         val url = "jsonplaceholder.typicode.com/posts/1"
         val expectedObject = Todo(
                 1, 1,
@@ -39,11 +40,8 @@ class StringExtTest : StringSpec() {
                 "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
         )
 
-        "should make get requests" {
-            onBgNoReturn { url.httpGetObjectAsync<Todo>().await() shouldBe expectedObject }
-        }
+        onBgNoReturn { url.httpGetObjectAsync<Todo>().await() shouldEqual expectedObject }
     }
-
 
     private data class Todo(
             @Json(name = "userId")

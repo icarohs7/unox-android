@@ -22,34 +22,19 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.core.extensions
+package com.github.icarohs7.templates.toplevel
 
-import com.github.icarohs7.core.annotations.Label
-import org.junit.Test
-import se.lovef.assert.v1.shouldEqual
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 
-class AnyExtTest {
-    @Test
-    fun `should convert a class to a map`() {
-        val firstObj = TestClass("a", 1, "b")
-        val firstMap = firstObj.mapOfProperties()
-        val firstMapExpected = mapOf(
-                "foo" to "a",
-                "bar" to "1",
-                "hi" to "b"
-        )
-        firstMap shouldEqual firstMapExpected
-
-        val secondObj = TestClass("x", 0, "p")
-        val secondMap = secondObj.mapOfProperties()
-        val secondMapExpected = mapOf(
-                "foo" to "x",
-                "bar" to "0",
-                "hi" to "p"
-        )
-        secondMap shouldEqual secondMapExpected
-    }
-
-
-    data class TestClass(val foo: String, val bar: Int, @Label("hi") val baz: String)
-}
+/**
+ * Inflates and return a binding of the determined type with the parameterized layout
+ */
+fun <T : ViewDataBinding> getBinding(inflater: LayoutInflater, layoutId: Int, parent: ViewGroup? = null): T =
+        DataBindingUtil.inflate(
+                inflater,
+                layoutId,
+                parent,
+                false)

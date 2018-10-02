@@ -4,7 +4,7 @@ https://jitpack.io/v/icarohs7/unox-android.svg)](
 https://jitpack.io/#icarohs7/unox-android)
 
 ## Description
-Set of android libraries
+Android library with a collection of modules and many features
 
 ## Adding to the project
 ````groovy
@@ -19,8 +19,4 @@ dependencies {
     implementation "com.github.icarohs7.unox-android:<moduleName>:$unoxandroid_version"
 }
 ````
-### List of modules [here](https://github.com/icarohs7/unox-android/tree/master/settings.gradle)
-
-## How to use
-
-Most modules have interfaces describing their functions
+### List of modules [here](https://github.com/icarohs7/unox-android/tree/master/settings.gradle) (without prefix colon)

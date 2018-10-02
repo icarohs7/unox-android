@@ -24,6 +24,11 @@
 
 package com.github.icarohs7.versioncontrol.entities
 
+/**
+ * Class used to store the actual and new version of
+ * an app, and a flag marking if the app has or
+ * not new updates
+ */
 data class VersionMetadata(
         val oldVersion: String,
         val newVersion: String,

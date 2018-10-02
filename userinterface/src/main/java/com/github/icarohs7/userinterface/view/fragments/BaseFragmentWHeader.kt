@@ -30,8 +30,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
-import com.github.icarohs7.userinterface.databinding.FragmentBaseWithheaderBinding
-import com.github.icarohs7.userinterface.providers.UIProvider
+import com.github.icarohs7.templates.bindings.NXBindings
+import com.github.icarohs7.templates.databinding.FragmentBaseWithheaderBinding
 import com.google.android.material.card.MaterialCardView
 
 /**
@@ -45,10 +45,10 @@ abstract class BaseFragmentWHeader : Fragment() {
     abstract fun onBindingCreated(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootBinding = UIProvider.Bindings.containerWithHeader(requireContext())
+        rootBinding = NXBindings.containerWithHeader(requireContext())
 
-        headerView = rootBinding.baseHeaderHeader
-        contentView = rootBinding.baseHeaderContainer
+        headerView = rootBinding.header
+        contentView = rootBinding.container
 
         onBindingCreated(inflater, container, savedInstanceState)
         return rootBinding.root

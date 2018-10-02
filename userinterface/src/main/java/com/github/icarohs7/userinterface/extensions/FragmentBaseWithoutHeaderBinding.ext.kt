@@ -28,7 +28,7 @@ import android.widget.ProgressBar
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.github.icarohs7.core.toplevel.onUi
-import com.github.icarohs7.userinterface.databinding.FragmentBaseWithoutheaderBinding
+import com.github.icarohs7.templates.databinding.FragmentBaseWithoutheaderBinding
 
 /**
  * Execute a function, showing the progress bar before starting and hiding

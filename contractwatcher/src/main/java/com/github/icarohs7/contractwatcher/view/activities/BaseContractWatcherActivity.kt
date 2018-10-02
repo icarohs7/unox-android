@@ -28,7 +28,7 @@ import androidx.annotation.CallSuper
 import androidx.databinding.DataBindingUtil
 import com.github.icarohs7.contractwatcher.R
 import com.github.icarohs7.contractwatcher.entities.ActivityResources
-import com.github.icarohs7.userinterface.databinding.ActivityBaseBinding
+import com.github.icarohs7.templates.databinding.ActivityBaseBinding
 
 /**
  * Base Activity implementing the Contract Watcher architecture,
@@ -44,10 +44,10 @@ open class BaseContractWatcherActivity : ContractWatcherActivity() {
 
     override fun onDefineActivityResources(): ActivityResources.() -> Unit {
         return {
-            bottomNavigationView = binding.baseactBottomnav
-            drawerLayout = binding.baseactDrawerLayout
-            sideNavigationView = binding.baseactSidenav
-            toolbar = binding.baseactToolbar
+            bottomNavigationView = binding.bottomNavigation
+            drawerLayout = binding.drawerLayout
+            sideNavigationView = binding.navView
+            toolbar = binding.toolbar
             toolbarOpenDrawerMenuItemDrawableId = R.drawable.ic_menu
         }
     }
