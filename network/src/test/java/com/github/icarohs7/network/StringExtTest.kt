@@ -39,7 +39,7 @@ import se.lovef.assert.v1.shouldNotEqual
 class StringExtTest {
     @Test
     fun `should do a get request`() {
-        val url = "jsonplaceholder.typicode.com/posts/1"
+        val url = "https://jsonplaceholder.typicode.com/posts/1"
         val expectedObject = Post(
                 1, 1,
                 "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
@@ -51,7 +51,7 @@ class StringExtTest {
 
     @Test
     fun `should do a get request receiving a list as response`() {
-        val url = "jsonplaceholder.typicode.com/posts/"
+        val url = "https://jsonplaceholder.typicode.com/posts/"
 
         val postsReceived = url.httpGetArrayAsync<Post>()
 

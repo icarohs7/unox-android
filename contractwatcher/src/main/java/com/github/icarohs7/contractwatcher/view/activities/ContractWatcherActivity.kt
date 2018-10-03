@@ -61,6 +61,7 @@ abstract class ContractWatcherActivity : AppCompatActivity(), NavigationView.OnN
         loadNavigationResources()
         savedInstanceState?.also(::recoverStateWhenExistent)
         observeContractChanges()
+        observeMenuItemChanges()
         afterInitialSetup()
     }
 
@@ -117,10 +118,17 @@ abstract class ContractWatcherActivity : AppCompatActivity(), NavigationView.OnN
     }
 
     /**
-     * Activity starts to observe and react to changes at liveDatas at the dealer
+     * Activity starts to observe and react to changes in the loaded contract
      */
     private fun observeContractChanges() {
         contractDealer.loadedContract.observe(this, Observer(::executeContract))
+    }
+
+    /**
+     * Activity starts to observe and react to changes in the loaded menu item
+     */
+    private fun observeMenuItemChanges() {
+        contractDealer.loadedMenuItemId.observe(this, Observer(::checkMenuItem))
     }
 
     /**

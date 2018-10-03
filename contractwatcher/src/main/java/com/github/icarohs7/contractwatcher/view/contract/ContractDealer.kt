@@ -24,6 +24,7 @@
 
 package com.github.icarohs7.contractwatcher.view.contract
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 /**
@@ -31,10 +32,17 @@ import androidx.lifecycle.MutableLiveData
  * of your application
  */
 abstract class ContractDealer {
+
     /**
      * Value observed by the activity
      */
-    val loadedContract = MutableLiveData<Contract>()
+    val loadedContract: LiveData<Contract> = MutableLiveData()
+
+    /**
+     * Loaded menu item, also observing the loaded contract
+     * to automatically change with it
+     */
+    val loadedMenuItemId: LiveData<Int> = MutableLiveData()
 
     /**
      * Return a contract identified by its menuId
@@ -44,11 +52,15 @@ abstract class ContractDealer {
     /**
      * Load a contract, notifying the observing activity
      */
-    fun loadContract(contract: Contract, async: Boolean = false) {
-        if (async) {
-            loadedContract.postValue(contract)
-        } else {
-            loadedContract.postValue(contract)
-        }
+    fun loadContract(contract: Contract) {
+        (loadedContract as MutableLiveData).postValue(contract)
+        loadMenuItem(contract.menuItemId)
+    }
+
+    /**
+     * Load a menu item
+     */
+    fun loadMenuItem(menuItemId: Int) {
+        (loadedMenuItemId as MutableLiveData).postValue(menuItemId)
     }
 }
