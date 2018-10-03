@@ -6,8 +6,8 @@ import se.lovef.assert.v1.shouldEqual
 class StringExtTest {
     @Test
     fun `should strip all non-numeric values from a string`() {
-        val s1 = "bcd8421"
-        val exp1 = "8421"
+        val s1 = "bcd84.21"
+        val exp1 = "84.21"
 
         s1.onlyNumbers() shouldEqual exp1
 
@@ -15,6 +15,26 @@ class StringExtTest {
         val exp2 = ""
 
         s2.onlyNumbers() shouldEqual exp2
+
+        val s3 = "bcd84.21"
+        val exp3 = "8421"
+
+        s3.onlyNumbers(true) shouldEqual exp3
+
+        val s4 = ".32"
+        val exp4 = "0.32"
+
+        s4.onlyNumbers() shouldEqual exp4
+
+        val s5 = "aa.aa"
+        val exp5 = ""
+
+        s5.onlyNumbers() shouldEqual exp5
+
+        val s6 = "1.1.1"
+        val exp6 = ""
+
+        s6.onlyNumbers() shouldEqual exp6
     }
 
     @Test
