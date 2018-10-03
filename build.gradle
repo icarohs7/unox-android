@@ -23,7 +23,32 @@
  */
 
 buildscript {
-    ext.kotlin_version = '1.2.71'
+    //External libraries versions
+    ext {
+        kotlin_version = '1.2.71'
+
+        //Implementation dependencies
+        anko_version = '0.10.5'
+        runtimepermissionlib_version = '3.7'
+        spinkit_version = '1.1.0'
+        klaxon_version = '3.0.1'
+        fuel_version = '1.15.0'
+        coroutines_version = '0.30.0'
+        recyclerview_version = '1.0.0'
+        materialdesign_version = '1.0.0'
+        fragment_version = '1.0.0'
+        constraintlayout_version = '1.1.3'
+        lifecycle_version = '2.0.0'
+        appcompat_version = '1.0.0'
+        androidxcore_version = '1.0.0'
+        glide_version = '4.8.0'
+
+        //Testing dependencies
+        junit_version = '4.12'
+        kotlinassertutils_version = '0.8.0'
+        testrunner_version = '1.1.0-alpha4'
+        espresso_version = '3.1.0-alpha4'
+    }
 
     repositories {
         google()
@@ -31,29 +56,14 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:3.2.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'gradle.plugin.com.palantir.gradle.gitversion:gradle-git-version:0.11.0'
     }
 }
 
 apply plugin: 'com.palantir.git-version'
-
-//External libraries versions
-ext.anko_version = '0.10.5'
-ext.runtimepermissionlib_version = '3.7'
-ext.spinkit_version = '1.1.0'
-ext.klaxon_version = '3.0.1'
-ext.fuel_version = '1.15.0'
-ext.coroutines_version = '0.30.0'
-ext.recyclerview_version = '1.0.0'
-ext.materialdesign_version = '1.0.0'
-ext.fragment_version = '1.0.0'
-ext.constraintlayout_version = '1.1.3'
-ext.lifecycle_version = '2.0.0'
-ext.appcompat_version = '1.0.0'
-ext.androidxcore_version = '1.0.0'
 
 // Common settings over projects
 allprojects {
@@ -107,10 +117,10 @@ subprojects { proj ->
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
         //Test
-        testImplementation 'junit:junit:4.12'
-        testImplementation 'se.lovef:kotlin-assert-utils:0.8.0'
-        androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-        androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+        testImplementation "junit:junit:$junit_version"
+        testImplementation "se.lovef:kotlin-assert-utils:$kotlinassertutils_version"
+        androidTestImplementation "androidx.test:runner:$testrunner_version"
+        androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     }
 
     task sourcesJar(type: Jar) {
