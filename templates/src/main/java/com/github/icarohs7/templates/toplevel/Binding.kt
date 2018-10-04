@@ -26,13 +26,14 @@ package com.github.icarohs7.templates.toplevel
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 /**
  * Inflates and return a binding of the determined type with the parameterized layout
  */
-fun <T : ViewDataBinding> getBinding(inflater: LayoutInflater, layoutId: Int, parent: ViewGroup? = null): T =
+fun <T : ViewDataBinding> getBinding(inflater: LayoutInflater, @LayoutRes layoutId: Int, parent: ViewGroup? = null): T =
         DataBindingUtil.inflate(
                 inflater,
                 layoutId,
