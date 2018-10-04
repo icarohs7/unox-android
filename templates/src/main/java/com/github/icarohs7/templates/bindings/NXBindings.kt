@@ -26,6 +26,7 @@ package com.github.icarohs7.templates.bindings
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.icarohs7.templates.databinding.ActivityBaseBinding
 import com.github.icarohs7.templates.databinding.FragmentBaseWithheaderBinding
@@ -36,6 +37,7 @@ import com.github.icarohs7.templates.databinding.PartialFormFieldBinding
 import com.github.icarohs7.templates.databinding.PartialFullscreenMessageBinding
 import com.github.icarohs7.templates.databinding.PartialLabelTextBinding
 import com.github.icarohs7.templates.databinding.PartialLoadingBinding
+import com.github.icarohs7.templates.databinding.PartialPasswordFormFieldBinding
 import com.github.icarohs7.templates.databinding.PartialSmallCenterContainerBinding
 import com.github.icarohs7.templates.databinding.PartialSwipeRecyclerBinding
 import com.github.ybq.android.spinkit.sprite.Sprite
@@ -164,9 +166,25 @@ object NXBindings {
     /**
      * Text input layout with a text input edit text
      */
-    fun formField(context: Context, label: String = ""): PartialFormFieldBinding {
+    fun formField(context: Context, label: String = "", text: MutableLiveData<String>): PartialFormFieldBinding {
         val binding = PartialFormFieldBinding.inflate(context.layoutInflater)
+
         binding.label = label
+
+        return binding
+    }
+
+    fun formPasswordField(
+            context: Context,
+            label: String = "",
+            text: MutableLiveData<String>
+    ): PartialPasswordFormFieldBinding {
+
+        val binding = PartialPasswordFormFieldBinding.inflate(context.layoutInflater)
+
+        binding.label = label
+        binding.text = text
+
         return binding
     }
 
