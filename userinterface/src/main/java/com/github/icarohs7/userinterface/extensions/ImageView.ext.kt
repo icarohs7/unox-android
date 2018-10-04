@@ -11,13 +11,13 @@ import com.bumptech.glide.request.RequestOptions
  */
 @JvmOverloads
 fun ImageView?.loadImage(picturePath: String?, placeholder: Drawable? = null, error: Drawable? = null) {
-    this?.let { _ ->
+    this?.run {
         Glide.with(context)
                 .load(picturePath)
-                .apply {
+                .also { _ ->
                     val options = RequestOptions().centerCrop()
-                    placeholder?.let { options.placeholder(placeholder) }
-                    error?.let { options.error(error) }
+                    placeholder?.let(options::placeholder)
+                    error?.let(options::error)
                 }
                 .into(this)
     }

@@ -42,11 +42,6 @@ fun ViewGroup.hideChildren() {
  * the parameterized one to visible
  */
 fun ViewGroup.hideChildrenExcept(exceptionChild: View) {
-    this.forEach { child ->
-        if (exceptionChild == child) {
-            child.isVisible = true
-        } else {
-            child.isGone = true
-        }
-    }
+    hideChildren()
+    exceptionChild.isVisible = true
 }
