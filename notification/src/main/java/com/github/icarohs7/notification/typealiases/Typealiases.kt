@@ -1,0 +1,5 @@
+package com.github.icarohs7.notification.typealiases
+
+import com.github.icarohs7.notification.providers.abstractions.ObjectNotificationProvider
+
+typealias SimpleMessagingProvider = ObjectNotificationProvider<CharSequence>
