@@ -27,7 +27,6 @@ package com.github.icarohs7.templates.bindings
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.icarohs7.templates.R
 import com.github.icarohs7.templates.databinding.ActivityBaseBinding
 import com.github.icarohs7.templates.databinding.FragmentBaseWithheaderBinding
 import com.github.icarohs7.templates.databinding.FragmentBaseWithoutheaderBinding
@@ -39,9 +38,9 @@ import com.github.icarohs7.templates.databinding.PartialLabelTextBinding
 import com.github.icarohs7.templates.databinding.PartialLoadingBinding
 import com.github.icarohs7.templates.databinding.PartialSmallCenterContainerBinding
 import com.github.icarohs7.templates.databinding.PartialSwipeRecyclerBinding
-import com.github.icarohs7.templates.extensions.inflateBinding
 import com.github.ybq.android.spinkit.sprite.Sprite
 import com.github.ybq.android.spinkit.style.FadingCircle
+import org.jetbrains.anko.layoutInflater
 
 /**
  * Bindings for the layout templates
@@ -52,7 +51,7 @@ object NXBindings {
      * Vertical linear layout with 2 text views
      */
     fun textLabel(context: Context, label: String = "", text: String = ""): PartialLabelTextBinding {
-        val binding = context.inflateBinding<PartialLabelTextBinding>(R.layout.partial_label_text)
+        val binding = PartialLabelTextBinding.inflate(context.layoutInflater)
 
         binding.label = label
         binding.text = text
@@ -64,7 +63,7 @@ object NXBindings {
      * Swipe refresh layout with a recycler
      */
     fun swipeRecycler(context: Context): PartialSwipeRecyclerBinding {
-        val binding = context.inflateBinding<PartialSwipeRecyclerBinding>(R.layout.partial_swipe_recycler)
+        val binding = PartialSwipeRecyclerBinding.inflate(context.layoutInflater)
 
         binding.recycler.layoutManager = LinearLayoutManager(context)
 
@@ -75,7 +74,7 @@ object NXBindings {
      * Frame layout with a text view
      */
     fun fullscreenMessage(context: Context, message: String = ""): PartialFullscreenMessageBinding {
-        val binding = context.inflateBinding<PartialFullscreenMessageBinding>(R.layout.partial_fullscreen_message)
+        val binding = PartialFullscreenMessageBinding.inflate(context.layoutInflater)
         binding.text = message
         return binding
     }
@@ -84,21 +83,21 @@ object NXBindings {
      * Linear layout with a inner frame layout as container
      */
     fun centerContainer(context: Context): PartialSmallCenterContainerBinding {
-        return context.inflateBinding(R.layout.partial_small_center_container)
+        return PartialSmallCenterContainerBinding.inflate(context.layoutInflater)
     }
 
     /**
      * Constraint layout with 2 frame layouts, 1 at the middle and 1 at the bottom
      */
     fun centerAndBottomContainer(context: Context): PartialCenterAndBottomConteinerBinding {
-        return context.inflateBinding(R.layout.partial_center_and_bottom_conteiner)
+        return PartialCenterAndBottomConteinerBinding.inflate(context.layoutInflater)
     }
 
     /**
      * Vertical linear layout with a image view and a text view
      */
     fun captionImage(context: Context, caption: String = "", drawable: Drawable): PartialCaptionImageBinding {
-        val binding = context.inflateBinding<PartialCaptionImageBinding>(R.layout.partial_caption_image)
+        val binding = PartialCaptionImageBinding.inflate(context.layoutInflater)
 
         binding.caption = caption
         binding.imgImage.setImageDrawable(drawable)
@@ -110,7 +109,7 @@ object NXBindings {
      * Vertical linear layout with a image view and a text view
      */
     fun captionImage(context: Context, caption: String = "", drawableRes: Int): PartialCaptionImageBinding {
-        val binding = context.inflateBinding<PartialCaptionImageBinding>(R.layout.partial_caption_image)
+        val binding = PartialCaptionImageBinding.inflate(context.layoutInflater)
 
         binding.caption = caption
         binding.imgImage.setImageResource(drawableRes)
@@ -123,7 +122,7 @@ object NXBindings {
      * material card view and a frame layout used as main container
      */
     fun containerWithHeader(context: Context): FragmentBaseWithheaderBinding {
-        return context.inflateBinding(R.layout.fragment_base_withheader)
+        return FragmentBaseWithheaderBinding.inflate(context.layoutInflater)
     }
 
     /**
@@ -131,7 +130,7 @@ object NXBindings {
      * a frame layout used as main container
      */
     fun containerWithoutHeader(context: Context): FragmentBaseWithoutheaderBinding {
-        return context.inflateBinding(R.layout.fragment_base_withoutheader)
+        return FragmentBaseWithoutheaderBinding.inflate(context.layoutInflater)
     }
 
     /**
@@ -141,7 +140,7 @@ object NXBindings {
      * a bottom navigation view
      */
     fun activityBase(context: Context): ActivityBaseBinding {
-        return context.inflateBinding(R.layout.activity_base)
+        return ActivityBaseBinding.inflate(context.layoutInflater)
     }
 
     /**
@@ -154,7 +153,7 @@ object NXBindings {
             drawable: Sprite = FadingCircle()
     ): PartialLoadingBinding {
 
-        val binding = context.inflateBinding<PartialLoadingBinding>(R.layout.partial_loading)
+        val binding = PartialLoadingBinding.inflate(context.layoutInflater)
 
         binding.txtDescription.text = message
         binding.progressSpinner.setIndeterminateDrawable(drawable)
@@ -166,7 +165,7 @@ object NXBindings {
      * Text input layout with a text input edit text
      */
     fun formField(context: Context, label: String = ""): PartialFormFieldBinding {
-        val binding = context.inflateBinding<PartialFormFieldBinding>(R.layout.partial_form_field)
+        val binding = PartialFormFieldBinding.inflate(context.layoutInflater)
         binding.label = label
         return binding
     }
