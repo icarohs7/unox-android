@@ -170,6 +170,7 @@ object NXBindings {
         val binding = PartialFormFieldBinding.inflate(context.layoutInflater)
 
         binding.label = label
+        binding.text = text
 
         return binding
     }
