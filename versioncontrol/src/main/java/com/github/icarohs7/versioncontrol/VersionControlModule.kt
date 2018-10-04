@@ -27,4 +27,4 @@ package com.github.icarohs7.versioncontrol
 import com.github.icarohs7.versioncontrol.providers.abstractions.VersionControlProvider
 import com.github.icarohs7.versioncontrol.providers.implementations.VersionControlProviderImpl
 
-fun versionControlProvider(): VersionControlProvider = VersionControlProviderImpl
+fun versionControlProvider(): VersionControlProvider = VersionControlProviderImpl()

@@ -30,7 +30,7 @@ import com.github.icarohs7.versioncontrol.entities.VersionMetadata
 import com.github.icarohs7.versioncontrol.providers.abstractions.VersionControlProvider
 import kotlinx.coroutines.experimental.Deferred
 
-internal object VersionControlProviderImpl : VersionControlProvider {
+internal class VersionControlProviderImpl : VersionControlProvider {
     override lateinit var localVersionProvider: (suspend () -> String)
     override lateinit var remoteVersionProvider: (suspend () -> String)
 
