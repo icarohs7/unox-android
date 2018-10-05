@@ -50,6 +50,34 @@ class AnyExtTest {
         secondMap shouldEqual secondMapExpected
     }
 
+    @Test
+    fun `should pipe operations`() {
+        val p1 = 5 PIPE { this + 3 } PIPE { this + 1 }
+        val exp1 = 9
+
+        p1 shouldEqual exp1
+
+        val p2 = "hey" PIPE { "$this you" } PIPE { "$this, out there" } PIPE { "$this in the cold" }
+        val exp2 = "hey you, out there in the cold"
+
+        p2 shouldEqual exp2
+    }
+
+    @Test
+    fun `should chain operations`() {
+        val c1 = mutableListOf<Int>() CHAIN { this += 1 } CHAIN { this += 42 }
+        val exp1 = mutableListOf(1, 42)
+
+        c1 shouldEqual exp1
+
+        val c2 = mutableListOf<String>() CHAIN
+                { this += "hello" } CHAIN
+                { add("is there anybody") } CHAIN
+                { this += "in there" }
+        val exp2 = mutableListOf("hello", "is there anybody", "in there")
+
+        c2 shouldEqual exp2
+    }
 
     data class TestClass(val foo: String, val bar: Int, @Label("hi") val baz: String)
 }

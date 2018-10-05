@@ -51,6 +51,13 @@ inline fun <reified T : Any> T.mapOfProperties(): Map<String, String> {
 infix fun <T> T.CHAIN(fn: T.() -> Unit) = this.also(fn)
 
 /**
+ * Chain a infix lambda to an operator, returning the result,
+ *  e.g: 5 PIPE { this + 3 } PIPE { this + 1 } - result=9
+ */
+@Suppress("FunctionName")
+infix fun <T, R> T.PIPE(fn: T.() -> R) = this.let(fn)
+
+/**
  * Function used to chain operations in a idiomatic way, as:
  * doThis() ASWELL doThat() ASWELL doAnotherThing()
  */

@@ -58,6 +58,13 @@ abstract class ContractDealer {
     }
 
     /**
+     * Reload a the currently loaded contract
+     */
+    fun reloadContract() {
+        loadedContract.value?.let(::loadContract)
+    }
+
+    /**
      * Load a menu item
      */
     fun loadMenuItem(menuItemId: Int) {
