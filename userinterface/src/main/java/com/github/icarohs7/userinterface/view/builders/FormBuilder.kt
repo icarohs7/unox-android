@@ -7,7 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.github.icarohs7.templates.bindings.NXBindings
 import com.github.icarohs7.templates.databinding.FragmentBaseVerticalLayoutBinding
 import com.github.icarohs7.templates.databinding.PartialFormFieldBinding
-import com.github.icarohs7.templates.databinding.PartialPasswordFormFieldBinding
+import com.github.icarohs7.templates.databinding.PartialFormMaskedFieldBinding
+import com.github.icarohs7.templates.databinding.PartialFormPasswordFieldBinding
 import org.jetbrains.anko.layoutInflater
 import java.lang.ref.WeakReference
 
@@ -44,6 +45,23 @@ class FormBuilder(context: Context) {
     }
 
     /**
+     * Add a masked text field to the form
+     */
+    fun maskedField(
+            label: String = "",
+            mask: String = "",
+            boundLiveData: MutableLiveData<String> = MutableLiveData(),
+            init: PartialFormMaskedFieldBinding.() -> Unit = {}
+    ): PartialFormMaskedFieldBinding {
+        return NXBindings.formMaskedField(
+                getContext(),
+                label,
+                mask,
+                boundLiveData
+        ).apply(init).apply { rootLayout += root }
+    }
+
+    /**
      * Add a text field with input type number to the form
      */
     fun numberField(
@@ -67,8 +85,8 @@ class FormBuilder(context: Context) {
     fun passwordField(
             label: String = "",
             boundLiveData: MutableLiveData<String> = MutableLiveData(),
-            init: PartialPasswordFormFieldBinding.() -> Unit = {}
-    ): PartialPasswordFormFieldBinding {
+            init: PartialFormPasswordFieldBinding.() -> Unit = {}
+    ): PartialFormPasswordFieldBinding {
 
         return NXBindings.formPasswordField(
                 getContext(),

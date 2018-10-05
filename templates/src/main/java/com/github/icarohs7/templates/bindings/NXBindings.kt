@@ -26,18 +26,25 @@ package com.github.icarohs7.templates.bindings
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.view.View
+import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.icarohs7.core.typealiases.RConsumer
+import com.github.icarohs7.templates.R
 import com.github.icarohs7.templates.databinding.ActivityBaseBinding
+import com.github.icarohs7.templates.databinding.DialogYesNoBinding
 import com.github.icarohs7.templates.databinding.FragmentBaseWithheaderBinding
 import com.github.icarohs7.templates.databinding.FragmentBaseWithoutheaderBinding
 import com.github.icarohs7.templates.databinding.PartialCaptionImageBinding
 import com.github.icarohs7.templates.databinding.PartialCenterAndBottomConteinerBinding
 import com.github.icarohs7.templates.databinding.PartialFormFieldBinding
+import com.github.icarohs7.templates.databinding.PartialFormMaskedFieldBinding
+import com.github.icarohs7.templates.databinding.PartialFormPasswordFieldBinding
 import com.github.icarohs7.templates.databinding.PartialFullscreenMessageBinding
 import com.github.icarohs7.templates.databinding.PartialLabelTextBinding
 import com.github.icarohs7.templates.databinding.PartialLoadingBinding
-import com.github.icarohs7.templates.databinding.PartialPasswordFormFieldBinding
 import com.github.icarohs7.templates.databinding.PartialSmallCenterContainerBinding
 import com.github.icarohs7.templates.databinding.PartialSwipeRecyclerBinding
 import com.github.ybq.android.spinkit.sprite.Sprite
@@ -175,16 +182,72 @@ object NXBindings {
         return binding
     }
 
+    /**
+     * Text input layout with a masked edit text
+     */
+    fun formMaskedField(
+            context: Context,
+            label: String = "",
+            mask: String = "",
+            text: MutableLiveData<String>
+    ): PartialFormMaskedFieldBinding {
+
+        val binding = PartialFormMaskedFieldBinding.inflate(context.layoutInflater)
+
+        binding.label = label
+        binding.text = text
+        binding.editField.mask = mask
+
+        return binding
+    }
+
+    /**
+     * Text input layout with hidden text used for passwords
+     */
     fun formPasswordField(
             context: Context,
             label: String = "",
             text: MutableLiveData<String>
-    ): PartialPasswordFormFieldBinding {
+    ): PartialFormPasswordFieldBinding {
 
-        val binding = PartialPasswordFormFieldBinding.inflate(context.layoutInflater)
+        val binding = PartialFormPasswordFieldBinding.inflate(context.layoutInflater)
 
         binding.label = label
         binding.text = text
+
+        return binding
+    }
+
+    /**
+     * Simple dialog with a yes and no button
+     */
+    fun yesNoDialog(context: Context,
+                    title: String = "",
+                    message: String = "",
+                    @ColorInt titleColor: Int = ContextCompat.getColor(context, R.color.colorPrimary),
+                    noHandler: (View) -> Unit = {},
+                    yesHandler: (View) -> Unit = {}
+    ): DialogYesNoBinding {
+        val binding = DialogYesNoBinding.inflate(context.layoutInflater)
+
+        binding.title = title
+        binding.titleColor = titleColor
+        binding.message = message
+        binding.noHandler = View.OnClickListener(noHandler)
+        binding.yesHandler = View.OnClickListener(yesHandler)
+
+        return binding
+    }
+
+    /**
+     * Simple dialog with a yes and no button
+     */
+    fun yesNoDialog(context: Context,
+                    init: RConsumer<DialogYesNoBinding>
+    ): DialogYesNoBinding {
+        val binding = DialogYesNoBinding.inflate(context.layoutInflater)
+
+        binding.init()
 
         return binding
     }
