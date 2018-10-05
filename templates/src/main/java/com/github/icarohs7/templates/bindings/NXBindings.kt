@@ -26,7 +26,6 @@ package com.github.icarohs7.templates.bindings
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.view.View
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
@@ -225,28 +224,13 @@ object NXBindings {
                     title: String = "",
                     message: String = "",
                     @ColorInt titleColor: Int = ContextCompat.getColor(context, R.color.colorPrimary),
-                    noHandler: (View) -> Unit = {},
-                    yesHandler: (View) -> Unit = {}
+                    init: RConsumer<DialogYesNoBinding> = {}
     ): DialogYesNoBinding {
         val binding = DialogYesNoBinding.inflate(context.layoutInflater)
 
         binding.title = title
         binding.titleColor = titleColor
         binding.message = message
-        binding.noHandler = View.OnClickListener(noHandler)
-        binding.yesHandler = View.OnClickListener(yesHandler)
-
-        return binding
-    }
-
-    /**
-     * Simple dialog with a yes and no button
-     */
-    fun yesNoDialog(context: Context,
-                    init: RConsumer<DialogYesNoBinding>
-    ): DialogYesNoBinding {
-        val binding = DialogYesNoBinding.inflate(context.layoutInflater)
-
         binding.init()
 
         return binding

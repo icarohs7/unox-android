@@ -65,25 +65,25 @@
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_yes"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:backgroundTint="@android:color/holo_red_dark"
-                android:onClick="@{ yesHandler::onClick }"
-                android:text="@android:string/no"
-                android:textAlignment="center"
-                android:textColor="@android:color/white" />
-
-            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_no"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:backgroundTint="@android:color/holo_green_dark"
+                android:backgroundTint="@android:color/holo_red_dark"
                 android:onClick="@{ noHandler::onClick }"
+                android:text="@android:string/no"
+                android:textAlignment="center"
+                android:textColor="@android:color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_yes"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/holo_green_dark"
+                android:onClick="@{ yesHandler::onClick }"
                 android:text="@android:string/yes"
                 android:textAlignment="center"
                 android:textColor="@android:color/white" />
