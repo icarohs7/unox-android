@@ -17,14 +17,14 @@ import java.lang.ref.WeakReference
 fun Context.form(fn: FormBuilder.() -> Unit): LinearLayout {
     val builder = FormBuilder(this)
     builder.fn()
-    return builder.layout
+    return builder.rootLayout
 }
 
 /**
  * Builder used to create a DSL for building forms
  */
 class FormBuilder(context: Context) {
-    internal val layout = FragmentBaseVerticalLayoutBinding.inflate(context.layoutInflater).linearLayout
+    val rootLayout: LinearLayout = FragmentBaseVerticalLayoutBinding.inflate(context.layoutInflater).linearLayout
     private var weakContext: WeakReference<Context> = WeakReference(context)
     private val getContext: () -> Context = { requireNotNull(weakContext.get()) }
 
@@ -40,7 +40,7 @@ class FormBuilder(context: Context) {
                 getContext(),
                 label,
                 boundLiveData
-        ).apply(init).apply { layout += root }
+        ).apply(init).apply { rootLayout += root }
     }
 
     /**
@@ -57,7 +57,7 @@ class FormBuilder(context: Context) {
                 boundLiveData
         ).apply(init)
                 .apply { this.editField.inputType = android.text.InputType.TYPE_CLASS_NUMBER }
-                .apply { layout += root }
+                .apply { rootLayout += root }
     }
 
 
@@ -74,7 +74,7 @@ class FormBuilder(context: Context) {
                 getContext(),
                 label,
                 boundLiveData
-        ).apply(init).apply { layout += root }
+        ).apply(init).apply { rootLayout += root }
     }
 
 }
