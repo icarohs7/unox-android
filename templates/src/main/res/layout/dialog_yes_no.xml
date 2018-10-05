@@ -70,7 +70,7 @@
                 android:layout_height="50dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:backgroundTint="@android:color/red"
+                android:backgroundTint="@android:color/holo_red_dark"
                 android:onClick="@{ yesHandler::onClick }"
                 android:text="@android:string/no"
                 android:textAlignment="center"
