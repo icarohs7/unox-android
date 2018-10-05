@@ -55,3 +55,11 @@ fun String?.toLocaleNumber(language: String, country: String): String {
         this
     }?.trim() ?: ""
 }
+
+/**
+ * Transformer removing the trailing and leading spaces
+ * and the Byte Order Mark (BOM) from a string
+ */
+fun String.trimAndRemoveBom(): String {
+    return replace(65279.toChar().toString(), "").trim()
+}
