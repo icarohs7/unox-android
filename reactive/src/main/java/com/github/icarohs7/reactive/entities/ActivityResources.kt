@@ -22,15 +22,26 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.contractwatcher.view.contract
+package com.github.icarohs7.reactive.entities
 
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
 /**
- * @property menuItemId Id of the menu item resource that should be selected whenever the contract is run
- * @property navigateAction Action to be executed when the contract is run
+ * Class used to store the resources of an Activity,
+ * i.e the Views and Resources for the sideNavigation(drawer),
+ * bottomNavigation and toolbar
  */
-data class Contract(
-        val menuItemId: Int = 0,
-        val navigateAction: AppCompatActivity.() -> Unit
-)
+class ActivityResources internal constructor() {
+    var sideNavigationView: NavigationView? = null
+    var sideNavigationMenuRes: Int? = null
+    var sideNavigationHeaderRes: Int? = null
+    var bottomNavigationView: BottomNavigationView? = null
+    var bottomNavigationMenuRes: Int? = null
+    var toolbarTitle: String? = null
+    var toolbar: Toolbar? = null
+    var toolbarOpenDrawerMenuItemDrawableId: Int? = null
+    var drawerLayout: DrawerLayout? = null
+}

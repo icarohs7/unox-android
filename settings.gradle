@@ -25,7 +25,7 @@
 include ':telephony',
         ':templates',
         ':network',
-        ':contractwatcher',
+        ':reactive',
         ':core',
         ':userinterface',
         ':notification',

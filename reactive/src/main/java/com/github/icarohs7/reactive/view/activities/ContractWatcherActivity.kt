@@ -22,16 +22,16 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.contractwatcher.view.activities
+package com.github.icarohs7.reactive.view.activities
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.github.icarohs7.contractwatcher.entities.ActivityResources
-import com.github.icarohs7.contractwatcher.settings.ContractWatcherSettings
-import com.github.icarohs7.contractwatcher.view.contract.Contract
+import com.github.icarohs7.reactive.entities.ActivityResources
+import com.github.icarohs7.reactive.settings.ContractWatcherSettings
+import com.github.icarohs7.reactive.view.contract.Contract
 import com.google.android.material.navigation.NavigationView
 
 /**

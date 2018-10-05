@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.contractwatcher.view.contract
+package com.github.icarohs7.reactive.view.contract
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

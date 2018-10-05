@@ -22,12 +22,12 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.contractwatcher.view.activities
+package com.github.icarohs7.reactive.view.activities
 
 import androidx.annotation.CallSuper
 import androidx.databinding.DataBindingUtil
-import com.github.icarohs7.contractwatcher.R
-import com.github.icarohs7.contractwatcher.entities.ActivityResources
+import com.github.icarohs7.reactive.R
+import com.github.icarohs7.reactive.entities.ActivityResources
 import com.github.icarohs7.templates.databinding.ActivityBaseBinding
 
 /**

@@ -22,10 +22,10 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.contractwatcher.settings
+package com.github.icarohs7.reactive.settings
 
-import com.github.icarohs7.contractwatcher.view.contract.ContractDealer
 import com.github.icarohs7.core.settings.UnoxAndroidSettings
+import com.github.icarohs7.reactive.view.contract.ContractDealer
 
 
 /**

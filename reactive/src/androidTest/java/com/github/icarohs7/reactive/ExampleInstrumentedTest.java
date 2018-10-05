@@ -22,26 +22,29 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.contractwatcher.entities
+package com.github.icarohs7.reactive;
 
-import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.runner.AndroidJUnit4;
+
+import static org.junit.Assert.assertEquals;
 
 /**
- * Class used to store the resources of an Activity,
- * namely the Views and Resources for the sideNavigation(drawer),
- * bottomNavigation and toolbar
+ * Instrumented test, which will execute on an Android device.
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-class ActivityResources internal constructor() {
-    var sideNavigationView: NavigationView? = null
-    var sideNavigationMenuRes: Int? = null
-    var sideNavigationHeaderRes: Int? = null
-    var bottomNavigationView: BottomNavigationView? = null
-    var bottomNavigationMenuRes: Int? = null
-    var toolbarTitle: String? = null
-    var toolbar: Toolbar? = null
-    var toolbarOpenDrawerMenuItemDrawableId: Int? = null
-    var drawerLayout: DrawerLayout? = null
+@RunWith(AndroidJUnit4.class)
+public class ExampleInstrumentedTest {
+    @Test
+    public void useAppContext() {
+        // Context of the app under test.
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        assertEquals("com.github.icarohs7.contractwatcher.test", appContext.getPackageName());
+    }
 }
