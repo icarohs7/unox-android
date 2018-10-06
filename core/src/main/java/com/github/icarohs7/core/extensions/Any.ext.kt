@@ -23,26 +23,6 @@
  */
 package com.github.icarohs7.core.extensions
 
-import com.github.icarohs7.core.annotations.Label
-import kotlin.reflect.full.findAnnotation
-import kotlin.reflect.full.memberProperties
-
-/**
- * Return a map representation with the keys being the name of the
- * properties or the value of the annotation [Label] and the values
- * being the values of the properties
- */
-inline fun <reified T : Any> T.mapOfProperties(): Map<String, String> {
-    val map = mutableMapOf<String, String>()
-    val clazz = T::class
-    clazz.memberProperties.forEach { prop ->
-        val label = prop.findAnnotation<Label>()?.value ?: prop.name
-        map += label to prop.get(this).toString()
-    }
-
-    return map
-}
-
 /**
  * Chain a infix lambda to an operator, returning itself,
  * with side effects, e.g: mutableListOf<Int>() CHAIN { add(2) }

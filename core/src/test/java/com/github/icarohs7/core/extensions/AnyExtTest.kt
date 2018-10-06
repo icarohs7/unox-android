@@ -24,31 +24,10 @@
 
 package com.github.icarohs7.core.extensions
 
-import com.github.icarohs7.core.annotations.Label
 import org.junit.Test
 import se.lovef.assert.v1.shouldEqual
 
 class AnyExtTest {
-    @Test
-    fun `should convert a class to a map`() {
-        val firstObj = TestClass("a", 1, "b")
-        val firstMap = firstObj.mapOfProperties()
-        val firstMapExpected = mapOf(
-                "foo" to "a",
-                "bar" to "1",
-                "hi" to "b"
-        )
-        firstMap shouldEqual firstMapExpected
-
-        val secondObj = TestClass("x", 0, "p")
-        val secondMap = secondObj.mapOfProperties()
-        val secondMapExpected = mapOf(
-                "foo" to "x",
-                "bar" to "0",
-                "hi" to "p"
-        )
-        secondMap shouldEqual secondMapExpected
-    }
 
     @Test
     fun `should pipe operations`() {
@@ -78,6 +57,4 @@ class AnyExtTest {
 
         c2 shouldEqual exp2
     }
-
-    data class TestClass(val foo: String, val bar: Int, @Label("hi") val baz: String)
 }

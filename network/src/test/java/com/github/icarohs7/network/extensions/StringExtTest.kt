@@ -22,14 +22,10 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.network
+package com.github.icarohs7.network.extensions
 
 import com.beust.klaxon.Json
 import com.github.icarohs7.core.toplevel.onBgNoReturn
-import com.github.icarohs7.network.extensions.httpGetArrayAsync
-import com.github.icarohs7.network.extensions.httpGetObjectAsync
-import com.github.icarohs7.network.extensions.parseJsonToArray
-import com.github.icarohs7.network.extensions.parseJsonToObj
 import org.junit.Test
 import se.lovef.assert.v1.shouldBeGreaterThan
 import se.lovef.assert.v1.shouldBeNull
@@ -76,7 +72,8 @@ class StringExtTest {
     fun `should parse json arrays`() {
         val json1 = """[{"name":"icaro"},{"name":"filipe"}]"""
         val arr1 = json1.parseJsonToArray<SimpleObj>()
-        val expect1 = listOf(SimpleObj("icaro"), SimpleObj("filipe"))
+        val expect1 = listOf(SimpleObj("icaro"),
+                             SimpleObj("filipe"))
         arr1 shouldEqual expect1
         arr1.size shouldEqual 2
 
