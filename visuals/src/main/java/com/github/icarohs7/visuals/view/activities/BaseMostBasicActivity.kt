@@ -24,11 +24,14 @@
 
 package com.github.icarohs7.visuals.view.activities
 
+import android.widget.ProgressBar
 import androidx.annotation.CallSuper
 import androidx.databinding.DataBindingUtil
+import com.github.icarohs7.core.toplevel.onBgNoReturn
 import com.github.icarohs7.visuals.R
 import com.github.icarohs7.visuals.databinding.ActivityBaseBinding
 import com.github.icarohs7.visuals.entities.ActivityResources
+import com.github.icarohs7.visuals.extensions.loadingTransactionAsync
 
 /**
  * Base Activity implementing the Contract Watcher architecture,
@@ -36,6 +39,23 @@ import com.github.icarohs7.visuals.entities.ActivityResources
  */
 abstract class BaseMostBasicActivity : MostBasicActivity() {
     lateinit var binding: ActivityBaseBinding
+
+    /**
+     * Execute an operation, showing the progress bar when it's running
+     * and hiding it when done
+     */
+    open fun runWithProgressFeedback(fn: suspend (ProgressBar) -> Unit) = onBgNoReturn { _ ->
+        binding.progressBar.loadingTransactionAsync(fn)
+    }
+
+    /**
+     * Execute an operation, showing the progress bar when it's running
+     * and hiding it when done
+     */
+    open fun runWithProgressFeedback(fn: suspend () -> Unit) = onBgNoReturn { _ ->
+        binding.progressBar.loadingTransactionAsync { fn() }
+    }
+
 
     @CallSuper
     override fun onSetContentView() {

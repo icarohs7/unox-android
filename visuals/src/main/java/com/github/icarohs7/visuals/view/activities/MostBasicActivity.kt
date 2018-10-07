@@ -61,8 +61,12 @@ abstract class MostBasicActivity : AppCompatActivity(), NavigationView.OnNavigat
         onSetContentView()
         onDefineActivityResources()(navigationResources)
         loadNavigationResources()
-        savedInstanceState?.also(::recoverStateWhenExistent)
         afterInitialSetup()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState?.also(::recoverStateWhenExistent)
     }
 
     /**
@@ -82,12 +86,13 @@ abstract class MostBasicActivity : AppCompatActivity(), NavigationView.OnNavigat
      */
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         navigationResources.drawerLayout?.closeDrawers()
+        checkMenuItem(menuItem.itemId)
         onSelectMenuItem(menuItem)
         return true
     }
 
     /**
-     * Called when there's state stored
+     * Called when there's state stored and the activity is restarted
      */
     open fun recoverStateWhenExistent(savedInstanceState: Bundle) {
     }

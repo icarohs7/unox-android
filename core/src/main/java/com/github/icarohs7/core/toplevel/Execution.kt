@@ -26,6 +26,7 @@ package com.github.icarohs7.core.toplevel
 
 import com.github.icarohs7.core.settings.UnoxAndroidSettings
 import kotlinx.coroutines.experimental.CoroutineScope
+import kotlinx.coroutines.experimental.Dispatchers
 import kotlinx.coroutines.experimental.android.Main
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
@@ -50,22 +51,25 @@ fun runAfterDelay(delayTime: Int, fn: suspend (CoroutineScope) -> Unit) {
 /**
  * Run a function on the UI Thread
  */
-fun onUi(fn: suspend (CoroutineScope) -> Unit) =
-        CoroutineScope(kotlinx.coroutines.experimental.Dispatchers.Main).launch { fn(this) }
+fun onUi(fn: suspend (CoroutineScope) -> Unit) = CoroutineScope(Dispatchers.Main).launch {
+    fn(this)
+}
 
 /**
  * Run a function on the background coroutine context and
  * returns the deferred
  */
-fun <T> onBg(fn: suspend (CoroutineScope) -> T) =
-        CoroutineScope(NXBGPOOL).async { fn(this) }
+fun <T> onBg(fn: suspend (CoroutineScope) -> T) = CoroutineScope(NXBGPOOL).async {
+    fn(this)
+}
 
 /**
  * Run a function on the background coroutine context and
  * returns the job, use for fire and forget operations
  */
-fun onBgNoReturn(fn: suspend (CoroutineScope) -> Unit) =
-        CoroutineScope(NXBGPOOL).launch { fn(this) }
+fun onBgNoReturn(fn: suspend (CoroutineScope) -> Unit) = CoroutineScope(NXBGPOOL).launch {
+    fn(this)
+}
 
 /**
  * Run a function and ignore the returning value,
