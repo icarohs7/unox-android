@@ -22,11 +22,26 @@
  * SOFTWARE.
  */
 
-include ':telephony',
-        ':visuals',
-        ':network',
-        ':core',
-        ':notification',
-        ':navigation',
-        ':animation',
-        ':adapter'
+package com.github.icarohs7.visuals.entities
+
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
+
+/**
+ * Class used to store the resources of an Activity,
+ * i.e the Views and Resources for the sideNavigation(drawer),
+ * bottomNavigation and toolbar
+ */
+class ActivityResources internal constructor() {
+    var sideNavigationView: NavigationView? = null
+    var sideNavigationMenuRes: Int? = null
+    var sideNavigationHeaderRes: Int? = null
+    var bottomNavigationView: BottomNavigationView? = null
+    var bottomNavigationMenuRes: Int? = null
+    var toolbarTitle: String? = null
+    var toolbar: Toolbar? = null
+    var toolbarOpenDrawerMenuItemDrawableId: Int? = null
+    var drawerLayout: DrawerLayout? = null
+}

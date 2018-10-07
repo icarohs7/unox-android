@@ -22,11 +22,41 @@
  * SOFTWARE.
  */
 
-include ':telephony',
-        ':visuals',
-        ':network',
-        ':core',
-        ':notification',
-        ':navigation',
-        ':animation',
-        ':adapter'
+package com.github.icarohs7.visuals.extensions
+
+import android.view.View
+import android.widget.FrameLayout
+import com.github.icarohs7.animation.extensions.animateFadeIn
+import com.github.icarohs7.animation.extensions.animateFadeOut
+import com.github.icarohs7.animation.extensions.animateScaleIn
+import com.github.icarohs7.animation.extensions.animateScaleOut
+
+/**
+ * Hides all children of the frame layout and show
+ * the parameterized child
+ */
+fun FrameLayout.showChild(child: View) {
+    hideChildrenExcept(child)
+}
+
+/**
+ * Fade and hide all children of the frame layout,
+ * then show the parameterized child and fadeIn
+ */
+fun FrameLayout.fadeInChild(child: View) {
+    this.animateFadeOut {
+        this.hideChildrenExcept(child)
+        this.animateFadeIn()
+    }
+}
+
+/**
+ * Scale out and hide all children of the frame layout,
+ * then show the parameterized child and ScaleIn
+ */
+fun FrameLayout.scaleInChild(child: View) {
+    this.animateScaleOut {
+        this.hideChildrenExcept(child)
+        this.animateScaleIn()
+    }
+}

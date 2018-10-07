@@ -22,11 +22,33 @@
  * SOFTWARE.
  */
 
-include ':telephony',
-        ':visuals',
-        ':network',
-        ':core',
-        ':notification',
-        ':navigation',
-        ':animation',
-        ':adapter'
+package com.github.icarohs7.visuals.view.activities
+
+import androidx.annotation.CallSuper
+import androidx.databinding.DataBindingUtil
+import com.github.icarohs7.visuals.R
+import com.github.icarohs7.visuals.databinding.ActivityBaseBinding
+import com.github.icarohs7.visuals.entities.ActivityResources
+
+/**
+ * Base Activity implementing the Contract Watcher architecture,
+ * using the [R.layout.activity_base] layout
+ */
+abstract class BaseMostBasicActivity : MostBasicActivity() {
+    lateinit var binding: ActivityBaseBinding
+
+    @CallSuper
+    override fun onSetContentView() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_base)
+    }
+
+    override fun onDefineActivityResources(): ActivityResources.() -> Unit {
+        return {
+            bottomNavigationView = binding.bottomNavigation
+            drawerLayout = binding.drawerLayout
+            sideNavigationView = binding.navView
+            toolbar = binding.toolbar
+            toolbarOpenDrawerMenuItemDrawableId = R.drawable.ic_menu
+        }
+    }
+}

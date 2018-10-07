@@ -22,11 +22,35 @@
  * SOFTWARE.
  */
 
-include ':telephony',
-        ':visuals',
-        ':network',
-        ':core',
-        ':notification',
-        ':navigation',
-        ':animation',
-        ':adapter'
+package com.github.icarohs7.visuals.extensions
+
+import android.widget.ProgressBar
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
+import com.github.icarohs7.core.toplevel.onUi
+
+/**
+ * Execute a function, showing the progress bar before starting and hiding
+ * it when finished
+ */
+fun ProgressBar.loadingTransaction(fn: (ProgressBar) -> Unit) {
+    try {
+        this.isVisible = true
+        fn(this)
+    } finally {
+        this.isGone = true
+    }
+}
+
+/**
+ * Execute a suspending function, showing the progress bar before starting and
+ * hiding it when finished
+ */
+suspend fun ProgressBar.loadingTransactionAsync(fn: suspend (ProgressBar) -> Unit) {
+    try {
+        onUi { this.isVisible = true }
+        fn(this)
+    } finally {
+        onUi { this.isGone = true }
+    }
+}

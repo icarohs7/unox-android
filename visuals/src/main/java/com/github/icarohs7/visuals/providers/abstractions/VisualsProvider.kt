@@ -22,11 +22,11 @@
  * SOFTWARE.
  */
 
-include ':telephony',
-        ':visuals',
-        ':network',
-        ':core',
-        ':notification',
-        ':navigation',
-        ':animation',
-        ':adapter'
+package com.github.icarohs7.visuals.providers.abstractions
+
+import android.content.Context
+import com.github.icarohs7.visuals.view.dialogs.NXDialogBuilder
+
+interface VisualsProvider {
+    fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
+}

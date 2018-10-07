@@ -22,11 +22,23 @@
  * SOFTWARE.
  */
 
-include ':telephony',
-        ':visuals',
-        ':network',
-        ':core',
-        ':notification',
-        ':navigation',
-        ':animation',
-        ':adapter'
+package com.github.icarohs7.visuals.extensions
+
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import org.jetbrains.anko.inputMethodManager
+
+/**
+ * Dismiss the soft keyboard
+ */
+fun AppCompatActivity.hideKeyboard(containerId: Int) {
+    inputMethodManager.hideSoftInputFromWindow(findViewById<View>(containerId)?.windowToken, 0)
+}
+
+
+/**
+ * Dismiss the soft keyboard
+ */
+fun AppCompatActivity.hideKeyboard(container: View) {
+    inputMethodManager.hideSoftInputFromWindow(container.windowToken, 0)
+}

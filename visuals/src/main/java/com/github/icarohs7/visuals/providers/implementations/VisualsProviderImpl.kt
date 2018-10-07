@@ -22,11 +22,19 @@
  * SOFTWARE.
  */
 
-include ':telephony',
-        ':visuals',
-        ':network',
-        ':core',
-        ':notification',
-        ':navigation',
-        ':animation',
-        ':adapter'
+package com.github.icarohs7.visuals.providers.implementations
+
+import android.content.Context
+import com.github.icarohs7.visuals.providers.abstractions.VisualsProvider
+import com.github.icarohs7.visuals.view.dialogs.NXDialogBuilder
+
+internal class VisualsProviderImpl : VisualsProvider {
+    /**
+     * Builds and show a nxDialog
+     */
+    override fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit) {
+        val builder = NXDialogBuilder(context)
+        builder.fn()
+        builder.build()
+    }
+}

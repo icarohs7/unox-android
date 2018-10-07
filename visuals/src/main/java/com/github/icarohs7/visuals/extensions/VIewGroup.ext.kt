@@ -22,11 +22,26 @@
  * SOFTWARE.
  */
 
-include ':telephony',
-        ':visuals',
-        ':network',
-        ':core',
-        ':notification',
-        ':navigation',
-        ':animation',
-        ':adapter'
+package com.github.icarohs7.visuals.extensions
+
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.view.forEach
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
+
+/**
+ * Set all children of the ViewGroup to Gone
+ */
+fun ViewGroup.hideChildren() {
+    this.forEach { child -> child.isGone = true }
+}
+
+/**
+ * Set all children of the ViewGroup to Gone and
+ * the parameterized one to visible
+ */
+fun ViewGroup.hideChildrenExcept(exceptionChild: View) {
+    hideChildren()
+    exceptionChild.isVisible = true
+}

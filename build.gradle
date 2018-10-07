@@ -106,9 +106,7 @@ subprojects { proj ->
         implementation fileTree(dir: 'libs', include: ['*.jar'])
 
         //Core module
-        if (proj.name != 'core') {
-            implementation project(':core')
-        }
+        if (proj.name != 'core') implementation project(':core')
 
         //AndroidX
         implementation "androidx.appcompat:appcompat:$appcompat_version"

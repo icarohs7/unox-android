@@ -22,11 +22,20 @@
  * SOFTWARE.
  */
 
-include ':telephony',
-        ':visuals',
-        ':network',
-        ':core',
-        ':notification',
-        ':navigation',
-        ':animation',
-        ':adapter'
+package com.github.icarohs7.visuals.toplevel
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+
+/**
+ * Inflates and return a binding of the determined type with the parameterized layout
+ */
+fun <T : ViewDataBinding> getBinding(inflater: LayoutInflater, @LayoutRes layoutId: Int, parent: ViewGroup? = null): T =
+        DataBindingUtil.inflate(
+                inflater,
+                layoutId,
+                parent,
+                false)
