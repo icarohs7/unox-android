@@ -24,7 +24,7 @@
 
 package com.github.icarohs7.core.extensions
 
-import com.github.icarohs7.core.toplevel.onBgNoReturn
+import com.github.icarohs7.core.toplevel.onBg
 import com.github.icarohs7.core.toplevel.onUi
 import kotlinx.coroutines.experimental.Deferred
 
@@ -33,7 +33,7 @@ import kotlinx.coroutines.experimental.Deferred
  * its execution, parameterizing the returning value
  */
 fun <T> Deferred<T>.onResponse(fn: (T) -> Unit) {
-    onBgNoReturn { _ ->
+    onBg { _ ->
         val response = this.await()
         onUi { fn(response) }
     }

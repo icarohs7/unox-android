@@ -27,7 +27,7 @@ package com.github.icarohs7.visuals.view.activities
 import android.widget.ProgressBar
 import androidx.annotation.CallSuper
 import androidx.databinding.DataBindingUtil
-import com.github.icarohs7.core.toplevel.onBgNoReturn
+import com.github.icarohs7.core.toplevel.onBg
 import com.github.icarohs7.visuals.R
 import com.github.icarohs7.visuals.databinding.ActivityBaseBinding
 import com.github.icarohs7.visuals.entities.ActivityResources
@@ -44,7 +44,7 @@ abstract class BaseMostBasicActivity : MostBasicActivity() {
      * Execute an operation, showing the progress bar when it's running
      * and hiding it when done
      */
-    open fun runWithProgressFeedback(fn: suspend (ProgressBar) -> Unit) = onBgNoReturn { _ ->
+    open fun runWithProgressFeedback(fn: suspend (ProgressBar) -> Unit) = onBg { _ ->
         binding.progressBar.loadingTransactionAsync(fn)
     }
 
@@ -52,7 +52,7 @@ abstract class BaseMostBasicActivity : MostBasicActivity() {
      * Execute an operation, showing the progress bar when it's running
      * and hiding it when done
      */
-    open fun runWithProgressFeedback(fn: suspend () -> Unit) = onBgNoReturn { _ ->
+    open fun runWithProgressFeedback(fn: suspend () -> Unit) = onBg { _ ->
         binding.progressBar.loadingTransactionAsync { fn() }
     }
 

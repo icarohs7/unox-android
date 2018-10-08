@@ -29,7 +29,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.github.icarohs7.core.extensions.ifTrue
 import com.github.icarohs7.core.toplevel.onBg
-import com.github.icarohs7.core.toplevel.onBgNoReturn
+import com.github.icarohs7.core.toplevel.onBgResult
 import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.core.toplevel.runAfterDelay
 import com.github.icarohs7.visuals.R
@@ -47,7 +47,7 @@ import kotlinx.coroutines.experimental.Deferred
 abstract class BaseBackgroundWorkerSplashActivity<T>(protected val animationTimeout: Int = 2000) : AppCompatActivity() {
 
     protected lateinit var root: PartialCenterAndBottomConteinerBinding
-    private var backgroundTask: Deferred<T?> = onBg { null }
+    private var backgroundTask: Deferred<T?> = onBgResult { null }
 
     /**
      * Called when the binding is set and waiting content
@@ -74,7 +74,7 @@ abstract class BaseBackgroundWorkerSplashActivity<T>(protected val animationTime
      */
     private fun verifyIfWillDoBackgroundWork() {
         val willDo = confirmIfShouldDoBackgroundWorkBeforeStarting()
-        willDo ifTrue { backgroundTask = onBg { startBackgroundOperations() } }
+        willDo ifTrue { backgroundTask = onBgResult { startBackgroundOperations() } }
     }
 
     /**
@@ -117,7 +117,7 @@ abstract class BaseBackgroundWorkerSplashActivity<T>(protected val animationTime
     private fun waitBackgroundOperationsAndProceed() {
         runAfterDelay(animationTimeout) { _ ->
             afterAnimationTimeout()
-            onBgNoReturn { _ ->
+            onBg { _ ->
                 val bgTaskResult = backgroundTask.await()
                 onUi { changeToNextScreen(bgTaskResult) }
             }

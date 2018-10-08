@@ -42,7 +42,7 @@ val NXBGPOOL by lazy { newFixedThreadPoolContext(UnoxAndroidSettings.NXBGPOOL_NU
  * Run a function on the UI Thread after some time
  */
 fun runAfterDelay(delayTime: Int, fn: suspend (CoroutineScope) -> Unit) {
-    onBgNoReturn {
+    onBg {
         delay(delayTime.toLong())
         onUi(fn)
     }
@@ -59,7 +59,7 @@ fun onUi(fn: suspend (CoroutineScope) -> Unit) = CoroutineScope(Dispatchers.Main
  * Run a function on the background coroutine context and
  * returns the deferred
  */
-fun <T> onBg(fn: suspend (CoroutineScope) -> T) = CoroutineScope(NXBGPOOL).async {
+fun <T> onBgResult(fn: suspend (CoroutineScope) -> T) = CoroutineScope(NXBGPOOL).async {
     fn(this)
 }
 
@@ -67,7 +67,7 @@ fun <T> onBg(fn: suspend (CoroutineScope) -> T) = CoroutineScope(NXBGPOOL).async
  * Run a function on the background coroutine context and
  * returns the job, use for fire and forget operations
  */
-fun onBgNoReturn(fn: suspend (CoroutineScope) -> Unit) = CoroutineScope(NXBGPOOL).launch {
+fun onBg(fn: suspend (CoroutineScope) -> Unit) = CoroutineScope(NXBGPOOL).launch {
     fn(this)
 }
 
