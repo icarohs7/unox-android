@@ -44,15 +44,19 @@ import com.github.icarohs7.visuals.databinding.PartialLabelTextBinding
 import com.github.icarohs7.visuals.databinding.PartialLoadingBinding
 import com.github.icarohs7.visuals.databinding.PartialSmallCenterContainerBinding
 import com.github.icarohs7.visuals.databinding.PartialSwipeRecyclerBinding
-import com.github.icarohs7.visuals.providers.abstractions.VisualsProvider
-import com.github.icarohs7.visuals.providers.implementations.VisualsProviderImpl
+import com.github.icarohs7.visuals.providers.VisualsProviderImpl
+import com.github.icarohs7.visuals.view.dialogs.NXDialogBuilder
 import com.github.ybq.android.spinkit.sprite.Sprite
 import com.github.ybq.android.spinkit.style.FadingCircle
 import org.jetbrains.anko.layoutInflater
 
 interface VisualsModule {
-    companion object {
-        val provider: VisualsProvider get() = VisualsProviderImpl()
+    interface VisualsProvider {
+        fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
+
+        companion object {
+            fun get(): VisualsProvider = VisualsProviderImpl()
+        }
     }
 
     /**

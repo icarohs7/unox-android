@@ -41,7 +41,7 @@ class FormBuilder(context: Context) {
                 getContext(),
                 label,
                 boundLiveData
-        ).apply(init).apply { rootLayout += root }
+        ).apply(init).apply { rootLayout += inputLayout }
     }
 
     /**
@@ -58,7 +58,26 @@ class FormBuilder(context: Context) {
                 label,
                 mask,
                 boundLiveData
-        ).apply(init).apply { rootLayout += root }
+        ).apply(init).apply { rootLayout += inputLayout }
+    }
+
+    /**
+     * Add a masked text with input type number field to the form
+     */
+    fun maskedNumberField(
+            label: String = "",
+            mask: String = "",
+            boundLiveData: MutableLiveData<String> = MutableLiveData(),
+            init: PartialFormMaskedFieldBinding.() -> Unit = {}
+    ): PartialFormMaskedFieldBinding {
+        return VisualsModule.NXBindings.formMaskedField(
+                getContext(),
+                label,
+                mask,
+                boundLiveData
+        ).apply(init)
+                .apply { this.editField.inputType = android.text.InputType.TYPE_CLASS_NUMBER }
+                .apply { rootLayout += inputLayout }
     }
 
     /**
@@ -75,7 +94,7 @@ class FormBuilder(context: Context) {
                 boundLiveData
         ).apply(init)
                 .apply { this.editField.inputType = android.text.InputType.TYPE_CLASS_NUMBER }
-                .apply { rootLayout += root }
+                .apply { rootLayout += inputLayout }
     }
 
 
@@ -92,7 +111,7 @@ class FormBuilder(context: Context) {
                 getContext(),
                 label,
                 boundLiveData
-        ).apply(init).apply { rootLayout += root }
+        ).apply(init).apply { rootLayout += inputLayout }
     }
 
 }

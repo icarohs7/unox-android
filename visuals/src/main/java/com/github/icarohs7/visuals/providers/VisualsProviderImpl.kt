@@ -22,11 +22,19 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.visuals.providers.abstractions
+package com.github.icarohs7.visuals.providers
 
 import android.content.Context
+import com.github.icarohs7.visuals.VisualsModule
 import com.github.icarohs7.visuals.view.dialogs.NXDialogBuilder
 
-interface VisualsProvider {
-    fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
+internal class VisualsProviderImpl : VisualsModule.VisualsProvider {
+    /**
+     * Builds and show a nxDialog
+     */
+    override fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit) {
+        val builder = NXDialogBuilder(context)
+        builder.fn()
+        builder.build()
+    }
 }
