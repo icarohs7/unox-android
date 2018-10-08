@@ -1,21 +1,25 @@
 package com.github.icarohs7.visuals.extensions
 
-import android.content.DialogInterface
-import android.view.ViewGroup
+import android.app.AlertDialog
 import androidx.databinding.ViewDataBinding
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.customView
-import org.jetbrains.anko.matchParent
 
 /**
  * Convert a binding to a dialog and show it, returning the
- * dialog interface shown
+ * dialog object shown
  */
-fun <T : ViewDataBinding> T.showAsDialog(): DialogInterface {
-    val ctx = this.root.context
-    return ctx.alert {
-        customView {
-            addView(this@showAsDialog.root, ViewGroup.LayoutParams(matchParent, matchParent))
-        }
-    }.show()
+fun <T : ViewDataBinding> T.toDialog(): AlertDialog {
+    return AlertDialog
+            .Builder(this.root.context)
+            .setView(this.root)
+            .create()
+}
+
+/**
+ * Convert a binding to a dialog builder with the root
+ * view set as the dialog's content
+ */
+fun <T : ViewDataBinding> T.toDialogBuilder(): AlertDialog.Builder {
+    return AlertDialog
+            .Builder(this.root.context)
+            .setView(this.root)
 }
