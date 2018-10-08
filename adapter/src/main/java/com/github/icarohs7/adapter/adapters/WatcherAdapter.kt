@@ -36,7 +36,9 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * Adapter based on observability and dynamic lists built using LiveData
  */
-abstract class WatcherAdapter<T, DB : ViewDataBinding> : RecyclerView.Adapter<WatcherAdapter.WatcherViewHolder<DB>>() {
+abstract class WatcherAdapter<T, DB : ViewDataBinding>(
+        private val dataSource: LiveData<List<T>>
+) : RecyclerView.Adapter<WatcherAdapter.WatcherViewHolder<DB>>() {
 
     /**
      * The observer watching the changes on the list
@@ -54,11 +56,6 @@ abstract class WatcherAdapter<T, DB : ViewDataBinding> : RecyclerView.Adapter<Wa
      */
     open fun diffCallback(oldList: List<T>, newList: List<T>): DiffUtil.Callback =
             WatcherDiffUtil(oldList, newList)
-
-    /**
-     * Function called to return the LiveData of the list
-     */
-    abstract fun dataFactory(): LiveData<List<T>>
 
     /**
      * Function converting an list item to an actual view
@@ -88,31 +85,31 @@ abstract class WatcherAdapter<T, DB : ViewDataBinding> : RecyclerView.Adapter<Wa
      * Setup of the viewholder when going to be visible
      */
     override fun onBindViewHolder(holder: WatcherViewHolder<DB>, position: Int) {
-        itemToViewMapping(dataFilter(dataFactory().value ?: emptyList()), position, holder.binding)
+        itemToViewMapping(dataFilter(dataSource.value ?: emptyList()), position, holder.binding)
     }
 
     override fun getItemCount(): Int =
-            dataFilter(dataFactory().value ?: emptyList()).size
+            dataFilter(dataSource.value ?: emptyList()).size
 
     /**
      * Start observing the data when the adapter is attached to the recycler
      */
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        dataFactory().observeForever(observer)
+        dataSource.observeForever(observer)
     }
 
     /**
      * Stop observing the data when the adapter is detached from the recycler
      */
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        dataFactory().removeObserver(observer)
+        dataSource.removeObserver(observer)
     }
 
     /**
      * Called to update the list with the minimum amount of work
      */
     private fun calculateChanges(newList: List<T>) {
-        val oldList = dataFactory().value ?: emptyList()
+        val oldList = dataSource.value ?: emptyList()
         val filteredOldList = dataFilter(oldList)
         val filteredNewList = dataFilter(newList)
         val diffResult = DiffUtil.calculateDiff(diffCallback(filteredOldList, filteredNewList))

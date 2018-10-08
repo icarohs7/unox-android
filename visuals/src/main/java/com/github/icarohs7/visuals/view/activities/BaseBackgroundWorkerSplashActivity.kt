@@ -74,7 +74,7 @@ abstract class BaseBackgroundWorkerSplashActivity<T>(protected val animationTime
      */
     private fun verifyIfWillDoBackgroundWork() {
         val willDo = confirmIfShouldDoBackgroundWorkBeforeStarting()
-        willDo ifTrue { backgroundTask = startBackgroundOperations() }
+        willDo ifTrue { backgroundTask = onBg { startBackgroundOperations() } }
     }
 
     /**
@@ -90,8 +90,8 @@ abstract class BaseBackgroundWorkerSplashActivity<T>(protected val animationTime
      * function, which will be awaited before going to the
      * next screen
      */
-    open fun startBackgroundOperations(): Deferred<T?> {
-        return onBg { null }
+    open suspend fun startBackgroundOperations(): T? {
+        return null
     }
 
     private fun setupBindings() {

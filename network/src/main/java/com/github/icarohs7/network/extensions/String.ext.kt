@@ -27,83 +27,77 @@ package com.github.icarohs7.network.extensions
 import awaitStringResult
 import com.beust.klaxon.Klaxon
 import com.github.icarohs7.core.extensions.trimAndRemoveBom
-import com.github.icarohs7.core.toplevel.onBg
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.getOrElse
-import kotlinx.coroutines.experimental.Deferred
 
 /**
  * Get request with embedded parsing of objects
  */
-inline fun <reified T> String.httpGetObjectAsync(
+suspend inline fun <reified T> String.httpGetObject(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
         noinline jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
-): Deferred<T?> {
+): T? {
 
-    return onBg {
-        this.httpGet(query)
-                .body(body)
-                .awaitStringResult()
-                .getOrElse("")
-                .parseJsonToObj<T>(jsonTransformBeforeParse)
-    }
+    return this
+            .httpGet(query)
+            .body(body)
+            .awaitStringResult()
+            .getOrElse("")
+            .parseJsonToObj<T>(jsonTransformBeforeParse)
 
 }
 
 /**
  * Get request with embedded parsing of arrays
  */
-inline fun <reified T> String.httpGetArrayAsync(
+suspend inline fun <reified T> String.httpGetArray(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
         noinline jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
-): Deferred<List<T>> {
+): List<T> {
 
-    return onBg {
-        this.httpGet(query)
-                .body(body)
-                .awaitStringResult()
-                .getOrElse("")
-                .parseJsonToArray<T>(jsonTransformBeforeParse)
-    }
+    return this
+            .httpGet(query)
+            .body(body)
+            .awaitStringResult()
+            .getOrElse("")
+            .parseJsonToArray(jsonTransformBeforeParse)
 }
 
 /**
  * Post request with embedded parsing of objects
  */
-inline fun <reified T> String.httpPostObjectAsync(
+suspend inline fun <reified T> String.httpPostObject(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
         noinline jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
-): Deferred<T?> {
+): T? {
 
-    return onBg {
-        this.httpPost(query)
-                .body(body)
-                .awaitStringResult()
-                .getOrElse("")
-                .parseJsonToObj<T>(jsonTransformBeforeParse)
-    }
+    return this
+            .httpPost(query)
+            .body(body)
+            .awaitStringResult()
+            .getOrElse("")
+            .parseJsonToObj<T>(jsonTransformBeforeParse)
 }
 
 /**
  * Get request with embedded parsing of arrays
  */
-inline fun <reified T> String.httpPostArrayAsync(
+suspend inline fun <reified T> String.httpPostArray(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
         noinline jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
-): Deferred<List<T>> {
+): List<T> {
 
-    return onBg {
-        this.httpPost(query)
-                .body(body)
-                .awaitStringResult()
-                .getOrElse("")
-                .parseJsonToArray<T>(jsonTransformBeforeParse)
-    }
+    return this
+            .httpPost(query)
+            .body(body)
+            .awaitStringResult()
+            .getOrElse("")
+            .parseJsonToArray(jsonTransformBeforeParse)
 }
 
 /**

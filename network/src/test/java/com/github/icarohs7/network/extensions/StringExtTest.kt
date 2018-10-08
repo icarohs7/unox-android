@@ -25,7 +25,7 @@
 package com.github.icarohs7.network.extensions
 
 import com.beust.klaxon.Json
-import com.github.icarohs7.core.toplevel.onBgNoReturn
+import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Test
 import se.lovef.assert.v1.shouldBeGreaterThan
 import se.lovef.assert.v1.shouldBeNull
@@ -35,23 +35,29 @@ import se.lovef.assert.v1.shouldNotEqual
 class StringExtTest {
     @Test
     fun `should do a get request`() {
-        val url = "https://jsonplaceholder.typicode.com/posts/1"
-        val expectedObject = Post(
-                1, 1,
-                "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-                "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-        )
+        runBlocking {
+            val url = "https://jsonplaceholder.typicode.com/posts/1"
+            val expectedObject = Post(
+                    1, 1,
+                    "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+                    "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+            )
 
-        onBgNoReturn { url.httpGetObjectAsync<Post>().await() shouldEqual expectedObject }
+            url.httpGetObject<Post>() shouldEqual expectedObject
+            Unit
+        }
     }
 
     @Test
     fun `should do a get request receiving a list as response`() {
-        val url = "https://jsonplaceholder.typicode.com/posts/"
+        runBlocking {
+            val url = "https://jsonplaceholder.typicode.com/posts/"
 
-        val postsReceived = url.httpGetArrayAsync<Post>()
+            val postsReceived = url.httpGetArray<Post>()
 
-        onBgNoReturn { postsReceived.await().size.shouldBeGreaterThan(0) }
+            postsReceived.size.shouldBeGreaterThan(0)
+            Unit
+        }
     }
 
     @Test

@@ -15,10 +15,7 @@ fun <T, DB : ViewDataBinding> LiveData<List<T>>.createAdapter(
         filter: Influencer<List<T>> = { it },
         mapping: BiConsumer<T, DB>
 ): WatcherAdapter<T, DB> {
-    return object : WatcherAdapter<T, DB>() {
-        override fun dataFactory(): LiveData<List<T>> {
-            return this@createAdapter
-        }
+    return object : WatcherAdapter<T, DB>(this) {
 
         override fun itemToViewMapping(data: List<T>, position: Int, view: DB) {
             mapping(data[position], view)
