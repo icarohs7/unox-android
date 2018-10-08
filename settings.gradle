@@ -28,5 +28,4 @@ include ':telephony',
         ':core',
         ':notification',
         ':navigation',
-        ':animation',
         ':adapter'

@@ -25,7 +25,71 @@
 package com.github.icarohs7.navigation
 
 import android.content.Context
-import com.github.icarohs7.navigation.providers.abstractions.NavigationProvider
-import com.github.icarohs7.navigation.providers.implementations.NavigationProviderImpl
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import com.github.icarohs7.navigation.providers.NavigationProviderImpl
 
-fun navigationProvider(context: Context): NavigationProvider = NavigationProviderImpl(context)
+interface NavigationModule {
+
+    interface NavigationProvider {
+        fun <T : AppCompatActivity> gotoActivity(activity: Class<T>)
+        fun <T : AppCompatActivity> getActivityLaunchIntent(activity: Class<T>): Intent
+
+        companion object {
+            fun get(context: Context): NavigationProvider = NavigationProviderImpl(context)
+        }
+    }
+
+    /**
+     * Companion object storing the settings of the module
+     */
+    companion object {
+        /**
+         * Builder used to define the settings for the module
+         */
+        fun config(fn: NavigationModule.Companion.() -> Unit) = fn(this)
+
+        /**
+         * Animation used at the transition between activities
+         */
+        var animationType: AnimationType = AnimationType.NO_ANIMATION
+
+        /**
+         * Container used to home the fragments loaded
+         */
+        var masterContainer: Int? = null
+
+        /**
+         * Map used when multiple activities have multiples containers,
+         * each storing a pair with their simple name and the conteiner layoutId
+         */
+        var activityContainer: MutableMap<String, Int> = mutableMapOf()
+
+        var enterAnim = R.anim.zoom_enter
+        var exitAnim = R.anim.zoom_exit
+        var popEnterAnim = R.anim.zoom_enter
+        var popExitAnim = R.anim.zoom_exit
+    }
+
+    /**
+     * Animations available at the [animationType]
+     */
+    enum class AnimationType {
+        SPLIT,
+        SHRINK,
+        CARD,
+        INOUT,
+        SWIPE_LEFT,
+        SWIPE_RIGHT,
+        SLIDE_UP,
+        SLIDE_DOWN,
+        SLIDE_LEFT,
+        SLIDE_RIGHT,
+        FADE,
+        ZOOM,
+        WINDMILL,
+        SPIN,
+        DIAGONAL,
+        NO_ANIMATION;
+    }
+}

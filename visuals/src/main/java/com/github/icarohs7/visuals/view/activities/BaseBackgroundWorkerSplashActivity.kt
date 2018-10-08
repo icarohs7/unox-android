@@ -27,7 +27,6 @@ package com.github.icarohs7.visuals.view.activities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.github.icarohs7.animation.extensions.animateScaleIn
 import com.github.icarohs7.core.extensions.ifTrue
 import com.github.icarohs7.core.toplevel.onBg
 import com.github.icarohs7.core.toplevel.onBgNoReturn
@@ -35,6 +34,7 @@ import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.core.toplevel.runAfterDelay
 import com.github.icarohs7.visuals.R
 import com.github.icarohs7.visuals.databinding.PartialCenterAndBottomConteinerBinding
+import com.github.icarohs7.visuals.extensions.animateScaleIn
 import kotlinx.coroutines.experimental.Deferred
 
 /**

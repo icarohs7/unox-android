@@ -26,10 +26,6 @@ package com.github.icarohs7.visuals.extensions
 
 import android.view.View
 import android.widget.FrameLayout
-import com.github.icarohs7.animation.extensions.animateFadeIn
-import com.github.icarohs7.animation.extensions.animateFadeOut
-import com.github.icarohs7.animation.extensions.animateScaleIn
-import com.github.icarohs7.animation.extensions.animateScaleOut
 
 /**
  * Hides all children of the frame layout and show

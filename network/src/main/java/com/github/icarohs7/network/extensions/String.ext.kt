@@ -39,7 +39,7 @@ import kotlinx.coroutines.experimental.Deferred
 inline fun <reified T> String.httpGetObjectAsync(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
-        noinline jsonTransformBeforeParse: (String) -> String = { it.trimAndRemoveBom() }
+        noinline jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
 ): Deferred<T?> {
 
     return onBg {
@@ -58,7 +58,7 @@ inline fun <reified T> String.httpGetObjectAsync(
 inline fun <reified T> String.httpGetArrayAsync(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
-        noinline jsonTransformBeforeParse: (String) -> String = { it.trimAndRemoveBom() }
+        noinline jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
 ): Deferred<List<T>> {
 
     return onBg {
@@ -76,7 +76,7 @@ inline fun <reified T> String.httpGetArrayAsync(
 inline fun <reified T> String.httpPostObjectAsync(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
-        noinline jsonTransformBeforeParse: (String) -> String = { it.trimAndRemoveBom() }
+        noinline jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
 ): Deferred<T?> {
 
     return onBg {
@@ -94,7 +94,7 @@ inline fun <reified T> String.httpPostObjectAsync(
 inline fun <reified T> String.httpPostArrayAsync(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
-        noinline jsonTransformBeforeParse: (String) -> String = { it.trimAndRemoveBom() }
+        noinline jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
 ): Deferred<List<T>> {
 
     return onBg {
@@ -110,7 +110,7 @@ inline fun <reified T> String.httpPostArrayAsync(
  * Parse a json object to a Kotlin object or return null in case of error parsing
  */
 inline fun <reified T> String.parseJsonToObj(
-        jsonTransformBeforeParse: (String) -> String = { it.trimAndRemoveBom() }
+        jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
 ): T? {
     return try {
         Klaxon().parse(jsonTransformBeforeParse(this))
@@ -123,7 +123,7 @@ inline fun <reified T> String.parseJsonToObj(
  * Parse a json array to a Kotlin list or return an empty list in case of error parsing
  */
 inline fun <reified T> String.parseJsonToArray(
-        jsonTransformBeforeParse: (String) -> String = { it.trimAndRemoveBom() }
+        jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
 ): List<T> {
     return try {
         Klaxon().parseArray(jsonTransformBeforeParse(this))!!

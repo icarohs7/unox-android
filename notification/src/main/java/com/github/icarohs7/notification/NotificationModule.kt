@@ -26,18 +26,10 @@ package com.github.icarohs7.notification
 
 import android.content.Context
 import com.github.icarohs7.notification.providers.abstractions.NotificationProvider
-import com.github.icarohs7.notification.providers.abstractions.ObjectNotificationProvider
 import com.github.icarohs7.notification.providers.implementations.NotificationProviderImpl
-import com.github.icarohs7.notification.providers.implementations.ObjectNotificationProviderImpl
 
 @JvmOverloads
 fun notificationProvider(
         context: Context,
         channelId: String = "standardchannelid"
 ): NotificationProvider = NotificationProviderImpl(context, channelId)
-
-fun simpleMessagingProvider(): ObjectNotificationProvider<CharSequence> =
-        ObjectNotificationProviderImpl()
-
-fun <T> objectNotificationProvider(): ObjectNotificationProvider<T> =
-        ObjectNotificationProviderImpl()

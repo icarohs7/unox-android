@@ -26,11 +26,11 @@ package com.github.icarohs7.navigation.extensions
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
-import com.github.icarohs7.navigation.navigationProvider
+import com.github.icarohs7.navigation.NavigationModule
 import kotlin.reflect.KClass
 
 /**
  * Navigate from an activity to another
  */
 fun <T : AppCompatActivity> Context.navigateTo(destination: KClass<T>) =
-        navigationProvider(this).gotoActivity(destination.java)
+        NavigationModule.NavigationProvider.get(this).gotoActivity(destination.java)

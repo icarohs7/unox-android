@@ -32,7 +32,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.github.icarohs7.navigation.navigationProvider
+import com.github.icarohs7.navigation.NavigationModule
 import com.github.icarohs7.notification.providers.abstractions.NotificationProvider
 
 internal class NotificationProviderImpl(
@@ -100,7 +100,7 @@ internal class NotificationProviderImpl(
     }
 
     private fun getPendingIntentToActivity(activityClass: Class<out AppCompatActivity>): PendingIntent {
-        val intent = navigationProvider(context).getActivityLaunchIntent(activityClass)
+        val intent = NavigationModule.NavigationProvider.get(context).getActivityLaunchIntent(activityClass)
         return PendingIntent.getActivity(context, 0, intent, 0)
     }
 

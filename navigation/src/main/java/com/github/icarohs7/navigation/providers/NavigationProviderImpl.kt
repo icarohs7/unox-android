@@ -22,16 +22,15 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.navigation.providers.implementations
+package com.github.icarohs7.navigation.providers
 
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import com.github.icarohs7.navigation.NavigationModuleSettings
-import com.github.icarohs7.navigation.providers.abstractions.NavigationProvider
+import com.github.icarohs7.navigation.NavigationModule
 import spencerstudios.com.bungeelib.Bungee
 
-internal class NavigationProviderImpl(private val context: Context) : NavigationProvider {
+internal class NavigationProviderImpl(private val context: Context) : NavigationModule.NavigationProvider {
     @Suppress("NOTHING_TO_INLINE", "OVERRIDE_BY_INLINE")
     override inline fun <T : AppCompatActivity> gotoActivity(activity: Class<T>) {
         val intent = Intent(context, activity)
@@ -45,39 +44,39 @@ internal class NavigationProviderImpl(private val context: Context) : Navigation
 
     @Suppress("NOTHING_TO_INLINE")
     private inline fun executeAnimation(context: Context) {
-        when (NavigationModuleSettings.animationType) {
+        when (NavigationModule.animationType) {
 
-            NavigationModuleSettings.Animation.SPLIT -> Bungee.split(context)
+            NavigationModule.AnimationType.SPLIT -> Bungee.split(context)
 
-            NavigationModuleSettings.Animation.SHRINK -> Bungee.shrink(context)
+            NavigationModule.AnimationType.SHRINK -> Bungee.shrink(context)
 
-            NavigationModuleSettings.Animation.CARD -> Bungee.card(context)
+            NavigationModule.AnimationType.CARD -> Bungee.card(context)
 
-            NavigationModuleSettings.Animation.INOUT -> Bungee.inAndOut(context)
+            NavigationModule.AnimationType.INOUT -> Bungee.inAndOut(context)
 
-            NavigationModuleSettings.Animation.SWIPE_LEFT -> Bungee.swipeLeft(context)
+            NavigationModule.AnimationType.SWIPE_LEFT -> Bungee.swipeLeft(context)
 
-            NavigationModuleSettings.Animation.SWIPE_RIGHT -> Bungee.swipeRight(context)
+            NavigationModule.AnimationType.SWIPE_RIGHT -> Bungee.swipeRight(context)
 
-            NavigationModuleSettings.Animation.SLIDE_UP -> Bungee.slideUp(context)
+            NavigationModule.AnimationType.SLIDE_UP -> Bungee.slideUp(context)
 
-            NavigationModuleSettings.Animation.SLIDE_DOWN -> Bungee.slideDown(context)
+            NavigationModule.AnimationType.SLIDE_DOWN -> Bungee.slideDown(context)
 
-            NavigationModuleSettings.Animation.SLIDE_LEFT -> Bungee.slideLeft(context)
+            NavigationModule.AnimationType.SLIDE_LEFT -> Bungee.slideLeft(context)
 
-            NavigationModuleSettings.Animation.SLIDE_RIGHT -> Bungee.slideRight(context)
+            NavigationModule.AnimationType.SLIDE_RIGHT -> Bungee.slideRight(context)
 
-            NavigationModuleSettings.Animation.FADE -> Bungee.fade(context)
+            NavigationModule.AnimationType.FADE -> Bungee.fade(context)
 
-            NavigationModuleSettings.Animation.ZOOM -> Bungee.zoom(context)
+            NavigationModule.AnimationType.ZOOM -> Bungee.zoom(context)
 
-            NavigationModuleSettings.Animation.WINDMILL -> Bungee.windmill(context)
+            NavigationModule.AnimationType.WINDMILL -> Bungee.windmill(context)
 
-            NavigationModuleSettings.Animation.SPIN -> Bungee.spin(context)
+            NavigationModule.AnimationType.SPIN -> Bungee.spin(context)
 
-            NavigationModuleSettings.Animation.DIAGONAL -> Bungee.diagonal(context)
+            NavigationModule.AnimationType.DIAGONAL -> Bungee.diagonal(context)
 
-            NavigationModuleSettings.Animation.NO_ANIMATION -> Unit
+            NavigationModule.AnimationType.NO_ANIMATION -> Unit
 
         }
     }

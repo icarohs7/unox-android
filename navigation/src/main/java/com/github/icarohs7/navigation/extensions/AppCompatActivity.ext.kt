@@ -28,16 +28,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.transaction
-import com.github.icarohs7.navigation.NavigationModuleSettings
-import com.github.icarohs7.navigation.NavigationModuleSettings.activityContainer
-import com.github.icarohs7.navigation.NavigationModuleSettings.masterContainer
+import com.github.icarohs7.navigation.NavigationModule
 
 /**
  * Load a fragment adding it to the backstack
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
         destination: T,
-        containerId: Int = masterContainer ?: activityContainer[this::class.simpleName] ?: 0
+        containerId: Int = NavigationModule.masterContainer
+                ?: NavigationModule.activityContainer[this::class.simpleName]
+                ?: 0
 ) {
 
     fragmentTransactionAnimated {
@@ -51,7 +51,9 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
         destination: T,
-        containerId: Int = masterContainer ?: activityContainer[this::class.simpleName] ?: 0
+        containerId: Int = NavigationModule.masterContainer
+                ?: NavigationModule.activityContainer[this::class.simpleName]
+                ?: 0
 ) {
 
     fragmentTransactionAnimated { replace(containerId, destination) }
@@ -59,15 +61,15 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
 
 /**
  * Execute a fragment transaction with an animation, defined by
- * the [NavigationModuleSettings]
+ * the [NavigationModule]
  */
 fun AppCompatActivity.fragmentTransactionAnimated(fn: FragmentTransaction.() -> Unit) {
     supportFragmentManager.transaction {
         setCustomAnimations(
-                NavigationModuleSettings.enterAnim,
-                NavigationModuleSettings.exitAnim,
-                NavigationModuleSettings.popEnterAnim,
-                NavigationModuleSettings.popExitAnim)
+                NavigationModule.enterAnim,
+                NavigationModule.exitAnim,
+                NavigationModule.popEnterAnim,
+                NavigationModule.popExitAnim)
         fn()
     }
 }
