@@ -37,7 +37,7 @@ import androidx.recyclerview.widget.RecyclerView
  * Adapter based on observability and dynamic lists built using LiveData
  */
 abstract class WatcherAdapter<T, DB : ViewDataBinding>(
-        private val dataSource: LiveData<List<T>>
+        protected val dataSource: LiveData<List<T>>
 ) : RecyclerView.Adapter<WatcherAdapter.WatcherViewHolder<DB>>() {
 
     /**
@@ -108,7 +108,7 @@ abstract class WatcherAdapter<T, DB : ViewDataBinding>(
     /**
      * Called to update the list with the minimum amount of work
      */
-    private fun calculateChanges(newList: List<T>) {
+    protected fun calculateChanges(newList: List<T>) {
         val oldList = dataSource.value ?: emptyList()
         val filteredOldList = dataFilter(oldList)
         val filteredNewList = dataFilter(newList)
