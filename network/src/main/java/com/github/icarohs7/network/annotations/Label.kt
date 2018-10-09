@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.core.annotations
+package com.github.icarohs7.network.annotations
 
 /**
  * Annotation used to give an alternate name to a

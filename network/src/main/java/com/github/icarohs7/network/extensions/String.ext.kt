@@ -27,27 +27,28 @@ package com.github.icarohs7.network.extensions
 import awaitStringResult
 import com.beust.klaxon.Klaxon
 import com.github.icarohs7.core.extensions.trimAndRemoveBom
+import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
-import com.github.kittinunf.result.getOrElse
+import com.github.kittinunf.result.Result
+import com.github.kittinunf.result.map
 
 /**
  * Get request with embedded parsing of objects
  */
-suspend inline fun <reified T> String.httpGetObject(
+suspend inline fun <reified T : Any> String.httpGetObject(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
         noinline jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
-): T? {
+): Result<T, FuelError> {
 
     return this
             .httpGet(query)
             .body(body)
             .awaitStringResult()
-            .getOrElse("")
-            .parseJsonToObj<T>(jsonTransformBeforeParse)
-
+            .map { it.parseJsonToObj<T>(jsonTransformBeforeParse)!! }
 }
+
 
 /**
  * Get request with embedded parsing of arrays
@@ -56,32 +57,30 @@ suspend inline fun <reified T> String.httpGetArray(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
         noinline jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
-): List<T> {
-
+): Result<List<T>, FuelError> {
     return this
             .httpGet(query)
             .body(body)
             .awaitStringResult()
-            .getOrElse("")
-            .parseJsonToArray(jsonTransformBeforeParse)
+            .map { it.parseJsonToArray<T>(jsonTransformBeforeParse)!! }
 }
+
 
 /**
  * Post request with embedded parsing of objects
  */
-suspend inline fun <reified T> String.httpPostObject(
+suspend inline fun <reified T : Any> String.httpPostObject(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
         noinline jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
-): T? {
+): Result<T, FuelError> {
 
-    return this
-            .httpPost(query)
+    return this.httpPost(query)
             .body(body)
             .awaitStringResult()
-            .getOrElse("")
-            .parseJsonToObj<T>(jsonTransformBeforeParse)
+            .map { it.parseJsonToObj<T>(jsonTransformBeforeParse)!! }
 }
+
 
 /**
  * Get request with embedded parsing of arrays
@@ -90,15 +89,14 @@ suspend inline fun <reified T> String.httpPostArray(
         query: List<Pair<String, Any>> = emptyList(),
         body: String = "",
         noinline jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
-): List<T> {
+): Result<List<T>, FuelError> {
 
-    return this
-            .httpPost(query)
+    return this.httpPost(query)
             .body(body)
             .awaitStringResult()
-            .getOrElse("")
-            .parseJsonToArray(jsonTransformBeforeParse)
+            .map { it.parseJsonToArray<T>(jsonTransformBeforeParse)!! }
 }
+
 
 /**
  * Parse a json object to a Kotlin object or return null in case of error parsing
@@ -118,10 +116,10 @@ inline fun <reified T> String.parseJsonToObj(
  */
 inline fun <reified T> String.parseJsonToArray(
         jsonTransformBeforeParse: (String) -> String = { json -> json.trimAndRemoveBom() }
-): List<T> {
+): List<T>? {
     return try {
-        Klaxon().parseArray(jsonTransformBeforeParse(this))!!
+        Klaxon().parseArray(jsonTransformBeforeParse(this))
     } catch (e: Exception) {
-        emptyList()
+        null
     }
 }

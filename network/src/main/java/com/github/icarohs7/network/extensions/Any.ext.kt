@@ -2,7 +2,7 @@ package com.github.icarohs7.network.extensions
 
 import com.beust.klaxon.Json
 import com.beust.klaxon.Klaxon
-import com.github.icarohs7.core.annotations.Label
+import com.github.icarohs7.network.annotations.Label
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.memberProperties
 

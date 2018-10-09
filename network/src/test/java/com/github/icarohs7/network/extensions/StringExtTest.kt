@@ -25,6 +25,7 @@
 package com.github.icarohs7.network.extensions
 
 import com.beust.klaxon.Json
+import com.github.kittinunf.result.getOrElse
 import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Test
 import se.lovef.assert.v1.shouldBeGreaterThan
@@ -43,7 +44,7 @@ class StringExtTest {
                     "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
             )
 
-            url.httpGetObject<Post>() shouldEqual expectedObject
+            url.httpGetObject<Post>().getOrElse(Post()) shouldEqual expectedObject
             Unit
         }
     }
@@ -55,7 +56,7 @@ class StringExtTest {
 
             val postsReceived = url.httpGetArray<Post>()
 
-            postsReceived.size.shouldBeGreaterThan(0)
+            postsReceived.getOrElse(emptyList()).size.shouldBeGreaterThan(0)
             Unit
         }
     }
@@ -81,13 +82,13 @@ class StringExtTest {
         val expect1 = listOf(SimpleObj("icaro"),
                              SimpleObj("filipe"))
         arr1 shouldEqual expect1
-        arr1.size shouldEqual 2
+        arr1?.size shouldEqual 2
 
         val json2 = """[1,2,3,4,5,6,7,8,9,10]"""
         val arr2 = json2.parseJsonToArray<Int>()
         val expect2 = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
         arr2 shouldEqual expect2
-        arr2.size shouldEqual 10
+        arr2?.size shouldEqual 10
     }
 
     data class Post(

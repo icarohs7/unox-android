@@ -1,7 +1,7 @@
 package com.github.icarohs7.network.extensions
 
 import com.beust.klaxon.Json
-import com.github.icarohs7.core.annotations.Label
+import com.github.icarohs7.network.annotations.Label
 import org.junit.Test
 import se.lovef.assert.v1.shouldEqual
 
