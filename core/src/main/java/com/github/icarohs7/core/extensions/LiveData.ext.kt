@@ -33,14 +33,10 @@ import androidx.lifecycle.Observer
  * Execute a transaction with the value of a LiveData
  */
 fun <T, M : LiveData<T>> M.valueTransaction(failOnNullValue: Boolean = false, fn: T.() -> Unit) {
-    if (this.value == null) {
-        when (failOnNullValue) {
-            true -> throw IllegalStateException("Live data value must not be null")
-            false -> return
-        }
+    this.value?.fn() ?: when (failOnNullValue) {
+        true -> throw IllegalStateException("Live data value must not be null")
+        false -> return
     }
-
-    this.value!!.fn()
 }
 
 /**
@@ -86,4 +82,3 @@ infix fun <T> LiveData<List<T>>.mergedElementsWith(other: LiveData<List<T>>): Li
     mediator.postValue(union(this.value, other.value))
     return mediator
 }
-
