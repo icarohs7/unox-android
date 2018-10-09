@@ -22,4 +22,8 @@
   ~ SOFTWARE.
   -->
 
-<manifest package="com.github.icarohs7.network" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.github.icarohs7.network">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

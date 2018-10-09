@@ -28,6 +28,13 @@ dependencies {
 
     //Fuel
     implementation "com.github.kittinunf.fuel:fuel-coroutines:$fuel_version"
+
+    //RxJava + RxKotlin
+    implementation "com.github.ReactiveX:RxKotlin:$rxkotlin_version"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+
+    // Reactive network
+    implementation "com.github.pwittchen:reactivenetwork-rx2:$reactivenetwork_version"
 }
 
 kotlin {
