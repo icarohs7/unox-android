@@ -1,7 +1,13 @@
 package com.github.icarohs7.visuals.extensions
 
 import android.app.AlertDialog
+import android.content.DialogInterface
+import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import org.jetbrains.anko.AlertBuilder
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.customView
+import org.jetbrains.anko.matchParent
 
 /**
  * Convert a binding to a dialog and show it, returning the
@@ -22,4 +28,27 @@ fun <T : ViewDataBinding> T.toDialogBuilder(): AlertDialog.Builder {
     return AlertDialog
             .Builder(this.root.context)
             .setView(this.root)
+}
+
+/**
+ * Convert a binding to an alert and show it, returning the
+ * dialog interface
+ */
+fun <T : ViewDataBinding> T.showAlert(): DialogInterface {
+    return this.root.context.alert {
+        customView {
+            addView(this@showAlert.root, ViewGroup.LayoutParams(matchParent, matchParent))
+        }
+    }.show()
+}
+
+/**
+ * Convert a binding to an alert builder
+ */
+fun <T : ViewDataBinding> T.toAlertBuilder(): AlertBuilder<DialogInterface> {
+    return this.root.context.alert {
+        customView {
+            addView(this@toAlertBuilder.root, ViewGroup.LayoutParams(matchParent, matchParent))
+        }
+    }
 }
