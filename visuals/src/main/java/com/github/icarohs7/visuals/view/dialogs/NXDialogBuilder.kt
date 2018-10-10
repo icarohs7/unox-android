@@ -59,6 +59,7 @@ class NXDialogBuilder(private val context: Context) {
                 buttonCallback = buttonCallback,
                 dismissCallback = dismissCallback,
                 customView = customView,
-                binding = dialogView) CHAIN Dialog::show
+                binding = dialogView) CHAIN
+                Dialog::show
     }
 }

@@ -52,7 +52,20 @@ import org.jetbrains.anko.layoutInflater
 
 interface VisualsModule {
     interface VisualsProvider {
+
+        /**
+         * Build and show a nxDialog
+         */
         fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
+
+        /**
+         * Build and show a simple confirmation dialog
+         */
+        fun yesNoDialog(context: Context,
+                        title: String = "",
+                        message: String = "",
+                        @ColorInt titleColor: Int = ContextCompat.getColor(context, R.color.colorPrimary),
+                        init: RConsumer<DialogYesNoBinding> = {})
 
         companion object {
             fun get(): VisualsProvider = VisualsProviderImpl()
