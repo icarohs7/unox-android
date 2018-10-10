@@ -11,9 +11,8 @@ import com.github.icarohs7.visuals.databinding.DialogYesNoBinding
 /**
  * Build and show a simple confirmation dialog
  */
-fun Context.yesNoDialog(context: Context,
-                        title: String = "",
+fun Context.yesNoDialog(title: String = "",
                         message: String = "",
-                        @ColorInt titleColor: Int = ContextCompat.getColor(context, R.color.colorPrimary),
+                        @ColorInt titleColor: Int = ContextCompat.getColor(this, R.color.colorPrimary),
                         init: RConsumer<DialogYesNoBinding> = {}) =
-        VisualsModule.VisualsProvider.get().yesNoDialog(context, title, message, titleColor, init)
+        VisualsModule.VisualsProvider.get().yesNoDialog(this, title, message, titleColor, init)
