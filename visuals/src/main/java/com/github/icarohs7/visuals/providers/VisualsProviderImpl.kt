@@ -25,10 +25,7 @@
 package com.github.icarohs7.visuals.providers
 
 import android.content.Context
-import com.github.icarohs7.core.typealiases.RConsumer
 import com.github.icarohs7.visuals.VisualsModule
-import com.github.icarohs7.visuals.databinding.DialogYesNoBinding
-import com.github.icarohs7.visuals.extensions.toDialog
 import com.github.icarohs7.visuals.view.dialogs.NXDialogBuilder
 
 internal class VisualsProviderImpl : VisualsModule.VisualsProvider {
@@ -39,23 +36,5 @@ internal class VisualsProviderImpl : VisualsModule.VisualsProvider {
         val builder = NXDialogBuilder(context)
         builder.fn()
         builder.build()
-    }
-
-    /**
-     * Build and show a simple confirmation dialog
-     */
-    override fun yesNoDialog(
-            context: Context,
-            title: String,
-            message: String,
-            titleColor: Int,
-            init: RConsumer<DialogYesNoBinding>
-    ) {
-
-        val binding = VisualsModule.NXBindings.yesNoDialog(context, title, message, titleColor)
-        val dialog = binding.toDialog()
-        binding.setNoHandler { dialog.dismiss() }
-        binding.init()
-        dialog.show()
     }
 }

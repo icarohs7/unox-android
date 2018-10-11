@@ -44,7 +44,6 @@ import com.github.icarohs7.visuals.databinding.PartialLabelTextBinding
 import com.github.icarohs7.visuals.databinding.PartialLoadingBinding
 import com.github.icarohs7.visuals.databinding.PartialSmallCenterContainerBinding
 import com.github.icarohs7.visuals.databinding.PartialSwipeRecyclerBinding
-import com.github.icarohs7.visuals.providers.VisualsProviderImpl
 import com.github.icarohs7.visuals.view.dialogs.NXDialogBuilder
 import com.github.ybq.android.spinkit.sprite.Sprite
 import com.github.ybq.android.spinkit.style.FadingCircle
@@ -57,19 +56,6 @@ interface VisualsModule {
          * Build and show a nxDialog
          */
         fun nxDialog(context: Context, fn: NXDialogBuilder.() -> Unit)
-
-        /**
-         * Build and show a simple confirmation dialog
-         */
-        fun yesNoDialog(context: Context,
-                        title: String = "",
-                        message: String = "",
-                        @ColorInt titleColor: Int = ContextCompat.getColor(context, R.color.colorPrimary),
-                        init: RConsumer<DialogYesNoBinding> = {})
-
-        companion object {
-            fun get(): VisualsProvider = VisualsProviderImpl()
-        }
     }
 
     /**
