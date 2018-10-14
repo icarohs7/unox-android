@@ -26,7 +26,10 @@ package com.github.icarohs7.core.toplevel
 
 import com.github.icarohs7.core.settings.UnoxAndroidSettings
 import kotlinx.coroutines.experimental.CoroutineScope
+import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.ExecutorCoroutineDispatcher
+import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.Main
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
@@ -36,7 +39,9 @@ import kotlinx.coroutines.experimental.newFixedThreadPoolContext
 /**
  * Coroutine pool used on the library
  */
-val NXBGPOOL by lazy { newFixedThreadPoolContext(UnoxAndroidSettings.NXBGPOOL_NUMBER_OF_THREADS, "unox") }
+val NXBGPOOL: ExecutorCoroutineDispatcher by lazy {
+    newFixedThreadPoolContext(UnoxAndroidSettings.NXBGPOOL_NUMBER_OF_THREADS, "unox")
+}
 
 /**
  * Run a function on the UI Thread after some time
@@ -44,14 +49,14 @@ val NXBGPOOL by lazy { newFixedThreadPoolContext(UnoxAndroidSettings.NXBGPOOL_NU
 fun runAfterDelay(delayTime: Int, fn: suspend (CoroutineScope) -> Unit) {
     onBg {
         delay(delayTime.toLong())
-        onUi(fn)
+        onUi(fn = fn)
     }
 }
 
 /**
  * Run a function on the UI Thread
  */
-fun onUi(fn: suspend (CoroutineScope) -> Unit) = CoroutineScope(Dispatchers.Main).launch {
+fun onUi(fn: suspend (CoroutineScope) -> Unit): Job = CoroutineScope(Dispatchers.Main).launch {
     fn(this)
 }
 
@@ -59,29 +64,35 @@ fun onUi(fn: suspend (CoroutineScope) -> Unit) = CoroutineScope(Dispatchers.Main
  * Run a function on the background coroutine context and
  * returns the deferred
  */
-fun <T> onBgResult(fn: suspend (CoroutineScope) -> T) = CoroutineScope(NXBGPOOL).async {
-    fn(this)
+fun <T> onBgResult(scope: CoroutineScope = CoroutineScope(NXBGPOOL), fn: suspend (CoroutineScope) -> T): Deferred<T> {
+    return scope.async {
+        fn(this)
+    }
 }
 
 /**
  * Run a function on the background coroutine context and
  * returns the job, use for fire and forget operations
  */
-fun onBg(fn: suspend (CoroutineScope) -> Unit) = CoroutineScope(NXBGPOOL).launch {
-    fn(this)
+fun onBg(scope: CoroutineScope = CoroutineScope(NXBGPOOL), fn: suspend (CoroutineScope) -> Unit): Job {
+    return scope.launch {
+        fn(this)
+    }
 }
 
 /**
  * Run a function and ignore the returning value,
  * instead returning Unit
  */
-inline fun noReturn(fn: () -> Unit) =
-        fn()
+inline fun noReturn(fn: () -> Unit) {
+    fn()
+}
 
 /**
  * Run a suspend function and ignore the returning
  * value, instead returning Unit
  */
 @Suppress("REDUNDANT_INLINE_SUSPEND_FUNCTION_TYPE")
-suspend inline fun noReturnSusp(fn: suspend () -> Unit) =
-        fn()
+suspend inline fun noReturnSusp(fn: suspend () -> Unit) {
+    fn()
+}

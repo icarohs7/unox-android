@@ -33,7 +33,8 @@ import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 
 /**
- * Return the phoneNumber of the user's primary phone line
+ * Return the phoneNumber of the user's primary phone line,
+ * may not work on some devices
  */
 val Context.phoneNumber: String
     get() {

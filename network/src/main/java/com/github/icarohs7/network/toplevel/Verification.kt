@@ -3,7 +3,9 @@ package com.github.icarohs7.network.toplevel
 import android.annotation.SuppressLint
 import com.github.icarohs7.core.toplevel.NXBGPOOL
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -20,4 +22,20 @@ fun appHasInternetConnection(fn: (Boolean) -> Unit) {
             .subscribe(
                     { hasConn -> fn(hasConn) },
                     { Unit })
+}
+
+/**
+ * Simplified observation of the app connection to the internet,
+ * @return The [Observable] used and the [Disposable] subscription
+ */
+fun appOnInternetConnectionChange(fn: (Boolean) -> Unit): Pair<Observable<Boolean>, Disposable> {
+    val obs = ReactiveNetwork
+            .observeInternetConnectivity()
+            .subscribeOn(Schedulers.from(NXBGPOOL.executor))
+            .observeOn(AndroidSchedulers.mainThread())
+
+    val subs = obs.subscribe({ hasConn -> fn(hasConn) },
+                             { Unit })
+
+    return obs to subs
 }

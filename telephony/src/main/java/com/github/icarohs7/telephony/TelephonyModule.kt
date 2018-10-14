@@ -24,7 +24,24 @@
 
 package com.github.icarohs7.telephony
 
-import com.github.icarohs7.telephony.providers.abstractions.PhoneCallProvider
-import com.github.icarohs7.telephony.providers.implementations.PhoneCallProviderImpl
+import android.content.Context
+import com.github.icarohs7.telephony.providers.PhoneCallProviderImpl
 
-fun telephonyProvider(): PhoneCallProvider = PhoneCallProviderImpl()
+interface TelephonyModule {
+
+    interface PhoneCallProvider {
+        /**
+         * Make a phone calling to the parameterized phone number and, when needing to
+         * as permission, uses the asking and on deny messages when asking the permission
+         * and when the permission is denied, respectively
+         */
+        fun callNumber(context: Context, phoneNumber: String, askingMessage: String, onDenyMessage: String)
+
+        companion object {
+            /**
+             * Return an instance of the provider
+             */
+            fun get(): TelephonyModule.PhoneCallProvider = PhoneCallProviderImpl()
+        }
+    }
+}

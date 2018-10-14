@@ -24,12 +24,52 @@
 
 package com.github.icarohs7.notification
 
+import android.app.PendingIntent
 import android.content.Context
-import com.github.icarohs7.notification.providers.abstractions.NotificationProvider
-import com.github.icarohs7.notification.providers.implementations.NotificationProviderImpl
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import com.github.icarohs7.notification.providers.NotificationProviderImpl
+import kotlin.reflect.KClass
 
-@JvmOverloads
-fun notificationProvider(
-        context: Context,
-        channelId: String = "standardchannelid"
-): NotificationProvider = NotificationProviderImpl(context, channelId)
+interface NotificationModule {
+
+    interface NotificationProvider {
+
+        /**
+         * Show a notification to the user
+         */
+        fun emitNotification(
+                title: String,
+                message: String,
+                iconResource: Int,
+                bigMessage: String,
+                onClickPendingIntent: PendingIntent
+        )
+
+        /**
+         * Use a builder to show a notification to the user
+         */
+        fun buildNotification(bigMessage: String = "", fn: NotificationCompat.Builder.() -> Unit)
+
+        /**
+         * Show a notification to the user
+         */
+        fun <T : AppCompatActivity> emitNotification(
+                title: String,
+                message: String,
+                iconResource: Int,
+                bigMessage: String,
+                destinationActivity: KClass<T>
+        )
+
+        companion object {
+            /**
+             * Return an instance of the provider
+             */
+            fun get(context: Context, channelId: String = "standardchannelid"): NotificationProvider {
+                return NotificationProviderImpl(context, channelId)
+            }
+        }
+    }
+
+}

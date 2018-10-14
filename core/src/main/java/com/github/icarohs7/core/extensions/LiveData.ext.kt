@@ -30,16 +30,6 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 
 /**
- * Execute a transaction with the value of a LiveData
- */
-fun <T, M : LiveData<T>> M.valueTransaction(failOnNullValue: Boolean = false, fn: T.() -> Unit) {
-    this.value?.fn() ?: when (failOnNullValue) {
-        true -> throw IllegalStateException("Live data value must not be null")
-        false -> return
-    }
-}
-
-/**
  * Observe a LiveData ignoring null values,
  */
 fun <T> LiveData<T>.nonNullObserve(owner: LifecycleOwner, observer: (t: T) -> Unit) {
@@ -68,17 +58,15 @@ infix fun <T> LiveData<T>.mergedWith(other: LiveData<T>): LiveData<T> {
 
 /**
  * Merges 2 [LiveData] objects of lists and emit notifications when any of
- * them change, and stores the merging result of the lists with distinct elements
+ * them change, and stores the merging result of the lists
  */
 infix fun <T> LiveData<List<T>>.mergedElementsWith(other: LiveData<List<T>>): LiveData<List<T>> {
     val mediator = MediatorLiveData<List<T>>()
 
-    // Lambda merging 2 lists and returning a list without repeated elements
-    val union = { l1: List<T>?, l2: List<T>? -> (l1 ?: emptyList()).union(l2 ?: emptyList()).toList() }
+    val merge = { l1: List<T>?, l2: List<T>? -> ((l1 ?: emptyList()) + (l2 ?: emptyList())) }
 
-    mediator.addSource(this) { newThis -> mediator.postValue(union(newThis, other.value)) }
-    mediator.addSource(other) { newOther -> mediator.postValue(union(newOther, this.value)) }
+    mediator.addSource(this) { newThis -> mediator.postValue(merge(newThis, other.value)) }
+    mediator.addSource(other) { newOther -> mediator.postValue(merge(newOther, this.value)) }
 
-    mediator.postValue(union(this.value, other.value))
     return mediator
 }

@@ -24,21 +24,7 @@
 
 package com.github.icarohs7.navigation
 
-import android.content.Context
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import com.github.icarohs7.navigation.providers.NavigationProviderImpl
-
 interface NavigationModule {
-
-    interface NavigationProvider {
-        fun <T : AppCompatActivity> gotoActivity(activity: Class<T>)
-        fun <T : AppCompatActivity> getActivityLaunchIntent(activity: Class<T>): Intent
-
-        companion object {
-            fun get(context: Context): NavigationProvider = NavigationProviderImpl(context)
-        }
-    }
 
     /**
      * Companion object storing the settings of the module

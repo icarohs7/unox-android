@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.telephony.providers.implementations
+package com.github.icarohs7.telephony.providers
 
 import android.Manifest
 import android.Manifest.permission
@@ -31,13 +31,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.core.app.ActivityCompat
-import com.github.icarohs7.telephony.providers.abstractions.PhoneCallProvider
+import com.github.icarohs7.telephony.TelephonyModule
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 import org.jetbrains.anko.longToast
 import java.util.ArrayList
 
-internal class PhoneCallProviderImpl : PhoneCallProvider {
+internal class PhoneCallProviderImpl : TelephonyModule.PhoneCallProvider {
 
     override fun callNumber(context: Context, phoneNumber: String, askingMessage: String, onDenyMessage: String) {
         val callback = object : PermissionHandler() {

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.notification.providers.implementations
+package com.github.icarohs7.notification.providers
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -32,13 +32,14 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.github.icarohs7.navigation.NavigationModule
-import com.github.icarohs7.notification.providers.abstractions.NotificationProvider
+import com.github.icarohs7.navigation.extensions.getPendingIntentToActivity
+import com.github.icarohs7.notification.NotificationModule
+import kotlin.reflect.KClass
 
 internal class NotificationProviderImpl(
         private val context: Context,
         private val channelId: String = "standardnotificationchannel"
-) : NotificationProvider {
+) : NotificationModule.NotificationProvider {
 
     private var notificationId = 0
 
@@ -64,14 +65,14 @@ internal class NotificationProviderImpl(
             message: String,
             iconResource: Int,
             bigMessage: String,
-            destinationActivity: Class<T>
+            destinationActivity: KClass<T>
     ) {
         emitNotification(
                 title,
                 message,
                 iconResource,
                 bigMessage,
-                getPendingIntentToActivity(destinationActivity))
+                context.getPendingIntentToActivity(destinationActivity))
     }
 
     override fun buildNotification(bigMessage: String, fn: NotificationCompat.Builder.() -> Unit) {
@@ -97,11 +98,6 @@ internal class NotificationProviderImpl(
             val notificationManager = context.getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(channel)
         }
-    }
-
-    private fun getPendingIntentToActivity(activityClass: Class<out AppCompatActivity>): PendingIntent {
-        val intent = NavigationModule.NavigationProvider.get(context).getActivityLaunchIntent(activityClass)
-        return PendingIntent.getActivity(context, 0, intent, 0)
     }
 
     private fun defaultBuilder(bigMessage: String): NotificationCompat.Builder {

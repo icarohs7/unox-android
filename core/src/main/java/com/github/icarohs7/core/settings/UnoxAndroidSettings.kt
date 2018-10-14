@@ -24,6 +24,8 @@
 
 package com.github.icarohs7.core.settings
 
+import kotlin.math.max
+
 /**
  * Object with settings for all libraries
  */
@@ -31,5 +33,5 @@ object UnoxAndroidSettings {
     /**
      * Number of threads contained in the POOL used for the library
      */
-    var NXBGPOOL_NUMBER_OF_THREADS = 2 * Runtime.getRuntime().availableProcessors()
+    var NXBGPOOL_NUMBER_OF_THREADS: Int = max(2, Runtime.getRuntime().availableProcessors())
 }

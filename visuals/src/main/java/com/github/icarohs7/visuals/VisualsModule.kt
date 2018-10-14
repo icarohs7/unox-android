@@ -29,7 +29,6 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.icarohs7.core.typealiases.RConsumer
 import com.github.icarohs7.visuals.databinding.ActivityBaseBinding
 import com.github.icarohs7.visuals.databinding.DialogYesNoBinding
 import com.github.icarohs7.visuals.databinding.FragmentBaseWithheaderBinding
@@ -232,7 +231,7 @@ interface VisualsModule {
                         title: String = "",
                         message: String = "",
                         @ColorInt titleColor: Int = ContextCompat.getColor(context, R.color.colorPrimary),
-                        init: RConsumer<DialogYesNoBinding> = {}
+                        init: DialogYesNoBinding.() -> Unit = {}
         ): DialogYesNoBinding {
             val binding = DialogYesNoBinding.inflate(context.layoutInflater)
 

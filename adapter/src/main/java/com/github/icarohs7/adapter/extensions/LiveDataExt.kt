@@ -4,16 +4,14 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
 import com.github.icarohs7.adapter.adapters.WatcherAdapter
-import com.github.icarohs7.core.typealiases.BiConsumer
-import com.github.icarohs7.core.typealiases.Influencer
 
 /**
  * Create an adapter from a liveData of a list
  */
 fun <T, DB : ViewDataBinding> LiveData<List<T>>.createAdapter(
         @LayoutRes layoutRes: Int,
-        filter: Influencer<List<T>> = { it },
-        mapping: BiConsumer<T, DB>
+        filter: (List<T>) -> List<T> = { it },
+        mapping: (T, DB) -> Unit
 ): WatcherAdapter<T, DB> {
     return object : WatcherAdapter<T, DB>(this) {
 
