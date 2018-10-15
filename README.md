@@ -21,9 +21,13 @@ https://github.com/icarohs7/unox-android/stargazers)
 ## Description
 Android library with a collection of modules and many features
 
+## Disclaimer
+Beware when updating, breaking changes between updates happen very
+frequently
+
 ## Adding to the project
 
-Groovy
+Groovy DSL
 ```groovy
 repositories {
     maven { url "https://jitpack.io" }
@@ -37,7 +41,7 @@ dependencies {
 }
 ```
 
-Kotlin
+Kotlin DSL
 ```kotlin
 repositories {
     maven("https://jitpack.io")
