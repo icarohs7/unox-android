@@ -2,27 +2,18 @@
 [![](
 https://jitpack.io/v/icarohs7/unox-android.svg)](
 https://jitpack.io/#icarohs7/unox-android)
-
 [![HitCount](
 http://hits.dwyl.io/icarohs7/unox-android.svg)](
 http://hits.dwyl.io/icarohs7/unox-android)
-
-
 [![GitHub license](
 https://img.shields.io/github/license/icarohs7/unox-android.svg)](
 https://github.com/icarohs7/unox-android/blob/master/LICENSE)
-
-
 [![GitHub issues](
 https://img.shields.io/github/issues/icarohs7/unox-android.svg)](
 https://github.com/icarohs7/unox-android/issues)
-
-
 [![GitHub forks](
 https://img.shields.io/github/forks/icarohs7/unox-android.svg)](
 https://github.com/icarohs7/unox-android/network)
-
-
 [![GitHub stars](
 https://img.shields.io/github/stars/icarohs7/unox-android.svg)](
 https://github.com/icarohs7/unox-android/stargazers)
