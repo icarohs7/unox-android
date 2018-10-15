@@ -2,6 +2,9 @@
 [![](
 https://jitpack.io/v/icarohs7/unox-android.svg)](
 https://jitpack.io/#icarohs7/unox-android)
+[![Build Status](
+https://travis-ci.org/icarohs7/unox-android.svg?branch=master)](
+https://travis-ci.org/icarohs7/unox-android)
 [![HitCount](
 http://hits.dwyl.io/icarohs7/unox-android.svg)](
 http://hits.dwyl.io/icarohs7/unox-android)
