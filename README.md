@@ -22,16 +22,32 @@ https://github.com/icarohs7/unox-android/stargazers)
 Android library with a collection of modules and many features
 
 ## Adding to the project
-````groovy
+
+Groovy
+```groovy
 repositories {
-    maven { url 'https://jitpack.io' }
+    maven { url "https://jitpack.io" }
 }
 dependencies {
     //All libs
     implementation "com.github.icarohs7:unox-android:$unoxandroid_version"
- 
+
     //Single modules
     implementation "com.github.icarohs7.unox-android:<moduleName>:$unoxandroid_version"
 }
-````
+```
+
+Kotlin
+```kotlin
+repositories {
+    maven("https://jitpack.io")
+}
+dependencies {
+    //All libs
+    implementation("com.github.icarohs7:unox-android:$unoxandroid_version")
+
+    //Single modules
+    implementation("com.github.icarohs7.unox-android:<moduleName>:$unoxandroid_version")
+}
+```
 ### List of modules [here](https://github.com/icarohs7/unox-android/tree/master/settings.gradle) (without prefix colon)
