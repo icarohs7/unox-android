@@ -56,5 +56,16 @@ class AnyExtTest {
         val exp2 = mutableListOf("hello", "is there anybody", "in there")
 
         c2 shouldEqual exp2
+
+        var c3 = 0
+        val exp3 = 3
+
+        0 ASWELL { c3 += 1 } ASWELL { c3 += 2 } ASWELL { c3 shouldEqual exp3 }
+    }
+
+    @Test
+    fun `should get the tag of a class`() {
+        val tag = this.TAG
+        tag shouldEqual "AnyExtTest"
     }
 }

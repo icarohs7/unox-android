@@ -25,16 +25,20 @@
 package com.github.icarohs7.core.extensions
 
 import com.github.icarohs7.core.toplevel.onBg
-import com.github.icarohs7.core.toplevel.onUi
+import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.launch
 
 /**
  * Invoke a function when the coroutine finishes
- * its execution, parameterizing the returning value
+ * its execution, parameterizing the returning value,
+ * the function will be invoked by default on the Main
+ * dispatcher of the application
  */
-fun <T> Deferred<T>.onResponse(fn: (T) -> Unit) {
+fun <T> Deferred<T>.onResponse(scope: CoroutineScope = CoroutineScope(Dispatchers.Main), fn: (T) -> Unit) {
     onBg { _ ->
         val response = this.await()
-        onUi { fn(response) }
+        scope.launch { fn(response) }
     }
 }
