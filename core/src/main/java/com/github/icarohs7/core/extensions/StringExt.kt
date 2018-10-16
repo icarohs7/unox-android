@@ -32,7 +32,7 @@ fun String?.toLocaleCurrency(language: String, country: String): String {
                             .getCurrencyInstance(Locale(language, country))
                             .format(this)
                 }
-    } catch (e: NumberFormatException) {
+    } catch (e: Exception) {
         this
     }?.trim() ?: ""
 }
@@ -51,7 +51,7 @@ fun String?.toLocaleNumber(language: String, country: String): String {
                             .getInstance(Locale(language, country))
                             .format(this)
                 }
-    } catch (e: NumberFormatException) {
+    } catch (e: Exception) {
         this
     }?.trim() ?: ""
 }

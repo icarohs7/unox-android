@@ -43,6 +43,10 @@ class StringExtTest {
         val exp1 = "1.532"
 
         n1.toLocaleNumber("pt", "BR") shouldEqual exp1
+
+        val n2: String? = null
+        val exp2 = ""
+        n2.toLocaleNumber("pt", "BR") shouldEqual exp2
     }
 
     @Test
@@ -56,6 +60,10 @@ class StringExtTest {
         val exp2 = "$15.32"
 
         n2.toLocaleCurrency("en", "US") shouldEqual exp2
+
+        val n3: String? = null
+        val exp3 = ""
+        n3.toLocaleCurrency("pt", "BR") shouldEqual exp3
     }
 
     @Test

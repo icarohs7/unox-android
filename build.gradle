@@ -35,6 +35,7 @@ buildscript {
         classpath "com.android.tools.build:gradle:3.2.1"
         classpath "com.github.dcendents:android-maven-gradle-plugin:2.1"
         classpath "gradle.plugin.com.palantir.gradle.gitversion:gradle-git-version:0.11.0"
+        classpath "com.dicedmelon.gradle:jacoco-android:0.1.2"
     }
 }
 
@@ -55,6 +56,7 @@ subprojects { proj ->
     apply plugin: 'kotlin-android-extensions'
     apply plugin: 'kotlin-kapt'
     apply plugin: 'com.palantir.git-version'
+    apply plugin: 'jacoco-android'
 
     android {
         compileSdkVersion 28

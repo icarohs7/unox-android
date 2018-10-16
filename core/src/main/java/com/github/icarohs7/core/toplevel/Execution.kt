@@ -45,10 +45,14 @@ val NXBGPOOL: ExecutorCoroutineDispatcher by lazy {
 /**
  * Run a function on the UI Thread after some time
  */
-fun runAfterDelay(delayTime: Int, fn: suspend (CoroutineScope) -> Unit) {
+fun runAfterDelay(
+        delayTime: Int,
+        scope: CoroutineScope = CoroutineScope(Dispatchers.Main),
+        fn: suspend (CoroutineScope) -> Unit
+) {
     onBg {
         delay(delayTime.toLong())
-        onUi(fn = fn)
+        scope.launch { fn(this) }
     }
 }
 
