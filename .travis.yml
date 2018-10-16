@@ -1,9 +1,5 @@
 language: android
 
-env:
-  global:
-    - ADB_INSTALL_TIMEOUT=10
-
 android:
   components:
     - tools
@@ -14,4 +10,4 @@ android:
     - sys-img-armeabi-v7a-android-26
 
   licenses:
-      - '.+'
+    - '.+'

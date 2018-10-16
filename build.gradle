@@ -64,7 +64,6 @@ subprojects { proj ->
             targetSdkVersion 28
             versionCode 1
             versionName gitVersion().toString().find('(\\d\\.\\d\\.\\d)')
-            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         }
 
         buildTypes {
@@ -84,9 +83,6 @@ subprojects { proj ->
 
         testImplementation "junit:junit:$junit_version"
         testImplementation "se.lovef:kotlin-assert-utils:$kotlinassertutils_version"
-
-        androidTestImplementation "androidx.test:runner:$testrunner_version"
-        androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     }
 
     task sourcesJar(type: Jar) {

@@ -43,7 +43,7 @@ abstract class WatcherAdapter<T, DB : ViewDataBinding>(
     /**
      * The observer watching the changes on the list
      */
-    open val observer: Observer<List<T>> = Observer { newList -> calculateChanges(newList ?: emptyList()) }
+    open val observer: Observer<List<T>> = Observer { notifyDataSetChanged() }
 
     /**
      * Override to choose what operations should be performed on the list before showing it
