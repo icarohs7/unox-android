@@ -27,7 +27,7 @@ package com.github.icarohs7.network.annotations
 /**
  * Annotation used to give an alternate name to a
  * property when being converted to a Map through
- * the function mapOfProperties
+ * the function toMapFromProperties
  */
 @Target(AnnotationTarget.PROPERTY)
 annotation class Label(val value: String)

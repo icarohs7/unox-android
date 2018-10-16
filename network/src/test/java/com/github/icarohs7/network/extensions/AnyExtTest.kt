@@ -10,7 +10,7 @@ class AnyExtTest {
     @Test
     fun `should convert a class to a map`() {
         val firstObj = TestClass3("a", 1, "b")
-        val firstMap = firstObj.mapOfProperties()
+        val firstMap = firstObj.toMapFromProperties()
         val firstMapExpected = mapOf(
                 "foo" to "a",
                 "bar" to "1",
@@ -19,7 +19,7 @@ class AnyExtTest {
         firstMap shouldEqual firstMapExpected
 
         val secondObj = TestClass3("x", 0, "p")
-        val secondMap = secondObj.mapOfProperties()
+        val secondMap = secondObj.toMapFromProperties()
         val secondMapExpected = mapOf(
                 "foo" to "x",
                 "bar" to "0",
@@ -28,7 +28,7 @@ class AnyExtTest {
         secondMap shouldEqual secondMapExpected
 
         val thirdObj = TestClass4(5, "hi")
-        val thirdMap = thirdObj.mapOfProperties()
+        val thirdMap = thirdObj.toMapFromProperties()
         val thirdMapExpected = mapOf(
                 "bar" to "5",
                 "someth" to "hi"

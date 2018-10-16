@@ -19,14 +19,15 @@ fun <T : Any> T?.toJson(): String {
  * property of the [Json] annotation and the values being the value
  * of each property
  */
-inline fun <reified T : Any> T.mapOfProperties(): Map<String, String> {
-    val map = mutableMapOf<String, String>()
-    val clazz = T::class
+inline fun <reified T : Any> T.toMapFromProperties(): Map<String, String> {
+    return T::class.memberProperties.map { prop ->
 
-    clazz.memberProperties.forEach { prop ->
-        val label = prop.findAnnotation<Label>()?.value ?: prop.findAnnotation<Json>()?.name ?: prop.name
-        map += label to prop.get(this).toString()
-    }
+        val propertyLabel = prop.findAnnotation<Label>()?.value
+                ?: prop.findAnnotation<Json>()?.name
+                ?: prop.name
+        val propertyValue = prop.get(this).toString()
 
-    return map
+        propertyLabel to propertyValue
+
+    }.toMap()
 }
