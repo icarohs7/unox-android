@@ -24,23 +24,16 @@
 
 package com.github.icarohs7.core.toplevel
 
-import com.github.icarohs7.core.settings.UnoxAndroidSettings
+import com.github.icarohs7.core.UnoxAndroidCoreModule
 import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.ExecutorCoroutineDispatcher
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.newFixedThreadPoolContext
+import kotlin.coroutines.experimental.CoroutineContext
 
-/**
- * Coroutine pool used on the library
- */
-val NXBGPOOL: ExecutorCoroutineDispatcher by lazy {
-    newFixedThreadPoolContext(UnoxAndroidSettings.NXBGPOOL_NUMBER_OF_THREADS, "unox")
-}
 
 /**
  * Run a function on the UI Thread after some time
@@ -48,18 +41,21 @@ val NXBGPOOL: ExecutorCoroutineDispatcher by lazy {
 fun runAfterDelay(
         delayTime: Int,
         scope: CoroutineScope = CoroutineScope(Dispatchers.Main),
+        context: CoroutineContext = UnoxAndroidCoreModule.CONTEXT,
         fn: suspend (CoroutineScope) -> Unit
 ) {
     onBg {
         delay(delayTime.toLong())
-        scope.launch { fn(this) }
+        scope.launch(context = context) { fn(this) }
     }
 }
 
 /**
  * Run a function on the UI Thread
  */
-fun onUi(fn: suspend (CoroutineScope) -> Unit): Job = CoroutineScope(Dispatchers.Main).launch {
+fun onUi(
+        fn: suspend (CoroutineScope) -> Unit
+): Job = CoroutineScope(Dispatchers.Main).launch {
     fn(this)
 }
 
@@ -67,20 +63,24 @@ fun onUi(fn: suspend (CoroutineScope) -> Unit): Job = CoroutineScope(Dispatchers
  * Run a function on the background coroutine context and
  * returns the deferred
  */
-fun <T> onBgResult(scope: CoroutineScope = CoroutineScope(NXBGPOOL), fn: suspend (CoroutineScope) -> T): Deferred<T> {
-    return scope.async {
-        fn(this)
-    }
+fun <T> onBgResult(
+        scope: CoroutineScope = UnoxAndroidCoreModule.SCOPE,
+        context: CoroutineContext = UnoxAndroidCoreModule.CONTEXT,
+        fn: suspend (CoroutineScope) -> T
+): Deferred<T> = scope.async(context = context) {
+    fn(this)
 }
 
 /**
  * Run a function on the background coroutine context and
  * returns the job, use for fire and forget operations
  */
-fun onBg(scope: CoroutineScope = CoroutineScope(NXBGPOOL), fn: suspend (CoroutineScope) -> Unit): Job {
-    return scope.launch {
-        fn(this)
-    }
+fun onBg(
+        scope: CoroutineScope = UnoxAndroidCoreModule.SCOPE,
+        context: CoroutineContext = UnoxAndroidCoreModule.CONTEXT,
+        fn: suspend (CoroutineScope) -> Unit
+): Job = scope.launch(context = context) {
+    fn(this)
 }
 
 /**

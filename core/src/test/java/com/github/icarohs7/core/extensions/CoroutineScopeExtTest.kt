@@ -1,7 +1,6 @@
 package com.github.icarohs7.core.extensions
 
-import com.github.icarohs7.core.toplevel.NXBGPOOL
-import kotlinx.coroutines.experimental.CoroutineScope
+import com.github.icarohs7.core.UnoxAndroidCoreModule
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
@@ -13,7 +12,7 @@ import kotlin.system.measureTimeMillis
 class CoroutineScopeExtTest {
     @Test
     fun `should wait for a list of jobs`() {
-        val scope = CoroutineScope(NXBGPOOL)
+        val scope = UnoxAndroidCoreModule.SCOPE
         var testV = 0
         val d = measureTimeMillis {
             runBlocking {
@@ -26,7 +25,7 @@ class CoroutineScopeExtTest {
             }
         }
 
-        d shouldBeCloseTo 1200 tolerance 400
+        d shouldBeCloseTo 1200 tolerance 500
         testV shouldEqual 1532
     }
 }

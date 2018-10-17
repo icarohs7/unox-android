@@ -1,7 +1,7 @@
 package com.github.icarohs7.core.toplevel
 
+import com.github.icarohs7.core.UnoxAndroidCoreModule
 import com.github.icarohs7.core.extensions.ignoreResult
-import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Test
@@ -24,11 +24,11 @@ class TopLevelTest {
     @Test
     fun `should invoke an action after a delay`(): Unit = runBlocking {
         val testList = mutableListOf(1, 2)
-        runAfterDelay(200, CoroutineScope(NXBGPOOL)) {
+        runAfterDelay(200, UnoxAndroidCoreModule.SCOPE) {
             testList += 3
             testList += 4
         }
-        delay(210)
+        delay(240)
         testList shouldEqual mutableListOf(1, 2, 3, 4)
         ignoreResult()
     }

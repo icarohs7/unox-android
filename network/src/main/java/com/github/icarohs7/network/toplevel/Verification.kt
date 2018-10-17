@@ -1,7 +1,7 @@
 package com.github.icarohs7.network.toplevel
 
 import android.annotation.SuppressLint
-import com.github.icarohs7.core.toplevel.NXBGPOOL
+import com.github.icarohs7.core.UnoxAndroidCoreModule
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,7 +17,7 @@ import io.reactivex.schedulers.Schedulers
 fun appHasInternetConnection(fn: (Boolean) -> Unit) {
     ReactiveNetwork
             .checkInternetConnectivity()
-            .subscribeOn(Schedulers.from(NXBGPOOL.executor))
+            .subscribeOn(Schedulers.from(UnoxAndroidCoreModule.EXECUTOR))
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                     { hasConn -> fn(hasConn) },
@@ -31,7 +31,7 @@ fun appHasInternetConnection(fn: (Boolean) -> Unit) {
 fun appOnInternetConnectionChange(fn: (Boolean) -> Unit): Pair<Observable<Boolean>, Disposable> {
     val obs = ReactiveNetwork
             .observeInternetConnectivity()
-            .subscribeOn(Schedulers.from(NXBGPOOL.executor))
+            .subscribeOn(Schedulers.from(UnoxAndroidCoreModule.EXECUTOR))
             .observeOn(AndroidSchedulers.mainThread())
 
     val subs = obs.subscribe({ hasConn -> fn(hasConn) },
