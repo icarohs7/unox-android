@@ -27,7 +27,7 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
 
     //Kotlin Reflection API
-    implementation "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}"
+    api "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}"
 }
 
 kotlin {

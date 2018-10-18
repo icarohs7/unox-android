@@ -31,7 +31,7 @@ dependencies {
     api "org.jetbrains.anko:anko-sdk25:${versions.anko}"
 
     //AndroidX
-    implementation "androidx.core:core-ktx:${versions.androidxcore}"
+    api "androidx.core:core-ktx:${versions.androidxcore}"
     api "androidx.recyclerview:recyclerview:${versions.recyclerview}"
     api "com.google.android.material:material:${versions.materialdesign}"
     api "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}"
