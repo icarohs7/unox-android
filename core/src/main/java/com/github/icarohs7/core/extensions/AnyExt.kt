@@ -23,6 +23,9 @@
  */
 package com.github.icarohs7.core.extensions
 
+import kotlin.reflect.KProperty
+import kotlin.reflect.full.memberProperties
+
 /**
  * Chain a infix lambda to an operator, returning itself,
  * e.g: mutableListOf<Int>() CHAIN { add(2) } CHAIN { add(3) }
@@ -49,3 +52,20 @@ infix fun Any?.ASWELL(other: Any?): Unit = Unit
  */
 val Any?.TAG: String
     get() = this?.let { obj -> obj::class.simpleName } ?: "null"
+
+/**
+ * Return a map representation with the keys being the name of the
+ * properties or the value of the parameterized lambda applied to the property
+ */
+inline fun <reified T : Any> T.toMapFromProperties(
+        propertyNameMapping: (KProperty<*>) -> String = { "" }
+): Map<String, String> {
+    return T::class.memberProperties.map { prop ->
+
+        val propertyLabel = propertyNameMapping(prop) ifBlankOrNull prop.name
+        val propertyValue = prop.get(this).toString()
+
+        propertyLabel to propertyValue
+
+    }.toMap()
+}

@@ -29,8 +29,8 @@ import android.Manifest.permission
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import androidx.core.app.ActivityCompat
+import androidx.core.net.toUri
 import com.github.icarohs7.telephony.TelephonyModule
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
@@ -40,7 +40,14 @@ import java.util.ArrayList
 internal class PhoneCallProviderImpl : TelephonyModule.PhoneCallProvider {
 
     override fun callNumber(context: Context, phoneNumber: String, askingMessage: String, onDenyMessage: String) {
-        val callback = object : PermissionHandler() {
+        val callback = permissionHandler(context, phoneNumber, onDenyMessage)
+
+        Permissions.check(context, Manifest.permission.CALL_PHONE, askingMessage, callback)
+    }
+
+    private fun permissionHandler(context: Context, phoneNumber: String,
+                                  onDenyMessage: String): PermissionHandler {
+        return object : PermissionHandler() {
             override fun onGranted() {
                 makeCall(context, phoneNumber)
             }
@@ -49,21 +56,15 @@ internal class PhoneCallProviderImpl : TelephonyModule.PhoneCallProvider {
                 context.longToast(onDenyMessage)
             }
         }
-
-        Permissions.check(context, Manifest.permission.CALL_PHONE, askingMessage, callback)
     }
 
-    private fun makeCall(context: Context, phoneNumber: String) {
+    private fun makeCall(context: Context, phoneNumber: String) = context.apply {
         val callIntent = Intent(Intent.ACTION_CALL)
-        callIntent.data = Uri.parse("tel:$phoneNumber")
+        callIntent.data = "tel:$phoneNumber".toUri()
 
-        if (
-                ActivityCompat.checkSelfPermission(context, permission.CALL_PHONE)
-                != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        } else {
-            context.startActivity(callIntent)
-        }
+        if (hasPermissionToCall()) startActivity(callIntent)
     }
+
+    private fun Context.hasPermissionToCall() =
+            (ActivityCompat.checkSelfPermission(this, permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED)
 }

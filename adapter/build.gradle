@@ -24,8 +24,9 @@
 
 dependencies {
     //AndroidX
-    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
-    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    implementation "androidx.recyclerview:recyclerview:${versions.recyclerview}"
+    implementation "androidx.lifecycle:lifecycle-livedata:${versions.lifecycle}"
+    implementation "androidx.core:core-ktx:${versions.androidxcore}"
 }
 
 android {

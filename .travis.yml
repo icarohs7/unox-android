@@ -2,12 +2,6 @@ language: android
 jdk: oraclejdk8
 sudo: false
 
-before_install:
-  - pip install --user codecov
-
-after_success:
-  - codecov
-
 android:
   components:
     - tools

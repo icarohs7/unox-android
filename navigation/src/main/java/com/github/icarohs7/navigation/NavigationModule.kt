@@ -31,11 +31,6 @@ interface NavigationModule {
      */
     companion object {
         /**
-         * Builder used to define the settings for the module
-         */
-        fun config(fn: NavigationModule.Companion.() -> Unit) = fn(this)
-
-        /**
          * Animation used at the transition between activities
          */
         var animationType: AnimationType = AnimationType.NO_ANIMATION

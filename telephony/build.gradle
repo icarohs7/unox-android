@@ -24,9 +24,12 @@
 
 
 dependencies {
+    //AndroidX
+    implementation "androidx.core:core-ktx:${versions.androidxcore}"
+
     //Anko
-    implementation "org.jetbrains.anko:anko-commons:$anko_version"
+    implementation "org.jetbrains.anko:anko-commons:${versions.anko}"
 
     //Android Runtime Permission Library
-    implementation "com.nabinbhandari.android:permissions:$runtimepermissionlib_version"
+    implementation "com.nabinbhandari.android:permissions:${versions.runtimepermissionlib}"
 }

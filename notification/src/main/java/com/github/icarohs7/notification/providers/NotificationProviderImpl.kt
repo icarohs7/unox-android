@@ -60,12 +60,12 @@ internal class NotificationProviderImpl(
         emitNotification(builder)
     }
 
-    override fun <T : AppCompatActivity> emitNotification(
+    override fun emitNotification(
             title: String,
             message: String,
             iconResource: Int,
             bigMessage: String,
-            destinationActivity: KClass<T>
+            destinationActivity: KClass<out AppCompatActivity>
     ) {
         emitNotification(
                 title,

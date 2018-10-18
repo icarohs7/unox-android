@@ -32,6 +32,7 @@ import com.github.icarohs7.core.toplevel.onBg
 import com.github.icarohs7.core.toplevel.onBgResult
 import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.core.toplevel.runAfterDelay
+import com.github.icarohs7.visuals.R
 import com.github.icarohs7.visuals.databinding.PartialCenterAndBottomConteinerBinding
 import com.github.icarohs7.visuals.extensions.animateScaleIn
 import kotlinx.coroutines.experimental.Deferred

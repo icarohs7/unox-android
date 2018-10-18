@@ -54,12 +54,12 @@ interface NotificationModule {
         /**
          * Show a notification to the user
          */
-        fun <T : AppCompatActivity> emitNotification(
+        fun emitNotification(
                 title: String,
                 message: String,
                 iconResource: Int,
                 bigMessage: String,
-                destinationActivity: KClass<T>
+                destinationActivity: KClass<out AppCompatActivity>
         )
 
         companion object {

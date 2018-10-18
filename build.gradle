@@ -23,7 +23,7 @@
  */
 
 buildscript {
-    apply(from: "buildSrc/libVersions.gradle")
+    apply(from: "buildSrc/libs.gradle")
 
     repositories {
         google()
@@ -31,11 +31,10 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         classpath "com.android.tools.build:gradle:3.2.1"
         classpath "com.github.dcendents:android-maven-gradle-plugin:2.1"
         classpath "gradle.plugin.com.palantir.gradle.gitversion:gradle-git-version:0.11.0"
-        classpath "com.dicedmelon.gradle:jacoco-android:0.1.2"
     }
 }
 
@@ -56,7 +55,6 @@ subprojects { proj ->
     apply plugin: 'kotlin-android-extensions'
     apply plugin: 'kotlin-kapt'
     apply plugin: 'com.palantir.git-version'
-    apply plugin: 'jacoco-android'
 
     android {
         compileSdkVersion 28
@@ -65,7 +63,7 @@ subprojects { proj ->
             minSdkVersion 21
             targetSdkVersion 28
             versionCode 1
-            versionName gitVersion().toString().find('(\\d\\.\\d\\.\\d)')
+            versionName gitVersion().toString().find("(\\d\\.\\d\\.\\d)")
         }
 
         buildTypes {
@@ -79,12 +77,10 @@ subprojects { proj ->
     dependencies {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
         if (proj.name != 'core') implementation project(':core')
-        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-        implementation "androidx.appcompat:appcompat:$appcompat_version"
-        implementation "androidx.core:core-ktx:$androidxcore_version"
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 
-        testImplementation "junit:junit:$junit_version"
-        testImplementation "se.lovef:kotlin-assert-utils:$kotlinassertutils_version"
+        testImplementation "junit:junit:${versions.junit}"
+        testImplementation "se.lovef:kotlin-assert-utils:${versions.kotlinassertutils}"
     }
 
     task sourcesJar(type: Jar) {

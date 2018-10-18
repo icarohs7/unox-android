@@ -24,23 +24,24 @@
 
 dependencies {
     //SpinKit
-    api "com.github.ybq:Android-SpinKit:$spinkit_version"
+    api "com.github.ybq:Android-SpinKit:${versions.spinkit}"
 
     //Anko
-    api "org.jetbrains.anko:anko-commons:$anko_version"
-    api "org.jetbrains.anko:anko-sdk25:$anko_version"
+    api "org.jetbrains.anko:anko-commons:${versions.anko}"
+    api "org.jetbrains.anko:anko-sdk25:${versions.anko}"
 
     //AndroidX
-    api "androidx.recyclerview:recyclerview:$recyclerview_version"
-    api "com.google.android.material:material:$materialdesign_version"
-    api "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    implementation "androidx.core:core-ktx:${versions.androidxcore}"
+    api "androidx.recyclerview:recyclerview:${versions.recyclerview}"
+    api "com.google.android.material:material:${versions.materialdesign}"
+    api "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}"
 
     //Masked edit text
-    api "com.github.santalu:mask-edittext:$maskededittext_version"
+    api "com.github.santalu:mask-edittext:${versions.maskededittext}"
 
     //Glide
-    implementation "com.github.bumptech.glide:glide:$glide_version"
-    kapt "com.github.bumptech.glide:compiler:$glide_version"
+    api "com.github.bumptech.glide:glide:${versions.glide}"
+    kapt "com.github.bumptech.glide:compiler:${versions.glide}"
 }
 
 android {
@@ -51,6 +52,6 @@ android {
 
 kotlin {
     experimental {
-        coroutines 'enable'
+        coroutines("enable")
     }
 }

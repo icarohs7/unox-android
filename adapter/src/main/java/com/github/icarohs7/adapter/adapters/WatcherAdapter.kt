@@ -30,7 +30,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -50,12 +49,6 @@ abstract class WatcherAdapter<T, DB : ViewDataBinding>(
      */
     open fun dataFilter(data: List<T>): List<T> =
             data
-
-    /**
-     * Callback used to calculate the difference between lists when the values are updated
-     */
-    open fun diffCallback(oldList: List<T>, newList: List<T>): DiffUtil.Callback =
-            WatcherDiffUtil(oldList, newList)
 
     /**
      * Function converting an list item to an actual view
@@ -106,37 +99,7 @@ abstract class WatcherAdapter<T, DB : ViewDataBinding>(
     }
 
     /**
-     * Called to update the list with the minimum amount of work
-     */
-    protected fun calculateChanges(newList: List<T>) {
-        val oldList = dataSource.value ?: emptyList()
-        val filteredOldList = dataFilter(oldList)
-        val filteredNewList = dataFilter(newList)
-        val diffResult = DiffUtil.calculateDiff(diffCallback(filteredOldList, filteredNewList))
-        diffResult.dispatchUpdatesTo(this)
-    }
-
-    /**
      * Viewholder for the adapter
      */
     class WatcherViewHolder<DB : ViewDataBinding>(val binding: DB) : RecyclerView.ViewHolder(binding.root)
-
-    /**
-     * Default diff class for calculating differences between lists
-     */
-    open class WatcherDiffUtil<T>(private val oldList: List<T>, private val newList: List<T>) : DiffUtil.Callback() {
-
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-                oldList[oldItemPosition] == newList[newItemPosition]
-
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-                oldList[oldItemPosition] == newList[newItemPosition]
-
-        override fun getOldListSize(): Int =
-                oldList.size
-
-        override fun getNewListSize(): Int =
-                newList.size
-
-    }
 }
