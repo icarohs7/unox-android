@@ -6,7 +6,6 @@ import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.newFixedThreadPoolContext
 import java.util.concurrent.Executor
 import kotlin.coroutines.experimental.CoroutineContext
-import kotlin.math.max
 
 /**
  * Interface used to store the settings of the module
@@ -15,11 +14,16 @@ interface UnoxAndroidCoreModule {
     companion object {
 
         /**
-         * Coroutine pool used on the library
+         * Coroutine pool used on the library,
+         * when changed, also redefine [SCOPE]
+         * and [EXECUTOR] from the library
          */
-        var POOL: ExecutorCoroutineDispatcher =
-                newFixedThreadPoolContext(
-                        max(2, Runtime.getRuntime().availableProcessors()), "unox")
+        var POOL: ExecutorCoroutineDispatcher = newFixedThreadPoolContext(2, "unox")
+            set(value) {
+                SCOPE = CoroutineScope(value)
+                EXECUTOR = value.executor
+                field = value
+            }
 
         /**
          * Context used on all coroutines of the library

@@ -25,14 +25,14 @@ package com.github.icarohs7.core.extensions
 
 /**
  * Chain a infix lambda to an operator, returning itself,
- * with side effects, e.g: mutableListOf<Int>() CHAIN { add(2) }
+ * e.g: mutableListOf<Int>() CHAIN { add(2) } CHAIN { add(3) }
  */
 @Suppress("FunctionName")
 infix fun <T> T.CHAIN(fn: T.() -> Unit): T = this.also(fn)
 
 /**
  * Chain a infix lambda to an operator, returning the result,
- *  e.g: 5 PIPE { this + 3 } PIPE { this + 1 } - result=9
+ * e.g: 5 PIPE { this + 3 } PIPE { this + 1 } - result=9
  */
 @Suppress("FunctionName")
 infix fun <T, R> T.PIPE(fn: T.() -> R): R = this.let(fn)
@@ -49,8 +49,3 @@ infix fun Any?.ASWELL(other: Any?): Unit = Unit
  */
 val Any?.TAG: String
     get() = this?.let { obj -> obj::class.simpleName } ?: "null"
-
-/**
- * Ignore the value of the caller and return [Unit]
- */
-fun Any?.ignoreResult(): Unit = Unit

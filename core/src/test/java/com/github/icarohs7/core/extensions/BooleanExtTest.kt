@@ -7,10 +7,10 @@ import se.lovef.assert.v1.shouldEqual
 class BooleanExtTest {
     @Test
     fun `should verify the value of a boolean`() {
-        true ifFalse { fail("true should not be false") }
-        false ifTrue { fail("false should no be true") }
+        true ifFalseInvoke { fail("true should not be false") }
+        false ifTrueInvoke { fail("false should no be true") }
 
-        true ifTrue { true shouldEqual true } ifFalse { true shouldEqual false }
-        false ifTrue { false shouldEqual true } ifFalse { false shouldEqual false }
+        true ifTrueInvoke { true shouldEqual true } ifFalseInvoke { true shouldEqual false }
+        false ifTrueInvoke { false shouldEqual true } ifFalseInvoke { false shouldEqual false }
     }
 }

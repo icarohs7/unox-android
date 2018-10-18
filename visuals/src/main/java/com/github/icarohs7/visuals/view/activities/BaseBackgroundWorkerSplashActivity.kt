@@ -27,12 +27,11 @@ package com.github.icarohs7.visuals.view.activities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.github.icarohs7.core.extensions.ifTrue
+import com.github.icarohs7.core.extensions.ifTrueInvoke
 import com.github.icarohs7.core.toplevel.onBg
 import com.github.icarohs7.core.toplevel.onBgResult
 import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.core.toplevel.runAfterDelay
-import com.github.icarohs7.visuals.R
 import com.github.icarohs7.visuals.databinding.PartialCenterAndBottomConteinerBinding
 import com.github.icarohs7.visuals.extensions.animateScaleIn
 import kotlinx.coroutines.experimental.Deferred
@@ -74,7 +73,7 @@ abstract class BaseBackgroundWorkerSplashActivity<T>(protected val animationTime
      */
     private fun verifyIfWillDoBackgroundWork() {
         val willDo = confirmIfShouldDoBackgroundWorkBeforeStarting()
-        willDo ifTrue { backgroundTask = onBgResult { startBackgroundOperations() } }
+        willDo ifTrueInvoke { backgroundTask = onBgResult { startBackgroundOperations() } }
     }
 
     /**

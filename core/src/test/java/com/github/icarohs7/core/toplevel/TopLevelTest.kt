@@ -1,7 +1,6 @@
 package com.github.icarohs7.core.toplevel
 
 import com.github.icarohs7.core.UnoxAndroidCoreModule
-import com.github.icarohs7.core.extensions.ignoreResult
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Test
@@ -30,6 +29,6 @@ class TopLevelTest {
         }
         delay(240)
         testList shouldEqual mutableListOf(1, 2, 3, 4)
-        ignoreResult()
+        Unit
     }
 }

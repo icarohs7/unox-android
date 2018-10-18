@@ -27,7 +27,7 @@ package com.github.icarohs7.core.extensions
 /**
  * Invoke the lambda only if the left operator is true
  */
-inline infix fun Boolean.ifTrue(fn: () -> Unit): Boolean {
+inline infix fun Boolean.ifTrueInvoke(fn: () -> Unit): Boolean {
     if (this) fn()
     return this
 }
@@ -35,7 +35,7 @@ inline infix fun Boolean.ifTrue(fn: () -> Unit): Boolean {
 /**
  * Invoke the lambda only if the left operator is false
  */
-inline infix fun Boolean.ifFalse(fn: () -> Unit): Boolean {
+inline infix fun Boolean.ifFalseInvoke(fn: () -> Unit): Boolean {
     if (!this) fn()
     return this
 }

@@ -7,8 +7,9 @@ import java.util.Locale
  * Returns a string containing only the numbers
  * in the original string (all that's not in \d)
  */
-fun String?.onlyNumbers(ignoreDecimalSeparator: Boolean = false): String {
-    val regex = if (ignoreDecimalSeparator) Regex("[^\\d]") else Regex("[^\\d.]")
+fun String?.onlyNumbers(vararg charsToIgnore: Char): String {
+    val regexString = "[^\\d$charsToIgnore]"
+    val regex = Regex(regexString)
 
     val stringOnlyNums = this?.replace(regex, "") ?: ""
 
