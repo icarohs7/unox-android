@@ -28,7 +28,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 
@@ -36,7 +36,7 @@ import androidx.recyclerview.widget.RecyclerView
  * Adapter based on observability and dynamic lists built using LiveData
  */
 abstract class WatcherAdapter<T, DB : ViewDataBinding>(
-        protected val dataSource: LiveData<List<T>>
+        val dataSource: MutableLiveData<List<T>> = MutableLiveData<List<T>>().apply { postValue(emptyList()) }
 ) : RecyclerView.Adapter<WatcherAdapter.WatcherViewHolder<DB>>() {
 
     /**
