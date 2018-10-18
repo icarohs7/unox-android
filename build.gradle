@@ -56,6 +56,8 @@ subprojects { proj ->
     apply plugin: 'kotlin-kapt'
     apply plugin: 'com.palantir.git-version'
 
+    if (proj.name != "core") dependencies { implementation(project(":core")) }
+
     android {
         compileSdkVersion 28
 
@@ -76,7 +78,6 @@ subprojects { proj ->
 
     dependencies {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
-        if (proj.name != 'core') implementation project(':core')
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 
         testImplementation "junit:junit:${versions.junit}"

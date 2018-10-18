@@ -29,12 +29,12 @@ import android.Manifest.permission
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
 import com.github.icarohs7.telephony.TelephonyModule
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
-import org.jetbrains.anko.longToast
 import java.util.ArrayList
 
 internal class PhoneCallProviderImpl : TelephonyModule.PhoneCallProvider {
@@ -53,7 +53,7 @@ internal class PhoneCallProviderImpl : TelephonyModule.PhoneCallProvider {
             }
 
             override fun onDenied(context: Context, deniedPermissions: ArrayList<String>) {
-                context.longToast(onDenyMessage)
+                Toast.makeText(context, onDenyMessage, Toast.LENGTH_LONG).show()
             }
         }
     }
