@@ -27,7 +27,6 @@ package com.github.icarohs7.visuals.view.activities
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.annotation.CallSuper
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.github.icarohs7.visuals.entities.ActivityResources
 import com.google.android.material.navigation.NavigationView
@@ -36,7 +35,7 @@ import com.google.android.material.navigation.NavigationView
  * Activity that listens to a LiveData of contracts and when it changes,
  * selects the menu item tied to it and runs the action in it
  */
-abstract class MostBasicActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+abstract class MostBasicActivity : BaseDisposerActivity(), NavigationView.OnNavigationItemSelectedListener {
     val navigationResources = ActivityResources()
 
     /**

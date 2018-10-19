@@ -28,7 +28,7 @@ dependencies {
     api "androidx.lifecycle:lifecycle-livedata:${versions.lifecycle}"
     api "androidx.core:core-ktx:${versions.androidxcore}"
 
-    //Reactive Streams
+    //RxJava
     api "io.reactivex.rxjava2:rxjava:${versions.rxjava}"
 }
 

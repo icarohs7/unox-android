@@ -25,7 +25,6 @@
 package com.github.icarohs7.visuals.view.activities
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.github.icarohs7.core.extensions.ifTrueInvoke
 import com.github.icarohs7.core.toplevel.onBg
@@ -44,7 +43,9 @@ import kotlinx.coroutines.experimental.Deferred
  * you want if not doing background work
  * @property animationTimeout How long the splash image will be shown in miliseconds
  */
-abstract class BaseBackgroundWorkerSplashActivity<T>(protected val animationTimeout: Int = 2000) : AppCompatActivity() {
+abstract class BaseBackgroundWorkerSplashActivity<T>(
+        protected val animationTimeout: Int = 2000
+) : BaseDisposerActivity() {
 
     protected lateinit var root: PartialCenterAndBottomConteinerBinding
     private var backgroundTask: Deferred<T?> = onBgResult { null }
