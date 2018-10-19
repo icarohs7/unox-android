@@ -24,7 +24,7 @@ abstract class BaseDisposerActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        errorSafeRun { disposables.dispose() }
+        errorSafeRun { disposables.clear() }
         super.onPause()
     }
 

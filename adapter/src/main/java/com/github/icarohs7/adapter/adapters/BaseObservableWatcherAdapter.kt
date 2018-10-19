@@ -28,7 +28,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.Observable
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -38,19 +38,23 @@ abstract class BaseObservableWatcherAdapter<T, DB : ViewDataBinding>(
         @LayoutRes itemLayout: Int,
         val dataSetObservable: Observable<List<T>>
 ) : BaseBindingAdapter<T, DB>(itemLayout) {
+    private val disposables = CompositeDisposable()
 
-    private var subscription: Disposable? = null
     open val subscriber: (List<T>?) -> Unit = { items: List<T>? ->
         items?.let { nonNullItems -> dataSet = nonNullItems }
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        subscription = dataSetObservable.subscribeOn(Schedulers.io()).subscribe(subscriber)
+        disposables.add(dataSetObservable.subscribeOn(Schedulers.io()).subscribe(subscriber))
         super.onAttachedToRecyclerView(recyclerView)
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        subscription?.dispose()
+        try {
+            disposables.clear()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         super.onDetachedFromRecyclerView(recyclerView)
     }
 }
