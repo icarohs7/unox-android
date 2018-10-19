@@ -24,8 +24,8 @@
 
 package com.github.icarohs7.visuals.extensions
 
+import android.view.View
 import android.widget.ProgressBar
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.github.icarohs7.core.toplevel.onUi
 
@@ -33,12 +33,12 @@ import com.github.icarohs7.core.toplevel.onUi
  * Execute a function, showing the progress bar before starting and hiding
  * it when finished
  */
-fun ProgressBar.loadingTransaction(fn: (ProgressBar) -> Unit) {
+fun ProgressBar.loadingTransaction(hiddenState: Int = View.GONE, fn: (ProgressBar) -> Unit) {
     try {
         this.isVisible = true
         fn(this)
     } finally {
-        this.isGone = true
+        this.visibility = hiddenState
     }
 }
 
@@ -46,11 +46,11 @@ fun ProgressBar.loadingTransaction(fn: (ProgressBar) -> Unit) {
  * Execute a suspending function, showing the progress bar before starting and
  * hiding it when finished
  */
-suspend fun ProgressBar.loadingTransactionAsync(fn: suspend (ProgressBar) -> Unit) {
+suspend fun ProgressBar.loadingTransactionAsync(hiddenState: Int = View.GONE, fn: suspend (ProgressBar) -> Unit) {
     try {
         onUi { this.isVisible = true }
         fn(this)
     } finally {
-        onUi { this.isGone = true }
+        onUi { this.visibility = hiddenState }
     }
 }
