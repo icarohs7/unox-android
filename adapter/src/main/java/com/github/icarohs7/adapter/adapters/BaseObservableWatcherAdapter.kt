@@ -29,6 +29,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 /**
  * Adapter based on observability and dynamic lists built using [org.reactivestreams.Publisher]
@@ -44,7 +45,7 @@ abstract class BaseObservableWatcherAdapter<T, DB : ViewDataBinding>(
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        subscription = dataSetObservable.subscribe(subscriber)
+        subscription = dataSetObservable.subscribeOn(Schedulers.io()).subscribe(subscriber)
         super.onAttachedToRecyclerView(recyclerView)
     }
 
