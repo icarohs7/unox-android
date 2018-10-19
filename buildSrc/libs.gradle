@@ -17,6 +17,7 @@ ext {
         glide = "4.8.0"
         maskededittext = "1.0.9"
         bungee = "master-SNAPSHOT"
+        reactivestreams = "1.0.2"
 
         //Testing dependencies
         junit = "4.12"

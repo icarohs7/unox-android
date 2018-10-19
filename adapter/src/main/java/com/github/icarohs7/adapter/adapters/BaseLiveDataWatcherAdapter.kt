@@ -22,18 +22,33 @@
  * SOFTWARE.
  */
 
-dependencies {
-    //AndroidX
-    api "androidx.recyclerview:recyclerview:${versions.recyclerview}"
-    api "androidx.lifecycle:lifecycle-livedata:${versions.lifecycle}"
-    api "androidx.core:core-ktx:${versions.androidxcore}"
+package com.github.icarohs7.adapter.adapters
 
-    //Reactive Streams
-    api "org.reactivestreams:reactive-streams:${versions.reactivestreams}"
-}
+import androidx.annotation.LayoutRes
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 
-android {
-    dataBinding {
-        enabled = true
+/**
+ * Adapter based on observability and dynamic lists built using [LiveData]
+ */
+abstract class BaseLiveDataWatcherAdapter<T, DB : ViewDataBinding>(
+        @LayoutRes itemLayout: Int,
+        val dataSetObservable: LiveData<List<T>>
+) : BaseBindingAdapter<T, DB>(itemLayout) {
+
+    open val observer: Observer<List<T>> = Observer { items ->
+        items?.let { nonNullItems -> dataSet = nonNullItems }
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        dataSetObservable.observeForever(observer)
+        super.onAttachedToRecyclerView(recyclerView)
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        dataSetObservable.removeObserver(observer)
+        super.onDetachedFromRecyclerView(recyclerView)
     }
 }
