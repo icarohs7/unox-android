@@ -27,44 +27,29 @@ package com.github.icarohs7.adapter.adapters
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import org.reactivestreams.Publisher
-import org.reactivestreams.Subscriber
-import org.reactivestreams.Subscription
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 
 /**
  * Adapter based on observability and dynamic lists built using [org.reactivestreams.Publisher]
  */
-abstract class BasePublisherWatcherAdapter<T, DB : ViewDataBinding>(
+abstract class BaseObservableWatcherAdapter<T, DB : ViewDataBinding>(
         @LayoutRes itemLayout: Int,
-        val dataSetObservable: Publisher<List<T>>
+        val dataSetObservable: Observable<List<T>>
 ) : BaseBindingAdapter<T, DB>(itemLayout) {
 
-    var subscription: Subscription? = null
-    open val subscriber: Subscriber<List<T>> = object : Subscriber<List<T>> {
-        override fun onComplete() {
-        }
-
-        override fun onSubscribe(subs: Subscription?) {
-            subscription = subs
-        }
-
-        override fun onNext(items: List<T>?) {
-            items?.let { nonNullItems ->
-                dataSet = nonNullItems
-            }
-        }
-
-        override fun onError(t: Throwable?) {
-        }
+    private var subscription: Disposable? = null
+    open val subscriber: (List<T>?) -> Unit = { items: List<T>? ->
+        items?.let { nonNullItems -> dataSet = nonNullItems }
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        dataSetObservable.subscribe(subscriber)
+        subscription = dataSetObservable.subscribe(subscriber)
         super.onAttachedToRecyclerView(recyclerView)
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        subscription?.cancel()
+        subscription?.dispose()
         super.onDetachedFromRecyclerView(recyclerView)
     }
 }

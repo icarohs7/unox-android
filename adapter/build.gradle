@@ -29,7 +29,7 @@ dependencies {
     api "androidx.core:core-ktx:${versions.androidxcore}"
 
     //Reactive Streams
-    api "org.reactivestreams:reactive-streams:${versions.reactivestreams}"
+    api "io.reactivex.rxjava2:rxjava:${versions.rxjava}"
 }
 
 android {
