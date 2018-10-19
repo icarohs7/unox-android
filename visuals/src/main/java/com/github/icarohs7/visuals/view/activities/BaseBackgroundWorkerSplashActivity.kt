@@ -45,7 +45,7 @@ import kotlinx.coroutines.experimental.Deferred
  */
 abstract class BaseBackgroundWorkerSplashActivity<T>(
         protected val animationTimeout: Int = 2000
-) : BaseDisposerActivity() {
+) : BaseNxActivity() {
 
     protected lateinit var root: PartialCenterAndBottomConteinerBinding
     private var backgroundTask: Deferred<T?> = onBgResult { null }
