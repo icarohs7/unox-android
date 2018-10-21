@@ -48,9 +48,9 @@ fun ProgressBar.loadingTransaction(hiddenState: Int = View.GONE, fn: (ProgressBa
  */
 suspend fun ProgressBar.loadingTransactionAsync(hiddenState: Int = View.GONE, fn: suspend (ProgressBar) -> Unit) {
     try {
-        onUi { this.isVisible = true }
+        onUi { this.isVisible = true }.join()
         fn(this)
     } finally {
-        onUi { this.visibility = hiddenState }
+        onUi { this.visibility = hiddenState }.join()
     }
 }
