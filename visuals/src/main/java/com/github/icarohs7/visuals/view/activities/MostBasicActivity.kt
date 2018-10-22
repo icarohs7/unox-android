@@ -41,7 +41,7 @@ abstract class MostBasicActivity : BaseNxActivity(), NavigationView.OnNavigation
     /**
      * Called first when the activity is started to define the navigationResources used, like menus, title, etc
      */
-    abstract fun onDefineActivityResources(): ActivityResources.() -> Unit
+    abstract fun onDefineActivityResources(activityResources: ActivityResources)
 
     /**
      * Called when a menu item from either the side or bottom nav is selected
@@ -58,7 +58,7 @@ abstract class MostBasicActivity : BaseNxActivity(), NavigationView.OnNavigation
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onSetContentView()
-        onDefineActivityResources()(navigationResources)
+        onDefineActivityResources(navigationResources)
         loadNavigationResources()
         afterInitialSetup()
     }
@@ -139,11 +139,11 @@ abstract class MostBasicActivity : BaseNxActivity(), NavigationView.OnNavigation
         }
 
         //Toolbar
+        setSupportActionBar(res.toolbar)
+
         res.toolbarTitle?.let {
             supportActionBar?.title = it
         }
-
-        setSupportActionBar(res.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

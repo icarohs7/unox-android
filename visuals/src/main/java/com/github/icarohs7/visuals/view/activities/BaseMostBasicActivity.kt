@@ -64,8 +64,8 @@ abstract class BaseMostBasicActivity : MostBasicActivity() {
         binding.progressBar.visibility = progressBarHiddenVisibility
     }
 
-    override fun onDefineActivityResources(): ActivityResources.() -> Unit {
-        return {
+    override fun onDefineActivityResources(activityResources: ActivityResources) {
+        activityResources.apply {
             bottomNavigationView = binding.bottomNavigation
             drawerLayout = binding.drawerLayout
             sideNavigationView = binding.navView
