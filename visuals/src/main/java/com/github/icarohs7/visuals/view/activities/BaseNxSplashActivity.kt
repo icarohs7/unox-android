@@ -128,7 +128,7 @@ abstract class BaseNxSplashActivity<T>(
     /**
      * Verify if the app will bootstrap
      */
-    open fun willDoBootstrap(): Boolean = true
+    open suspend fun willDoBootstrap(): Boolean = true
 
     /**
      * Called 2 seconds after the splash image is shown
