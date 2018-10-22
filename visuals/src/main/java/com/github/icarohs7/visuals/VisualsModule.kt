@@ -34,7 +34,7 @@ import com.github.icarohs7.visuals.databinding.DialogYesNoBinding
 import com.github.icarohs7.visuals.databinding.FragmentBaseWithheaderBinding
 import com.github.icarohs7.visuals.databinding.FragmentBaseWithoutheaderBinding
 import com.github.icarohs7.visuals.databinding.PartialCaptionImageBinding
-import com.github.icarohs7.visuals.databinding.PartialCenterAndBottomConteinerBinding
+import com.github.icarohs7.visuals.databinding.PartialCenterAndBottomContainerBinding
 import com.github.icarohs7.visuals.databinding.PartialFormFieldBinding
 import com.github.icarohs7.visuals.databinding.PartialFormMaskedFieldBinding
 import com.github.icarohs7.visuals.databinding.PartialFormPasswordFieldBinding
@@ -104,8 +104,8 @@ interface VisualsModule {
         /**
          * Constraint layout with 2 frame layouts, 1 at the middle and 1 at the bottom
          */
-        fun centerAndBottomContainer(context: Context): PartialCenterAndBottomConteinerBinding {
-            return PartialCenterAndBottomConteinerBinding.inflate(context.layoutInflater)
+        fun centerAndBottomContainer(context: Context): PartialCenterAndBottomContainerBinding {
+            return PartialCenterAndBottomContainerBinding.inflate(context.layoutInflater)
         }
 
         /**
