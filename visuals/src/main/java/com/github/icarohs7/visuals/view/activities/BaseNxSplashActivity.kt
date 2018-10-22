@@ -26,8 +26,8 @@ package com.github.icarohs7.visuals.view.activities
 
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import com.github.icarohs7.core.UnoxAndroidCoreModule
 import com.github.icarohs7.core.extensions.ifTrueInvoke
-import com.github.icarohs7.core.toplevel.onBg
 import com.github.icarohs7.core.toplevel.onBgResult
 import com.github.icarohs7.core.toplevel.onUi
 import com.github.icarohs7.core.toplevel.runAfterDelay
@@ -116,12 +116,10 @@ abstract class BaseNxSplashActivity<T>(
      * function changeToNextScreen with the result
      */
     private fun waitBackgroundOperationsAndProceed() {
-        runAfterDelay(animationTimeout) { _ ->
-            afterAnimationTimeout()
-            onBg { _ ->
-                val bgTaskResult = backgroundTask.await()
-                onUi { if (willDoBootstrap()) changeToNextScreen(bgTaskResult) }
-            }
+        runAfterDelay(animationTimeout, scope = UnoxAndroidCoreModule.SCOPE) { _ ->
+            onUi { afterAnimationTimeout() }.join()
+            val bgTaskResult = backgroundTask.await()
+            onUi { if (willDoBootstrap()) changeToNextScreen(bgTaskResult) }
         }
     }
 
@@ -133,6 +131,6 @@ abstract class BaseNxSplashActivity<T>(
     /**
      * Called 2 seconds after the splash image is shown
      */
-    open fun afterAnimationTimeout() {
+    open suspend fun afterAnimationTimeout() {
     }
 }
