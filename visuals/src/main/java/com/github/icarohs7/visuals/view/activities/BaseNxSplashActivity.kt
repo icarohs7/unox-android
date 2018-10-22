@@ -43,7 +43,7 @@ import kotlinx.coroutines.experimental.Deferred
  * you want if not doing background work
  * @property animationTimeout How long the splash image will be shown in miliseconds
  */
-abstract class BaseBackgroundWorkerSplashActivity<T>(
+abstract class BaseNxSplashActivity<T>(
         protected val animationTimeout: Int = 2000
 ) : BaseNxActivity() {
 
@@ -120,10 +120,15 @@ abstract class BaseBackgroundWorkerSplashActivity<T>(
             afterAnimationTimeout()
             onBg { _ ->
                 val bgTaskResult = backgroundTask.await()
-                onUi { changeToNextScreen(bgTaskResult) }
+                onUi { if (willDoBootstrap()) changeToNextScreen(bgTaskResult) }
             }
         }
     }
+
+    /**
+     * Verify if the app will bootstrap
+     */
+    open fun willDoBootstrap(): Boolean = true
 
     /**
      * Called 2 seconds after the splash image is shown
