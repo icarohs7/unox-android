@@ -27,5 +27,5 @@ dependencies {
     api "androidx.appcompat:appcompat:${versions.appcompat}"
 
     //Sibling modules
-    api project(':navigation')
+    api(project(":navigation"))
 }

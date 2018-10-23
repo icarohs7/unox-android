@@ -25,8 +25,8 @@
 
 dependencies {
     //AndroidX
-    api "androidx.core:core-ktx:${versions.androidxcore}"
+    api("androidx.core:core-ktx:${versions.androidxcore}")
 
     //Android Runtime Permission Library
-    api "com.nabinbhandari.android:permissions:${versions.runtimepermissionlib}"
+    api("com.nabinbhandari.android:permissions:${versions.runtimepermissionlib}")
 }

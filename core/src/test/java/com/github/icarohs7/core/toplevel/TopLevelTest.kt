@@ -1,10 +1,11 @@
 package com.github.icarohs7.core.toplevel
 
 import com.github.icarohs7.core.UnoxAndroidCoreModule
-import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Test
+import se.lovef.assert.v1.shouldBeCloseTo
 import se.lovef.assert.v1.shouldEqual
+import kotlin.system.measureTimeMillis
 
 class TopLevelTest {
     @Test
@@ -23,12 +24,14 @@ class TopLevelTest {
     @Test
     fun `should invoke an action after a delay`(): Unit = runBlocking {
         val testList = mutableListOf(1, 2)
-        runAfterDelay(200, UnoxAndroidCoreModule.SCOPE) {
-            testList += 3
-            testList += 4
+        val time = measureTimeMillis {
+            runAfterDelay(200, UnoxAndroidCoreModule.SCOPE) {
+                testList += 3
+                testList += 4
+            }.join()
         }
-        delay(240)
         testList shouldEqual mutableListOf(1, 2, 3, 4)
+        time shouldBeCloseTo 200 tolerance 200
         Unit
     }
 }

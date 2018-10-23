@@ -43,11 +43,9 @@ fun runAfterDelay(
         scope: CoroutineScope = CoroutineScope(Dispatchers.Main),
         context: CoroutineContext = UnoxAndroidCoreModule.CONTEXT,
         fn: suspend (CoroutineScope) -> Unit
-) {
-    onBg {
-        delay(delayTime.toLong())
-        scope.launch(context = context) { fn(this) }
-    }
+): Job = onBg { _ ->
+    delay(delayTime.toLong())
+    scope.launch(context = context) { fn(this) }
 }
 
 /**

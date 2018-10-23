@@ -28,7 +28,4 @@ dependencies {
 
     //Bungee
     api "com.github.Binary-Finery:Bungee:${versions.bungee}"
-
-    //Kotlin Reflection API
-    api "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}"
 }

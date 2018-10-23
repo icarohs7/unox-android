@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-include ':telephony',
+include ':telephony', ':dependencypull',
         ':visuals',
         ':core',
         ':notification',

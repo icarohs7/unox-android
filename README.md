@@ -25,8 +25,8 @@ https://github.com/icarohs7/unox-android/stargazers)
 Android library with a collection of modules and many features
 
 ## Disclaimer
-Beware when updating, breaking changes between updates happen very
-frequently
+* Beware when updating, breaking changes between updates happen very frequently
+* Beware to the module dependencypull, it's used solely to pull a lot of dependencies
 
 ## Adding to the project
 
