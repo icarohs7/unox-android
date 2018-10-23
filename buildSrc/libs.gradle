@@ -20,7 +20,7 @@ ext {
         rxjava = "2.2.2"
 
         //Testing dependencies
-        junit = "4.12"
         kotlinassertutils = "0.8.0"
+        robolectric = "4.0-beta-1"
     }
 }

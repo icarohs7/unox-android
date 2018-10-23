@@ -23,3 +23,10 @@ infix fun String?.ifBlankOrNull(fallback: String): String {
 infix fun String?.ifEmptyOrNull(fallback: String): String {
     return if (this.isNullOrEmpty()) fallback else "$this"
 }
+
+/**
+ * Returns the first ocurrence of the substring
+ * matching the Regex
+ */
+fun String.find(regex: Regex): String? =
+        regex.find(this)?.value

@@ -38,23 +38,16 @@ buildscript {
     }
 }
 
-// Common settings over projects
-allprojects {
-    group = 'com.github.icarohs7'
-    repositories {
-        google()
-        jcenter()
-        maven { url 'https://jitpack.io' }
-    }
-}
+apply(plugin: "com.palantir.git-version")
+group = "com.github.icarohs7"
+version = gitVersion().toString().find("(\\d\\.\\d\\.\\d)")
 
 subprojects { proj ->
-    apply plugin: 'com.github.dcendents.android-maven'
-    apply plugin: 'com.android.library'
-    apply plugin: 'kotlin-android'
-    apply plugin: 'kotlin-android-extensions'
-    apply plugin: 'kotlin-kapt'
-    apply plugin: 'com.palantir.git-version'
+    apply(plugin: "com.github.dcendents.android-maven")
+    apply(plugin: "com.android.library")
+    apply(plugin: "kotlin-android")
+    apply(plugin: "kotlin-android-extensions")
+    apply(plugin: "kotlin-kapt")
 
     if (proj.name != "core") dependencies { implementation(project(":core")) }
 
@@ -62,10 +55,10 @@ subprojects { proj ->
         compileSdkVersion 28
 
         defaultConfig {
-            minSdkVersion 21
-            targetSdkVersion 28
-            versionCode 1
-            versionName gitVersion().toString().find("(\\d\\.\\d\\.\\d)")
+            minSdkVersion(21)
+            targetSdkVersion(28)
+            versionCode(1)
+            versionName(rootProject.version)
         }
 
         buildTypes {
@@ -80,8 +73,14 @@ subprojects { proj ->
         implementation fileTree(dir: 'libs', include: ['*.jar'])
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 
-        testImplementation "junit:junit:${versions.junit}"
         testImplementation "se.lovef:kotlin-assert-utils:${versions.kotlinassertutils}"
+        testImplementation "org.robolectric:robolectric:${versions.robolectric}"
+    }
+
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
     }
 
     task sourcesJar(type: Jar) {
