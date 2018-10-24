@@ -25,7 +25,6 @@
 dependencies {
     //AndroidX
     api "androidx.recyclerview:recyclerview:${versions.recyclerview}"
-    api "androidx.lifecycle:lifecycle-livedata:${versions.lifecycle}"
     api "androidx.core:core-ktx:${versions.androidxcore}"
 
     //RxJava

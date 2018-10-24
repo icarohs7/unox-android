@@ -31,29 +31,29 @@ fun LifecycleOwner.attachLifecycleToUnoxAndroid(scope: CoroutineScope) {
 /**
  * Attach an observable to the lifecycle of a given lifecycle owner using a builder DSL
  */
-fun <T : LifecycleOwner> T.addObserver(fn: LifecycleObserverBuilder<T>.() -> Unit) {
+fun <T : LifecycleOwner> T.addLifecycleObserver(fn: LifecycleObserverBuilder<T>.() -> Unit) {
     val builder = LifecycleObserverBuilder<T>()
     builder.fn()
     this.lifecycle.addObserver(object : LifecycleObserver {
         @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-        fun onCreate(): Unit = builder.create(this@addObserver)
+        fun onCreate(): Unit = builder.create(this@addLifecycleObserver)
 
         @OnLifecycleEvent(Lifecycle.Event.ON_START)
-        fun onStart(): Unit = builder.start(this@addObserver)
+        fun onStart(): Unit = builder.start(this@addLifecycleObserver)
 
         @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-        fun onResume(): Unit = builder.resume(this@addObserver)
+        fun onResume(): Unit = builder.resume(this@addLifecycleObserver)
 
         @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-        fun onPause(): Unit = builder.pause(this@addObserver)
+        fun onPause(): Unit = builder.pause(this@addLifecycleObserver)
 
         @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-        fun onStop(): Unit = builder.stop(this@addObserver)
+        fun onStop(): Unit = builder.stop(this@addLifecycleObserver)
 
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-        fun onDestroy(): Unit = builder.destroy(this@addObserver)
+        fun onDestroy(): Unit = builder.destroy(this@addLifecycleObserver)
 
         @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
-        fun onAny(): Unit = builder.any(this@addObserver)
+        fun onAny(): Unit = builder.any(this@addLifecycleObserver)
     })
 }

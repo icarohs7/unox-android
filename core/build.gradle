@@ -27,7 +27,7 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
 
     //Androidx
-    api "androidx.lifecycle:lifecycle-common:${versions.lifecycle}"
+    api "androidx.lifecycle:lifecycle-livedata:${versions.lifecycle}"
 
     //Kotlin Reflection API
     api "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}"
