@@ -5,9 +5,7 @@ import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import se.lovef.assert.v1.shouldBeCloseTo
 import se.lovef.assert.v1.shouldEqual
-import kotlin.system.measureTimeMillis
 
 @RunWith(RobolectricTestRunner::class)
 class TopLevelTest {
@@ -27,14 +25,11 @@ class TopLevelTest {
     @Test
     fun `should invoke an action after a delay`(): Unit = runBlocking {
         val testList = mutableListOf(1, 2)
-        val time = measureTimeMillis {
-            runAfterDelay(200, UnoxAndroidCoreModule.SCOPE) {
-                testList += 3
-                testList += 4
-            }.join()
-        }
+        runAfterDelay(200, UnoxAndroidCoreModule.SCOPE) {
+            testList += 3
+            testList += 4
+        }.join()
         testList shouldEqual mutableListOf(1, 2, 3, 4)
-        time shouldBeCloseTo 200 tolerance 200
         Unit
     }
 

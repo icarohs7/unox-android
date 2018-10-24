@@ -30,7 +30,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
-import com.github.icarohs7.visuals.VisualsModule
+import com.github.icarohs7.visuals.UnoxAndroidVisualsModule
 import com.github.icarohs7.visuals.databinding.FragmentBaseWithoutheaderBinding
 
 /**
@@ -43,7 +43,7 @@ abstract class BaseFragmentFull : Fragment() {
     abstract fun onBindingCreated(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootBinding = VisualsModule.NXBindings.containerWithoutHeader(requireContext())
+        rootBinding = UnoxAndroidVisualsModule.NXBindings.containerWithoutHeader(requireContext())
         contentView = rootBinding.container
 
         onBindingCreated(inflater, container, savedInstanceState)

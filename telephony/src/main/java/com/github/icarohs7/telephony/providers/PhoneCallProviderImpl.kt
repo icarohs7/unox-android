@@ -32,12 +32,12 @@ import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
-import com.github.icarohs7.telephony.TelephonyModule
+import com.github.icarohs7.telephony.UnoxAndroidTelephonyModule
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 import java.util.ArrayList
 
-internal class PhoneCallProviderImpl : TelephonyModule.PhoneCallProvider {
+internal class PhoneCallProviderImpl : UnoxAndroidTelephonyModule.PhoneCallProvider {
 
     override fun callNumber(context: Context, phoneNumber: String, askingMessage: String, onDenyMessage: String) {
         val callback = permissionHandler(context, phoneNumber, onDenyMessage)

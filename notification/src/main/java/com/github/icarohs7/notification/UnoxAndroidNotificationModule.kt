@@ -31,7 +31,7 @@ import androidx.core.app.NotificationCompat
 import com.github.icarohs7.notification.providers.NotificationProviderImpl
 import kotlin.reflect.KClass
 
-interface NotificationModule {
+interface UnoxAndroidNotificationModule {
 
     interface NotificationProvider {
 

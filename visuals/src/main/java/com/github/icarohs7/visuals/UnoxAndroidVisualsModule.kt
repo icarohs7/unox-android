@@ -48,7 +48,7 @@ import com.github.ybq.android.spinkit.sprite.Sprite
 import com.github.ybq.android.spinkit.style.FadingCircle
 import org.jetbrains.anko.layoutInflater
 
-interface VisualsModule {
+interface UnoxAndroidVisualsModule {
     interface VisualsProvider {
 
         /**

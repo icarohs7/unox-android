@@ -27,7 +27,7 @@ package com.github.icarohs7.telephony
 import android.content.Context
 import com.github.icarohs7.telephony.providers.PhoneCallProviderImpl
 
-interface TelephonyModule {
+interface UnoxAndroidTelephonyModule {
 
     interface PhoneCallProvider {
         /**
@@ -41,7 +41,7 @@ interface TelephonyModule {
             /**
              * Return an instance of the provider
              */
-            fun get(): TelephonyModule.PhoneCallProvider = PhoneCallProviderImpl()
+            fun get(): UnoxAndroidTelephonyModule.PhoneCallProvider = PhoneCallProviderImpl()
         }
     }
 }

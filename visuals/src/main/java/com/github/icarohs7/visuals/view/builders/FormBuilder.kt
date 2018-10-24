@@ -4,7 +4,7 @@ import android.content.Context
 import android.widget.LinearLayout
 import androidx.core.view.plusAssign
 import androidx.lifecycle.MutableLiveData
-import com.github.icarohs7.visuals.VisualsModule
+import com.github.icarohs7.visuals.UnoxAndroidVisualsModule
 import com.github.icarohs7.visuals.databinding.FragmentBaseVerticalLayoutBinding
 import com.github.icarohs7.visuals.databinding.PartialFormFieldBinding
 import com.github.icarohs7.visuals.databinding.PartialFormMaskedFieldBinding
@@ -37,7 +37,7 @@ class FormBuilder(context: Context) {
             boundLiveData: MutableLiveData<String> = MutableLiveData(),
             init: PartialFormFieldBinding.() -> Unit = {}
     ): PartialFormFieldBinding {
-        return VisualsModule.NXBindings.formField(
+        return UnoxAndroidVisualsModule.NXBindings.formField(
                 getContext(),
                 label,
                 boundLiveData
@@ -53,7 +53,7 @@ class FormBuilder(context: Context) {
             boundLiveData: MutableLiveData<String> = MutableLiveData(),
             init: PartialFormMaskedFieldBinding.() -> Unit = {}
     ): PartialFormMaskedFieldBinding {
-        return VisualsModule.NXBindings.formMaskedField(
+        return UnoxAndroidVisualsModule.NXBindings.formMaskedField(
                 getContext(),
                 label,
                 mask,
@@ -70,7 +70,7 @@ class FormBuilder(context: Context) {
             boundLiveData: MutableLiveData<String> = MutableLiveData(),
             init: PartialFormMaskedFieldBinding.() -> Unit = {}
     ): PartialFormMaskedFieldBinding {
-        return VisualsModule.NXBindings.formMaskedField(
+        return UnoxAndroidVisualsModule.NXBindings.formMaskedField(
                 getContext(),
                 label,
                 mask,
@@ -88,7 +88,7 @@ class FormBuilder(context: Context) {
             boundLiveData: MutableLiveData<String> = MutableLiveData(),
             init: PartialFormFieldBinding.() -> Unit = {}
     ): PartialFormFieldBinding {
-        return VisualsModule.NXBindings.formField(
+        return UnoxAndroidVisualsModule.NXBindings.formField(
                 getContext(),
                 label,
                 boundLiveData
@@ -107,7 +107,7 @@ class FormBuilder(context: Context) {
             init: PartialFormPasswordFieldBinding.() -> Unit = {}
     ): PartialFormPasswordFieldBinding {
 
-        return VisualsModule.NXBindings.formPasswordField(
+        return UnoxAndroidVisualsModule.NXBindings.formPasswordField(
                 getContext(),
                 label,
                 boundLiveData

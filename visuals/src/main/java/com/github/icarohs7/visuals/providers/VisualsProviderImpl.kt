@@ -25,10 +25,10 @@
 package com.github.icarohs7.visuals.providers
 
 import android.content.Context
-import com.github.icarohs7.visuals.VisualsModule
+import com.github.icarohs7.visuals.UnoxAndroidVisualsModule
 import com.github.icarohs7.visuals.view.dialogs.NXDialogBuilder
 
-internal class VisualsProviderImpl : VisualsModule.VisualsProvider {
+internal class VisualsProviderImpl : UnoxAndroidVisualsModule.VisualsProvider {
     /**
      * Build and show a nxDialog
      */

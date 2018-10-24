@@ -24,7 +24,7 @@
 
 package com.github.icarohs7.navigation
 
-interface NavigationModule {
+interface UnoxAndroidNavigationModule {
 
     /**
      * Companion object storing the settings of the module

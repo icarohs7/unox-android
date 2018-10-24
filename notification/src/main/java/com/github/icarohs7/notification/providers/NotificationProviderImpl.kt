@@ -33,13 +33,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.github.icarohs7.navigation.extensions.getPendingIntentToActivity
-import com.github.icarohs7.notification.NotificationModule
+import com.github.icarohs7.notification.UnoxAndroidNotificationModule
 import kotlin.reflect.KClass
 
 internal class NotificationProviderImpl(
         private val context: Context,
         private val channelId: String = "standardnotificationchannel"
-) : NotificationModule.NotificationProvider {
+) : UnoxAndroidNotificationModule.NotificationProvider {
 
     private var notificationId = 0
 

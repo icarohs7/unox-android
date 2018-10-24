@@ -28,15 +28,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.transaction
-import com.github.icarohs7.navigation.NavigationModule
+import com.github.icarohs7.navigation.UnoxAndroidNavigationModule
 
 /**
  * Load a fragment adding it to the backstack
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
         destination: T,
-        containerId: Int = NavigationModule.masterContainer
-                ?: NavigationModule.activityContainer[this::class.simpleName]
+        containerId: Int = UnoxAndroidNavigationModule.masterContainer
+                ?: UnoxAndroidNavigationModule.activityContainer[this::class.simpleName]
                 ?: 0
 ) {
 
@@ -51,8 +51,8 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
         destination: T,
-        containerId: Int = NavigationModule.masterContainer
-                ?: NavigationModule.activityContainer[this::class.simpleName]
+        containerId: Int = UnoxAndroidNavigationModule.masterContainer
+                ?: UnoxAndroidNavigationModule.activityContainer[this::class.simpleName]
                 ?: 0
 ) {
 
@@ -61,15 +61,15 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
 
 /**
  * Execute a fragment transaction with an animation, defined by
- * the [NavigationModule]
+ * the [UnoxAndroidNavigationModule]
  */
 fun AppCompatActivity.fragmentTransactionAnimated(fn: FragmentTransaction.() -> Unit) {
     supportFragmentManager.transaction {
         setCustomAnimations(
-                NavigationModule.enterAnim,
-                NavigationModule.exitAnim,
-                NavigationModule.popEnterAnim,
-                NavigationModule.popExitAnim)
+                UnoxAndroidNavigationModule.enterAnim,
+                UnoxAndroidNavigationModule.exitAnim,
+                UnoxAndroidNavigationModule.popEnterAnim,
+                UnoxAndroidNavigationModule.popExitAnim)
         fn()
     }
 }
