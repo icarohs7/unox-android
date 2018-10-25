@@ -24,62 +24,6 @@
 
 package com.github.icarohs7.core.toplevel
 
-import com.github.icarohs7.core.UnoxAndroidCoreModule
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.launch
-import kotlin.coroutines.experimental.CoroutineContext
-
-
-/**
- * Run a function on the UI Thread after some time
- */
-fun runAfterDelay(
-        delayTime: Int,
-        scope: CoroutineScope = CoroutineScope(Dispatchers.Main),
-        context: CoroutineContext = UnoxAndroidCoreModule.CONTEXT,
-        fn: suspend (CoroutineScope) -> Unit
-): Job = onBg { _ ->
-    delay(delayTime.toLong())
-    scope.launch(context = context) { fn(this) }
-}
-
-/**
- * Run a function on the UI Thread
- */
-fun onUi(
-        fn: suspend (CoroutineScope) -> Unit
-): Job = CoroutineScope(Dispatchers.Main).launch {
-    fn(this)
-}
-
-/**
- * Run a function on the background coroutine context and
- * returns the deferred
- */
-fun <T> onBgResult(
-        scope: CoroutineScope = UnoxAndroidCoreModule.SCOPE,
-        context: CoroutineContext = UnoxAndroidCoreModule.CONTEXT,
-        fn: suspend (CoroutineScope) -> T
-): Deferred<T> = scope.async(context = context) {
-    fn(this)
-}
-
-/**
- * Run a function on the background coroutine context and
- * returns the job, use for fire and forget operations
- */
-fun onBg(
-        scope: CoroutineScope = UnoxAndroidCoreModule.SCOPE,
-        context: CoroutineContext = UnoxAndroidCoreModule.CONTEXT,
-        fn: suspend (CoroutineScope) -> Unit
-): Job = scope.launch(context = context) {
-    fn(this)
-}
 
 /**
  * Run a function and ignore the returning value,

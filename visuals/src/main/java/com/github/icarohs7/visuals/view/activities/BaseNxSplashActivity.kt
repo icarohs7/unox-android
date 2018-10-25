@@ -26,15 +26,15 @@ package com.github.icarohs7.visuals.view.activities
 
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import com.github.icarohs7.core.UnoxAndroidCoreModule
 import com.github.icarohs7.core.extensions.ifTrueInvoke
-import com.github.icarohs7.core.toplevel.onBgResult
-import com.github.icarohs7.core.toplevel.onUi
-import com.github.icarohs7.core.toplevel.runAfterDelay
 import com.github.icarohs7.visuals.R
 import com.github.icarohs7.visuals.databinding.PartialCenterAndBottomContainerBinding
 import com.github.icarohs7.visuals.extensions.animateScaleIn
 import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
 
 /**
  * Base splash activity with support for background work
@@ -48,7 +48,7 @@ abstract class BaseNxSplashActivity<T>(
 ) : BaseNxActivity() {
 
     protected lateinit var root: PartialCenterAndBottomContainerBinding
-    private var backgroundTask: Deferred<T?> = onBgResult { null }
+    private var backgroundTask: Deferred<T?> = async { null }
 
     /**
      * Called when the binding is set and waiting content
@@ -75,7 +75,7 @@ abstract class BaseNxSplashActivity<T>(
      */
     private fun verifyIfWillDoBackgroundWork() {
         val willDo = confirmIfShouldDoBackgroundWorkBeforeStarting()
-        willDo ifTrueInvoke { backgroundTask = onBgResult { startBackgroundOperations() } }
+        willDo ifTrueInvoke { backgroundTask = async(Dispatchers.Default) { startBackgroundOperations() } }
     }
 
     /**
@@ -116,10 +116,11 @@ abstract class BaseNxSplashActivity<T>(
      * function changeToNextScreen with the result
      */
     private fun waitBackgroundOperationsAndProceed() {
-        runAfterDelay(animationTimeout, scope = UnoxAndroidCoreModule.SCOPE) { _ ->
-            onUi { afterAnimationTimeout() }.join()
+        launch(Dispatchers.Main) {
+            delay(animationTimeout.toLong())
+            afterAnimationTimeout()
             val bgTaskResult = backgroundTask.await()
-            onUi { if (willDoBootstrap()) changeToNextScreen(bgTaskResult) }
+            changeToNextScreen(bgTaskResult)
         }
     }
 

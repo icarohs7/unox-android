@@ -29,7 +29,7 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.icarohs7.visuals.databinding.ActivityBaseBinding
+import com.github.icarohs7.visuals.databinding.ActivityBaseStandardNxBinding
 import com.github.icarohs7.visuals.databinding.DialogYesNoBinding
 import com.github.icarohs7.visuals.databinding.FragmentBaseWithheaderBinding
 import com.github.icarohs7.visuals.databinding.FragmentBaseWithoutheaderBinding
@@ -154,8 +154,8 @@ interface UnoxAndroidVisualsModule {
          * a toolbar, a frame layout used as main container and
          * a bottom navigation view
          */
-        fun activityBase(context: Context): ActivityBaseBinding {
-            return ActivityBaseBinding.inflate(context.layoutInflater)
+        fun activityBase(context: Context): ActivityBaseStandardNxBinding {
+            return ActivityBaseStandardNxBinding.inflate(context.layoutInflater)
         }
 
         /**

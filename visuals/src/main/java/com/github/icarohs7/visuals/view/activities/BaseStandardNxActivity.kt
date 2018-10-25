@@ -28,27 +28,18 @@ import android.view.View
 import android.widget.ProgressBar
 import androidx.annotation.CallSuper
 import androidx.databinding.DataBindingUtil
-import com.github.icarohs7.core.toplevel.onBg
 import com.github.icarohs7.visuals.R
-import com.github.icarohs7.visuals.databinding.ActivityBaseBinding
+import com.github.icarohs7.visuals.databinding.ActivityBaseStandardNxBinding
 import com.github.icarohs7.visuals.entities.ActivityResources
 import com.github.icarohs7.visuals.extensions.loadingTransactionAsync
 
 /**
  * Base Activity implementing the Contract Watcher architecture,
- * using the [R.layout.activity_base] layout
+ * using the [R.layout.activity_base_standard_nx] layout
  */
-abstract class BaseMostBasicActivity : MostBasicActivity() {
-    lateinit var binding: ActivityBaseBinding
+abstract class BaseStandardNxActivity : BaseResourceNxActivity() {
+    lateinit var binding: ActivityBaseStandardNxBinding
     open var progressBarHiddenVisibility: Int = View.GONE
-
-    /**
-     * Execute an operation, showing the progress bar when it's running
-     * and hiding it when done
-     */
-    open fun runWithProgressFeedbackAsync(fn: suspend (ProgressBar) -> Unit) = onBg { _ ->
-        binding.progressBar.loadingTransactionAsync(progressBarHiddenVisibility, fn)
-    }
 
     /**
      * Execute an operation, showing the progress bar when it's running
@@ -60,7 +51,7 @@ abstract class BaseMostBasicActivity : MostBasicActivity() {
 
     @CallSuper
     override fun onSetContentView() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_base)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_base_standard_nx)
         binding.progressBar.visibility = progressBarHiddenVisibility
     }
 

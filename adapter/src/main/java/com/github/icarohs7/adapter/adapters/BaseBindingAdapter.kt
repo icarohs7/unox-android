@@ -30,7 +30,9 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.github.icarohs7.core.toplevel.onUi
+import kotlinx.coroutines.experimental.CoroutineScope
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.launch
 
 /**
  * Base adapter based on data binding
@@ -53,7 +55,7 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
      * Called when a new list of items is loaded
      */
     open fun onDataSetChanged(oldList: List<T>, newList: List<T>) {
-        onUi { notifyDataSetChanged() }
+        CoroutineScope(Dispatchers.Main).launch { notifyDataSetChanged() }
     }
 
     /**

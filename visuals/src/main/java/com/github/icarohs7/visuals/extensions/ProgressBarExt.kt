@@ -27,30 +27,23 @@ package com.github.icarohs7.visuals.extensions
 import android.view.View
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
-import com.github.icarohs7.core.toplevel.onUi
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.coroutineScope
+import kotlinx.coroutines.experimental.launch
 
-/**
- * Execute a function, showing the progress bar before starting and hiding
- * it when finished
- */
-fun ProgressBar.loadingTransaction(hiddenState: Int = View.GONE, fn: (ProgressBar) -> Unit) {
-    try {
-        this.isVisible = true
-        fn(this)
-    } finally {
-        this.visibility = hiddenState
-    }
-}
 
 /**
  * Execute a suspending function, showing the progress bar before starting and
  * hiding it when finished
  */
 suspend fun ProgressBar.loadingTransactionAsync(hiddenState: Int = View.GONE, fn: suspend (ProgressBar) -> Unit) {
-    try {
-        onUi { this.isVisible = true }.join()
-        fn(this)
-    } finally {
-        onUi { this.visibility = hiddenState }.join()
+    val progress = this
+    coroutineScope {
+        try {
+            launch(Dispatchers.Main) { progress.isVisible = true }.join()
+            fn(progress)
+        } finally {
+            launch(Dispatchers.Main) { progress.visibility = hiddenState }.join()
+        }
     }
 }
