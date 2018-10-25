@@ -36,14 +36,28 @@ import kotlinx.coroutines.experimental.launch
  * Execute a suspending function, showing the progress bar before starting and
  * hiding it when finished
  */
-suspend fun ProgressBar.loadingTransactionAsync(hiddenState: Int = View.GONE, fn: suspend (ProgressBar) -> Unit) {
-    val progress = this
+suspend fun ProgressBar.loadingTransaction(hiddenState: Int = View.GONE, fn: suspend (ProgressBar) -> Unit) {
     coroutineScope {
         try {
-            launch(Dispatchers.Main) { progress.isVisible = true }.join()
-            fn(progress)
+            launch(Dispatchers.Main) { startLoading() }.join()
+            fn(this@loadingTransaction)
         } finally {
-            launch(Dispatchers.Main) { progress.visibility = hiddenState }.join()
+            launch(Dispatchers.Main) { stopLoading(hiddenState) }.join()
         }
     }
+}
+
+/**
+ * Show the progress bar
+ */
+fun ProgressBar.startLoading() {
+    isVisible = true
+}
+
+/**
+ * Hide the progress bar, toggling its visibility to the
+ * parameterized value or [View.GONE] by default
+ */
+fun ProgressBar.stopLoading(hiddenState: Int = View.GONE) {
+    visibility = hiddenState
 }

@@ -31,7 +31,9 @@ import androidx.databinding.DataBindingUtil
 import com.github.icarohs7.visuals.R
 import com.github.icarohs7.visuals.databinding.ActivityBaseStandardNxBinding
 import com.github.icarohs7.visuals.entities.ActivityResources
-import com.github.icarohs7.visuals.extensions.loadingTransactionAsync
+import com.github.icarohs7.visuals.extensions.loadingTransaction
+import com.github.icarohs7.visuals.extensions.startLoading
+import com.github.icarohs7.visuals.extensions.stopLoading
 
 /**
  * Base Activity implementing the Contract Watcher architecture,
@@ -46,8 +48,19 @@ abstract class BaseStandardNxActivity : BaseResourceNxActivity() {
      * and hiding it when done
      */
     open suspend fun runWithProgressFeedback(fn: suspend (ProgressBar) -> Unit) {
-        binding.progressBar.loadingTransactionAsync(progressBarHiddenVisibility, fn)
+        binding.progressBar.loadingTransaction(progressBarHiddenVisibility, fn)
     }
+
+    /**
+     * Show the progress bar
+     */
+    fun startLoading(): Unit = binding.progressBar.startLoading()
+
+    /**
+     * Hide the progress bar, visibility defined
+     * by [progressBarHiddenVisibility]
+     */
+    fun stopLoading(): Unit = binding.progressBar.stopLoading(progressBarHiddenVisibility)
 
     @CallSuper
     override fun onSetContentView() {
