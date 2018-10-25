@@ -15,8 +15,9 @@ import kotlin.coroutines.experimental.CoroutineContext
  * destroyed
  */
 abstract class BaseNxActivity : AppCompatActivity(), CoroutineScope {
-    protected lateinit var job: Job
-    override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
+    protected var job: Job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
     val disposables: CompositeDisposable = CompositeDisposable()
 
     @CallSuper

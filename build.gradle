@@ -61,6 +61,10 @@ subprojects { proj ->
             versionName(rootProject.version)
         }
 
+        testOptions {
+            unitTests.includeAndroidResources true
+        }
+
         buildTypes {
             release {
                 minifyEnabled false
