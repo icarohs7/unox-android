@@ -29,6 +29,7 @@ ext {
         kotpref = "2.6.0"
         autoDispose = "1.0.0"
         quantum = "1.0.0-beta.2"
+        spotsdialog = "1.1"
 
         //Testing dependencies
         kotlinassertutils = "0.8.0"

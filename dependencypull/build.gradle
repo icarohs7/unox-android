@@ -13,4 +13,5 @@ dependencies {
     api("org.jetbrains.anko:anko-design:${versions.anko}")
     api("io.sellmair:quantum:${versions.quantum}")
     api("io.sellmair:quantum-rx:${versions.quantum}")
+    api("com.github.d-max:spots-dialog:${versions.spotsdialog}@aar")
 }
