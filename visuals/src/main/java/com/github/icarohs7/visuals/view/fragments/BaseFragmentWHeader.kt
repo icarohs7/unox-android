@@ -26,31 +26,35 @@ package com.github.icarohs7.visuals.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.fragment.app.Fragment
-import com.github.icarohs7.visuals.UnoxAndroidVisualsModule
+import androidx.annotation.CallSuper
+import com.github.icarohs7.visuals.R
 import com.github.icarohs7.visuals.databinding.FragmentBaseWithheaderBinding
 import com.google.android.material.card.MaterialCardView
 
 /**
  * Base fragment with a card header and a body
  */
-abstract class BaseFragmentWHeader : Fragment() {
-    protected lateinit var rootBinding: FragmentBaseWithheaderBinding
+abstract class BaseFragmentWHeader : BaseBindingFragment<FragmentBaseWithheaderBinding>() {
+    /**
+     * Defined on [onBindingCreated]
+     */
     protected lateinit var headerView: MaterialCardView
+
+    /**
+     * Defined on [onBindingCreated]
+     */
     protected lateinit var contentView: FrameLayout
 
-    abstract fun onBindingCreated(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
+    @CallSuper
+    override fun onBindingCreated(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) {
+        super.onBindingCreated(inflater, container, savedInstanceState)
+        headerView = binding.header
+        contentView = binding.container
+    }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootBinding = UnoxAndroidVisualsModule.NXBindings.containerWithHeader(requireContext())
-
-        headerView = rootBinding.header
-        contentView = rootBinding.container
-
-        onBindingCreated(inflater, container, savedInstanceState)
-        return rootBinding.root
+    override fun getLayout(): Int {
+        return R.layout.fragment_base_withheader
     }
 }
