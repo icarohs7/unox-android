@@ -1,7 +1,7 @@
-package com.github.icarohs7.visuals.view.activities
+package com.github.icarohs7.visuals.view.fragments
 
 import androidx.annotation.CallSuper
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.github.icarohs7.visuals.UnoxAndroidVisualsModule
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.experimental.CoroutineScope
@@ -10,11 +10,11 @@ import kotlinx.coroutines.experimental.Job
 import kotlin.coroutines.experimental.CoroutineContext
 
 /**
- * Activity containing a composite disposable
+ * Fragment containing a composite disposable
  * and a coroutine context, cancelling them when
  * stopped
  */
-abstract class BaseNxActivity : AppCompatActivity(), CoroutineScope, UnoxAndroidVisualsModule.DisposableEntity {
+abstract class BaseNxFragment : Fragment(), CoroutineScope, UnoxAndroidVisualsModule.DisposableEntity {
     var job: Job = Job()
         private set
     override val disposable: CompositeDisposable = CompositeDisposable()
