@@ -23,7 +23,7 @@ ext {
         rxkotlin = "2.3.0"
         rxRelay = "2.1.0"
         klaxon = "3.0.1"
-        fuel = "1.15.1"
+        fuel = "1.16.0"
         arrow = "0.7.3"
         koin = "1.0.1"
         kotpref = "2.6.0"
