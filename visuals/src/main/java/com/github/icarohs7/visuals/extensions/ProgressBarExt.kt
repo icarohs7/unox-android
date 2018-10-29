@@ -27,9 +27,9 @@ package com.github.icarohs7.visuals.extensions
 import android.view.View
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.coroutineScope
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 
 /**

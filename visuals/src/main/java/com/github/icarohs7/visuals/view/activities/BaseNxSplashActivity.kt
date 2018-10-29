@@ -30,11 +30,11 @@ import com.github.icarohs7.core.extensions.ifTrueInvoke
 import com.github.icarohs7.visuals.R
 import com.github.icarohs7.visuals.databinding.PartialCenterAndBottomContainerBinding
 import com.github.icarohs7.visuals.extensions.animateScaleIn
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Base splash activity with support for background work

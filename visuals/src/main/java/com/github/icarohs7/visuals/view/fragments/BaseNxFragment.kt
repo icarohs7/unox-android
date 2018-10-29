@@ -4,10 +4,10 @@ import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import com.github.icarohs7.visuals.UnoxAndroidVisualsModule
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.Job
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Fragment containing a composite disposable
