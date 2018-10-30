@@ -4,7 +4,7 @@ ext {
         coroutines = "1.0.0"
 
         //Implementation dependencies
-        anko = "0.10.7"
+        anko = "0.10.7-rc13"
         runtimepermissionlib = "3.7"
         spinkit = "1.1.0"
         recyclerview = "1.0.0"
