@@ -40,12 +40,12 @@ buildscript {
 }
 
 apply(plugin: "com.palantir.git-version")
+apply(plugin: "com.github.ben-manes.versions")
 group = "com.github.icarohs7"
 version = gitVersion().toString().find("(\\d\\.\\d\\.\\d)")
 
 subprojects { proj ->
     apply(plugin: "com.github.dcendents.android-maven")
-    apply plugin: "com.github.ben-manes.versions"
     apply(plugin: "com.android.library")
     apply(plugin: "kotlin-android")
     apply(plugin: "kotlin-android-extensions")

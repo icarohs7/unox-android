@@ -41,8 +41,8 @@ fun FrameLayout.showChild(child: View) {
  */
 fun FrameLayout.fadeInChild(child: View) {
     this.animateFadeOut {
-        this.hideChildrenExcept(child)
-        this.animateFadeIn()
+        hideChildrenExcept(child)
+        animateFadeIn()
     }
 }
 
@@ -52,7 +52,7 @@ fun FrameLayout.fadeInChild(child: View) {
  */
 fun FrameLayout.scaleInChild(child: View) {
     this.animateScaleOut {
-        this.hideChildrenExcept(child)
-        this.animateScaleIn()
+        hideChildrenExcept(child)
+        animateScaleIn()
     }
 }
