@@ -10,7 +10,7 @@ dependencies {
     api("org.koin:koin-androidx-viewmodel:${versions.koin}")
     api("com.chibatching.kotpref:kotpref:${versions.kotpref}")
     api("com.uber.autodispose:autodispose-android-archcomponents-ktx:${versions.autoDispose}")
-    api("org.jetbrains.anko:anko-design:${versions.anko}")
+    api("org.jetbrains.anko:anko:${versions.anko}")
     api("io.arrow-kt:arrow-effects-rx2:${versions.arrow}")
     api("io.arrow-kt:arrow-syntax:${versions.arrow}")
     api("io.arrow-kt:arrow-effects-kotlinx-coroutines:${versions.arrow}")
