@@ -36,13 +36,14 @@ import androidx.recyclerview.widget.RecyclerView
  * Base adapter based on data binding
  */
 abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
-        @LayoutRes val itemLayout: Int
+        @LayoutRes val itemLayout: Int,
+        initialDataSet: List<T> = emptyList()
 ) : RecyclerView.Adapter<BaseBindingAdapter.BaseBindingViewHolder<DB>>() {
 
     /**
      * Items currently being shown at the adapter
      */
-    var dataSet: List<T> = emptyList()
+    var dataSet: List<T> = initialDataSet
         set(value) {
             val oldList = field
             field = value
