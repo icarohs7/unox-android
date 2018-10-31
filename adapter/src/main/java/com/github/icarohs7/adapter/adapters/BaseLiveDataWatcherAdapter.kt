@@ -35,7 +35,7 @@ import androidx.recyclerview.widget.RecyclerView
  */
 abstract class BaseLiveDataWatcherAdapter<T, DB : ViewDataBinding>(
         @LayoutRes itemLayout: Int,
-        val dataSetObservable: LiveData<List<T>>
+        protected val dataSetObservable: LiveData<List<T>>
 ) : BaseBindingAdapter<T, DB>(itemLayout) {
 
     open val observer: Observer<List<T>> = Observer { items ->

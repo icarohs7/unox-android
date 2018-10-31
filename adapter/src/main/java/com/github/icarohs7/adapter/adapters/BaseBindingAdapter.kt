@@ -24,15 +24,13 @@
 
 package com.github.icarohs7.adapter.adapters
 
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 /**
  * Base adapter based on data binding
@@ -55,7 +53,7 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
      * Called when a new list of items is loaded
      */
     open fun onDataSetChanged(oldList: List<T>, newList: List<T>) {
-        CoroutineScope(Dispatchers.Main).launch { notifyDataSetChanged() }
+        Handler().post { notifyDataSetChanged() }
     }
 
     /**
