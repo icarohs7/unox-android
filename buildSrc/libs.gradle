@@ -31,6 +31,7 @@ ext {
         quantum = "1.0.0-beta.2"
         spotsdialog = "1.1"
         drawableToolbox = "1.0.7"
+        pugNotification = "1.8.1"
 
         //Testing dependencies
         kotlinassertutils = "0.8.0"

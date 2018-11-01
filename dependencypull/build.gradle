@@ -18,4 +18,5 @@ dependencies {
     api("io.sellmair:quantum-rx:${versions.quantum}")
     api("com.github.d-max:spots-dialog:${versions.spotsdialog}@aar")
     api("com.github.duanhong169:drawabletoolbox:${versions.drawableToolbox}")
+    api("com.github.halysongoncalves:pugnotification:${versions.pugNotification}")
 }
