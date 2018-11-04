@@ -43,10 +43,7 @@ import kotlinx.coroutines.launch
  * you want if not doing background work
  * @property animationTimeout How long the splash image will be shown in miliseconds
  */
-abstract class BaseNxSplashActivity<T>(
-        protected val animationTimeout: Int = 2000
-) : BaseNxActivity() {
-
+abstract class BaseNxSplashActivity<T>(protected val animationTimeout: Int = 2000) : BaseNxActivity() {
     protected lateinit var root: PartialCenterAndBottomContainerBinding
     private var backgroundTask: Deferred<T?> = async { null }
 
@@ -67,7 +64,7 @@ abstract class BaseNxSplashActivity<T>(
         onBindingCreated(root)
         verifyIfWillDoBackgroundWork()
         runAnimations()
-        waitBackgroundOperationsAndProceed()
+        launch { waitBackgroundOperationsAndProceed() }
     }
 
     /**
@@ -115,13 +112,11 @@ abstract class BaseNxSplashActivity<T>(
      * Wait the background work to be done and then run the
      * function changeToNextScreen with the result
      */
-    private fun waitBackgroundOperationsAndProceed() {
-        launch(Dispatchers.Main) {
-            delay(animationTimeout.toLong())
-            afterAnimationTimeout()
-            val bgTaskResult = backgroundTask.await()
-            changeToNextScreen(bgTaskResult)
-        }
+    private suspend fun waitBackgroundOperationsAndProceed() {
+        delay(animationTimeout.toLong())
+        afterAnimationTimeout()
+        val bgTaskResult = backgroundTask.await()
+        changeToNextScreen(bgTaskResult)
     }
 
     /**
