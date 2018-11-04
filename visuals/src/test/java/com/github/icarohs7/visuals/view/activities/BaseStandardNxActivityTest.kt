@@ -22,7 +22,8 @@ class BaseStandardNxActivityTest {
     }
 
     class ActivityImpl : BaseStandardNxActivity() {
-        override fun onSelectMenuItem(menuItemId: MenuItem) {
+        override fun onSelectMenuItem(menuItemId: MenuItem): Boolean {
+            return true
         }
     }
 }

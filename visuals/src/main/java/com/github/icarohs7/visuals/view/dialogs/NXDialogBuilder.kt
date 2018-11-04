@@ -37,12 +37,12 @@ class NXDialogBuilder(private val context: Context) {
     var title: String = "Info"
     var message: String = "Lorem Ipsum"
     var icon: Drawable? = null
-    var backgroundResource = android.R.color.white
-    var buttonText = "Continue"
-    var buttonTextColorResource = android.R.color.black
-    var buttonColorResource = android.R.color.white
-    var buttonCallback = Runnable {}
-    var dismissCallback = Runnable {}
+    var backgroundResource: Int = android.R.color.white
+    var buttonText: String = "Continue"
+    var buttonTextColorResource: Int = android.R.color.black
+    var buttonColorResource: Int = android.R.color.white
+    var buttonCallback: Runnable = Runnable {}
+    var dismissCallback: Runnable = Runnable {}
     var customView: View? = null
     val dialogView: DialogNxBinding = DialogNxBinding.inflate(context.layoutInflater)
 

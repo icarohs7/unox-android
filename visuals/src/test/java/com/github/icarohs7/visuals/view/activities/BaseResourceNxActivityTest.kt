@@ -23,7 +23,8 @@ class BaseResourceNxActivityTest {
         override fun onDefineActivityResources(activityResources: ActivityResources) {
         }
 
-        override fun onSelectMenuItem(menuItemId: MenuItem) {
+        override fun onSelectMenuItem(menuItemId: MenuItem): Boolean {
+            return true
         }
 
         override fun onSetContentView() {

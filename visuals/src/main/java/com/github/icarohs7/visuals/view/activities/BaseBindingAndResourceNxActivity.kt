@@ -38,8 +38,9 @@ import com.google.android.material.navigation.NavigationView
  * Activity that listens to a LiveData of contracts and when it changes,
  * selects the menu item tied to it and runs the action in it
  */
-abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding> : BaseNxActivity(), NavigationView.OnNavigationItemSelectedListener {
-    val navigationResources = ActivityResources()
+abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding>
+    : BaseNxActivity(), NavigationView.OnNavigationItemSelectedListener {
+    val navigationResources: ActivityResources = ActivityResources()
 
     /**
      * Initialized on [onCreate]

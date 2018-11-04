@@ -14,7 +14,7 @@ fun ImageView?.loadImage(picturePath: String?, placeholder: Drawable? = null, er
     this?.run {
         Glide.with(context)
                 .load(picturePath)
-                .also { _ ->
+                .also {
                     val options = RequestOptions().centerCrop()
                     placeholder?.let(options::placeholder)
                     error?.let(options::error)

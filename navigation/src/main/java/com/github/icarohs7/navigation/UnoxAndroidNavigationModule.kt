@@ -46,10 +46,10 @@ interface UnoxAndroidNavigationModule {
          */
         var activityContainer: MutableMap<String, Int> = mutableMapOf()
 
-        var enterAnim = R.anim.zoom_enter
-        var exitAnim = R.anim.zoom_exit
-        var popEnterAnim = R.anim.zoom_enter
-        var popExitAnim = R.anim.zoom_exit
+        var enterAnim: Int = R.anim.zoom_enter
+        var exitAnim: Int = R.anim.zoom_exit
+        var popEnterAnim: Int = R.anim.zoom_enter
+        var popExitAnim: Int = R.anim.zoom_exit
     }
 
     /**

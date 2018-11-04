@@ -66,7 +66,7 @@ internal class NXDialog(
             binding.btnConfirm.text = buttonText
             binding.btnConfirm.textColorResource = buttonTextColorResource
             binding.btnConfirm.backgroundColorResource = buttonColorResource
-            binding.btnConfirm.setOnClickListener { _ ->
+            binding.btnConfirm.setOnClickListener {
                 buttonCallback.run()
                 dismiss()
             }

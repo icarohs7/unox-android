@@ -36,7 +36,7 @@ import com.google.android.material.navigation.NavigationView
  * selects the menu item tied to it and runs the action in it
  */
 abstract class BaseResourceNxActivity : BaseNxActivity(), NavigationView.OnNavigationItemSelectedListener {
-    val navigationResources = ActivityResources()
+    val navigationResources: ActivityResources = ActivityResources()
 
     /**
      * Called first when the activity is started to define the navigationResources used, like menus, title, etc
@@ -46,7 +46,7 @@ abstract class BaseResourceNxActivity : BaseNxActivity(), NavigationView.OnNavig
     /**
      * Called when a menu item from either the side or bottom nav is selected
      */
-    abstract fun onSelectMenuItem(menuItemId: MenuItem)
+    abstract fun onSelectMenuItem(menuItemId: MenuItem): Boolean
 
     /**
      * Called when the activity is created, content view should be
@@ -63,21 +63,14 @@ abstract class BaseResourceNxActivity : BaseNxActivity(), NavigationView.OnNavig
         afterInitialSetup()
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
-        savedInstanceState?.also(::recoverStateWhenExistent)
-    }
-
     /**
      * Called whenever an item in your options menu is selected
      */
-    override fun onOptionsItemSelected(item: MenuItem) = navigationResources.drawerLayout?.let { drawer ->
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = navigationResources.drawerLayout?.let { drawer ->
         if (item.itemId == android.R.id.home) {
             drawer.openDrawer(GravityCompat.START)
             true
-        } else {
-            super.onOptionsItemSelected(item)
-        }
+        } else onSelectMenuItem(item)
     } ?: super.onOptionsItemSelected(item)
 
     /**
@@ -88,12 +81,6 @@ abstract class BaseResourceNxActivity : BaseNxActivity(), NavigationView.OnNavig
         checkMenuItem(menuItem.itemId)
         onSelectMenuItem(menuItem)
         return true
-    }
-
-    /**
-     * Called when there's state stored and the activity is restarted
-     */
-    open fun recoverStateWhenExistent(savedInstanceState: Bundle) {
     }
 
     /**
