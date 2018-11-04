@@ -1,4 +1,4 @@
-package com.github.icarohs7.core.toplevel
+package com.github.icarohs7.core
 
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
