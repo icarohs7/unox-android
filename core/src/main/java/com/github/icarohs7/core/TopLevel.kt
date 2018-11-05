@@ -63,7 +63,6 @@ suspend fun <T> onBackground(
         foregroundContext: CoroutineDispatcher = Dispatchers.Main,
         fn: suspend CoroutineScope.() -> T
 ): T {
-    //TODO cover with tests
     return if (coroutineContext hasTheSameDispatcherAs foregroundContext) {
         withContext(backgroundContext, fn)
     } else {

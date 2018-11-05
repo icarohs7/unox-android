@@ -1,11 +1,15 @@
 package com.github.icarohs7.core
 
+import com.github.icarohs7.core.extensions.hasTheSameDispatcherAs
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import se.lovef.assert.v1.shouldBeTrue
 import se.lovef.assert.v1.shouldEqual
 
 @RunWith(RobolectricTestRunner::class)
@@ -35,5 +39,37 @@ class TopLevelTest {
 
         val ld3 = mutableLiveDataOf { s: String -> s.toUpperCase() }
         ld3.value?.invoke("omg") shouldEqual "OMG"
+    }
+
+    @Test
+    fun `should run operations on background`(): Unit = runBlocking {
+        withContext(Dispatchers.Default) {
+            (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+
+            onBackground(Dispatchers.IO, Dispatchers.Default) {
+                (coroutineContext hasTheSameDispatcherAs Dispatchers.IO).shouldBeTrue()
+            }
+            Unit
+        }
+
+        withContext(Dispatchers.IO) {
+            (coroutineContext hasTheSameDispatcherAs Dispatchers.IO).shouldBeTrue()
+
+            onBackground(Dispatchers.Default, Dispatchers.IO) {
+                (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+            }
+            Unit
+        }
+
+        withContext(Dispatchers.Main) {
+            (coroutineContext hasTheSameDispatcherAs Dispatchers.Main).shouldBeTrue()
+
+            onBackground {
+                (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+            }
+            Unit
+        }
+
+        Unit
     }
 }
