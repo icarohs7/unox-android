@@ -19,4 +19,5 @@ dependencies {
     api("com.github.d-max:spots-dialog:${versions.spotsdialog}@aar")
     api("com.github.duanhong169:drawabletoolbox:${versions.drawableToolbox}")
     api("com.github.halysongoncalves:pugnotification:${versions.pugNotification}")
+    api("com.github.vanniktech:RxPermission:${versions.rxPermissions}")
 }
