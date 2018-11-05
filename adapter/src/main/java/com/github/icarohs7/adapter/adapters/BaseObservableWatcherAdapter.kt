@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 /**
  * Adapter based on observability and dynamic lists built using [org.reactivestreams.Publisher]
@@ -41,31 +42,24 @@ abstract class BaseObservableWatcherAdapter<T, DB : ViewDataBinding>(
     private val disposables = CompositeDisposable()
 
     /**
-     * Subscriber used to update the dataset of the adapter
+     * Called to apply the chain of operators on the observable and
+     * return the disposable subscription used to handle change events
      */
-    open val subscriber: (List<T>?) -> Unit = { items: List<T>? ->
-        items?.let { nonNullItems -> dataSet = nonNullItems }
-    }
-
-    /**
-     * Called to apply the operators and the subscriber to the observable emitting the
-     * items of the dataset, returning the disposable that will be handled by the adadpter
-     */
-    open fun onObservableSubscribe(observable: Observable<List<T>>, subscriber: (List<T>?) -> Unit): Disposable {
-        return dataSetObservable.subscribe(subscriber)
+    open fun onObservableSubscribe(observable: Observable<List<T>>): Disposable {
+        return observable.subscribeOn(Schedulers.single()).subscribe { dataSet = it }
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        disposables.add(onObservableSubscribe(dataSetObservable, subscriber))
+        disposables.add(onObservableSubscribe(dataSetObservable))
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
         try {
             disposables.clear()
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        super.onDetachedFromRecyclerView(recyclerView)
     }
 }

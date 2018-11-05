@@ -61,15 +61,6 @@ class TopLevelTest {
             Unit
         }
 
-        withContext(Dispatchers.Main) {
-            (coroutineContext hasTheSameDispatcherAs Dispatchers.Main).shouldBeTrue()
-
-            onBackground {
-                (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
-            }
-            Unit
-        }
-
         Unit
     }
 }

@@ -24,13 +24,17 @@
 
 package com.github.icarohs7.adapter.adapters
 
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Base adapter based on data binding
@@ -38,7 +42,18 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
         @LayoutRes val itemLayout: Int,
         initialDataSet: List<T> = emptyList()
-) : RecyclerView.Adapter<BaseBindingAdapter.BaseBindingViewHolder<DB>>() {
+) : RecyclerView.Adapter<BaseBindingAdapter.BaseBindingViewHolder<DB>>(), CoroutineScope {
+
+    /**
+     * Parent job of coroutines executed within the adapter
+     */
+    private var job = Job()
+
+    /**
+     * Context (thread) executing the coroutines
+     */
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 
     /**
      * Items currently being shown at the adapter
@@ -47,14 +62,14 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
         set(value) {
             val oldList = field
             field = value
-            onDataSetChanged(oldList = oldList, newList = value)
+            launch { onDataSetChanged(oldList = oldList, newList = value) }
         }
 
     /**
      * Called when a new list of items is loaded
      */
-    open fun onDataSetChanged(oldList: List<T>, newList: List<T>) {
-        Handler().post { notifyDataSetChanged() }
+    open suspend fun onDataSetChanged(oldList: List<T>, newList: List<T>) {
+        notifyDataSetChanged()
     }
 
     /**
@@ -93,4 +108,20 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
      * Viewholder for the adapter
      */
     class BaseBindingViewHolder<DB : ViewDataBinding>(val binding: DB) : RecyclerView.ViewHolder(binding.root)
+
+    /**
+     * Create a new parent job when attached to the recycler view
+     */
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        job = Job()
+    }
+
+    /**
+     * Cancel all coroutines when detached from the recycler view
+     */
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        job.cancel()
+    }
 }

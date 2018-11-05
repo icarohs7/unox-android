@@ -29,6 +29,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 
 /**
  * Adapter based on observability and dynamic lists built using [LiveData]
@@ -37,18 +38,22 @@ abstract class BaseLiveDataWatcherAdapter<T, DB : ViewDataBinding>(
         @LayoutRes itemLayout: Int,
         protected val dataSetObservable: LiveData<List<T>>
 ) : BaseBindingAdapter<T, DB>(itemLayout) {
+    private val observer: Observer<List<T>> = Observer { data -> launch { onLiveDataChange(data) } }
 
-    open val observer: Observer<List<T>> = Observer { items ->
+    /**
+     * Callback invoked when the live data changes
+     */
+    open suspend fun onLiveDataChange(items: List<T>?) {
         items?.let { nonNullItems -> dataSet = nonNullItems }
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        dataSetObservable.observeForever(observer)
         super.onAttachedToRecyclerView(recyclerView)
+        dataSetObservable.observeForever(observer)
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        dataSetObservable.removeObserver(observer)
         super.onDetachedFromRecyclerView(recyclerView)
+        dataSetObservable.removeObserver(observer)
     }
 }
