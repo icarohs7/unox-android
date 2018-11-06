@@ -15,8 +15,8 @@ import java.util.Calendar
  * Build and show a simple confirmation dialog
  */
 fun Context.dialogYesNo(
-        title: String,
-        message: String,
+        title: String = "",
+        message: String = "",
         titleColor: Int = ContextCompat.getColor(this, R.color.colorPrimary),
         init: DialogYesNoBinding.(Dialog) -> Unit = {}
 ): Dialog {
