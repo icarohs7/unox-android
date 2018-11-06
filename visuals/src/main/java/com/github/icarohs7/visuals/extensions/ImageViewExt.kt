@@ -10,22 +10,20 @@ import com.bumptech.glide.request.RequestOptions
  * Load a image view from a path
  */
 @JvmOverloads
-fun ImageView?.loadImage(picturePath: String?, placeholder: Drawable? = null, error: Drawable? = null) {
-    this?.run {
-        Glide.with(context)
-                .load(picturePath)
-                .also {
-                    val options = RequestOptions().centerCrop()
-                    placeholder?.let(options::placeholder)
-                    error?.let(options::error)
-                }
-                .into(this)
-    }
+fun ImageView.loadImage(picturePath: String?, placeholder: Drawable? = null, error: Drawable? = null) {
+    Glide.with(context)
+            .load(picturePath)
+            .also {
+                val options = RequestOptions().centerCrop()
+                placeholder?.let(options::placeholder)
+                error?.let(options::error)
+            }
+            .into(this)
 }
 
 /**
  * Load a image drawable onto a ImageView from a drawable resource
  */
-fun ImageView?.setImageDrawable(@DrawableRes resource: Int) {
-    this?.setImageDrawable(resource.drawableByResourceId(context))
+fun ImageView.setImageDrawable(@DrawableRes resource: Int) {
+    setImageDrawable(resource.drawableByResourceId(context))
 }
