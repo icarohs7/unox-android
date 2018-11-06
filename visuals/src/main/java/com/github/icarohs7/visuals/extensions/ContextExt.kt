@@ -1,32 +1,10 @@
 package com.github.icarohs7.visuals.extensions
 
 import android.app.DatePickerDialog
-import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.text.format.DateFormat
-import androidx.core.content.ContextCompat
-import com.github.icarohs7.visuals.R
-import com.github.icarohs7.visuals.UnoxAndroidVisualsModule
-import com.github.icarohs7.visuals.databinding.DialogYesNoBinding
 import java.util.Calendar
-
-/**
- * Build and show a simple confirmation dialog
- */
-fun Context.dialogYesNo(
-        title: String = "",
-        message: String = "",
-        titleColor: Int = ContextCompat.getColor(this, R.color.colorPrimary),
-        init: DialogYesNoBinding.(Dialog) -> Unit = {}
-): Dialog {
-
-    val binding = UnoxAndroidVisualsModule.NXBindings.yesNoDialog(this, title, message, titleColor)
-    val dialog = binding.toDialog()
-    binding.setNoHandler { dialog.dismiss() }
-    init(binding, dialog)
-    return dialog
-}
 
 /**
  * Return a date picker dialog

@@ -12,7 +12,7 @@ ext {
         constraintlayout = "1.1.3"
         lifecycle = "2.0.0"
         appcompat = "1.0.0"
-        androidxcore = "1.0.0"
+        androidxcore = "1.0.1"
         glide = "4.8.0"
         maskededittext = "1.0.9"
         bungee = "master-SNAPSHOT"
