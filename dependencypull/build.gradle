@@ -31,4 +31,6 @@ dependencies {
     api("com.github.duanhong169:drawabletoolbox:${versions.drawableToolbox}")
     api("com.github.halysongoncalves:pugnotification:${versions.pugNotification}")
     api("com.github.vanniktech:RxPermission:${versions.rxPermissions}")
+    api("com.github.pwittchen:reactivenetwork-rx2:${versions.reactiveNetwork}")
+    api("com.jakewharton.timber:timber:${versions.timber}")
 }

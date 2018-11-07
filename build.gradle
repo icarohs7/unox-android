@@ -81,11 +81,11 @@ subprojects { proj ->
     }
 
     dependencies {
-        implementation fileTree(dir: 'libs', include: ['*.jar'])
-        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+        implementation(fileTree(dir: "libs", include: ["*.jar"]))
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}")
 
-        testImplementation "se.lovef:kotlin-assert-utils:${versions.kotlinassertutils}"
-        testImplementation "org.robolectric:robolectric:${versions.robolectric}"
+        testImplementation("se.lovef:kotlin-assert-utils:${versions.kotlinassertutils}")
+        testImplementation("org.robolectric:robolectric:${versions.robolectric}")
     }
 
     repositories {

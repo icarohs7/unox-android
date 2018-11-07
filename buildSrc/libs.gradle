@@ -32,6 +32,8 @@ ext {
         drawableToolbox = "1.0.7"
         pugNotification = "1.8.1"
         rxPermissions = "0.5.0"
+        reactiveNetwork = "3.0.0"
+        timber = "4.7.1"
 
         //Testing dependencies
         kotlinassertutils = "0.8.0"
