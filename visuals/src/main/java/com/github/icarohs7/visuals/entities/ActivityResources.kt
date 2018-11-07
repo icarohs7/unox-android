@@ -34,7 +34,7 @@ import com.google.android.material.navigation.NavigationView
  * i.e the Views and Resources for the sideNavigation(drawer),
  * bottomNavigation and toolbar
  */
-class ActivityResources internal constructor() {
+class ActivityResources {
     var sideNavigationView: NavigationView? = null
     var sideNavigationMenuRes: Int? = null
     var sideNavigationHeaderRes: Int? = null

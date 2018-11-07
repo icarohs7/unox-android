@@ -26,32 +26,6 @@ package com.github.icarohs7.core.extensions
 import kotlin.reflect.KProperty
 import kotlin.reflect.full.memberProperties
 
-/**
- * Chain a infix lambda to an operator, returning itself,
- * e.g: mutableListOf<Int>() CHAIN { add(2) } CHAIN { add(3) }
- */
-@Suppress("FunctionName")
-infix fun <T> T.CHAIN(fn: T.() -> Unit): T = this.also(fn)
-
-/**
- * Chain a infix lambda to an operator, returning the result,
- * e.g: 5 PIPE { this + 3 } PIPE { this + 1 } - result=9
- */
-@Suppress("FunctionName")
-infix fun <T, R> T.PIPE(fn: T.() -> R): R = this.let(fn)
-
-/**
- * Function used to chain operations in a idiomatic way, as:
- * doThis() ASWELL doThat() ASWELL doAnotherThing()
- */
-@Suppress("FunctionName")
-infix fun Any?.ASWELL(other: Any?): Unit = Unit
-
-/**
- * Extension property returning the simple name of the class
- */
-val Any?.TAG: String
-    get() = this?.let { obj -> obj::class.simpleName } ?: "null"
 
 /**
  * Return a map representation with the keys being the name of the

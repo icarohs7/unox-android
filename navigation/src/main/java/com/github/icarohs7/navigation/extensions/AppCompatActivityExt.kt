@@ -35,9 +35,7 @@ import com.github.icarohs7.navigation.UnoxAndroidNavigationModule
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
         destination: T,
-        containerId: Int = UnoxAndroidNavigationModule.masterContainer
-                ?: UnoxAndroidNavigationModule.activityContainer[this::class.simpleName]
-                ?: 0
+        containerId: Int = UnoxAndroidNavigationModule.masterContainer ?: 0
 ) {
 
     fragmentTransactionAnimated {
@@ -51,9 +49,7 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
         destination: T,
-        containerId: Int = UnoxAndroidNavigationModule.masterContainer
-                ?: UnoxAndroidNavigationModule.activityContainer[this::class.simpleName]
-                ?: 0
+        containerId: Int = UnoxAndroidNavigationModule.masterContainer ?: 0
 ) {
 
     fragmentTransactionAnimated { replace(containerId, destination) }

@@ -35,6 +35,6 @@ ext {
 
         //Testing dependencies
         kotlinassertutils = "0.8.0"
-        robolectric = "4.0"
+        robolectric = "4.0.1"
     }
 }

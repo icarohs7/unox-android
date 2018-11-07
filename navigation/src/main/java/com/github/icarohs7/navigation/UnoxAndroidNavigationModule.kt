@@ -40,16 +40,12 @@ interface UnoxAndroidNavigationModule {
          */
         var masterContainer: Int? = null
 
-        /**
-         * Map used when multiple activities have multiples containers,
-         * each storing a pair with their simple name and the conteiner layoutId
-         */
-        var activityContainer: MutableMap<String, Int> = mutableMapOf()
-
-        var enterAnim: Int = R.anim.zoom_enter
-        var exitAnim: Int = R.anim.zoom_exit
-        var popEnterAnim: Int = R.anim.zoom_enter
-        var popExitAnim: Int = R.anim.zoom_exit
+        /* Animations used on the animated fragment transitions */
+        var enterAnim: Int = R.anim.zoom_enter      /* ------- */
+        var exitAnim: Int = R.anim.zoom_exit        /* ------- */
+        var popEnterAnim: Int = R.anim.zoom_enter   /* ------- */
+        var popExitAnim: Int = R.anim.zoom_exit     /* ------- */
+        /* --------------------------------------------------- */
     }
 
     /**

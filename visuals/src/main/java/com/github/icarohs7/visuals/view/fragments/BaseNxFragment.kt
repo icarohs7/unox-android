@@ -15,13 +15,27 @@ import kotlin.coroutines.CoroutineContext
  * stopped
  */
 abstract class BaseNxFragment : Fragment(), CoroutineScope, UnoxAndroidVisualsModule.DisposableEntity {
+
+    /**
+     * Parent job of coroutines on the scope of the fragment
+     */
     var job: Job = Job()
         private set
+
+    /**
+     * Composite disposable aggregating all subscriptions on the scope of the fragment
+     */
     override val disposable: CompositeDisposable = CompositeDisposable()
 
+    /**
+     * Context in which coroutines are executed by default inside the fragment
+     */
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
+    /**
+     * Create a new parent job when the fragment is started
+     */
     @CallSuper
     override fun onStart() {
         super.onStart()

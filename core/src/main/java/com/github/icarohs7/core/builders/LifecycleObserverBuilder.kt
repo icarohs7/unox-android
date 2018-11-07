@@ -2,6 +2,10 @@ package com.github.icarohs7.core.builders
 
 import androidx.lifecycle.LifecycleOwner
 
+/**
+ * Builder used to easily attach lifecycle observer to
+ * lifecycle owners through a DSL
+ */
 class LifecycleObserverBuilder<T : LifecycleOwner> {
     internal var create: T.() -> Unit = {}
     internal var start: T.() -> Unit = {}

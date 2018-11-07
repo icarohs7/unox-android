@@ -26,11 +26,9 @@ package com.github.icarohs7.visuals.view.activities
 
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import com.github.icarohs7.core.extensions.ifTrueInvoke
 import com.github.icarohs7.visuals.R
 import com.github.icarohs7.visuals.databinding.PartialCenterAndBottomContainerBinding
 import com.github.icarohs7.visuals.extensions.animateScaleIn
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -43,9 +41,23 @@ import kotlinx.coroutines.launch
  * you want if not doing background work
  * @property animationTimeout How long the splash image will be shown in miliseconds
  */
-abstract class BaseNxSplashActivity<T>(protected val animationTimeout: Int = 2000) : BaseNxActivity() {
-    protected lateinit var root: PartialCenterAndBottomContainerBinding
-    private var backgroundTask: Deferred<T?> = async { null }
+abstract class BaseNxSplashActivity<T : Any>(private val animationTimeout: Int = 2000) : BaseNxActivity() {
+    protected lateinit var binding: PartialCenterAndBottomContainerBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setupBindings()
+        onBindingCreated(binding)
+        runAnimations()
+        launch { waitBackgroundOperationsAndProceed() }
+    }
+
+    /**
+     * Called to define and setup the view binding used on the activity
+     */
+    private fun setupBindings() {
+        binding = DataBindingUtil.setContentView(this, R.layout.partial_center_and_bottom_container)
+    }
 
     /**
      * Called when the binding is set and waiting content
@@ -53,55 +65,11 @@ abstract class BaseNxSplashActivity<T>(protected val animationTimeout: Int = 200
     abstract fun onBindingCreated(binding: PartialCenterAndBottomContainerBinding)
 
     /**
-     * Called after the end of the heavy background operation
-     * with its result
-     */
-    abstract fun changeToNextScreen(backgroundTaskResult: T?)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setupBindings()
-        onBindingCreated(root)
-        verifyIfWillDoBackgroundWork()
-        runAnimations()
-        launch { waitBackgroundOperationsAndProceed() }
-    }
-
-    /**
-     * Called to check if there will be background work
-     */
-    private fun verifyIfWillDoBackgroundWork() {
-        val willDo = confirmIfShouldDoBackgroundWorkBeforeStarting()
-        willDo ifTrueInvoke { backgroundTask = async(Dispatchers.Default) { startBackgroundOperations() } }
-    }
-
-    /**
-     * Called just before the background task start, if true
-     * the background work will start
-     */
-    open fun confirmIfShouldDoBackgroundWorkBeforeStarting(): Boolean {
-        return true
-    }
-
-    /**
-     * Return the deferred heavy background operation in this
-     * function, which will be awaited before going to the
-     * next screen
-     */
-    open suspend fun startBackgroundOperations(): T? {
-        return null
-    }
-
-    private fun setupBindings() {
-        root = DataBindingUtil.setContentView(this, R.layout.partial_center_and_bottom_container)
-    }
-
-    /**
      * Animations being run by the splash, by default it's
      * an scaleIn with 600ms animation times
      */
     open fun runAnimations() {
-        val content = root.centerContainer
+        val content = binding.centerContainer
 
         content.scaleX = 0f
         content.scaleY = 0f
@@ -113,20 +81,30 @@ abstract class BaseNxSplashActivity<T>(protected val animationTimeout: Int = 200
      * function changeToNextScreen with the result
      */
     private suspend fun waitBackgroundOperationsAndProceed() {
+        val bgOperationResult = async(Dispatchers.Default) { onCallBackgroundOperation() }
         delay(animationTimeout.toLong())
         afterAnimationTimeout()
-        val bgTaskResult = backgroundTask.await()
-        changeToNextScreen(bgTaskResult)
+        changeToNextScreen(bgOperationResult.await())
     }
 
     /**
-     * Verify if the app will bootstrap
+     * Run an operation in background and wait for it to finish
+     * before changing to the next screen, waiting at least
+     * the [animationTimeout] before navigating
      */
-    open suspend fun willDoBootstrap(): Boolean = true
+    open suspend fun onCallBackgroundOperation(): T? {
+        return null
+    }
 
     /**
      * Called 2 seconds after the splash image is shown
      */
     open suspend fun afterAnimationTimeout() {
     }
+
+    /**
+     * Called after the end of the heavy background operation
+     * with its result
+     */
+    abstract fun changeToNextScreen(backgroundTaskResult: T?)
 }

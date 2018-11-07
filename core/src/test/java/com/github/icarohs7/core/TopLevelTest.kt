@@ -2,7 +2,6 @@ package com.github.icarohs7.core
 
 import com.github.icarohs7.core.extensions.hasTheSameDispatcherAs
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.junit.Test
@@ -15,19 +14,6 @@ import se.lovef.assert.v1.shouldEqual
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE)
 class TopLevelTest {
-
-    @Test
-    fun `should ignore return values`() {
-        noReturn { 5 } shouldEqual Unit
-        noReturn { } shouldEqual Unit
-        noReturn { "Hello" + " World!" } shouldEqual Unit
-
-        runBlocking {
-            noReturnSusp { async { 5 }.await() } shouldEqual Unit
-            noReturnSusp { async { false }.await() } shouldEqual Unit
-            noReturnSusp { async { "Hello" }.await() } shouldEqual Unit
-        }
-    }
 
     @Test
     fun mutableLiveDataOf() {

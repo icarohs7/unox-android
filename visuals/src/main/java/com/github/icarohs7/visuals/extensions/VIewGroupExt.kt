@@ -45,3 +45,33 @@ fun ViewGroup.hideChildrenExcept(exceptionChild: View) {
     hideChildren()
     exceptionChild.isVisible = true
 }
+
+/**
+ * Hides all children of the frame layout and show
+ * the parameterized child
+ */
+fun ViewGroup.showChild(child: View) {
+    hideChildrenExcept(child)
+}
+
+/**
+ * Fade and hide all children of the frame layout,
+ * then show the parameterized child and fadeIn
+ */
+fun ViewGroup.fadeInChild(child: View) {
+    this.animateFadeOut {
+        hideChildrenExcept(child)
+        animateFadeIn()
+    }
+}
+
+/**
+ * Scale out and hide all children of the frame layout,
+ * then show the parameterized child and ScaleIn
+ */
+fun ViewGroup.scaleInChild(child: View) {
+    this.animateScaleOut {
+        hideChildrenExcept(child)
+        animateScaleIn()
+    }
+}

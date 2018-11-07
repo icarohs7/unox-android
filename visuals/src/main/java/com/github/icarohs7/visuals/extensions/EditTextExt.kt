@@ -61,7 +61,11 @@ fun EditText.onDonePressedListener(fn: (v: View) -> Unit) {
     this.onImeAction(EditorInfo.IME_ACTION_DONE, fn)
 }
 
-private fun EditText.onImeAction(action: Int, fn: (v: View) -> Unit) {
+/**
+ * Invoked when a certain ime action defined by the [action] parameter
+ * is triggered, invoking the function defined by the [fn] parameter
+ */
+fun EditText.onImeAction(action: Int, fn: (v: View) -> Unit) {
     this.setOnEditorActionListener { v, actionId, _ ->
         if (actionId == action) {
             fn(v)

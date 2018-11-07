@@ -32,24 +32,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.coroutineContext
 
-
-/**
- * Run a function and ignore the returning value,
- * instead returning Unit
- */
-inline fun noReturn(fn: () -> Unit) {
-    fn()
-}
-
-/**
- * Run a suspend function and ignore the returning
- * value, instead returning Unit
- */
-@Suppress("REDUNDANT_INLINE_SUSPEND_FUNCTION_TYPE")
-suspend inline fun noReturnSusp(fn: suspend () -> Unit) {
-    fn()
-}
-
 /**
  * Execute an operation in the current coroutine context if it's different from the [foregroundContext]
  * or switch to a background context default to [Dispatchers.Main] and execute the operation there,
