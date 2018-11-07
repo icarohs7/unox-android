@@ -33,4 +33,6 @@ dependencies {
     api("com.github.vanniktech:RxPermission:${versions.rxPermissions}")
     api("com.github.pwittchen:reactivenetwork-rx2:${versions.reactiveNetwork}")
     api("com.jakewharton.timber:timber:${versions.timber}")
+
+    debugApi("com.amitshekhar.android:debug-db:${versions.debugDb}")
 }

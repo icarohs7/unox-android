@@ -34,6 +34,7 @@ ext {
         rxPermissions = "0.5.0"
         reactiveNetwork = "3.0.0"
         timber = "4.7.1"
+        debugDb = "1.0.4"
 
         //Testing dependencies
         kotlinassertutils = "0.8.0"
