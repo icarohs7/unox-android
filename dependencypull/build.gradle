@@ -13,7 +13,6 @@ dependencies {
     api("com.uber.autodispose:autodispose-android-archcomponents-ktx:${versions.autoDispose}")
     api("org.jetbrains.anko:anko-design:${versions.anko}")
 
-    api("io.arrow-kt:arrow-core:${versions.arrow}")
     api("io.arrow-kt:arrow-syntax:${versions.arrow}")
     api("io.arrow-kt:arrow-typeclasses:${versions.arrow}")
     api("io.arrow-kt:arrow-data:${versions.arrow}")

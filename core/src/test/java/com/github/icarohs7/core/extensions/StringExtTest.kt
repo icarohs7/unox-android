@@ -1,6 +1,8 @@
 package com.github.icarohs7.core.extensions
 
+import arrow.core.orNull
 import org.junit.Test
+import se.lovef.assert.v1.shouldBeCloseTo
 import se.lovef.assert.v1.shouldEqual
 
 class StringExtTest {
@@ -46,5 +48,27 @@ class StringExtTest {
         val s3 = "15lsdkasdklskdlklsadk32osdaklkdlksdlksld99".find(Regex("\\w{2}\\d+"))
         val exp3 = "dk32"
         s3 shouldEqual exp3
+    }
+
+    @Test
+    fun parseDate() {
+        val s1 = "2018-10-30 11:00:00".parseDate().orNull()!!.time
+        val s2 = "2018-10-30 11:01:00".parseDate().orNull()!!.time
+        (s1 + 60000) shouldBeCloseTo s2 tolerance 1000
+
+        val s3 = "1997-01-01 00:00:00".parseDate().orNull()!!.time
+        val s4 = "1997-01-01 00:10:00".parseDate().orNull()!!.time
+        (s3 + 600000) shouldEqual s4
+    }
+
+    @Test
+    fun toStringDateWithFormat() {
+        val d1 = "2018-05-09 12:00:00"
+        val ed1 = "09/05/2018 12:00"
+        d1.toStringDateWithFormat("dd/MM/yyyy HH:mm").orNull() shouldEqual ed1
+
+        val d2 = "09/05/18 12:00"
+        val ed2 = "2018-05-09 12:00:00"
+        d2.toStringDateWithFormat(oldFormat = "dd/MM/yy HH:mm").orNull() shouldEqual ed2
     }
 }
