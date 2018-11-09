@@ -24,7 +24,7 @@ ext {
         klaxon = "4.0.1"
         fuel = "1.16.0"
         arrow = "0.8.0"
-        koin = "1.0.1"
+        koin = "1.0.2"
         kotpref = "2.6.0"
         autoDispose = "1.0.0"
         quantum = "1.0.0-RC.0"
