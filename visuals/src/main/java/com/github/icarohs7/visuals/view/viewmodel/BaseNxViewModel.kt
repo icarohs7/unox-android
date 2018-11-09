@@ -13,7 +13,7 @@ import kotlin.coroutines.CoroutineContext
  * Base viewmodel class with a coroutine and subscription scope,
  * cancelling all coroutines and subscriptions when cleared
  */
-class BaseNxViewModel : ViewModel(), CoroutineScope, UnoxAndroidVisualsModule.DisposableEntity {
+abstract class BaseNxViewModel : ViewModel(), CoroutineScope, UnoxAndroidVisualsModule.DisposableEntity {
     /**
      * Parent job of coroutines on the scope of the viewmodel
      */

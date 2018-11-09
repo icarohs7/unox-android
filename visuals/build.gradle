@@ -34,6 +34,7 @@ dependencies {
     api("androidx.recyclerview:recyclerview:${versions.recyclerview}")
     api("com.google.android.material:material:${versions.materialdesign}")
     api("androidx.constraintlayout:constraintlayout:${versions.constraintlayout}")
+    api("androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}")
 
     //Masked edit text
     api("com.github.santalu:mask-edittext:${versions.maskededittext}")
