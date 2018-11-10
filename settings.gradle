@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 
-include ":dependencypull",
-        ":visuals",
-        ":core",
-        ":navigation",
-        ":adapter"
+include(":visuals")
+include(":core")
+include(":navigation")
+include(":adapter")
+include(":library")
