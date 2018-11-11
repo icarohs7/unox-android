@@ -22,4 +22,26 @@
  * SOFTWARE.
  */
 
-include(":library")
+package com.github.icarohs7.library.entities
+
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
+
+/**
+ * Class used to store the resources of an Activity,
+ * i.e the Views and Resources for the navDrawer,
+ * bottomNavigation and toolbar
+ */
+class ActivityResources {
+    var navDrawerView: NavigationView? = null
+    var navDrawerMenuRes: Int? = null
+    var navDrawerHeaderRes: Int? = null
+    var bottomNavigationView: BottomNavigationView? = null
+    var bottomNavigationMenuRes: Int? = null
+    var toolbarTitle: String? = null
+    var toolbar: Toolbar? = null
+    var toolbarOpenDrawerMenuItemDrawableId: Int? = null
+    var drawerLayout: DrawerLayout? = null
+}

@@ -21,5 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.github.icarohs7.library.extensions
 
-include(":library")
+import kotlin.reflect.KProperty
+import kotlin.reflect.full.memberProperties
+
+
+/**
+ * Return a map representation with the keys being the name of the
+ * properties or the value of the parameterized lambda applied to the property
+ */
+inline fun <reified T : Any> T.toMapFromProperties(
+        propertyNameMapping: (KProperty<*>) -> String = { "" }
+): Map<String, String> {
+    return T::class.memberProperties.map { prop ->
+
+        val propertyLabel = propertyNameMapping(prop) ifBlankOrNull prop.name
+        val propertyValue = prop.get(this).toString()
+
+        propertyLabel to propertyValue
+
+    }.toMap()
+}

@@ -18,8 +18,8 @@ https://github.com/icarohs7/unox-android/search?l=kotlin)
 http://hits.dwyl.io/icarohs7/unox-android)
 [![GitHub license](https://img.shields.io/github/license/icarohs7/unox-android.svg)](
 https://github.com/icarohs7/unox-android/blob/master/LICENSE)
-[![GitHub last commit](https://img.shields.io/github/last-commit/icarohs7/unox-android.svg)](
-https://github.com/icarohs7/unox-android/commits/master)
+[![Codecov](https://img.shields.io/codecov/c/github/icarohs7/unox-android.svg)](
+https://codecov.io/gh/icarohs7/unox-android)
 
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/w/icarohs7/unox-android.svg)](
 https://github.com/icarohs7/unox-android/commits/master)
@@ -42,13 +42,11 @@ https://github.com/Naereen/badges)
 https://github.com/defunctzombie/badginator)
 [![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](
 https://github.com/ellerbrock/open-source-badges/)
+[![GitHub last commit](https://img.shields.io/github/last-commit/icarohs7/unox-android.svg)](
+https://github.com/icarohs7/unox-android/commits/master)
 
 ## Description
-Android library with a collection of modules and many features
-
-## Disclaimer
-* Beware when updating, breaking changes between updates happen very frequently
-* Beware to the module dependencypull, it's used solely to pull a lot of dependencies, list [here](https://github.com/icarohs7/unox-android/blob/master/dependencypull/build.gradle)
+Android library aggregating extensions, utility functions and some QOL features I find useful
 
 ## Adding to the project
 
@@ -58,11 +56,7 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 dependencies {
-    //All libs
     implementation "com.github.icarohs7:unox-android:$unoxandroid_version"
-
-    //Single modules
-    implementation "com.github.icarohs7.unox-android:<moduleName>:$unoxandroid_version"
 }
 ```
 
@@ -72,11 +66,6 @@ repositories {
     maven("https://jitpack.io")
 }
 dependencies {
-    //All libs
     implementation("com.github.icarohs7:unox-android:$unoxandroid_version")
-
-    //Single modules
-    implementation("com.github.icarohs7.unox-android:<moduleName>:$unoxandroid_version")
 }
 ```
-### List of modules [here](https://github.com/icarohs7/unox-android/tree/master/settings.gradle) (without prefix colon)

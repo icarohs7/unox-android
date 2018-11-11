@@ -1,0 +1,111 @@
+plugins {
+    id("com.github.dcendents.android-maven") version "2.1"
+    id("com.android.library")
+    id("kotlin-android")
+    id("kotlin-android-extensions")
+    id("kotlin-kapt")
+    id("jacoco")
+}
+
+android {
+    compileSdkVersion(28)
+
+    defaultConfig {
+        minSdkVersion(21)
+        targetSdkVersion(28)
+        versionCode(1)
+        versionName(rootProject.version)
+        testInstrumentationRunner("android.support.test.runner.AndroidJUnitRunner")
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled(true)
+        }
+        release {
+            minifyEnabled(false)
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+        }
+    }
+
+    dataBinding {
+        enabled(true)
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources(true)
+            returnDefaultValues(true)
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility(1.8)
+        targetCompatibility(1.8)
+    }
+
+}
+
+dependencies {
+    implementation(fileTree(dir: "libs", include: ["*.jar"]))
+    implementation(Deps.all)
+    kapt(KaptDeps.all)
+    testImplementation(TestImplDeps.all)
+    androidTestImplementation(AndroidTestImplDeps.all)
+}
+
+jacoco {
+    toolVersion = "0.8.2"
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = [
+            '**/R.class',
+            '**/R$*.class',
+            '**/BuildConfig.*',
+            '**/Manifest*.*',
+            '**/*Test*.*',
+            'android/**/*.*',
+            '**/*$[0-9].*'
+    ]
+    def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
+    def mainSrc = "$project.projectDir/src/main/kotlin"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    executionData = fileTree(dir: project.buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
+    ])
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}

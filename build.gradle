@@ -23,96 +23,31 @@
  */
 
 buildscript {
-    apply(from: "buildSrc/libs.gradle")
-
     repositories {
         google()
         jcenter()
-        gradlePluginPortal()
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-        classpath "com.android.tools.build:gradle:3.2.1"
-        classpath "com.github.dcendents:android-maven-gradle-plugin:2.1"
-        classpath "gradle.plugin.com.palantir.gradle.gitversion:gradle-git-version:0.11.0"
-        classpath "com.github.ben-manes:gradle-versions-plugin:0.20.0"
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
+        classpath("com.android.tools.build:gradle:3.2.1")
+        classpath("org.jacoco:org.jacoco.core:0.8.2")
     }
 }
 
-apply(plugin: "com.palantir.git-version")
-apply(plugin: "com.github.ben-manes.versions")
-group = "com.github.icarohs7"
-version = gitVersion().toString().find("(\\d\\.\\d\\.\\d)")
+plugins {
+    id("com.github.ben-manes.versions") version "0.20.0"
+    id("com.palantir.git-version") version "0.11.0"
+}
 
-subprojects { proj ->
-    apply(plugin: "com.github.dcendents.android-maven")
-    apply(plugin: "com.android.library")
-    apply(plugin: "kotlin-android")
-    apply(plugin: "kotlin-android-extensions")
-    apply(plugin: "kotlin-kapt")
+project.with {
+    group = "com.github.icarohs7"
+    version = gitVersion().toString().find("(\\d\\.\\d\\.\\d)")
+}
 
-    if (proj.name != "core") dependencies { implementation(project(":core")) }
-
-    android {
-        compileSdkVersion 28
-
-        defaultConfig {
-            minSdkVersion(21)
-            targetSdkVersion(28)
-            versionCode(1)
-            versionName(rootProject.version)
-        }
-
-        testOptions {
-            unitTests.includeAndroidResources true
-        }
-
-        compileOptions {
-            sourceCompatibility 1.8
-            targetCompatibility 1.8
-        }
-
-        buildTypes {
-            release {
-                minifyEnabled false
-                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            }
-        }
-    }
-
-    dependencies {
-        implementation(fileTree(dir: "libs", include: ["*.jar"]))
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}")
-
-        testImplementation("se.lovef:kotlin-assert-utils:${versions.kotlinassertutils}")
-        testImplementation("org.robolectric:robolectric:${versions.robolectric}")
-    }
-
+allprojects {
     repositories {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
-    }
-
-    task sourcesJar(type: Jar) {
-        from android.sourceSets.main.java.srcDirs
-        classifier = 'sources'
-    }
-
-    task javadoc(type: Javadoc) {
-        failOnError false
-        source = android.sourceSets.main.java.sourceFiles
-        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-        classpath += configurations.compile
-    }
-
-    task javadocJar(type: Jar, dependsOn: javadoc) {
-        classifier = 'javadoc'
-        from javadoc.destinationDir
-    }
-
-    artifacts {
-        archives sourcesJar
-        archives javadocJar
     }
 }
