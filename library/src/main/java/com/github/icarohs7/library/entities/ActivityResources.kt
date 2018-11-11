@@ -31,13 +31,13 @@ import com.google.android.material.navigation.NavigationView
 
 /**
  * Class used to store the resources of an Activity,
- * i.e the Views and Resources for the sideNavigation(drawer),
+ * i.e the Views and Resources for the navDrawer,
  * bottomNavigation and toolbar
  */
 class ActivityResources {
-    var sideNavigationView: NavigationView? = null
-    var sideNavigationMenuRes: Int? = null
-    var sideNavigationHeaderRes: Int? = null
+    var navDrawerView: NavigationView? = null
+    var navDrawerMenuRes: Int? = null
+    var navDrawerHeaderRes: Int? = null
     var bottomNavigationView: BottomNavigationView? = null
     var bottomNavigationMenuRes: Int? = null
     var toolbarTitle: String? = null

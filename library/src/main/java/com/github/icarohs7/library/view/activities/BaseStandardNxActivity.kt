@@ -59,7 +59,7 @@ abstract class BaseStandardNxActivity : BaseBindingAndResourceNxActivity<Activit
         activityResources.apply {
             bottomNavigationView = binding.bottomNavigation
             drawerLayout = binding.drawerLayout
-            sideNavigationView = binding.navView
+            navDrawerView = binding.navView
             toolbar = binding.toolbar
             toolbarOpenDrawerMenuItemDrawableId = R.drawable.ic_menu
         }

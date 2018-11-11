@@ -59,7 +59,7 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
 
 /**
  * Execute a fragment transaction with an animation, defined by
- * the [UnoxAndroid]
+ * the settings on the [UnoxAndroid.Companion]
  */
 fun AppCompatActivity.fragmentTransactionAnimated(fn: FragmentTransaction.() -> Unit) {
     supportFragmentManager.transaction {

@@ -25,7 +25,6 @@
 package com.github.icarohs7.library.extensions
 
 import android.app.DatePickerDialog
-import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -43,21 +42,6 @@ fun <T : AppCompatActivity> Context.navigateTo(destination: KClass<T>) {
     val intent = Intent(this, destination.java)
     startActivity(intent)
     executeAnimation(this)
-}
-
-/**
- * Return the [Intent] used to launch the parameterized activity
- */
-fun Context.getActivityLaunchIntent(activity: KClass<out AppCompatActivity>): Intent {
-    return Intent(this, activity.java)
-}
-
-/**
- * Return the [PendingIntent] used to launch the parameterized activity
- */
-fun Context.getPendingIntentToActivity(activityClass: KClass<out AppCompatActivity>): PendingIntent {
-    val intent = getActivityLaunchIntent(activityClass)
-    return PendingIntent.getActivity(this, 0, intent, 0)
 }
 
 /**

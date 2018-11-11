@@ -8,13 +8,6 @@ import se.lovef.assert.v1.shouldEqual
 class StringExtTest {
 
     @Test
-    fun trimAndRemoveBom() {
-        val s1 = 65279.toChar() + "Hello World!!  "
-        val es1 = "Hello World!!"
-        s1.trimAndRemoveBom() shouldEqual es1
-    }
-
-    @Test
     fun `should use a fallback string`() {
         val s1 = " "
         val f1 = "leeeeeroy jeeeeenkins!"

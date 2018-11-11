@@ -45,7 +45,7 @@ import kotlin.coroutines.coroutineContext
  */
 suspend fun <T> onBackground(
         backgroundContext: CoroutineDispatcher = Dispatchers.Default,
-        foregroundContext: CoroutineDispatcher = Dispatchers.Main, //TODO move to settings
+        foregroundContext: CoroutineDispatcher = UnoxAndroid.foregroundDispatcher,
         fn: suspend CoroutineScope.() -> T
 ): T {
     return if (coroutineContext hasTheSameDispatcherAs foregroundContext) {

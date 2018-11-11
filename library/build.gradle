@@ -48,28 +48,10 @@ android {
 
 dependencies {
     implementation(fileTree(dir: "libs", include: ["*.jar"]))
-    implementation(Deps.recyclerView)
-    implementation(Deps.rxJava)
-    implementation(Deps.appCompat)
-    implementation(Deps.fragment)
-    implementation(Deps.bungee)
-    implementation(Deps.spinkit)
-    implementation(Deps.ankoCommons)
-    implementation(Deps.ankoSdk25)
-    implementation(Deps.materialDesign)
-    implementation(Deps.constraintLayout)
-    implementation(Deps.lifecycleExtensions)
-    implementation(Deps.maskedEditText)
-    implementation(Deps.glide)
-    kapt(Deps.glideKapt)
-    implementation(Deps.coroutines)
-    implementation(Deps.arrowCore)
-    implementation(Deps.androidxCore)
-    implementation(Deps.kotlinReflection)
-    testImplementation(Deps.kotlinAssertUtils)
-    testImplementation(Deps.robolectric)
-    androidTestImplementation(Deps.testRunner)
-    androidTestImplementation(Deps.espresso)
+    implementation(Deps.all)
+    kapt(KaptDeps.all)
+    testImplementation(TestImplDeps.all)
+    androidTestImplementation(AndroidTestImplDeps.all)
 }
 
 jacoco {

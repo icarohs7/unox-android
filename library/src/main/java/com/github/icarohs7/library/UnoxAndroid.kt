@@ -25,6 +25,8 @@
 package com.github.icarohs7.library
 
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 interface UnoxAndroid {
 
@@ -40,6 +42,10 @@ interface UnoxAndroid {
      * Companion object storing the settings of the module
      */
     companion object {
+
+        /** Coroutine dispatcher that should be avoided for heavy work */
+        var foregroundDispatcher: CoroutineDispatcher = Dispatchers.Main
+
         /**
          * Animation used at the transition between activities
          */

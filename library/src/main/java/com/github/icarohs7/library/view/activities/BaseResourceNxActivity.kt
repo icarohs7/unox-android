@@ -96,7 +96,7 @@ abstract class BaseResourceNxActivity : BaseNxActivity(), NavigationView.OnNavig
      */
     open fun onCheckmenuItem(menuItemId: Int) {
         try {
-            navigationResources.sideNavigationView?.setCheckedItem(menuItemId)
+            navigationResources.navDrawerView?.setCheckedItem(menuItemId)
         } catch (e: IllegalArgumentException) {
         }
     }
@@ -116,15 +116,15 @@ abstract class BaseResourceNxActivity : BaseNxActivity(), NavigationView.OnNavig
         }
 
         //Side navigation
-        res.sideNavigationView
+        res.navDrawerView
                 ?.setNavigationItemSelectedListener(this)
 
-        res.sideNavigationHeaderRes?.let {
-            res.sideNavigationView?.inflateHeaderView(it)
+        res.navDrawerHeaderRes?.let {
+            res.navDrawerView?.inflateHeaderView(it)
         }
 
-        res.sideNavigationMenuRes?.let {
-            res.sideNavigationView?.inflateMenu(it)
+        res.navDrawerMenuRes?.let {
+            res.navDrawerView?.inflateMenu(it)
         }
 
         //Toolbar

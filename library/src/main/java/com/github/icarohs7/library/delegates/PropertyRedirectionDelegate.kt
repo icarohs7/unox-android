@@ -23,7 +23,7 @@ class PropertyRedirectionDelegate<T>(
     constructor(fn: () -> Array<out KMutableProperty<T>>) : this(*fn())
 
     override fun getValue(thisRef: Any, property: KProperty<*>): T {
-        return targetProperty[0].accessibleTransaction { call() }
+        return targetProperty.first().accessibleTransaction { call() }
     }
 
     override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {

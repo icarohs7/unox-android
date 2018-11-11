@@ -92,15 +92,15 @@ abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding>
         }
 
         //Side navigation
-        res.sideNavigationView
+        res.navDrawerView
                 ?.setNavigationItemSelectedListener(this)
 
-        res.sideNavigationHeaderRes?.let {
-            res.sideNavigationView?.inflateHeaderView(it)
+        res.navDrawerHeaderRes?.let {
+            res.navDrawerView?.inflateHeaderView(it)
         }
 
-        res.sideNavigationMenuRes?.let {
-            res.sideNavigationView?.inflateMenu(it)
+        res.navDrawerMenuRes?.let {
+            res.navDrawerView?.inflateMenu(it)
         }
 
         //Toolbar
@@ -157,7 +157,7 @@ abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding>
      */
     open fun checkMenuItem(menuItemId: Int) {
         try {
-            navigationResources.sideNavigationView?.setCheckedItem(menuItemId)
+            navigationResources.navDrawerView?.setCheckedItem(menuItemId)
         } catch (e: IllegalArgumentException) {
         }
     }
