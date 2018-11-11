@@ -8,7 +8,6 @@ android {
         targetSdkVersion(28)
         versionCode(1)
         versionName(rootProject.version)
-
         testInstrumentationRunner("android.support.test.runner.AndroidJUnitRunner")
     }
 
@@ -19,10 +18,16 @@ android {
         }
     }
 
+    dataBinding {
+        enabled(true)
+    }
+
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation(fileTree(dir: "libs", include: ["*.jar"]))
+    implementation(Deps.recyclerView)
+    implementation(Deps.rxJava)
     implementation(Deps.appCompat)
     testImplementation(Deps.kotlinAssertUtils)
     androidTestImplementation(Deps.testRunner)

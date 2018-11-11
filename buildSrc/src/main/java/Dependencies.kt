@@ -1,9 +1,9 @@
-object Deps {
+object Deps { //TODO collector method
     const val kotlinStdLib: String = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
     const val coroutines: String = ""
     const val anko: String = ""
     const val spinkit: String = ""
-    const val recyclerView: String = ""
+    const val recyclerView: String = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
     const val materialDesign: String = ""
     const val fragment: String = ""
     const val constraintLayout: String = ""
@@ -13,7 +13,7 @@ object Deps {
     const val glide: String = ""
     const val maskedEditText: String = ""
     const val bungee: String = ""
-    const val rxJava: String = ""
+    const val rxJava: String = "io.reactivex.rxjava2:rxjava:${Versions.rxJava}"
     const val arrow: String = ""
 
     /** testImplementation */
@@ -31,7 +31,7 @@ object Versions {
     const val coroutines: String = "1.0.1"
     const val anko: String = "0.10.8"
     const val spinkit: String = "1.1.0"
-    const val recyclerview: String = "1.0.0"
+    const val recyclerView: String = "1.0.0"
     const val materialdesign: String = "1.0.0"
     const val fragment: String = "1.0.0"
     const val constraintlayout: String = "1.1.3"
@@ -41,7 +41,7 @@ object Versions {
     const val glide: String = "4.8.0"
     const val maskededittext: String = "1.0.9"
     const val bungee: String = "master-SNAPSHOT"
-    const val rxjava: String = "2.2.3"
+    const val rxJava: String = "2.2.3"
     const val arrow: String = "0.8.0"
     const val kotlinassertutils: String = "0.8.0"
     const val robolectric: String = "4.0.1"

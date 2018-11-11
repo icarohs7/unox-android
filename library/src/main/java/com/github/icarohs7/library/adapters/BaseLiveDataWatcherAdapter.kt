@@ -22,44 +22,38 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.adapter.adapters
+package com.github.icarohs7.library.adapters
 
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
 /**
- * Adapter based on observability and dynamic lists built using [org.reactivestreams.Publisher]
+ * Adapter based on observability and dynamic lists built using [LiveData]
  */
-abstract class BaseObservableWatcherAdapter<T, DB : ViewDataBinding>(
+abstract class BaseLiveDataWatcherAdapter<T, DB : ViewDataBinding>(
         @LayoutRes itemLayout: Int,
-        protected val dataSetObservable: Observable<List<T>>
+        protected val dataSetObservable: LiveData<List<T>>
 ) : BaseBindingAdapter<T, DB>(itemLayout) {
-    private val disposables = CompositeDisposable()
+    private val observer: Observer<List<T>> = Observer { data -> launch { onLiveDataChange(data) } }
 
     /**
-     * Called to apply the chain of operators on the observable and
-     * return the disposable subscription used to handle change events
+     * Callback invoked when the live data changes
      */
-    open fun onObservableSubscribe(observable: Observable<List<T>>): Disposable {
-        return observable.subscribeOn(Schedulers.single()).subscribe { dataSet = it }
+    open suspend fun onLiveDataChange(items: List<T>?) {
+        items?.let { nonNullItems -> dataSet = nonNullItems }
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        disposables.add(onObservableSubscribe(dataSetObservable))
+        dataSetObservable.observeForever(observer)
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
-        try {
-            disposables.clear()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        dataSetObservable.removeObserver(observer)
     }
 }

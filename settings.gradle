@@ -25,5 +25,4 @@
 include(":visuals")
 include(":core")
 include(":navigation")
-include(":adapter")
 include(":library")
