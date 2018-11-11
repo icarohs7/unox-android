@@ -22,13 +22,13 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.navigation.extensions
+package com.github.icarohs7.library.extensions
 
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import com.github.icarohs7.navigation.UnoxAndroidNavigationModule
+import com.github.icarohs7.library.UnoxAndroidSettings
 import spencerstudios.com.bungeelib.Bungee
 import kotlin.reflect.KClass
 
@@ -60,38 +60,38 @@ fun Context.getPendingIntentToActivity(activityClass: KClass<out AppCompatActivi
  * Execute an activity transition animation
  */
 private fun executeAnimation(context: Context) {
-    when (UnoxAndroidNavigationModule.animationType) {
+    when (UnoxAndroidSettings.animationType) {
 
-        UnoxAndroidNavigationModule.AnimationType.SPLIT -> Bungee.split(context)
+        UnoxAndroidSettings.AnimationType.SPLIT -> Bungee.split(context)
 
-        UnoxAndroidNavigationModule.AnimationType.SHRINK -> Bungee.shrink(context)
+        UnoxAndroidSettings.AnimationType.SHRINK -> Bungee.shrink(context)
 
-        UnoxAndroidNavigationModule.AnimationType.CARD -> Bungee.card(context)
+        UnoxAndroidSettings.AnimationType.CARD -> Bungee.card(context)
 
-        UnoxAndroidNavigationModule.AnimationType.INOUT -> Bungee.inAndOut(context)
+        UnoxAndroidSettings.AnimationType.INOUT -> Bungee.inAndOut(context)
 
-        UnoxAndroidNavigationModule.AnimationType.SWIPE_LEFT -> Bungee.swipeLeft(context)
+        UnoxAndroidSettings.AnimationType.SWIPE_LEFT -> Bungee.swipeLeft(context)
 
-        UnoxAndroidNavigationModule.AnimationType.SWIPE_RIGHT -> Bungee.swipeRight(context)
+        UnoxAndroidSettings.AnimationType.SWIPE_RIGHT -> Bungee.swipeRight(context)
 
-        UnoxAndroidNavigationModule.AnimationType.SLIDE_UP -> Bungee.slideUp(context)
+        UnoxAndroidSettings.AnimationType.SLIDE_UP -> Bungee.slideUp(context)
 
-        UnoxAndroidNavigationModule.AnimationType.SLIDE_DOWN -> Bungee.slideDown(context)
+        UnoxAndroidSettings.AnimationType.SLIDE_DOWN -> Bungee.slideDown(context)
 
-        UnoxAndroidNavigationModule.AnimationType.SLIDE_LEFT -> Bungee.slideLeft(context)
+        UnoxAndroidSettings.AnimationType.SLIDE_LEFT -> Bungee.slideLeft(context)
 
-        UnoxAndroidNavigationModule.AnimationType.SLIDE_RIGHT -> Bungee.slideRight(context)
+        UnoxAndroidSettings.AnimationType.SLIDE_RIGHT -> Bungee.slideRight(context)
 
-        UnoxAndroidNavigationModule.AnimationType.FADE -> Bungee.fade(context)
+        UnoxAndroidSettings.AnimationType.FADE -> Bungee.fade(context)
 
-        UnoxAndroidNavigationModule.AnimationType.ZOOM -> Bungee.zoom(context)
+        UnoxAndroidSettings.AnimationType.ZOOM -> Bungee.zoom(context)
 
-        UnoxAndroidNavigationModule.AnimationType.WINDMILL -> Bungee.windmill(context)
+        UnoxAndroidSettings.AnimationType.WINDMILL -> Bungee.windmill(context)
 
-        UnoxAndroidNavigationModule.AnimationType.SPIN -> Bungee.spin(context)
+        UnoxAndroidSettings.AnimationType.SPIN -> Bungee.spin(context)
 
-        UnoxAndroidNavigationModule.AnimationType.DIAGONAL -> Bungee.diagonal(context)
+        UnoxAndroidSettings.AnimationType.DIAGONAL -> Bungee.diagonal(context)
 
-        UnoxAndroidNavigationModule.AnimationType.NO_ANIMATION -> Unit
+        UnoxAndroidSettings.AnimationType.NO_ANIMATION -> Unit
     }
 }

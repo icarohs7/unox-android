@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.navigation
+package com.github.icarohs7.library
 
-interface UnoxAndroidNavigationModule {
+interface UnoxAndroidSettings {
 
     /**
      * Companion object storing the settings of the module

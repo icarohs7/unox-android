@@ -29,6 +29,8 @@ dependencies {
     implementation(Deps.recyclerView)
     implementation(Deps.rxJava)
     implementation(Deps.appCompat)
+    implementation(Deps.fragment)
+    implementation(Deps.bungee)
     testImplementation(Deps.kotlinAssertUtils)
     androidTestImplementation(Deps.testRunner)
     androidTestImplementation(Deps.espresso)

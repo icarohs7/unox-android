@@ -22,20 +22,20 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.navigation.extensions
+package com.github.icarohs7.library.extensions
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.transaction
-import com.github.icarohs7.navigation.UnoxAndroidNavigationModule
+import com.github.icarohs7.library.UnoxAndroidSettings
 
 /**
  * Load a fragment adding it to the backstack
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
         destination: T,
-        containerId: Int = UnoxAndroidNavigationModule.masterContainer ?: 0
+        containerId: Int = UnoxAndroidSettings.masterContainer ?: 0
 ) {
 
     fragmentTransactionAnimated {
@@ -49,7 +49,7 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
         destination: T,
-        containerId: Int = UnoxAndroidNavigationModule.masterContainer ?: 0
+        containerId: Int = UnoxAndroidSettings.masterContainer ?: 0
 ) {
 
     fragmentTransactionAnimated { replace(containerId, destination) }
@@ -57,15 +57,15 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
 
 /**
  * Execute a fragment transaction with an animation, defined by
- * the [UnoxAndroidNavigationModule]
+ * the [UnoxAndroidSettings]
  */
 fun AppCompatActivity.fragmentTransactionAnimated(fn: FragmentTransaction.() -> Unit) {
     supportFragmentManager.transaction {
         setCustomAnimations(
-                UnoxAndroidNavigationModule.enterAnim,
-                UnoxAndroidNavigationModule.exitAnim,
-                UnoxAndroidNavigationModule.popEnterAnim,
-                UnoxAndroidNavigationModule.popExitAnim)
+                UnoxAndroidSettings.enterAnim,
+                UnoxAndroidSettings.exitAnim,
+                UnoxAndroidSettings.popEnterAnim,
+                UnoxAndroidSettings.popExitAnim)
         fn()
     }
 }
