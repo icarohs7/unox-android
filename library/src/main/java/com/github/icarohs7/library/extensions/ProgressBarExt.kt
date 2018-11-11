@@ -22,5 +22,42 @@
  * SOFTWARE.
  */
 
-include(":core")
-include(":library")
+package com.github.icarohs7.library.extensions
+
+import android.view.View
+import android.widget.ProgressBar
+import androidx.core.view.isVisible
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+
+
+/**
+ * Execute a suspending function, showing the progress bar before starting and
+ * hiding it when finished
+ */
+suspend fun ProgressBar.loadingTransaction(hiddenState: Int = View.GONE, fn: suspend (ProgressBar) -> Unit) {
+    coroutineScope {
+        try {
+            launch(Dispatchers.Main) { startLoading() }.join()
+            fn(this@loadingTransaction)
+        } finally {
+            launch(Dispatchers.Main) { stopLoading(hiddenState) }.join()
+        }
+    }
+}
+
+/**
+ * Show the progress bar
+ */
+fun ProgressBar.startLoading() {
+    isVisible = true
+}
+
+/**
+ * Hide the progress bar, toggling its visibility to the
+ * parameterized value or [View.GONE] by default
+ */
+fun ProgressBar.stopLoading(hiddenState: Int = View.GONE) {
+    visibility = hiddenState
+}

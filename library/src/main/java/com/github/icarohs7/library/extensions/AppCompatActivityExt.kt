@@ -24,18 +24,20 @@
 
 package com.github.icarohs7.library.extensions
 
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.transaction
-import com.github.icarohs7.library.UnoxAndroidSettings
+import com.github.icarohs7.library.UnoxAndroid
+import org.jetbrains.anko.inputMethodManager
 
 /**
  * Load a fragment adding it to the backstack
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
         destination: T,
-        containerId: Int = UnoxAndroidSettings.masterContainer ?: 0
+        containerId: Int = UnoxAndroid.masterContainer ?: 0
 ) {
 
     fragmentTransactionAnimated {
@@ -49,7 +51,7 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
         destination: T,
-        containerId: Int = UnoxAndroidSettings.masterContainer ?: 0
+        containerId: Int = UnoxAndroid.masterContainer ?: 0
 ) {
 
     fragmentTransactionAnimated { replace(containerId, destination) }
@@ -57,15 +59,30 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
 
 /**
  * Execute a fragment transaction with an animation, defined by
- * the [UnoxAndroidSettings]
+ * the [UnoxAndroid]
  */
 fun AppCompatActivity.fragmentTransactionAnimated(fn: FragmentTransaction.() -> Unit) {
     supportFragmentManager.transaction {
         setCustomAnimations(
-                UnoxAndroidSettings.enterAnim,
-                UnoxAndroidSettings.exitAnim,
-                UnoxAndroidSettings.popEnterAnim,
-                UnoxAndroidSettings.popExitAnim)
+                UnoxAndroid.enterAnim,
+                UnoxAndroid.exitAnim,
+                UnoxAndroid.popEnterAnim,
+                UnoxAndroid.popExitAnim)
         fn()
     }
+}
+
+/**
+ * Dismiss the soft keyboard
+ */
+fun AppCompatActivity.hideKeyboard(containerId: Int) {
+    inputMethodManager.hideSoftInputFromWindow(findViewById<View>(containerId)?.windowToken, 0)
+}
+
+
+/**
+ * Dismiss the soft keyboard
+ */
+fun AppCompatActivity.hideKeyboard(container: View) {
+    inputMethodManager.hideSoftInputFromWindow(container.windowToken, 0)
 }

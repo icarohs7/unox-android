@@ -22,5 +22,32 @@
  * SOFTWARE.
  */
 
-include(":core")
-include(":library")
+package com.github.icarohs7.library.view.fragments
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.annotation.CallSuper
+import com.github.icarohs7.library.R
+import com.github.icarohs7.library.databinding.FragmentBaseWithoutheaderBinding
+
+/**
+ * Base fragment with a single container filling the screen
+ */
+abstract class BaseFragmentFull : BaseBindingFragment<FragmentBaseWithoutheaderBinding>() {
+    /**
+     * Defined on [onBindingCreated]
+     */
+    protected lateinit var contentView: FrameLayout
+
+    @CallSuper
+    override fun onBindingCreated(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) {
+        super.onBindingCreated(inflater, container, savedInstanceState)
+        contentView = binding.container
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.fragment_base_withoutheader
+    }
+}

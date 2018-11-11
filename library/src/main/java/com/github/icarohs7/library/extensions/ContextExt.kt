@@ -24,12 +24,16 @@
 
 package com.github.icarohs7.library.extensions
 
+import android.app.DatePickerDialog
 import android.app.PendingIntent
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.text.format.DateFormat
 import androidx.appcompat.app.AppCompatActivity
-import com.github.icarohs7.library.UnoxAndroidSettings
+import com.github.icarohs7.library.UnoxAndroid
 import spencerstudios.com.bungeelib.Bungee
+import java.util.Calendar
 import kotlin.reflect.KClass
 
 /**
@@ -60,38 +64,71 @@ fun Context.getPendingIntentToActivity(activityClass: KClass<out AppCompatActivi
  * Execute an activity transition animation
  */
 private fun executeAnimation(context: Context) {
-    when (UnoxAndroidSettings.animationType) {
+    when (UnoxAndroid.animationType) {
 
-        UnoxAndroidSettings.AnimationType.SPLIT -> Bungee.split(context)
+        UnoxAndroid.AnimationType.SPLIT -> Bungee.split(context)
 
-        UnoxAndroidSettings.AnimationType.SHRINK -> Bungee.shrink(context)
+        UnoxAndroid.AnimationType.SHRINK -> Bungee.shrink(context)
 
-        UnoxAndroidSettings.AnimationType.CARD -> Bungee.card(context)
+        UnoxAndroid.AnimationType.CARD -> Bungee.card(context)
 
-        UnoxAndroidSettings.AnimationType.INOUT -> Bungee.inAndOut(context)
+        UnoxAndroid.AnimationType.INOUT -> Bungee.inAndOut(context)
 
-        UnoxAndroidSettings.AnimationType.SWIPE_LEFT -> Bungee.swipeLeft(context)
+        UnoxAndroid.AnimationType.SWIPE_LEFT -> Bungee.swipeLeft(context)
 
-        UnoxAndroidSettings.AnimationType.SWIPE_RIGHT -> Bungee.swipeRight(context)
+        UnoxAndroid.AnimationType.SWIPE_RIGHT -> Bungee.swipeRight(context)
 
-        UnoxAndroidSettings.AnimationType.SLIDE_UP -> Bungee.slideUp(context)
+        UnoxAndroid.AnimationType.SLIDE_UP -> Bungee.slideUp(context)
 
-        UnoxAndroidSettings.AnimationType.SLIDE_DOWN -> Bungee.slideDown(context)
+        UnoxAndroid.AnimationType.SLIDE_DOWN -> Bungee.slideDown(context)
 
-        UnoxAndroidSettings.AnimationType.SLIDE_LEFT -> Bungee.slideLeft(context)
+        UnoxAndroid.AnimationType.SLIDE_LEFT -> Bungee.slideLeft(context)
 
-        UnoxAndroidSettings.AnimationType.SLIDE_RIGHT -> Bungee.slideRight(context)
+        UnoxAndroid.AnimationType.SLIDE_RIGHT -> Bungee.slideRight(context)
 
-        UnoxAndroidSettings.AnimationType.FADE -> Bungee.fade(context)
+        UnoxAndroid.AnimationType.FADE -> Bungee.fade(context)
 
-        UnoxAndroidSettings.AnimationType.ZOOM -> Bungee.zoom(context)
+        UnoxAndroid.AnimationType.ZOOM -> Bungee.zoom(context)
 
-        UnoxAndroidSettings.AnimationType.WINDMILL -> Bungee.windmill(context)
+        UnoxAndroid.AnimationType.WINDMILL -> Bungee.windmill(context)
 
-        UnoxAndroidSettings.AnimationType.SPIN -> Bungee.spin(context)
+        UnoxAndroid.AnimationType.SPIN -> Bungee.spin(context)
 
-        UnoxAndroidSettings.AnimationType.DIAGONAL -> Bungee.diagonal(context)
+        UnoxAndroid.AnimationType.DIAGONAL -> Bungee.diagonal(context)
 
-        UnoxAndroidSettings.AnimationType.NO_ANIMATION -> Unit
+        UnoxAndroid.AnimationType.NO_ANIMATION -> Unit
     }
+}
+
+/**
+ * Return a date picker dialog
+ */
+fun Context.dialogDatePicker(listener: (year: Int, month: Int, day: Int) -> Unit): DatePickerDialog {
+    val c = Calendar.getInstance()
+    val year = c.get(Calendar.YEAR)
+    val month = c.get(Calendar.MONTH)
+    val day = c.get(Calendar.DAY_OF_MONTH)
+
+    return DatePickerDialog(
+            this,
+            { _, y, m, d -> listener(y, m + 1, d) },
+            year,
+            month,
+            day)
+}
+
+/**
+ * Return a time picker dialog
+ */
+fun Context.dialogTimePicker(listener: (hour: Int, minute: Int) -> Unit): TimePickerDialog {
+    val c = Calendar.getInstance()
+    val hour = c.get(Calendar.HOUR_OF_DAY)
+    val minute = c.get(Calendar.MINUTE)
+
+    return TimePickerDialog(
+            this,
+            { _, h, m -> listener(h, m) },
+            hour,
+            minute,
+            DateFormat.is24HourFormat(this))
 }
