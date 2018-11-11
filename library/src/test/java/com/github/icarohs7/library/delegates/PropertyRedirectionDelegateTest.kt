@@ -1,4 +1,4 @@
-package com.github.icarohs7.core.delegates
+package com.github.icarohs7.library.delegates
 
 import org.junit.Test
 import se.lovef.assert.v1.shouldEqual

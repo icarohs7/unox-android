@@ -21,25 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.icarohs7.core.extensions
 
-import kotlin.reflect.KProperty
-import kotlin.reflect.full.memberProperties
+package com.github.icarohs7.library.extensions
 
+import org.junit.Test
+import se.lovef.assert.v1.shouldEqual
+import kotlin.reflect.full.findAnnotation
 
-/**
- * Return a map representation with the keys being the name of the
- * properties or the value of the parameterized lambda applied to the property
- */
-inline fun <reified T : Any> T.toMapFromProperties(
-        propertyNameMapping: (KProperty<*>) -> String = { "" }
-): Map<String, String> {
-    return T::class.memberProperties.map { prop ->
+class AnyExtTest {
 
-        val propertyLabel = propertyNameMapping(prop) ifBlankOrNull prop.name
-        val propertyValue = prop.get(this).toString()
+    @Test
+    fun `should convert a class to a map`() {
+        val firstObj = TestClass3("a", 1, "b")
+        val firstMap = firstObj.toMapFromProperties { it.findAnnotation<Label>()?.value ?: "" }
+        val firstMapExpected = mapOf(
+                "foo" to "a",
+                "bar" to "1",
+                "hi" to "b"
+        )
+        firstMap shouldEqual firstMapExpected
 
-        propertyLabel to propertyValue
+        val secondObj = TestClass3("x", 0, "p")
+        val secondMap = secondObj.toMapFromProperties { it.findAnnotation<Label>()?.value ?: "" }
+        val secondMapExpected = mapOf(
+                "foo" to "x",
+                "bar" to "0",
+                "hi" to "p"
+        )
+        secondMap shouldEqual secondMapExpected
+    }
 
-    }.toMap()
+    data class TestClass3(val foo: String, val bar: Int, @Label("hi") val baz: String)
+
+    @Target(AnnotationTarget.PROPERTY)
+    annotation class Label(val value: String)
 }

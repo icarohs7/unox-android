@@ -1,4 +1,4 @@
-package com.github.icarohs7.core.extensions
+package com.github.icarohs7.library.extensions
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel

@@ -1,4 +1,4 @@
-package com.github.icarohs7.core.extensions
+package com.github.icarohs7.library.extensions
 
 import kotlin.coroutines.ContinuationInterceptor
 import kotlin.coroutines.CoroutineContext

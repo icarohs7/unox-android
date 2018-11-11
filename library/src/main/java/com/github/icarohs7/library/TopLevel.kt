@@ -22,10 +22,10 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.core
+package com.github.icarohs7.library
 
 import androidx.lifecycle.MutableLiveData
-import com.github.icarohs7.core.extensions.hasTheSameDispatcherAs
+import com.github.icarohs7.library.extensions.hasTheSameDispatcherAs
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +45,7 @@ import kotlin.coroutines.coroutineContext
  */
 suspend fun <T> onBackground(
         backgroundContext: CoroutineDispatcher = Dispatchers.Default,
-        foregroundContext: CoroutineDispatcher = Dispatchers.Main,
+        foregroundContext: CoroutineDispatcher = Dispatchers.Main, //TODO move to settings
         fn: suspend CoroutineScope.() -> T
 ): T {
     return if (coroutineContext hasTheSameDispatcherAs foregroundContext) {

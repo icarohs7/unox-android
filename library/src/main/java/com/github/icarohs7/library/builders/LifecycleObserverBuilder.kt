@@ -1,4 +1,4 @@
-package com.github.icarohs7.core.builders
+package com.github.icarohs7.library.builders
 
 import androidx.lifecycle.LifecycleOwner
 

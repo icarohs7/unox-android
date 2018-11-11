@@ -22,5 +22,4 @@
  * SOFTWARE.
  */
 
-include(":core")
 include(":library")

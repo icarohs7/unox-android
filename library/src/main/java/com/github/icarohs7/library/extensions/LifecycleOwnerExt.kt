@@ -1,10 +1,10 @@
-package com.github.icarohs7.core.extensions
+package com.github.icarohs7.library.extensions
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import com.github.icarohs7.core.builders.LifecycleObserverBuilder
+import com.github.icarohs7.library.builders.LifecycleObserverBuilder
 
 /**
  * Attach an observable to the lifecycle of a given lifecycle owner using a builder DSL

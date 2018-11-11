@@ -1,4 +1,4 @@
-package com.github.icarohs7.core.delegates
+package com.github.icarohs7.library.delegates
 
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KMutableProperty

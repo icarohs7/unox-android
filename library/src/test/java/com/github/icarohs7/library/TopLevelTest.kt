@@ -1,6 +1,6 @@
-package com.github.icarohs7.core
+package com.github.icarohs7.library
 
-import com.github.icarohs7.core.extensions.hasTheSameDispatcherAs
+import com.github.icarohs7.library.extensions.hasTheSameDispatcherAs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext

@@ -23,8 +23,6 @@
  */
 
 buildscript {
-    apply(from: "buildSrc/libs.gradle")
-
     repositories {
         google()
         jcenter()
@@ -38,7 +36,6 @@ buildscript {
 plugins {
     id("com.github.ben-manes.versions") version "0.20.0"
     id("com.palantir.git-version") version "0.11.0"
-    id("com.github.dcendents.android-maven") version "2.1"
 }
 
 project.with {
@@ -51,52 +48,5 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
-    }
-}
-
-subprojects { proj ->
-    apply(plugin: "com.github.dcendents.android-maven")
-    apply(plugin: "com.android.library")
-    apply(plugin: "kotlin-android")
-    apply(plugin: "kotlin-android-extensions")
-    apply(plugin: "kotlin-kapt")
-
-    if (proj.name != "core") dependencies { implementation(project(":core")) }
-
-    android {
-        compileSdkVersion(28)
-
-        defaultConfig {
-            minSdkVersion(21)
-            targetSdkVersion(28)
-            versionCode(1)
-            versionName(rootProject.version)
-        }
-
-        testOptions {
-            unitTests {
-                includeAndroidResources(true)
-                returnDefaultValues(true)
-            }
-        }
-
-        compileOptions {
-            sourceCompatibility(1.8)
-            targetCompatibility(1.8)
-        }
-
-        buildTypes {
-            release {
-                minifyEnabled(false)
-                proguardFiles(getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro')
-            }
-        }
-    }
-
-    dependencies {
-        implementation(fileTree(dir: "libs", include: ["*.jar"]))
-        implementation(Deps.kotlinStdLib)
-        testImplementation(Deps.kotlinAssertUtils)
-        testImplementation(Deps.robolectric)
     }
 }

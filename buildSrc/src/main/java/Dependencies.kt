@@ -1,6 +1,6 @@
 object Deps { //TODO collector method
     const val kotlinStdLib: String = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
-    const val coroutines: String = ""
+    const val coroutines: String = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     const val ankoCommons: String = "org.jetbrains.anko:anko-commons:${Versions.anko}"
     const val ankoSdk25: String = "org.jetbrains.anko:anko-sdk25:${Versions.anko}"
     const val spinkit: String = "com.github.ybq:Android-SpinKit:${Versions.spinkit}"
@@ -10,22 +10,23 @@ object Deps { //TODO collector method
     const val constraintLayout: String = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     const val lifecycleExtensions: String = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
     const val appCompat: String = "androidx.appcompat:appcompat:${Versions.appCompat}"
-    const val androidxCore: String = ""
+    const val androidxCore: String = "androidx.core:core-ktx:${Versions.androidxcore}"
     const val glide: String = "com.github.bumptech.glide:glide:${Versions.glide}"
     const val glideKapt: String = "com.github.bumptech.glide:compiler:${Versions.glide}"
     const val maskedEditText: String = "com.github.santalu:mask-edittext:${Versions.maskedEditText}"
     const val bungee: String = "com.github.Binary-Finery:Bungee:${Versions.bungee}"
     const val rxJava: String = "io.reactivex.rxjava2:rxjava:${Versions.rxJava}"
-    const val arrow: String = ""
+    const val arrowCore: String = "io.arrow-kt:arrow-core:${Versions.arrow}"
+    const val kotlinReflection: String = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
 
     /** testImplementation */
     const val kotlinAssertUtils: String = "se.lovef:kotlin-assert-utils:${Versions.kotlinassertutils}"
     /** testImplementation */
     const val robolectric: String = "org.robolectric:robolectric:${Versions.robolectric}"
     /** androidTestImplementation */
-    val testRunner = "androidx.test:runner:${Versions.testRunner}"
+    const val testRunner: String = "androidx.test:runner:${Versions.testRunner}"
     /** androidTestImplementation */
-    val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    const val espresso: String = "androidx.test.espresso:espresso-core:${Versions.espresso}"
 }
 
 object Versions {
