@@ -18,8 +18,8 @@ https://github.com/icarohs7/unox-android/search?l=kotlin)
 http://hits.dwyl.io/icarohs7/unox-android)
 [![GitHub license](https://img.shields.io/github/license/icarohs7/unox-android.svg)](
 https://github.com/icarohs7/unox-android/blob/master/LICENSE)
-[![GitHub last commit](https://img.shields.io/github/last-commit/icarohs7/unox-android.svg)](
-https://github.com/icarohs7/unox-android/commits/master)
+[![Codecov](https://img.shields.io/codecov/c/github/icarohs7/unox-android.svg)](
+https://codecov.io/gh/icarohs7/unox-android)
 
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/w/icarohs7/unox-android.svg)](
 https://github.com/icarohs7/unox-android/commits/master)
@@ -42,6 +42,8 @@ https://github.com/Naereen/badges)
 https://github.com/defunctzombie/badginator)
 [![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](
 https://github.com/ellerbrock/open-source-badges/)
+[![GitHub last commit](https://img.shields.io/github/last-commit/icarohs7/unox-android.svg)](
+https://github.com/icarohs7/unox-android/commits/master)
 
 ## Description
 Android library aggregating extensions, utility functions and some QOL features I find useful
