@@ -9,5 +9,13 @@ import androidx.lifecycle.ViewModel
  * coroutine scope
  */
 abstract class BaseFullNxActivity<DB : ViewDataBinding, VM : ViewModel> : BaseBindingAndResourceNxActivity<DB>() {
-    abstract val viewModel: VM
+    /**
+     * Viewmodel used for the activity
+     */
+    protected val viewModel: VM by lazy { viewModelInstance() }
+
+    /**
+     * Define the instance of the viewmodel that will be used
+     */
+    abstract fun viewModelInstance(): VM
 }

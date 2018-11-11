@@ -27,7 +27,7 @@ package com.github.icarohs7.library.view.activities
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.github.icarohs7.library.R
-import com.github.icarohs7.library.databinding.PartialCenterAndBottomContainerBinding
+import com.github.icarohs7.library.databinding.ActivityBaseSplashBinding
 import com.github.icarohs7.library.extensions.animateScaleIn
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -42,13 +42,17 @@ import kotlinx.coroutines.launch
  * @property animationTimeout How long the splash image will be shown in miliseconds
  */
 abstract class BaseNxSplashActivity<T : Any>(private val animationTimeout: Int = 2000) : BaseNxActivity() {
-    protected lateinit var binding: PartialCenterAndBottomContainerBinding
+    /**
+     * Initialized in [onCreate]
+     */
+    protected lateinit var binding: ActivityBaseSplashBinding
+        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupBindings()
         onBindingCreated(binding)
-        runAnimations()
+        onStartAnimation()
         launch { waitBackgroundOperationsAndProceed() }
     }
 
@@ -56,19 +60,14 @@ abstract class BaseNxSplashActivity<T : Any>(private val animationTimeout: Int =
      * Called to define and setup the view binding used on the activity
      */
     private fun setupBindings() {
-        binding = DataBindingUtil.setContentView(this, R.layout.partial_center_and_bottom_container)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_base_splash)
     }
 
-    /**
-     * Called when the binding is set and waiting content
-     */
-    abstract fun onBindingCreated(binding: PartialCenterAndBottomContainerBinding)
+    /** Called when the binding is set and waiting content */
+    abstract fun onBindingCreated(binding: ActivityBaseSplashBinding)
 
-    /**
-     * Animations being run by the splash, by default it's
-     * an scaleIn with 600ms animation times
-     */
-    open fun runAnimations() {
+    /** Called after [onBindingCreated], used to start the animation of the content */
+    open fun onStartAnimation() {
         val content = binding.centerContainer
 
         content.scaleX = 0f
@@ -78,7 +77,7 @@ abstract class BaseNxSplashActivity<T : Any>(private val animationTimeout: Int =
 
     /**
      * Wait the background work to be done and then run the
-     * function changeToNextScreen with the result
+     * function [changeToNextScreen] with the result
      */
     private suspend fun waitBackgroundOperationsAndProceed() {
         val bgOperationResult = async(Dispatchers.Default) { onCallBackgroundOperation() }

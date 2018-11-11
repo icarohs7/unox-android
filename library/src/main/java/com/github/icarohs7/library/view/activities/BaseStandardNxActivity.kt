@@ -26,47 +26,34 @@ package com.github.icarohs7.library.view.activities
 
 import android.view.View
 import android.widget.ProgressBar
-import androidx.annotation.CallSuper
-import androidx.databinding.DataBindingUtil
 import com.github.icarohs7.library.R
 import com.github.icarohs7.library.databinding.ActivityBaseStandardNxBinding
 import com.github.icarohs7.library.entities.ActivityResources
-import com.github.icarohs7.library.extensions.loadingTransaction
-import com.github.icarohs7.library.extensions.startLoading
-import com.github.icarohs7.library.extensions.stopLoading
+import com.github.icarohs7.library.extensions.hide
+import com.github.icarohs7.library.extensions.show
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-/**
- * Base Activity implementing the Contract Watcher architecture,
- * using the [R.layout.activity_base_standard_nx] layout
- */
-abstract class BaseStandardNxActivity : BaseResourceNxActivity() {
-    lateinit var binding: ActivityBaseStandardNxBinding
-    open var progressBarHiddenVisibility: Int = View.GONE
 
+abstract class BaseStandardNxActivity : BaseBindingAndResourceNxActivity<ActivityBaseStandardNxBinding>() {
     /**
      * Execute an operation, showing the progress bar when it's running
      * and hiding it when done
      */
     open suspend fun runWithProgressFeedback(fn: suspend (ProgressBar) -> Unit) {
-        binding.progressBar.loadingTransaction(progressBarHiddenVisibility, fn)
+        try {
+            launch(Dispatchers.Main) { startLoading() }.join()
+            fn(binding.progressBar)
+        } finally {
+            launch(Dispatchers.Main) { stopLoading() }.join()
+        }
     }
 
-    /**
-     * Show the progress bar
-     */
-    fun startLoading(): Unit = binding.progressBar.startLoading()
+    /** Show the progress bar */
+    fun startLoading(): Unit = binding.progressBar.show()
 
-    /**
-     * Hide the progress bar, visibility defined
-     * by [progressBarHiddenVisibility]
-     */
-    fun stopLoading(): Unit = binding.progressBar.stopLoading(progressBarHiddenVisibility)
-
-    @CallSuper
-    override fun onSetContentView() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_base_standard_nx)
-        binding.progressBar.visibility = progressBarHiddenVisibility
-    }
+    /** Hide the progress bar */
+    fun stopLoading(): Unit = binding.progressBar.hide(View.GONE)
 
     override fun onDefineActivityResources(activityResources: ActivityResources) {
         activityResources.apply {

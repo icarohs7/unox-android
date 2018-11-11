@@ -29,7 +29,7 @@ object Deps { //TODO collector method
     const val espresso: String = "androidx.test.espresso:espresso-core:${Versions.espresso}"
 }
 
-object Versions {
+object Versions { //TODO clean up
     const val kotlin: String = "1.3.0"
     const val coroutines: String = "1.0.1"
     const val anko: String = "0.10.8"

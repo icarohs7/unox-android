@@ -11,6 +11,7 @@ interface StateManager<T> {
     val observable: Observable<T>
     val channel: ReceiveChannel<T>
 
+    /** Return the last valid state of the application */
     suspend fun lastValue(): T
 
     /**

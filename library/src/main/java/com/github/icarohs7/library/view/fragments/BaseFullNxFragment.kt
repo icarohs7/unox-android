@@ -9,5 +9,13 @@ import androidx.lifecycle.ViewModel
  * coroutine scope
  */
 abstract class BaseFullNxFragment<DB : ViewDataBinding, VM : ViewModel> : BaseBindingFragment<DB>() {
-    abstract val viewModel: VM
+    /**
+     * Viewmodel used for the fragment
+     */
+    protected val viewModel: VM by lazy { viewModelInstance() }
+
+    /**
+     * Define the instance of the viewmodel that will be used
+     */
+    abstract fun viewModelInstance(): VM
 }

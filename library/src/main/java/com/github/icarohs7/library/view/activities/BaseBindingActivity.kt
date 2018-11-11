@@ -7,7 +7,7 @@ import androidx.databinding.ViewDataBinding
 
 abstract class BaseBindingActivity<B : ViewDataBinding> : BaseNxActivity() {
     /**
-     * Initialized on [onCreate]
+     * Initialized in [onCreate]
      */
     protected lateinit var binding: B
 

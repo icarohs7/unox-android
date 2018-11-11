@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewPropertyAnimator
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 
 /**
  * Define the background tint resource of the View
@@ -108,4 +109,14 @@ fun View.animateFadeIn(duration: Long = 500L, callback: ViewPropertyAnimator.() 
  */
 fun View.animateFadeOut(duration: Long = 500L, callback: ViewPropertyAnimator.() -> Unit = {}): ViewPropertyAnimator {
     return animate().setDuration(duration).doOnEnd(callback).alpha(0f)
+}
+
+/** Set the view's visibility to [View.VISIBLE] */
+fun View.show() {
+    isVisible = true
+}
+
+/** Set the view's visibility to [View.GONE], or the parameterized visibility */
+fun View.hide(hiddenState: Int = View.GONE) {
+    visibility = hiddenState
 }

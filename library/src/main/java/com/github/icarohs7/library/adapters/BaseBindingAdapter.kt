@@ -29,11 +29,12 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -41,8 +42,9 @@ import kotlin.coroutines.CoroutineContext
  */
 abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
         @LayoutRes val itemLayout: Int,
-        initialDataSet: List<T> = emptyList()
-) : RecyclerView.Adapter<BaseBindingAdapter.BaseBindingViewHolder<DB>>(), CoroutineScope {
+        diffCallback: DiffUtil.ItemCallback<T>?
+) : ListAdapter<T, BaseBindingAdapter.BaseBindingViewHolder<DB>>(
+        diffCallback ?: AllRefreshDiffCallback()), CoroutineScope {
 
     /**
      * Parent job of coroutines executed within the adapter
@@ -56,26 +58,9 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
         get() = job + Dispatchers.Main
 
     /**
-     * Items currently being shown at the adapter
-     */
-    var dataSet: List<T> = initialDataSet
-        set(value) {
-            val oldList = field
-            field = value
-            launch { onDataSetChanged(oldList = oldList, newList = value) }
-        }
-
-    /**
-     * Called when a new list of items is loaded
-     */
-    open suspend fun onDataSetChanged(oldList: List<T>, newList: List<T>) {
-        notifyDataSetChanged()
-    }
-
-    /**
      * Function converting an list item to an actual view
      */
-    abstract fun onBindItemToView(data: List<T>, position: Int, view: DB)
+    abstract fun onBindItemToView(item: T?, view: DB)
 
     /**
      * Creation of the viewholder
@@ -95,19 +80,8 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
      * Setup of the viewholder when going to be visible
      */
     override fun onBindViewHolder(holder: BaseBindingViewHolder<DB>, position: Int) {
-        onBindItemToView(dataSet, position, holder.binding)
+        onBindItemToView(getItem(position), holder.binding)
     }
-
-    /**
-     * Amount of items present on the data set
-     */
-    override fun getItemCount(): Int =
-            dataSet.size
-
-    /**
-     * Viewholder for the adapter
-     */
-    class BaseBindingViewHolder<DB : ViewDataBinding>(val binding: DB) : RecyclerView.ViewHolder(binding.root)
 
     /**
      * Create a new parent job when attached to the recycler view
@@ -123,5 +97,24 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         job.cancel()
+    }
+
+    /**
+     * Viewholder for the adapter
+     */
+    class BaseBindingViewHolder<DB : ViewDataBinding>(val binding: DB) : RecyclerView.ViewHolder(binding.root)
+
+    /**
+     * Default callback for lazy people, will just
+     * use equals on the objects compared
+     */
+    class AllRefreshDiffCallback<T> : DiffUtil.ItemCallback<T>() {
+        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
+            return oldItem == newItem
+        }
     }
 }

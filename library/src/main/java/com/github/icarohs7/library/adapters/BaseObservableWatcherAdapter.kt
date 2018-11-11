@@ -26,19 +26,24 @@ package com.github.icarohs7.library.adapters
 
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
 /**
  * Adapter based on observability and dynamic lists built using [org.reactivestreams.Publisher]
  */
 abstract class BaseObservableWatcherAdapter<T, DB : ViewDataBinding>(
         @LayoutRes itemLayout: Int,
-        protected val dataSetObservable: Observable<List<T>>
-) : BaseBindingAdapter<T, DB>(itemLayout) {
+        private val dataSetObservable: Observable<List<T>>,
+        diffCallback: DiffUtil.ItemCallback<T>? = null
+) : BaseBindingAdapter<T, DB>(itemLayout, diffCallback) {
+
+    /** Composite disposable storing the current subscriptions of the adapter */
     private val disposables = CompositeDisposable()
 
     /**
@@ -46,14 +51,21 @@ abstract class BaseObservableWatcherAdapter<T, DB : ViewDataBinding>(
      * return the disposable subscription used to handle change events
      */
     open fun onObservableSubscribe(observable: Observable<List<T>>): Disposable {
-        return observable.subscribeOn(Schedulers.single()).subscribe { dataSet = it }
+        return observable.subscribeOn(Schedulers.computation()).subscribe { launch { onDataSourceChange(it) } }
     }
 
+    /** Callback invoked when a new list is emmited by the observable */
+    open suspend fun onDataSourceChange(items: List<T>) {
+        submitList(items)
+    }
+
+    /** Start observing the data source when attached to the recycler view */
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         disposables.add(onObservableSubscribe(dataSetObservable))
     }
 
+    /** Stop observing the data source when detached from the recycler view */
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         try {

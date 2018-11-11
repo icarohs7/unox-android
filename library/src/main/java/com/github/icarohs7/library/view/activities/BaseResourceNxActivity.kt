@@ -32,8 +32,9 @@ import com.github.icarohs7.library.entities.ActivityResources
 import com.google.android.material.navigation.NavigationView
 
 /**
- * Activity that listens to a LiveData of contracts and when it changes,
- * selects the menu item tied to it and runs the action in it
+ * Activity holding an object aggregating some common resources
+ * used on activities in single activity architectures, like
+ * navigation drawer, bottom navigation and toolbar
  */
 abstract class BaseResourceNxActivity : BaseNxActivity(), NavigationView.OnNavigationItemSelectedListener {
     val navigationResources: ActivityResources = ActivityResources()
@@ -59,7 +60,7 @@ abstract class BaseResourceNxActivity : BaseNxActivity(), NavigationView.OnNavig
         super.onCreate(savedInstanceState)
         onSetContentView()
         onDefineActivityResources(navigationResources)
-        loadNavigationResources()
+        onLoadNavigationResources()
         afterInitialSetup()
     }
 
@@ -78,13 +79,14 @@ abstract class BaseResourceNxActivity : BaseNxActivity(), NavigationView.OnNavig
      */
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         navigationResources.drawerLayout?.closeDrawers()
-        checkMenuItem(menuItem.itemId)
+        onCheckmenuItem(menuItem.itemId)
         onSelectMenuItem(menuItem)
         return true
     }
 
     /**
-     * Called after View creation and initial setup done
+     * Called after View creation and initial setup done,
+     * at the end of [onCreate]
      */
     open fun afterInitialSetup() {
     }
@@ -92,7 +94,7 @@ abstract class BaseResourceNxActivity : BaseNxActivity(), NavigationView.OnNavig
     /**
      * Check the menu item with the Id parameterized or do nothing if the item doesn't exist
      */
-    open fun checkMenuItem(menuItemId: Int) {
+    open fun onCheckmenuItem(menuItemId: Int) {
         try {
             navigationResources.sideNavigationView?.setCheckedItem(menuItemId)
         } catch (e: IllegalArgumentException) {
@@ -102,7 +104,7 @@ abstract class BaseResourceNxActivity : BaseNxActivity(), NavigationView.OnNavig
     /**
      * Load the resources defined
      */
-    private fun loadNavigationResources() {
+    private fun onLoadNavigationResources() {
         val res = navigationResources
 
         //Bottom navigation

@@ -28,6 +28,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
 
@@ -36,22 +37,25 @@ import kotlinx.coroutines.launch
  */
 abstract class BaseLiveDataWatcherAdapter<T, DB : ViewDataBinding>(
         @LayoutRes itemLayout: Int,
-        protected val dataSetObservable: LiveData<List<T>>
-) : BaseBindingAdapter<T, DB>(itemLayout) {
-    private val observer: Observer<List<T>> = Observer { data -> launch { onLiveDataChange(data) } }
+        private val dataSetObservable: LiveData<List<T>>,
+        diffCallback: DiffUtil.ItemCallback<T>? = null
+) : BaseBindingAdapter<T, DB>(itemLayout, diffCallback) {
 
-    /**
-     * Callback invoked when the live data changes
-     */
-    open suspend fun onLiveDataChange(items: List<T>?) {
-        items?.let { nonNullItems -> dataSet = nonNullItems }
+    /** Observer responsible of dispatching the liveData changes to the adapter */
+    private val observer: Observer<List<T>> = Observer { launch { onDataSourceChange(it) } }
+
+    /** Callback invoked when the live data changes */
+    open suspend fun onDataSourceChange(items: List<T>?) {
+        items?.let(this::submitList)
     }
 
+    /** Start observing the data source when attached to the recycler view */
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         dataSetObservable.observeForever(observer)
     }
 
+    /** Stop observing the data source when detached from the recycler view */
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         dataSetObservable.removeObserver(observer)
