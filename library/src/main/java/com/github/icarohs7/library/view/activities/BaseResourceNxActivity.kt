@@ -80,8 +80,7 @@ abstract class BaseResourceNxActivity : BaseNxActivity(), NavigationView.OnNavig
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         navigationResources.drawerLayout?.closeDrawers()
         onCheckmenuItem(menuItem.itemId)
-        onSelectMenuItem(menuItem)
-        return true
+        return onSelectMenuItem(menuItem)
     }
 
     /**

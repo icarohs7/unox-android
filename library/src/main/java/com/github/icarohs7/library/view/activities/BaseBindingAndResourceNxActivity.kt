@@ -50,7 +50,7 @@ abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding>
     /**
      * Called when a menu item from either the side or bottom nav is selected
      */
-    abstract fun onSelectMenuItem(menuItemId: MenuItem)
+    abstract fun onSelectMenuItem(menuItemId: MenuItem): Boolean
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +59,7 @@ abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding>
         binding.setLifecycleOwner(this)
         onBindingCreated(savedInstanceState)
         onDefineActivityResources(navigationResources)
-        loadNavigationResources()
+        onLoadNavigationResources()
         afterInitialSetup()
     }
 
@@ -80,7 +80,7 @@ abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding>
      * Called after [onDefineActivityResources], used to load all
      * defined resources from the activityResources object
      */
-    fun loadNavigationResources() {
+    fun onLoadNavigationResources() {
         val res = navigationResources
 
         //Bottom navigation
@@ -118,7 +118,7 @@ abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding>
     }
 
     /**
-     * Called after [loadNavigationResources], as the last step of
+     * Called after [onLoadNavigationResources], as the last step of
      * the [onCreate] method
      */
     open fun afterInitialSetup() {
@@ -137,9 +137,7 @@ abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding>
         if (item.itemId == android.R.id.home) {
             drawer.openDrawer(GravityCompat.START)
             true
-        } else {
-            super.onOptionsItemSelected(item)
-        }
+        } else onSelectMenuItem(item)
     } ?: super.onOptionsItemSelected(item)
 
     /**
@@ -147,15 +145,14 @@ abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding>
      */
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         navigationResources.drawerLayout?.closeDrawers()
-        checkMenuItem(menuItem.itemId)
-        onSelectMenuItem(menuItem)
-        return true
+        onCheckMenuItem(menuItem.itemId)
+        return onSelectMenuItem(menuItem)
     }
 
     /**
      * Check the menu item with the Id parameterized or do nothing if the item doesn't exist
      */
-    open fun checkMenuItem(menuItemId: Int) {
+    open fun onCheckMenuItem(menuItemId: Int) {
         try {
             navigationResources.navDrawerView?.setCheckedItem(menuItemId)
         } catch (e: IllegalArgumentException) {

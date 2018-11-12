@@ -24,7 +24,6 @@
 
 package com.github.icarohs7.library.view.activities
 
-import android.view.View
 import android.widget.ProgressBar
 import com.github.icarohs7.library.R
 import com.github.icarohs7.library.databinding.ActivityBaseStandardNxBinding
@@ -32,7 +31,7 @@ import com.github.icarohs7.library.entities.ActivityResources
 import com.github.icarohs7.library.extensions.hide
 import com.github.icarohs7.library.extensions.show
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 abstract class BaseStandardNxActivity : BaseBindingAndResourceNxActivity<ActivityBaseStandardNxBinding>() {
@@ -42,10 +41,10 @@ abstract class BaseStandardNxActivity : BaseBindingAndResourceNxActivity<Activit
      */
     open suspend fun runWithProgressFeedback(fn: suspend (ProgressBar) -> Unit) {
         try {
-            launch(Dispatchers.Main) { startLoading() }.join()
+            withContext(Dispatchers.Main) { startLoading() }
             fn(binding.progressBar)
         } finally {
-            launch(Dispatchers.Main) { stopLoading() }.join()
+            withContext(Dispatchers.Main) { stopLoading() }
         }
     }
 
@@ -53,7 +52,7 @@ abstract class BaseStandardNxActivity : BaseBindingAndResourceNxActivity<Activit
     fun startLoading(): Unit = binding.progressBar.show()
 
     /** Hide the progress bar */
-    fun stopLoading(): Unit = binding.progressBar.hide(View.GONE)
+    fun stopLoading(): Unit = binding.progressBar.hide()
 
     override fun onDefineActivityResources(activityResources: ActivityResources) {
         activityResources.apply {
@@ -63,5 +62,9 @@ abstract class BaseStandardNxActivity : BaseBindingAndResourceNxActivity<Activit
             toolbar = binding.toolbar
             toolbarOpenDrawerMenuItemDrawableId = R.drawable.ic_menu
         }
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.activity_base_standard_nx
     }
 }
