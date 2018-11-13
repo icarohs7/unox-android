@@ -46,5 +46,5 @@ inline fun <reified T : Any> T.toMapFromProperties(
 }
 
 /** Convert a nullable item to a try of it, or a null pointer failure */
-fun <T : Any> T?.toTry(): Try<T> =
+fun <T> T?.toTry(): Try<T> =
         Try { this@toTry!! }
