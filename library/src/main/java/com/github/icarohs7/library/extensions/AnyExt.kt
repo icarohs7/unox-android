@@ -23,6 +23,7 @@
  */
 package com.github.icarohs7.library.extensions
 
+import arrow.core.Try
 import kotlin.reflect.KProperty
 import kotlin.reflect.full.memberProperties
 
@@ -43,3 +44,7 @@ inline fun <reified T : Any> T.toMapFromProperties(
 
     }.toMap()
 }
+
+/** Convert a nullable item to a try of it, or a null pointer failure */
+fun <T : Any> T?.toTry(): Try<T> =
+        Try { this@toTry!! }

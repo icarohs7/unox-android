@@ -24,11 +24,37 @@
 
 package com.github.icarohs7.library.extensions
 
+import arrow.core.getOrElse
 import org.junit.Test
+import se.lovef.assert.v1.shouldBeTrue
 import se.lovef.assert.v1.shouldEqual
+import se.lovef.assert.v1.throws
 import kotlin.reflect.full.findAnnotation
 
 class AnyExtTest {
+
+    @Test
+    fun `convert nullable value to Try`() {
+        //Given
+        val v1: String? = null
+        val v2: String? = "Omai wa mou shindeiru"
+        val v3: Int? = null
+        val v4: Int = 1532
+
+        //When
+        val t1 = v1.toTry()
+        val t2 = v2.toTry()
+        val t3 = v3.toTry()
+        val t4 = v4.toTry()
+
+        //Then
+        t1.isFailure().shouldBeTrue()
+        ;{ throw t1.failed().getOrElse { Exception() } } throws KotlinNullPointerException::class
+        t2.getOrElse { "" } shouldEqual "Omai wa mou shindeiru"
+        t3.isFailure().shouldBeTrue()
+        ;{ throw t3.failed().getOrElse { Exception() } } throws KotlinNullPointerException::class
+        t4.getOrElse { -42 } shouldEqual 1532
+    }
 
     @Test
     fun `should convert a class to a map`() {
