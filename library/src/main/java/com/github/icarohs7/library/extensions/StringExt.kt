@@ -1,6 +1,7 @@
 package com.github.icarohs7.library.extensions
 
 import arrow.core.Try
+import arrow.core.getOrElse
 import arrow.core.orNull
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -35,6 +36,14 @@ fun String.find(regex: Regex): String? =
 fun String.parseDate(format: String = "yyyy-MM-dd HH:mm:ss"): Try<Date> = Try {
     SimpleDateFormat(format, Locale.getDefault()).parse(this)!!
 }
+
+/** Parse a date to its miliseconds value without unwrapping it */
+fun String.parseDateMilisTry(format: String = "yyyy-MM-dd HH:mm:ss"): Try<Long> =
+        parseDate(format).map { it.time }
+
+/** Parse a date to its miliseconds value or return 0 if failed */
+fun String.parseDateMilis(format: String = "yyyy-MM-dd HH:mm:ss"): Long =
+        parseDateMilisTry(format).getOrElse { 0 }
 
 /**
  * Format a date string to another date format
