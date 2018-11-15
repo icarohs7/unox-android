@@ -3,7 +3,6 @@ package com.github.icarohs7.library.delegates
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KMutableProperty
 import kotlin.reflect.KProperty
-import kotlin.reflect.jvm.isAccessible
 
 fun <T> redirectToProperty(
         vararg targetProperty: KMutableProperty<T>
@@ -28,15 +27,5 @@ class PropertyRedirectionDelegate<T>(
 
     override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
         targetProperty.forEach { prop -> prop.accessibleTransaction { setter.call(value) } }
-    }
-
-    private fun <T, R> KMutableProperty<T>.accessibleTransaction(fn: KMutableProperty<T>.() -> R): R {
-        val originalAccessibility = isAccessible
-        return try {
-            isAccessible = true
-            fn()
-        } finally {
-            isAccessible = originalAccessibility
-        }
     }
 }
