@@ -9,7 +9,8 @@ abstract class BaseBindingActivity<B : ViewDataBinding> : BaseNxActivity() {
     /**
      * Initialized in [onCreate]
      */
-    protected lateinit var binding: B
+    lateinit var binding: B
+        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,5 +29,5 @@ abstract class BaseBindingActivity<B : ViewDataBinding> : BaseNxActivity() {
      * @return layout to setup data binding.
      */
     @LayoutRes
-    protected abstract fun getLayout(): Int
+    abstract fun getLayout(): Int
 }

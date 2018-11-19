@@ -45,7 +45,7 @@ abstract class BaseNxSplashActivity<T : Any>(private val animationTimeout: Int =
     /**
      * Initialized in [onCreate]
      */
-    protected lateinit var binding: ActivityBaseSplashBinding
+    lateinit var binding: ActivityBaseSplashBinding
         private set
 
     override fun onCreate(savedInstanceState: Bundle?) {

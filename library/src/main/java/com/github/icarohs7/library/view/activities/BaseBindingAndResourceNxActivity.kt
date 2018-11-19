@@ -45,7 +45,8 @@ abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding>
     /**
      * Initialized on [onCreate]
      */
-    protected lateinit var binding: B
+    lateinit var binding: B
+        protected set
 
     /**
      * Called when a menu item from either the side or bottom nav is selected
@@ -128,7 +129,7 @@ abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding>
      * @return layout to setup data binding.
      */
     @LayoutRes
-    protected abstract fun getLayout(): Int
+    abstract fun getLayout(): Int
 
     /**
      * Called whenever an item in your options menu is selected

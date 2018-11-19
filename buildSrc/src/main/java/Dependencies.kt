@@ -38,8 +38,8 @@ object KaptDeps {
 
 object AndroidTestImplDeps {
     val core = listOf(
-            "androidx.test:runner:${Versions.testRunner}",
-            "androidx.test.espresso:espresso-core:${Versions.espresso}"
+            "androidx.test:rules:${Versions.testRules}",
+            "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
     )
 }
 
@@ -64,6 +64,6 @@ object Versions {
     const val kotlinassertutils: String = "0.8.0"
     const val robolectric: String = "4.0.2"
 
-    const val testRunner: String = "1.1.0"
+    const val testRules: String = "1.1.0"
     const val espresso: String = "3.1.0"
 }

@@ -15,7 +15,8 @@ abstract class BaseBindingFragment<B : ViewDataBinding> : BaseNxFragment() {
     /**
      * Initialized on [onCreateView]
      */
-    protected lateinit var binding: B
+    lateinit var binding: B
+        private set
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil
@@ -36,6 +37,6 @@ abstract class BaseBindingFragment<B : ViewDataBinding> : BaseNxFragment() {
      * @return layout to setup data binding.
      */
     @LayoutRes
-    protected abstract fun getLayout(): Int
+    abstract fun getLayout(): Int
 
 }
