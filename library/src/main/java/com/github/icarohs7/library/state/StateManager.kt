@@ -16,10 +16,19 @@ interface StateManager<T> {
 
     /**
      * Apply the reducer to the state and
-     * and use the new state created as the
+     * use the new state created as the
      * current state of the application
      */
     fun reduce(reducer: T.() -> T)
+
+    /**
+     * Apply the reducer to the state
+     * and use the new state created as
+     * the current state of the application,
+     * also invoke the callback when the
+     * reducer is applied
+     */
+    fun reduceWithCallback(callback: () -> Unit, reducer: T.() -> T)
 
     /**
      * Use the latest state without
