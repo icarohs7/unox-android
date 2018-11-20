@@ -24,6 +24,8 @@
 
 package com.github.icarohs7.library
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import com.github.icarohs7.library.extensions.hasTheSameDispatcherAs
 import kotlinx.coroutines.CoroutineDispatcher
@@ -68,3 +70,15 @@ fun <T> mutableLiveDataOf(initialValue: T): MutableLiveData<T> {
  */
 fun getActualDateTime(format: String = "yyyy-MM-dd HH:mm:ss"): String =
         SimpleDateFormat(format, Locale("pt", "BR")).format(Date())
+
+/**
+ * Execute the block right away if on main thread, or schedule it
+ * to be executed on the main thread otherwise
+ */
+fun mustRunOnMainThread(fn: () -> Unit) {
+    val mainLooper = Looper.getMainLooper()
+    val isOnMainLooper = (Looper.myLooper() == mainLooper)
+
+    if (isOnMainLooper) fn()
+    else Handler(mainLooper).post(fn)
+}

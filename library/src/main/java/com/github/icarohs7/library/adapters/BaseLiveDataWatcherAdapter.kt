@@ -30,6 +30,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.github.icarohs7.library.mustRunOnMainThread
 import kotlinx.coroutines.launch
 
 /**
@@ -52,12 +53,12 @@ abstract class BaseLiveDataWatcherAdapter<T, DB : ViewDataBinding>(
     /** Start observing the data source when attached to the recycler view */
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        dataSetObservable.observeForever(observer)
+        mustRunOnMainThread { dataSetObservable.observeForever(observer) }
     }
 
     /** Stop observing the data source when detached from the recycler view */
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
-        dataSetObservable.removeObserver(observer)
+        mustRunOnMainThread { dataSetObservable.removeObserver(observer) }
     }
 }
