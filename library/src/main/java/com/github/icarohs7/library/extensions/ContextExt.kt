@@ -28,8 +28,10 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.text.format.DateFormat
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import com.github.icarohs7.library.UnoxAndroid
 import spencerstudios.com.bungeelib.Bungee
 import java.util.Calendar
@@ -38,8 +40,9 @@ import kotlin.reflect.KClass
 /**
  * Navigate from an activity to another
  */
-fun <T : AppCompatActivity> Context.navigateTo(destination: KClass<T>) {
+fun <T : AppCompatActivity> Context.navigateTo(destination: KClass<T>, extras: Bundle = bundleOf()) {
     val intent = Intent(this, destination.java)
+    intent.putExtras(extras)
     startActivity(intent)
     executeAnimation(this)
 }
