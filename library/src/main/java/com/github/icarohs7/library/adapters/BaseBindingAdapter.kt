@@ -32,6 +32,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import arrow.core.Try
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -81,7 +82,7 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
      * Setup of the viewholder when going to be visible
      */
     override fun onBindViewHolder(holder: BaseBindingViewHolder<DB>, position: Int) {
-        launch { onBindItemToView(getItem(position), holder.binding) }
+        launch { Try { onBindItemToView(getItem(position), holder.binding) } }
     }
 
     /**
