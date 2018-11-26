@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.library.view.activities
+package com.github.icarohs7.library.ui.activities
 
 import android.widget.ProgressBar
 import com.github.icarohs7.library.R

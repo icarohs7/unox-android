@@ -1,16 +1,16 @@
-package com.github.icarohs7.library.view.fragments
+package com.github.icarohs7.library.ui.activities
 
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 
 /**
- * Base fragment class using databinding, viewmodel,
+ * Base activity class using databinding, viewmodel,
  * embedded composite disposable and implementing a
  * coroutine scope
  */
-abstract class BaseFullNxFragment<DB : ViewDataBinding, VM : ViewModel> : BaseBindingFragment<DB>() {
+abstract class BaseFullNxActivity<DB : ViewDataBinding, VM : ViewModel> : BaseBindingAndResourceNxActivity<DB>() {
     /**
-     * Viewmodel used for the fragment
+     * Viewmodel used for the activity
      */
     val viewModel: VM by lazy { viewModelInstance() }
 

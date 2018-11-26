@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.library.adapters
+package com.github.icarohs7.library.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

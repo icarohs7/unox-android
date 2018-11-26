@@ -1,7 +1,7 @@
-package com.github.icarohs7.library.view.fragments
+package com.github.icarohs7.library.ui.viewmodel
 
 import androidx.annotation.CallSuper
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import com.github.icarohs7.library.UnoxAndroid
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.CoroutineScope
@@ -10,35 +10,31 @@ import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 
 /**
- * Fragment containing a composite disposable
- * and a coroutine context, cancelling them when
- * stopped
+ * Base viewmodel class with a coroutine and subscription scope,
+ * cancelling all coroutines and subscriptions when cleared
  */
-abstract class BaseNxFragment : Fragment(), CoroutineScope, UnoxAndroid.DisposableEntity {
-
+abstract class BaseNxViewModel : ViewModel(), CoroutineScope, UnoxAndroid.DisposableEntity {
     /**
-     * Parent job of coroutines on the scope of the fragment
+     * Parent job of coroutines on the scope of the viewmodel
      */
     var job: Job = Job()
         private set
 
     /**
-     * Composite disposable aggregating all subscriptions on the scope of the fragment
+     * Composite disposable aggregating all subscriptions on the scope of the viewmodel
      */
     override val disposable: CompositeDisposable = CompositeDisposable()
 
     /**
-     * Context in which coroutines are executed by default inside the fragment
+     * Context in which coroutines are executed by default inside the viewmodel
      */
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
     /**
-     * Create a new parent job when the fragment is started
+     * Create a new parent job when the viewmodel is instantiated
      */
-    @CallSuper
-    override fun onStart() {
-        super.onStart()
+    init {
         job = Job()
     }
 
@@ -47,8 +43,8 @@ abstract class BaseNxFragment : Fragment(), CoroutineScope, UnoxAndroid.Disposab
      * subscriptions when destroyed
      */
     @CallSuper
-    override fun onStop() {
-        super.onStop()
+    override fun onCleared() {
+        super.onCleared()
         job.cancel()
         disposable.clear()
     }

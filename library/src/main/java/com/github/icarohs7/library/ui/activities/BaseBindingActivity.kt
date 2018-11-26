@@ -1,4 +1,4 @@
-package com.github.icarohs7.library.view.activities
+package com.github.icarohs7.library.ui.activities
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes

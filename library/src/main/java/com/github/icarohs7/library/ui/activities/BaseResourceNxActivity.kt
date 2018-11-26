@@ -22,66 +22,88 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.library.view.activities
+package com.github.icarohs7.library.ui.activities
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.annotation.CallSuper
-import androidx.annotation.LayoutRes
 import androidx.core.view.GravityCompat
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import com.github.icarohs7.library.entities.ActivityResources
 import com.google.android.material.navigation.NavigationView
 
 /**
- * Activity that listens to a LiveData of contracts and when it changes,
- * selects the menu item tied to it and runs the action in it
+ * Activity holding an object aggregating some common resources
+ * used on activities in single activity architectures, like
+ * navigation drawer, bottom navigation and toolbar
  */
-abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding>
-    : BaseNxActivity(), NavigationView.OnNavigationItemSelectedListener {
+abstract class BaseResourceNxActivity : BaseNxActivity(), NavigationView.OnNavigationItemSelectedListener {
     val navigationResources: ActivityResources = ActivityResources()
 
     /**
-     * Initialized on [onCreate]
+     * Called first when the activity is started to define the navigationResources used, like menus, title, etc
      */
-    lateinit var binding: B
-        protected set
+    abstract fun onDefineActivityResources(activityResources: ActivityResources)
 
     /**
      * Called when a menu item from either the side or bottom nav is selected
      */
     abstract fun onSelectMenuItem(menuItemId: MenuItem): Boolean
 
+    /**
+     * Called when the activity is created, content view should be
+     * defined here
+     */
+    abstract fun onSetContentView()
+
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, getLayout())
-        binding.setLifecycleOwner(this)
-        onBindingCreated(savedInstanceState)
+        onSetContentView()
         onDefineActivityResources(navigationResources)
         onLoadNavigationResources()
         afterInitialSetup()
     }
 
     /**
-     * Called on [onCreate], after the binding is inflated and defined
-     * as content of the activity
+     * Called whenever an item in your options menu is selected
      */
-    open fun onBindingCreated(savedInstanceState: Bundle?) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = navigationResources.drawerLayout?.let { drawer ->
+        if (item.itemId == android.R.id.home) {
+            drawer.openDrawer(GravityCompat.START)
+            true
+        } else onSelectMenuItem(item)
+    } ?: super.onOptionsItemSelected(item)
+
+    /**
+     * Called when an item menu is selected
+     */
+    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
+        navigationResources.drawerLayout?.closeDrawers()
+        onCheckmenuItem(menuItem.itemId)
+        return onSelectMenuItem(menuItem)
     }
 
     /**
-     * Called after [onBindingCreated], used to define the resources used
-     * by the activity through the activityResources object
+     * Called after View creation and initial setup done,
+     * at the end of [onCreate]
      */
-    abstract fun onDefineActivityResources(activityResources: ActivityResources)
+    open fun afterInitialSetup() {
+    }
 
     /**
-     * Called after [onDefineActivityResources], used to load all
-     * defined resources from the activityResources object
+     * Check the menu item with the Id parameterized or do nothing if the item doesn't exist
      */
-    fun onLoadNavigationResources() {
+    open fun onCheckmenuItem(menuItemId: Int) {
+        try {
+            navigationResources.navDrawerView?.setCheckedItem(menuItemId)
+        } catch (e: IllegalArgumentException) {
+        }
+    }
+
+    /**
+     * Load the resources defined
+     */
+    private fun onLoadNavigationResources() {
         val res = navigationResources
 
         //Bottom navigation
@@ -118,45 +140,4 @@ abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding>
         }
     }
 
-    /**
-     * Called after [onLoadNavigationResources], as the last step of
-     * the [onCreate] method
-     */
-    open fun afterInitialSetup() {
-    }
-
-    /**
-     * @return layout to setup data binding.
-     */
-    @LayoutRes
-    abstract fun getLayout(): Int
-
-    /**
-     * Called whenever an item in your options menu is selected
-     */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = navigationResources.drawerLayout?.let { drawer ->
-        if (item.itemId == android.R.id.home) {
-            drawer.openDrawer(GravityCompat.START)
-            true
-        } else onSelectMenuItem(item)
-    } ?: super.onOptionsItemSelected(item)
-
-    /**
-     * Called when an item menu is selected
-     */
-    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
-        navigationResources.drawerLayout?.closeDrawers()
-        onCheckMenuItem(menuItem.itemId)
-        return onSelectMenuItem(menuItem)
-    }
-
-    /**
-     * Check the menu item with the Id parameterized or do nothing if the item doesn't exist
-     */
-    open fun onCheckMenuItem(menuItemId: Int) {
-        try {
-            navigationResources.navDrawerView?.setCheckedItem(menuItemId)
-        } catch (e: IllegalArgumentException) {
-        }
-    }
 }

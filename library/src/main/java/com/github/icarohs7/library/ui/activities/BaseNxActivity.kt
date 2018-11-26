@@ -1,4 +1,4 @@
-package com.github.icarohs7.library.view.activities
+package com.github.icarohs7.library.ui.activities
 
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
