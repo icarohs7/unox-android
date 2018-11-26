@@ -40,11 +40,18 @@ import kotlin.reflect.KClass
 /**
  * Navigate from an activity to another
  */
-fun <T : AppCompatActivity> Context.navigateTo(destination: KClass<T>, extras: Bundle = bundleOf()) {
+fun <T : AppCompatActivity> Context.navigateTo(
+        destination: KClass<T>,
+        extras: Bundle = bundleOf(),
+        finishActivity: Boolean = false
+) {
     val intent = Intent(this, destination.java)
     intent.putExtras(extras)
     startActivity(intent)
     executeAnimation(this)
+
+    if (this is AppCompatActivity && (UnoxAndroid.finishActivityOnNavigate || finishActivity))
+        finish()
 }
 
 /**

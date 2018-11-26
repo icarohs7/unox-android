@@ -24,6 +24,8 @@
 
 package com.github.icarohs7.library
 
+import androidx.annotation.AnimRes
+import com.github.icarohs7.library.domain.BungeeAnim
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -62,27 +64,48 @@ interface UnoxAndroid {
         var popEnterAnim: Int = R.anim.zoom_enter   /* ------- */
         var popExitAnim: Int = R.anim.zoom_exit     /* ------- */
         /* --------------------------------------------------- */
+
+        /**
+         * When set to true, every call to navigateTo from
+         * an activity will also finish it after the navigation
+         */
+        var finishActivityOnNavigate: Boolean = false
     }
 
     /**
      * Animations available at the [animationType]
      */
-    enum class AnimationType {
-        SPLIT,
-        SHRINK,
-        CARD,
-        INOUT,
-        SWIPE_LEFT,
-        SWIPE_RIGHT,
-        SLIDE_UP,
-        SLIDE_DOWN,
-        SLIDE_LEFT,
-        SLIDE_RIGHT,
-        FADE,
-        ZOOM,
-        WINDMILL,
-        SPIN,
-        DIAGONAL,
-        NO_ANIMATION;
+    enum class AnimationType(@AnimRes val enterRes: Int, @AnimRes val exitRes: Int) {
+        SPLIT(BungeeAnim.split_enter, BungeeAnim.split_exit),
+
+        SHRINK(BungeeAnim.shrink_enter, BungeeAnim.shrink_exit),
+
+        CARD(BungeeAnim.card_enter, BungeeAnim.card_exit),
+
+        INOUT(BungeeAnim.in_out_enter, BungeeAnim.in_out_exit),
+
+        SWIPE_LEFT(BungeeAnim.swipe_left_enter, BungeeAnim.swipe_left_exit),
+
+        SWIPE_RIGHT(BungeeAnim.swipe_right_enter, BungeeAnim.swipe_right_exit),
+
+        SLIDE_UP(BungeeAnim.slide_up_enter, BungeeAnim.slide_up_exit),
+
+        SLIDE_DOWN(BungeeAnim.slide_down_enter, BungeeAnim.slide_down_exit),
+
+        SLIDE_LEFT(BungeeAnim.slide_left_enter, BungeeAnim.slide_left_exit),
+
+        SLIDE_RIGHT(BungeeAnim.slide_in_left, BungeeAnim.slide_out_right),
+
+        FADE(BungeeAnim.fade_enter, BungeeAnim.fade_exit),
+
+        ZOOM(BungeeAnim.zoom_enter, BungeeAnim.zoom_exit),
+
+        WINDMILL(BungeeAnim.windmill_enter, BungeeAnim.windmill_exit),
+
+        SPIN(BungeeAnim.spin_enter, BungeeAnim.spin_exit),
+
+        DIAGONAL(BungeeAnim.diagonal_right_enter, BungeeAnim.diagonal_right_exit),
+
+        NO_ANIMATION(0, 0);
     }
 }
