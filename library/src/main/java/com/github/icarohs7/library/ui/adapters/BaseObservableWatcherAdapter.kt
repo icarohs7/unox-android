@@ -32,7 +32,6 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.launch
 
 /**
  * Adapter based on observability and dynamic lists built using [org.reactivestreams.Publisher]
@@ -51,11 +50,11 @@ abstract class BaseObservableWatcherAdapter<T, DB : ViewDataBinding>(
      * return the disposable subscription used to handle change events
      */
     open fun onObservableSubscribe(observable: Observable<List<T>>): Disposable {
-        return observable.subscribeOn(Schedulers.computation()).subscribe { launch { onDataSourceChange(it) } }
+        return observable.subscribeOn(Schedulers.computation()).subscribe { onDataSourceChange(it) }
     }
 
     /** Callback invoked when a new list is emmited by the observable */
-    open suspend fun onDataSourceChange(items: List<T>) {
+    open fun onDataSourceChange(items: List<T>) {
         submitList(items)
     }
 

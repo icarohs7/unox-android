@@ -46,7 +46,7 @@ abstract class BaseLiveDataWatcherAdapter<T, DB : ViewDataBinding>(
     private val observer: Observer<List<T>> = Observer { launch { onDataSourceChange(it) } }
 
     /** Callback invoked when the live data changes */
-    open suspend fun onDataSourceChange(items: List<T>?) {
+    open fun onDataSourceChange(items: List<T>?) {
         items?.let(this::submitList)
     }
 

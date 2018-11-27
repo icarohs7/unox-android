@@ -39,7 +39,7 @@ abstract class BaseStandardNxActivity : BaseBindingAndResourceNxActivity<Activit
      * Execute an operation, showing the progress bar when it's running
      * and hiding it when done
      */
-    open suspend fun runWithProgressFeedback(fn: suspend (ProgressBar) -> Unit) {
+    suspend inline fun runWithProgressFeedback(fn: (ProgressBar) -> Unit) {
         try {
             withContext(Dispatchers.Main) { startLoading() }
             fn(binding.progressBar)

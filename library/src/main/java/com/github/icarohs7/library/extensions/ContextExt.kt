@@ -24,6 +24,7 @@
 
 package com.github.icarohs7.library.extensions
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
@@ -48,10 +49,10 @@ fun <T : AppCompatActivity> Context.navigateTo(
     val intent = Intent(this, destination.java)
     intent.putExtras(extras)
     startActivity(intent)
-    executeAnimation(this)
-
-    if (this is AppCompatActivity && (UnoxAndroid.finishActivityOnNavigate || finishActivity))
-        finish()
+    if (this is Activity) {
+        executeAnimation(this)
+        if (UnoxAndroid.finishActivityOnNavigate || finishActivity) finish()
+    }
 }
 
 /**

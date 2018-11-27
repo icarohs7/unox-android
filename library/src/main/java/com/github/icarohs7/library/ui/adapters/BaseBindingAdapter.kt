@@ -36,7 +36,6 @@ import arrow.core.Try
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -62,7 +61,7 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
     /**
      * Function converting an list item to an actual view
      */
-    abstract suspend fun onBindItemToView(item: T?, view: DB)
+    abstract fun onBindItemToView(item: T?, view: DB)
 
     /**
      * Creation of the viewholder
@@ -82,7 +81,7 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
      * Setup of the viewholder when going to be visible
      */
     override fun onBindViewHolder(holder: BaseBindingViewHolder<DB>, position: Int) {
-        launch { Try { onBindItemToView(getItem(position), holder.binding) } }
+        Try { onBindItemToView(getItem(position), holder.binding) }
     }
 
     /**
