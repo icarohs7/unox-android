@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
  * finished
  */
 abstract class BaseNxTimeoutActivity<DB : ViewDataBinding>(
-        private val timeout: Int = 2000
+        val timeout: Int = 2000
 ) : BaseBindingActivity<DB>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

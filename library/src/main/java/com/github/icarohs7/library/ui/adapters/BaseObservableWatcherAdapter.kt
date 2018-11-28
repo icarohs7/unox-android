@@ -38,12 +38,12 @@ import io.reactivex.schedulers.Schedulers
  */
 abstract class BaseObservableWatcherAdapter<T, DB : ViewDataBinding>(
         @LayoutRes itemLayout: Int,
-        private val dataSetObservable: Observable<List<T>>,
+        val dataSetObservable: Observable<List<T>>,
         diffCallback: DiffUtil.ItemCallback<T>? = null
 ) : BaseBindingAdapter<T, DB>(itemLayout, diffCallback) {
 
     /** Composite disposable storing the current subscriptions of the adapter */
-    private val disposables = CompositeDisposable()
+    val disposables = CompositeDisposable()
 
     /**
      * Called to apply the chain of operators on the observable and

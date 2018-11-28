@@ -50,7 +50,8 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
     /**
      * Parent job of coroutines executed within the adapter
      */
-    private var job = Job()
+    var job = Job()
+        private set
 
     /**
      * Context (thread) executing the coroutines

@@ -38,12 +38,12 @@ import kotlinx.coroutines.launch
  */
 abstract class BaseLiveDataWatcherAdapter<T, DB : ViewDataBinding>(
         @LayoutRes itemLayout: Int,
-        private val dataSetObservable: LiveData<List<T>>,
+        val dataSetObservable: LiveData<List<T>>,
         diffCallback: DiffUtil.ItemCallback<T>? = null
 ) : BaseBindingAdapter<T, DB>(itemLayout, diffCallback) {
 
     /** Observer responsible of dispatching the liveData changes to the adapter */
-    private val observer: Observer<List<T>> = Observer { launch { onDataSourceChange(it) } }
+    val observer: Observer<List<T>> = Observer { launch { onDataSourceChange(it) } }
 
     /** Callback invoked when the live data changes */
     open fun onDataSourceChange(items: List<T>?) {
