@@ -56,7 +56,7 @@ interface UnoxAndroid {
         /**
          * Container used to home the fragments loaded
          */
-        var masterContainer: Int? = null
+        var masterContainer: Int = R.id.container
 
         /* Animations used on the animated fragment transitions */
         var enterAnim: Int = R.anim.zoom_enter      /* ------- */

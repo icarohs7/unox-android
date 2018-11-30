@@ -37,7 +37,7 @@ import org.jetbrains.anko.inputMethodManager
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
         destination: T,
-        containerId: Int = UnoxAndroid.masterContainer ?: 0
+        containerId: Int = UnoxAndroid.masterContainer
 ) {
 
     fragmentTransactionAnimated {
@@ -51,7 +51,7 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
         destination: T,
-        containerId: Int = UnoxAndroid.masterContainer ?: 0
+        containerId: Int = UnoxAndroid.masterContainer
 ) {
 
     fragmentTransactionAnimated { replace(containerId, destination) }
