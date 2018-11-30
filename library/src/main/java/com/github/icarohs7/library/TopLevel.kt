@@ -32,9 +32,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import kotlin.coroutines.coroutineContext
 
 /**
@@ -63,13 +60,6 @@ suspend fun <T> onBackground(
 fun <T> mutableLiveDataOf(initialValue: T): MutableLiveData<T> {
     return MutableLiveData<T>().apply { postValue(initialValue) }
 }
-
-/**
- * Return the actual date, time or both according to the parameterized
- * format
- */
-fun getActualDateTime(format: String = "yyyy-MM-dd HH:mm:ss"): String =
-        SimpleDateFormat(format, Locale("pt", "BR")).format(Date())
 
 /**
  * Execute the block right away if on main thread, or schedule it

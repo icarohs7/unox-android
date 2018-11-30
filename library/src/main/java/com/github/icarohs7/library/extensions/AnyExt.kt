@@ -24,26 +24,6 @@
 package com.github.icarohs7.library.extensions
 
 import arrow.core.Try
-import kotlin.reflect.KProperty
-import kotlin.reflect.full.memberProperties
-
-
-/**
- * Return a map representation with the keys being the name of the
- * properties or the value of the parameterized lambda applied to the property
- */
-inline fun <reified T : Any> T.toMapFromProperties(
-        propertyNameMapping: (KProperty<*>) -> String = { "" }
-): Map<String, String> {
-    return T::class.memberProperties.map { prop ->
-
-        val propertyLabel = propertyNameMapping(prop) ifBlankOrNull prop.name
-        val propertyValue = prop.get(this).toString()
-
-        propertyLabel to propertyValue
-
-    }.toMap()
-}
 
 /** Convert a nullable item to a try of it, or a null pointer failure */
 fun <T> T?.toTry(): Try<T> =

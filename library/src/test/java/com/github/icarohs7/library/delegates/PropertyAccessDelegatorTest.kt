@@ -3,15 +3,17 @@ package com.github.icarohs7.library.delegates
 import org.junit.Test
 import se.lovef.assert.v1.shouldEqual
 
-class PropertyRedirectionDelegateTest {
+class PropertyAccessDelegatorTest {
     private var target1 = "hello"
-    private var mirror1 by redirectToProperty(::target1)
-
+    private var mirror1 by delegateAccess(::target1, { target1 = it })
     private var target2 = "omai"
     private var target3 = "wa"
     private var target4 = "mou"
     private var target5 = "shindeiru"
-    private var mirror2 by redirectToProperty { arrayOf(::target2, ::target3, ::target4, ::target5) }
+    private var mirror2: String by delegateAccess {
+        getter = ::target2
+        setters = arrayOf<(String) -> Unit>({ target2 = it }, { target3 = it }, { target4 = it }, { target5 = it })
+    }
 
     @Test
     fun getValue() {

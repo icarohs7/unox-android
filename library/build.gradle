@@ -50,8 +50,8 @@ dependencies {
     implementation(fileTree(dir: "libs", include: ["*.jar"]))
     implementation(Deps.core)
     kapt(KaptDeps.core)
-    testImplementation(TestImplDeps.core)
-    androidTestImplementation(AndroidTestImplDeps.core)
+    testImplementation(TestDeps.core)
+    androidTestImplementation(AndroidTestDeps.core)
 }
 
 jacoco {

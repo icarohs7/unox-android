@@ -29,7 +29,6 @@ import org.junit.Test
 import se.lovef.assert.v1.shouldBeTrue
 import se.lovef.assert.v1.shouldEqual
 import se.lovef.assert.v1.throws
-import kotlin.reflect.full.findAnnotation
 
 class AnyExtTest {
 
@@ -55,30 +54,4 @@ class AnyExtTest {
         ;{ throw t3.failed().getOrElse { Exception() } } throws KotlinNullPointerException::class
         t4.getOrElse { -42 } shouldEqual 1532
     }
-
-    @Test
-    fun `should convert a class to a map`() {
-        val firstObj = TestClass3("a", 1, "b")
-        val firstMap = firstObj.toMapFromProperties { it.findAnnotation<Label>()?.value ?: "" }
-        val firstMapExpected = mapOf(
-                "foo" to "a",
-                "bar" to "1",
-                "hi" to "b"
-        )
-        firstMap shouldEqual firstMapExpected
-
-        val secondObj = TestClass3("x", 0, "p")
-        val secondMap = secondObj.toMapFromProperties { it.findAnnotation<Label>()?.value ?: "" }
-        val secondMapExpected = mapOf(
-                "foo" to "x",
-                "bar" to "0",
-                "hi" to "p"
-        )
-        secondMap shouldEqual secondMapExpected
-    }
-
-    data class TestClass3(val foo: String, val bar: Int, @Label("hi") val baz: String)
-
-    @Target(AnnotationTarget.PROPERTY)
-    annotation class Label(val value: String)
 }
