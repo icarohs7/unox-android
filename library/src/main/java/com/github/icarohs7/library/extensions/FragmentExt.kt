@@ -96,5 +96,23 @@ fun Fragment.showConfirmDialog(
     binding.title = title
     binding.message = message
     val dialog = binding.showAlert()
+    binding.setNoHandler { dialog.dismiss() }
     binding.builder(dialog)
+}
+
+/** Show a confirm dialog */
+fun Fragment.showConfirmDialog(
+        title: String = "",
+        message: String = "",
+        yesHandler: View.OnClickListener
+) {
+    val binding = DialogYesNoBinding.inflate(layoutInflater)
+    binding.title = title
+    binding.message = message
+    val dialog = binding.showAlert()
+    binding.setNoHandler { dialog.dismiss() }
+    binding.setYesHandler {
+        yesHandler.onClick(it)
+        dialog.dismiss()
+    }
 }
