@@ -28,12 +28,15 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateFormat
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import com.github.icarohs7.library.UnoxAndroid
+import com.github.icarohs7.library.databinding.DialogYesNoBinding
+import org.jetbrains.anko.layoutInflater
 import spencerstudios.com.bungeelib.Bungee
 import java.util.Calendar
 import kotlin.reflect.KClass
@@ -126,4 +129,17 @@ fun Context.dialogTimePicker(listener: (hour: Int, minute: Int) -> Unit): TimePi
             hour,
             minute,
             DateFormat.is24HourFormat(this))
+}
+
+/** Show a confirm dialog */
+fun Context.showConfirmDialog(
+        title: String = "",
+        message: String = "",
+        builder: DialogYesNoBinding.(DialogInterface) -> Unit
+) {
+    val binding = DialogYesNoBinding.inflate(layoutInflater)
+    binding.title = title
+    binding.message = message
+    val dialog = binding.showAlert()
+    binding.builder(dialog)
 }

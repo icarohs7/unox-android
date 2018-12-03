@@ -24,8 +24,10 @@
 
 package com.github.icarohs7.library.extensions
 
+import android.content.DialogInterface
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.github.icarohs7.library.databinding.DialogYesNoBinding
 import org.jetbrains.anko.inputMethodManager
 
 /**
@@ -83,3 +85,16 @@ val Fragment.argumentStringList: List<Pair<String, String>>
  */
 val Fragment.argumentStringMap: Map<String, String>
     get() = argumentStringList.toMap()
+
+/** Show a confirm dialog */
+fun Fragment.showConfirmDialog(
+        title: String = "",
+        message: String = "",
+        builder: DialogYesNoBinding.(DialogInterface) -> Unit
+) {
+    val binding = DialogYesNoBinding.inflate(layoutInflater)
+    binding.title = title
+    binding.message = message
+    val dialog = binding.showAlert()
+    binding.builder(dialog)
+}
