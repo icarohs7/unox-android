@@ -38,10 +38,51 @@ class TopLevelTest {
             Unit
         }
 
+        withContext(Dispatchers.Default) {
+            (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+
+            onBackground(Dispatchers.Default, Dispatchers.IO) {
+                (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+            }
+            Unit
+        }
+
         withContext(Dispatchers.IO) {
             (coroutineContext hasTheSameDispatcherAs Dispatchers.IO).shouldBeTrue()
 
             onBackground(Dispatchers.Default, Dispatchers.IO) {
+                (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+            }
+            Unit
+        }
+
+        Unit
+    }
+
+    @Test
+    fun `should run operations on foreground`(): Unit = runBlocking {
+        withContext(Dispatchers.Default) {
+            (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+
+            onForeground(Dispatchers.IO) {
+                (coroutineContext hasTheSameDispatcherAs Dispatchers.IO).shouldBeTrue()
+            }
+            Unit
+        }
+
+        withContext(Dispatchers.Default) {
+            (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+
+            onForeground(Dispatchers.Default) {
+                (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+            }
+            Unit
+        }
+
+        withContext(Dispatchers.IO) {
+            (coroutineContext hasTheSameDispatcherAs Dispatchers.IO).shouldBeTrue()
+
+            onForeground(Dispatchers.Default) {
                 (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
             }
             Unit
