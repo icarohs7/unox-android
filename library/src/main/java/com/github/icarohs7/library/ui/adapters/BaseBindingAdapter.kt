@@ -62,7 +62,7 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
     /**
      * Function converting an list item to an actual view
      */
-    abstract fun onBindItemToView(item: T?, view: DB)
+    abstract fun onBindItemToView(item: T, view: DB)
 
     /**
      * Creation of the viewholder
