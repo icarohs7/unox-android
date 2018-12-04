@@ -43,11 +43,11 @@ abstract class BaseLiveDataWatcherAdapter<T, DB : ViewDataBinding>(
 ) : BaseBindingAdapter<T, DB>(itemLayout, diffCallback) {
 
     /** Observer responsible of dispatching the liveData changes to the adapter */
-    val observer: Observer<List<T>> = Observer { launch { onDataSourceChange(it) } }
+    val observer: Observer<List<T>> = Observer { launch { onDataSourceChange(it ?: emptyList()) } }
 
     /** Callback invoked when the live data changes */
-    open fun onDataSourceChange(items: List<T>?) {
-        items?.let(this::submitList)
+    open fun onDataSourceChange(items: List<T>) {
+        submitList(items)
     }
 
     /** Start observing the data source when attached to the recycler view */
