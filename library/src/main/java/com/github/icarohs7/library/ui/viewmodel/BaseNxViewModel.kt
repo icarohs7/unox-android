@@ -7,6 +7,8 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -17,8 +19,7 @@ abstract class BaseNxViewModel : ViewModel(), CoroutineScope, UnoxAndroid.Dispos
     /**
      * Parent job of coroutines on the scope of the viewmodel
      */
-    var job: Job = Job()
-        private set
+    val job: Job = SupervisorJob()
 
     /**
      * Composite disposable aggregating all subscriptions on the scope of the viewmodel
@@ -32,20 +33,13 @@ abstract class BaseNxViewModel : ViewModel(), CoroutineScope, UnoxAndroid.Dispos
         get() = job + Dispatchers.Main
 
     /**
-     * Create a new parent job when the viewmodel is instantiated
-     */
-    init {
-        job = Job()
-    }
-
-    /**
      * Cancel all coroutines and dispose all
      * subscriptions when destroyed
      */
     @CallSuper
     override fun onCleared() {
         super.onCleared()
-        job.cancel()
+        job.cancelChildren()
         disposable.clear()
     }
 }

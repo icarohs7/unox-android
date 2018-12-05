@@ -7,6 +7,8 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -19,13 +21,7 @@ abstract class BaseNxFragment : Fragment(), CoroutineScope, UnoxAndroid.Disposab
     /**
      * Parent job of coroutines on the scope of the fragment
      */
-    var job: Job = Job()
-        private set
-
-    /**
-     * Composite disposable aggregating all subscriptions on the scope of the fragment
-     */
-    override val disposable: CompositeDisposable = CompositeDisposable()
+    val job: Job = SupervisorJob()
 
     /**
      * Context in which coroutines are executed by default inside the fragment
@@ -34,13 +30,9 @@ abstract class BaseNxFragment : Fragment(), CoroutineScope, UnoxAndroid.Disposab
         get() = job + Dispatchers.Main
 
     /**
-     * Create a new parent job when the fragment is started
+     * Composite disposable aggregating all subscriptions on the scope of the fragment
      */
-    @CallSuper
-    override fun onStart() {
-        super.onStart()
-        job = Job()
-    }
+    override val disposable: CompositeDisposable = CompositeDisposable()
 
     /**
      * Cancel all coroutines and dispose all
@@ -49,7 +41,7 @@ abstract class BaseNxFragment : Fragment(), CoroutineScope, UnoxAndroid.Disposab
     @CallSuper
     override fun onStop() {
         super.onStop()
-        job.cancel()
+        job.cancelChildren()
         disposable.clear()
     }
 }

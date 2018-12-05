@@ -35,7 +35,8 @@ import androidx.recyclerview.widget.RecyclerView
 import arrow.core.Try
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -50,8 +51,7 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
     /**
      * Parent job of coroutines executed within the adapter
      */
-    var job = Job()
-        private set
+    val job = SupervisorJob()
 
     /**
      * Context (thread) executing the coroutines
@@ -86,19 +86,11 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
     }
 
     /**
-     * Create a new parent job when attached to the recycler view
-     */
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        job = Job()
-    }
-
-    /**
      * Cancel all coroutines when detached from the recycler view
      */
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
-        job.cancel()
+        job.cancelChildren()
     }
 
     /**
