@@ -26,6 +26,8 @@ package com.github.icarohs7.library.ui.activities
 
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -40,7 +42,7 @@ abstract class BaseNxTimeoutActivity<DB : ViewDataBinding>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        launch {
+        GlobalScope.launch(Dispatchers.Main) {
             delay(timeout.toLong())
             onTimeout()
         }
