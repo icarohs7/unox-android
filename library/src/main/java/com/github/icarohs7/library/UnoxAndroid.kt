@@ -25,19 +25,24 @@
 package com.github.icarohs7.library
 
 import androidx.annotation.AnimRes
+import com.github.icarohs7.library.delegates.mutableLazy
 import com.github.icarohs7.library.domain.BungeeAnim
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
 interface UnoxAndroid {
-
     /**
      * Interface representing an element containing
-     * a composite disposable
+     * a set of subscriptions that can be disposed
      */
     interface DisposableEntity {
         val disposable: CompositeDisposable
+        fun disposeSubscriptions(): Unit = disposable.clear()
+        fun Disposable.autoDispose() {
+            disposable.add(this)
+        }
     }
 
     /**
@@ -46,12 +51,21 @@ interface UnoxAndroid {
     companion object {
 
         /** Coroutine dispatcher that should be avoided for heavy work */
-        var foregroundDispatcher: CoroutineDispatcher = Dispatchers.Main
+        var foregroundDispatcher: CoroutineDispatcher by mutableLazy { Dispatchers.Main }
+
+        /** Define the animation used in the navigation transitions used by library */
+        fun setActivityAndFragmentTransitionAnimation(animationType: AnimationType) {
+            this.animationType = animationType
+            enterAnim = animationType.enterRes
+            exitAnim = animationType.exitRes
+            popEnterAnim = animationType.enterRes
+            popExitAnim = animationType.exitRes
+        }
 
         /**
          * Animation used at the transition between activities
          */
-        var animationType: AnimationType = AnimationType.NO_ANIMATION
+        var animationType: AnimationType by mutableLazy { AnimationType.NO_ANIMATION }
 
         /**
          * Container used to home the fragments loaded

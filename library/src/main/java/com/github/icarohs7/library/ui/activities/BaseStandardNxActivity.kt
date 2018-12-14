@@ -28,8 +28,8 @@ import android.widget.ProgressBar
 import com.github.icarohs7.library.R
 import com.github.icarohs7.library.databinding.ActivityBaseStandardNxBinding
 import com.github.icarohs7.library.entities.ActivityResources
-import com.github.icarohs7.library.extensions.hide
-import com.github.icarohs7.library.extensions.show
+import com.github.icarohs7.library.extensions.views.hide
+import com.github.icarohs7.library.extensions.views.show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
