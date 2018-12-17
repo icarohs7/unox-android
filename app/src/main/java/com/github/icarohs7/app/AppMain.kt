@@ -1,7 +1,7 @@
 package com.github.icarohs7.app
 
 import android.app.Application
-import com.github.icarohs7.library.UnoxAndroid
+import com.github.icarohs7.unoxandroid.UnoxAndroid
 
 class AppMain : Application() {
     override fun onCreate() {

@@ -1,4 +1,3 @@
-include ':app'
 /*
  * MIT License
  *
@@ -23,4 +22,27 @@ include ':app'
  * SOFTWARE.
  */
 
-include(":unoxandroid")
+package com.github.icarohs7.unoxandroid
+
+import android.os.Handler
+import android.os.Looper
+import androidx.lifecycle.MutableLiveData
+
+/**
+ * Create a mutable live data with an initial value
+ */
+fun <T> mutableLiveDataOf(initialValue: T): MutableLiveData<T> {
+    return MutableLiveData<T>().apply { postValue(initialValue) }
+}
+
+/**
+ * Execute the block right away if on main thread, or schedule it
+ * to be executed on the main thread otherwise
+ */
+fun mustRunOnMainThread(fn: () -> Unit) {
+    val mainLooper = Looper.getMainLooper()
+    val isOnMainLooper = (Looper.myLooper() == mainLooper)
+
+    if (isOnMainLooper) fn()
+    else Handler(mainLooper).post(fn)
+}

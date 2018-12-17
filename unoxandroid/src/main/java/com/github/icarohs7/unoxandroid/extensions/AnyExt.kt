@@ -1,4 +1,3 @@
-include ':app'
 /*
  * MIT License
  *
@@ -22,5 +21,10 @@ include ':app'
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.github.icarohs7.unoxandroid.extensions
 
-include(":unoxandroid")
+import arrow.core.Try
+
+/** Convert a nullable item to a try of it, or a null pointer failure */
+fun <T> T?.toTry(): Try<T> =
+        Try { this@toTry!! }
