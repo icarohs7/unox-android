@@ -43,7 +43,7 @@ abstract class BaseObservableWatcherAdapter<T, DB : ViewDataBinding>(
 ) : BaseBindingAdapter<T, DB>(itemLayout, diffCallback) {
 
     /** Composite disposable storing the current subscriptions of the adapter */
-    val disposables = CompositeDisposable()
+    val disposables: CompositeDisposable = CompositeDisposable()
 
     /**
      * Called to apply the chain of operators on the observable and

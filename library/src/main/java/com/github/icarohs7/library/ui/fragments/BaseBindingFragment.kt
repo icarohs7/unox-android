@@ -11,7 +11,7 @@ import androidx.databinding.ViewDataBinding
 /**
  * Base fragment using databinding
  */
-abstract class BaseBindingFragment<B : ViewDataBinding> : BaseNxFragment() {
+abstract class BaseBindingFragment<B : ViewDataBinding> : ScopedFragment() {
     /**
      * Initialized on [onCreateView]
      */
@@ -38,5 +38,4 @@ abstract class BaseBindingFragment<B : ViewDataBinding> : BaseNxFragment() {
      */
     @LayoutRes
     abstract fun getLayout(): Int
-
 }

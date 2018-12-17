@@ -36,7 +36,7 @@ import com.google.android.material.navigation.NavigationView
  * used on activities in single activity architectures, like
  * navigation drawer, bottom navigation and toolbar
  */
-abstract class BaseResourceNxActivity : BaseNxActivity(), NavigationView.OnNavigationItemSelectedListener {
+abstract class BaseResourceNxActivity : ScopedActivity(), NavigationView.OnNavigationItemSelectedListener {
     val navigationResources: ActivityResources = ActivityResources()
 
     /**

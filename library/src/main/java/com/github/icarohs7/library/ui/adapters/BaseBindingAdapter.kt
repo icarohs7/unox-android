@@ -33,11 +33,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import arrow.core.Try
+import com.github.icarohs7.library.extensions.coroutines.MainScope
+import com.github.icarohs7.library.extensions.coroutines.cancelCoroutineScope
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancelChildren
-import kotlin.coroutines.CoroutineContext
 
 /**
  * Base adapter based on data binding
@@ -46,19 +44,8 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
         @LayoutRes val itemLayout: Int,
         diffCallback: DiffUtil.ItemCallback<T>?
 ) : ListAdapter<T, BaseBindingAdapter.BaseBindingViewHolder<DB>>(
-        diffCallback ?: AllRefreshDiffCallback()), CoroutineScope {
-
-    /**
-     * Parent job of coroutines executed within the adapter
-     */
-    val job = SupervisorJob()
-
-    /**
-     * Context (thread) executing the coroutines
-     */
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
-
+        diffCallback ?: AllRefreshDiffCallback()
+), CoroutineScope by MainScope() {
     /**
      * Function converting an list item to an actual view
      */
@@ -90,7 +77,7 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
      */
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
-        job.cancelChildren()
+        cancelCoroutineScope()
     }
 
     /**

@@ -27,24 +27,10 @@ package com.github.icarohs7.library
 import androidx.annotation.AnimRes
 import com.github.icarohs7.library.delegates.mutableLazy
 import com.github.icarohs7.library.domain.BungeeAnim
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
 interface UnoxAndroid {
-    /**
-     * Interface representing an element containing
-     * a set of subscriptions that can be disposed
-     */
-    interface DisposableEntity {
-        val disposable: CompositeDisposable
-        fun disposeSubscriptions(): Unit = disposable.clear()
-        fun Disposable.autoDispose() {
-            disposable.add(this)
-        }
-    }
-
     /**
      * Companion object storing the settings of the module
      */

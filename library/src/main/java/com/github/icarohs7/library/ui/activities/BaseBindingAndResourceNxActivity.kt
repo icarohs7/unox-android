@@ -39,7 +39,7 @@ import com.google.android.material.navigation.NavigationView
  * selects the menu item tied to it and runs the action in it
  */
 abstract class BaseBindingAndResourceNxActivity<B : ViewDataBinding>
-    : BaseNxActivity(), NavigationView.OnNavigationItemSelectedListener {
+    : ScopedActivity(), NavigationView.OnNavigationItemSelectedListener {
     val navigationResources: ActivityResources = ActivityResources()
 
     /**
