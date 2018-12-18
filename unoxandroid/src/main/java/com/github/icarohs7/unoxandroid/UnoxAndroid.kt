@@ -56,20 +56,20 @@ interface UnoxAndroid {
         /**
          * Container used to home the fragments loaded
          */
-        var masterContainer: Int = R.id.container
+        var masterContainer: Int by mutableLazy { R.id.container }
 
-        /* Animations used on the animated fragment transitions */
-        var enterAnim: Int = R.anim.zoom_enter      /* ------- */
-        var exitAnim: Int = R.anim.zoom_exit        /* ------- */
-        var popEnterAnim: Int = R.anim.zoom_enter   /* ------- */
-        var popExitAnim: Int = R.anim.zoom_exit     /* ------- */
-        /* --------------------------------------------------- */
+        /* Animations used on the animated fragment transitions -------------- */
+        var enterAnim: Int by mutableLazy { R.anim.zoom_enter }     /* ------- */
+        var exitAnim: Int by mutableLazy { R.anim.zoom_exit }       /* ------- */
+        var popEnterAnim: Int by mutableLazy { R.anim.zoom_enter }  /* ------- */
+        var popExitAnim: Int by mutableLazy { R.anim.zoom_exit }    /* ------- */
+        /* ------------------------------------------------------------------- */
 
         /**
          * When set to true, every call to navigateTo from
          * an activity will also finish it after the navigation
          */
-        var finishActivityOnNavigate: Boolean = false
+        var finishActivityOnNavigate: Boolean by mutableLazy { false }
     }
 
     /**
