@@ -17,28 +17,28 @@ class CoroutinesExtensionsKtTest {
     @Test
     fun `should run operations on background`(): Unit = runBlocking {
         withContext(Dispatchers.Default) {
-            (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+            (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
 
             onBackground(Dispatchers.IO, Dispatchers.Default) {
-                (coroutineContext hasTheSameDispatcherAs Dispatchers.IO).shouldBeTrue()
+                (coroutineContext.equalDispatcher(Dispatchers.IO)).shouldBeTrue()
             }
             Unit
         }
 
         withContext(Dispatchers.Default) {
-            (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+            (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
 
             onBackground(Dispatchers.Default, Dispatchers.IO) {
-                (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+                (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
             }
             Unit
         }
 
         withContext(Dispatchers.IO) {
-            (coroutineContext hasTheSameDispatcherAs Dispatchers.IO).shouldBeTrue()
+            (coroutineContext.equalDispatcher(Dispatchers.IO)).shouldBeTrue()
 
             onBackground(Dispatchers.Default, Dispatchers.IO) {
-                (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+                (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
             }
             Unit
         }
@@ -49,28 +49,28 @@ class CoroutinesExtensionsKtTest {
     @Test
     fun `should run operations on foreground`(): Unit = runBlocking {
         withContext(Dispatchers.Default) {
-            (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+            (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
 
             onForeground(Dispatchers.IO) {
-                (coroutineContext hasTheSameDispatcherAs Dispatchers.IO).shouldBeTrue()
+                (coroutineContext.equalDispatcher(Dispatchers.IO)).shouldBeTrue()
             }
             Unit
         }
 
         withContext(Dispatchers.Default) {
-            (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+            (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
 
             onForeground(Dispatchers.Default) {
-                (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+                (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
             }
             Unit
         }
 
         withContext(Dispatchers.IO) {
-            (coroutineContext hasTheSameDispatcherAs Dispatchers.IO).shouldBeTrue()
+            (coroutineContext.equalDispatcher(Dispatchers.IO)).shouldBeTrue()
 
             onForeground(Dispatchers.Default) {
-                (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+                (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
             }
             Unit
         }
@@ -83,7 +83,7 @@ class CoroutinesExtensionsKtTest {
         //Given
         val scope = MainScope()
         //Then
-        (scope.coroutineContext hasTheSameDispatcherAs Dispatchers.Main).shouldBeTrue()
+        (scope.coroutineContext.equalDispatcher(Dispatchers.Main)).shouldBeTrue()
     }
 
     @Test
@@ -115,11 +115,11 @@ class CoroutinesExtensionsKtTest {
     @Test
     fun `should verify if two contexts have the same dispatcher`(): Unit = runBlocking {
         withContext(Dispatchers.Default) {
-            (coroutineContext hasTheSameDispatcherAs Dispatchers.Default).shouldBeTrue()
+            (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
         }
 
         withContext(Dispatchers.IO) {
-            (coroutineContext hasTheSameDispatcherAs Dispatchers.IO).shouldBeTrue()
+            (coroutineContext.equalDispatcher(Dispatchers.IO)).shouldBeTrue()
         }
 
         Unit

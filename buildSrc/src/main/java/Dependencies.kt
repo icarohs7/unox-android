@@ -28,17 +28,18 @@ object KaptDeps {
 
 object TestDeps {
     val core: List<String> = listOf(
-            "se.lovef:kotlin-assert-utils:${Versions.kotlinAssertUtils}",
+            "androidx.test:core:${Versions.testCore}",
+            "org.bigtesting:fixd:${Versions.fixd}",
             "org.robolectric:robolectric:${Versions.robolectric}",
-            "org.bigtesting:fixd:${Versions.fixd}"
+            "se.lovef:kotlin-assert-utils:${Versions.kotlinAssertUtils}"
     )
 }
 
 object AndroidTestDeps {
     val core: List<String> = listOf(
-            "androidx.test:rules:${Versions.testRules}",
             "androidx.test.espresso:espresso-contrib:${Versions.espresso}",
-            "androidx.test.espresso:espresso-intents:${Versions.espresso}"
+            "androidx.test.espresso:espresso-intents:${Versions.espresso}",
+            "androidx.test:rules:${Versions.testRules}"
     ) + TestDeps.core.filterNot { it.contains("org.robolectric:robolectric") }
 }
 
@@ -64,6 +65,7 @@ object Versions {
     const val fixd: String = "1.0.3"
     const val kotlinAssertUtils: String = "0.8.0"
     const val robolectric: String = "4.1"
+    const val testCore: String = "1.1.0"
 
     const val espresso: String = "3.1.1"
     const val testRules: String = "1.1.1"

@@ -38,7 +38,7 @@ fun String.find(regex: Regex): String? =
 suspend fun String.fetchImage(context: Context, placeholder: Drawable? = null, error: Drawable? = null): Drawable? {
     return onBackground {
         Glide.with(context)
-                .load(this)
+                .load(this@fetchImage)
                 .also {
                     val options = RequestOptions().centerCrop()
                     placeholder?.let(options::placeholder)

@@ -25,7 +25,7 @@ suspend fun <T> onBackground(
         foregroundContext: CoroutineDispatcher = UnoxAndroid.foregroundDispatcher,
         block: suspend CoroutineScope.() -> T
 ): T {
-    return when (coroutineContext hasTheSameDispatcherAs foregroundContext) {
+    return when (coroutineContext.equalDispatcher(foregroundContext)) {
         true -> withContext(backgroundContext, block)
         false -> withContext(coroutineContext, block)
     }
@@ -42,7 +42,7 @@ suspend fun <T> onForeground(
         foregroundContext: CoroutineDispatcher = UnoxAndroid.foregroundDispatcher,
         block: suspend CoroutineScope.() -> T
 ): T {
-    return when (coroutineContext hasTheSameDispatcherAs foregroundContext) {
+    return when (coroutineContext.equalDispatcher(foregroundContext)) {
         true -> withContext(coroutineContext, block)
         false -> withContext(foregroundContext, block)
     }
@@ -72,7 +72,7 @@ inline val CoroutineScope.job: Job
 /**
  * Verify if 2 coroutines are being executed by the same dispatcher
  */
-infix fun CoroutineContext.hasTheSameDispatcherAs(other: CoroutineContext): Boolean =
+fun CoroutineContext.equalDispatcher(other: CoroutineContext): Boolean =
         this[ContinuationInterceptor] == other[ContinuationInterceptor]
 
 /**

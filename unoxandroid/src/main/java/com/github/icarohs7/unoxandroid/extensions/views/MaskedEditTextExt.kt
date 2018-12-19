@@ -2,7 +2,6 @@ package com.github.icarohs7.unoxandroid.extensions.views
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import com.santalu.maskedittext.MaskEditText
 
 /**
@@ -48,10 +47,7 @@ private fun String?.formattedMask(): String {
 private fun String?.unformattedMask(): String {
     this ?: return ""
     val indexOfLastMask = indexOfLast { it == '#' }
-    Log.i("icaro", "X")
-    val newMask = substring(0 until indexOfLastMask) + { substring(indexOfLastMask + 1) }.catchEx("")
-    Log.i("icaro", newMask)
-    return newMask
+    return substring(0 until indexOfLastMask) + { substring(indexOfLastMask + 1) }.catchEx("")
 }
 
 /**
