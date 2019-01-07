@@ -1,9 +1,9 @@
 package com.github.icarohs7.unoxandroid.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
-import com.github.icarohs7.unoxandroid.extensions.coroutines.MainScope
 import com.github.icarohs7.unoxandroid.extensions.coroutines.cancelCoroutineScope
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 
 /**
  * Activity containing a coroutine scope,

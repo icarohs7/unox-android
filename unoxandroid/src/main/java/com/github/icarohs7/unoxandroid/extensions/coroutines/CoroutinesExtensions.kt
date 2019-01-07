@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE", "EXPERIMENTAL_API_USAGE", "FunctionName")
+
 package com.github.icarohs7.unoxandroid.extensions.coroutines
 
 import com.github.icarohs7.unoxandroid.UnoxAndroid
@@ -5,7 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.ContinuationInterceptor
@@ -49,19 +51,9 @@ suspend fun <T> onForeground(
 }
 
 /**
- * Coroutine scope launching coroutines on the
- * [Dispatchers.Main] dispatcher
- */
-@Suppress("FunctionName")
-fun MainScope(): CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
-
-/**
  * Cancel the coroutine scope
  */
-@Suppress("NOTHING_TO_INLINE")
-inline fun CoroutineScope.cancelCoroutineScope() {
-    job.cancel()
-}
+inline fun CoroutineScope.cancelCoroutineScope(): Unit = this.cancel()
 
 /**
  * The job used by this [CoroutineScope]
@@ -72,7 +64,7 @@ inline val CoroutineScope.job: Job
 /**
  * Verify if 2 coroutines are being executed by the same dispatcher
  */
-fun CoroutineContext.equalDispatcher(other: CoroutineContext): Boolean =
+inline fun CoroutineContext.equalDispatcher(other: CoroutineContext): Boolean =
         this[ContinuationInterceptor] == other[ContinuationInterceptor]
 
 /**

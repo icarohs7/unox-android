@@ -33,9 +33,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import arrow.core.Try
-import com.github.icarohs7.unoxandroid.extensions.coroutines.MainScope
 import com.github.icarohs7.unoxandroid.extensions.coroutines.cancelCoroutineScope
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 
 /**
  * Base adapter based on data binding
