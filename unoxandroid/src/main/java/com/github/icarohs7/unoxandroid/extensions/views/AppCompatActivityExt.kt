@@ -37,8 +37,14 @@ import org.jetbrains.anko.inputMethodManager
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
         destination: T,
-        containerId: Int = UnoxAndroid.masterContainer
+        containerId: Int = UnoxAndroid.masterContainer,
+        allowLoadingFragmentTwiceInARow: Boolean = UnoxAndroid.allowLoadingFragmentTwiceInARow
 ) {
+
+    if (!allowLoadingFragmentTwiceInARow) {
+        val loaded = supportFragmentManager.findFragmentById(containerId)
+        loaded?.let { f -> if (destination::class == f::class) return }
+    }
 
     fragmentTransactionAnimated {
         replace(containerId, destination)
@@ -51,8 +57,14 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
         destination: T,
-        containerId: Int = UnoxAndroid.masterContainer
+        containerId: Int = UnoxAndroid.masterContainer,
+        allowLoadingFragmentTwiceInARow: Boolean = UnoxAndroid.allowLoadingFragmentTwiceInARow
 ) {
+
+    if (!allowLoadingFragmentTwiceInARow) {
+        val loaded = supportFragmentManager.findFragmentById(containerId)
+        loaded?.let { f -> if (destination::class == f::class) return }
+    }
 
     fragmentTransactionAnimated { replace(containerId, destination) }
 }

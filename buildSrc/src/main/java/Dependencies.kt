@@ -22,7 +22,7 @@ object Deps {
 }
 
 object KaptDeps {
-    val core = listOf(
+    val core: List<String> = listOf(
             "com.github.bumptech.glide:compiler:${Versions.glide}"
     )
 }

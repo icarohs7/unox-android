@@ -70,6 +70,12 @@ interface UnoxAndroid {
          * an activity will also finish it after the navigation
          */
         var finishActivityOnNavigate: Boolean by mutableLazy { false }
+
+        /**
+         * When set to true, will allow a fragment to be loaded twice
+         * in succession
+         */
+        var allowLoadingFragmentTwiceInARow: Boolean by mutableLazy { true }
     }
 
     /**
