@@ -9,9 +9,7 @@ object Deps {
             "com.github.Binary-Finery:Bungee:${Versions.bungee}",
             "com.github.bumptech.glide:glide:${Versions.glide}",
             "com.github.santalu:mask-edittext:${Versions.maskedEditText}",
-            "com.github.ybq:Android-SpinKit:${Versions.spinkit}",
             "com.google.android.material:material:${Versions.materialDesign}",
-            "com.louiscad.splitties:splitties-lifecycle-coroutines:${Versions.splitties}",
             "io.arrow-kt:arrow-core:${Versions.arrow}",
             "io.reactivex.rxjava2:rxjava:${Versions.rxJava}",
             "org.jetbrains.anko:anko-commons:${Versions.anko}",
@@ -60,8 +58,6 @@ object Versions {
     const val materialDesign: String = "1.0.0"
     const val recyclerView: String = "1.0.0"
     const val rxJava: String = "2.2.5"
-    const val spinkit: String = "1.2.0"
-    const val splitties: String = "3.0.0-alpha02"
 
     const val barista: String = "2.7.1"
     const val fixd: String = "1.0.3"

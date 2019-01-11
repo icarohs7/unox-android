@@ -18,28 +18,28 @@ class CoroutinesExtensionsKtTest {
     @Test
     fun `should run operations on background`(): Unit = runBlocking {
         withContext(Dispatchers.Default) {
-            (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
+            coroutineContext.dispatcher shouldEqual Dispatchers.Default
 
             onBackground(Dispatchers.IO, Dispatchers.Default) {
-                (coroutineContext.equalDispatcher(Dispatchers.IO)).shouldBeTrue()
+                coroutineContext.dispatcher shouldEqual Dispatchers.IO
             }
             Unit
         }
 
         withContext(Dispatchers.Default) {
-            (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
+            coroutineContext.dispatcher shouldEqual Dispatchers.Default
 
             onBackground(Dispatchers.Default, Dispatchers.IO) {
-                (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
+                coroutineContext.dispatcher shouldEqual Dispatchers.Default
             }
             Unit
         }
 
         withContext(Dispatchers.IO) {
-            (coroutineContext.equalDispatcher(Dispatchers.IO)).shouldBeTrue()
+            coroutineContext.dispatcher shouldEqual Dispatchers.IO
 
             onBackground(Dispatchers.Default, Dispatchers.IO) {
-                (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
+                coroutineContext.dispatcher shouldEqual Dispatchers.Default
             }
             Unit
         }
@@ -50,28 +50,28 @@ class CoroutinesExtensionsKtTest {
     @Test
     fun `should run operations on foreground`(): Unit = runBlocking {
         withContext(Dispatchers.Default) {
-            (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
+            coroutineContext.dispatcher shouldEqual Dispatchers.Default
 
             onForeground(Dispatchers.IO) {
-                (coroutineContext.equalDispatcher(Dispatchers.IO)).shouldBeTrue()
+                coroutineContext.dispatcher shouldEqual Dispatchers.IO
             }
             Unit
         }
 
         withContext(Dispatchers.Default) {
-            (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
+            coroutineContext.dispatcher shouldEqual Dispatchers.Default
 
             onForeground(Dispatchers.Default) {
-                (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
+                coroutineContext.dispatcher shouldEqual Dispatchers.Default
             }
             Unit
         }
 
         withContext(Dispatchers.IO) {
-            (coroutineContext.equalDispatcher(Dispatchers.IO)).shouldBeTrue()
+            coroutineContext.dispatcher shouldEqual Dispatchers.IO
 
             onForeground(Dispatchers.Default) {
-                (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
+                coroutineContext.dispatcher shouldEqual Dispatchers.Default
             }
             Unit
         }
@@ -84,7 +84,7 @@ class CoroutinesExtensionsKtTest {
         //Given
         val scope = MainScope()
         //Then
-        (scope.coroutineContext.equalDispatcher(Dispatchers.Main)).shouldBeTrue()
+        scope.dispatcher shouldEqual Dispatchers.Main
     }
 
     @Test
@@ -116,14 +116,36 @@ class CoroutinesExtensionsKtTest {
     @Test
     fun `should verify if two contexts have the same dispatcher`(): Unit = runBlocking {
         withContext(Dispatchers.Default) {
-            (coroutineContext.equalDispatcher(Dispatchers.Default)).shouldBeTrue()
+            coroutineContext.dispatcher shouldEqual Dispatchers.Default
         }
 
         withContext(Dispatchers.IO) {
-            (coroutineContext.equalDispatcher(Dispatchers.IO)).shouldBeTrue()
+            coroutineContext.dispatcher shouldEqual Dispatchers.IO
         }
 
         Unit
+    }
+
+    @Test
+    fun `should get dispatcher of scope`() {
+        runBlocking {
+            CoroutineScope(Dispatchers.Default).launch {
+                this.dispatcher shouldEqual Dispatchers.Default
+                withContext(Dispatchers.IO) {
+                    this.dispatcher shouldEqual Dispatchers.IO
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `should get dispatcher of context`() {
+        runBlocking(Dispatchers.Default) {
+            coroutineContext.dispatcher shouldEqual Dispatchers.Default
+            withContext(Dispatchers.IO) {
+                coroutineContext.dispatcher shouldEqual Dispatchers.IO
+            }
+        }
     }
 
     @Test
