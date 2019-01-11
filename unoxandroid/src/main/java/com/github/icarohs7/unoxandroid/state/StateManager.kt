@@ -1,15 +1,13 @@
 package com.github.icarohs7.unoxandroid.state
 
-import io.reactivex.Observable
-import kotlinx.coroutines.channels.ReceiveChannel
-
 /**
  * Interface describing a container managing a
  * instance of a substate of the application
+ * @param T The type representing the State of The Application
+ * @param O The type representing the observable used to emit new instances of the state
  */
-interface StateManager<T> {
-    val observable: Observable<T>
-    val channel: ReceiveChannel<T>
+interface StateManager<T, O> {
+    val observable: O
 
     /** Return the last valid state of the application */
     suspend fun lastValue(): T

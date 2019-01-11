@@ -27,7 +27,7 @@ suspend fun <T> onBackground(
         foregroundContext: CoroutineDispatcher = UnoxAndroid.foregroundDispatcher,
         block: suspend CoroutineScope.() -> T
 ): T {
-    return when (coroutineContext.equalDispatcher(foregroundContext)) {
+    return when (coroutineContext.dispatcher == foregroundContext.dispatcher) {
         true -> withContext(backgroundContext, block)
         false -> withContext(coroutineContext, block)
     }
@@ -44,7 +44,7 @@ suspend fun <T> onForeground(
         foregroundContext: CoroutineDispatcher = UnoxAndroid.foregroundDispatcher,
         block: suspend CoroutineScope.() -> T
 ): T {
-    return when (coroutineContext.equalDispatcher(foregroundContext)) {
+    return when (coroutineContext.dispatcher == foregroundContext.dispatcher) {
         true -> withContext(coroutineContext, block)
         false -> withContext(foregroundContext, block)
     }
@@ -62,10 +62,17 @@ inline val CoroutineScope.job: Job
     get() = coroutineContext[Job] ?: error("This coroutine scope doesn't have a job: $this")
 
 /**
- * Verify if 2 coroutines are being executed by the same dispatcher
+ * Default [CoroutineDispatcher] used in the scope
  */
-inline fun CoroutineContext.equalDispatcher(other: CoroutineContext): Boolean =
-        this[ContinuationInterceptor] == other[ContinuationInterceptor]
+inline val CoroutineScope.dispatcher: CoroutineDispatcher
+    get() = coroutineContext.dispatcher
+
+/**
+ * [CoroutineDispatcher] in which the coroutine is being executed
+ */
+inline val CoroutineContext.dispatcher: CoroutineDispatcher
+    get() = this[ContinuationInterceptor] as? CoroutineDispatcher ?: error("Coroutine dispatcher not found")
+
 
 /**
  * Consume each element sent by the channel, suspending when there's
