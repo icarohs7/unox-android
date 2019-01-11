@@ -24,6 +24,7 @@
 
 package com.github.icarohs7.unoxandroid.ui.activities
 
+import android.os.Bundle
 import android.widget.ProgressBar
 import com.github.icarohs7.unoxandroid.R
 import com.github.icarohs7.unoxandroid.databinding.ActivityBaseStandardNxBinding
@@ -35,6 +36,14 @@ import kotlinx.coroutines.withContext
 
 
 abstract class BaseStandardNxActivity : BaseBindingAndResourceNxActivity<ActivityBaseStandardNxBinding>() {
+    /**
+     * Start with not state set on [com.umutbey.stateviews.StateView]
+     */
+    override fun onBindingCreated(savedInstanceState: Bundle?) {
+        super.onBindingCreated(savedInstanceState)
+        binding.stateViewActivitybasestandardnx.hideStates()
+    }
+
     /**
      * Execute an operation, showing the progress bar when it's running
      * and hiding it when done

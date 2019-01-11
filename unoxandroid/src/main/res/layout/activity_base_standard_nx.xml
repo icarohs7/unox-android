@@ -59,13 +59,19 @@
                 app:layout_constraintTop_toBottomOf="@id/toolbar_activitybasestandardnx"
                 tools:visibility="visible" />
 
-            <FrameLayout
-                android:id="@+id/container_activitybasestandardnx"
+            <com.umutbey.stateviews.StateView
+                android:id="@+id/state_view_activitybasestandardnx"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toTopOf="@id/bottom_navigation_activitybasestandardnx"
-                app:layout_constraintTop_toBottomOf="@id/toolbar_activitybasestandardnx"
-                tools:background="@color/colorPrimary" />
+                app:layout_constraintTop_toBottomOf="@id/toolbar_activitybasestandardnx">
+
+                <FrameLayout
+                    android:id="@+id/container_activitybasestandardnx"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:background="@color/colorPrimary" />
+            </com.umutbey.stateviews.StateView>
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_navigation_activitybasestandardnx"

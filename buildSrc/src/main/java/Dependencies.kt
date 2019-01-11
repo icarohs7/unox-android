@@ -8,6 +8,7 @@ object Deps {
             "androidx.recyclerview:recyclerview:${Versions.recyclerView}",
             "com.github.Binary-Finery:Bungee:${Versions.bungee}",
             "com.github.bumptech.glide:glide:${Versions.glide}",
+            "com.github.kobeumut:StateViews:${Versions.stateViews}",
             "com.github.santalu:mask-edittext:${Versions.maskedEditText}",
             "com.google.android.material:material:${Versions.materialDesign}",
             "io.arrow-kt:arrow-core:${Versions.arrow}",
@@ -58,6 +59,7 @@ object Versions {
     const val materialDesign: String = "1.0.0"
     const val recyclerView: String = "1.0.0"
     const val rxJava: String = "2.2.5"
+    const val stateViews = "0.5"
 
     const val barista: String = "2.7.1"
     const val fixd: String = "1.0.3"
