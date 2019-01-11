@@ -6,6 +6,7 @@ import com.github.icarohs7.unoxandroid.ui.activities.BaseStandardNxActivity
 class BaseStandardNxActivityImpl : BaseStandardNxActivity() {
     override fun afterInitialSetup() {
         super.afterInitialSetup()
+//        loadFragmentWithoutBack(TestFragment())
     }
 
     override fun onSelectMenuItem(menuItemId: MenuItem): Boolean {

@@ -42,24 +42,24 @@ abstract class BaseStandardNxActivity : BaseBindingAndResourceNxActivity<Activit
     suspend inline fun runWithProgressFeedback(fn: (ProgressBar) -> Unit) {
         try {
             withContext(Dispatchers.Main) { startLoading() }
-            fn(binding.progressBar)
+            fn(binding.progressBarActivitybasestandardnx)
         } finally {
             withContext(Dispatchers.Main) { stopLoading() }
         }
     }
 
     /** Show the progress bar */
-    fun startLoading(): Unit = binding.progressBar.show()
+    fun startLoading(): Unit = binding.progressBarActivitybasestandardnx.show()
 
     /** Hide the progress bar */
-    fun stopLoading(): Unit = binding.progressBar.hide()
+    fun stopLoading(): Unit = binding.progressBarActivitybasestandardnx.hide()
 
     override fun onDefineActivityResources(activityResources: ActivityResources) {
         activityResources.apply {
-            bottomNavigationView = binding.bottomNavigation
-            drawerLayout = binding.drawerLayout
-            navDrawerView = binding.navView
-            toolbar = binding.toolbar
+            bottomNavigationView = binding.bottomNavigationActivitybasestandardnx
+            drawerLayout = binding.drawerLayoutActivitybasestandardnx
+            navDrawerView = binding.navViewActivitybasestandardnx
+            toolbar = binding.toolbarActivitybasestandardnx
             toolbarOpenDrawerMenuItemDrawableId = R.drawable.ic_menu
         }
     }

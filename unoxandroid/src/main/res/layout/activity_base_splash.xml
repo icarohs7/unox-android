@@ -34,12 +34,12 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_layout"
+        android:id="@+id/root_container_activitybasesplash"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <FrameLayout
-            android:id="@+id/center_container"
+            android:id="@+id/center_container_activitybasesplash"
             android:layout_width="280dp"
             android:layout_height="280dp"
             android:orientation="vertical"
@@ -49,11 +49,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
-            android:id="@+id/bottom_container"
+            android:id="@+id/bottom_container_activitybasesplash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            app:layout_constraintTop_toBottomOf="@id/center_container" />
+            app:layout_constraintTop_toBottomOf="@id/center_container_activitybasesplash" />
 
         <TextView
             android:layout_width="wrap_content"

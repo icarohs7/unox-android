@@ -26,19 +26,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
+        android:id="@+id/drawer_layout_activitybasestandardnx"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/constraint_layout"
+            android:id="@+id/constraint_layout_activitybasestandardnx"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ui.activities.MainActivity">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/toolbar_activitybasestandardnx"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimaryDark"
@@ -50,25 +50,25 @@
                 tools:layout_height="200dp" />
 
             <ProgressBar
-                android:id="@+id/progress_bar"
+                android:id="@+id/progress_bar_activitybasestandardnx"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintTop_toBottomOf="@id/toolbar_activitybasestandardnx"
                 tools:visibility="visible" />
 
             <FrameLayout
-                android:id="@+id/container"
+                android:id="@+id/container_activitybasestandardnx"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintBottom_toTopOf="@id/bottom_navigation_activitybasestandardnx"
+                app:layout_constraintTop_toBottomOf="@id/toolbar_activitybasestandardnx"
                 tools:background="@color/colorPrimary" />
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_navigation"
+                android:id="@+id/bottom_navigation_activitybasestandardnx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
@@ -81,7 +81,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.navigation.NavigationView
-            android:id="@+id/nav_view"
+            android:id="@+id/nav_view_activitybasestandardnx"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
