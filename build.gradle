@@ -91,6 +91,10 @@ subprojects { proj ->
                     returnDefaultValues(true)
                 }
             }
+
+            packagingOptions {
+                pickFirst("META-INF/library_release.kotlin_module")
+            }
         }
     }
 }
