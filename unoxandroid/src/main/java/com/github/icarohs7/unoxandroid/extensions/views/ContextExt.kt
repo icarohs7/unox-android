@@ -38,7 +38,6 @@ import androidx.core.os.bundleOf
 import com.github.icarohs7.unoxandroid.UnoxAndroid
 import com.github.icarohs7.unoxandroid.databinding.DialogYesNoBinding
 import org.jetbrains.anko.layoutInflater
-import spencerstudios.com.bungeelib.Bungee
 import java.util.Calendar
 import kotlin.reflect.KClass
 
@@ -54,48 +53,8 @@ fun <T : AppCompatActivity> Context.navigateTo(
     intent.putExtras(extras)
     startActivity(intent)
     if (this is Activity) {
-        executeAnimation(this)
+        UnoxAndroid.animationType.executeFn(this)
         if (UnoxAndroid.finishActivityOnNavigate || finishActivity) finish()
-    }
-}
-
-/**
- * Execute an activity transition animation
- */
-private fun executeAnimation(context: Context) {
-    when (UnoxAndroid.animationType) {
-
-        UnoxAndroid.AnimationType.SPLIT -> Bungee.split(context)
-
-        UnoxAndroid.AnimationType.SHRINK -> Bungee.shrink(context)
-
-        UnoxAndroid.AnimationType.CARD -> Bungee.card(context)
-
-        UnoxAndroid.AnimationType.INOUT -> Bungee.inAndOut(context)
-
-        UnoxAndroid.AnimationType.SWIPE_LEFT -> Bungee.swipeLeft(context)
-
-        UnoxAndroid.AnimationType.SWIPE_RIGHT -> Bungee.swipeRight(context)
-
-        UnoxAndroid.AnimationType.SLIDE_UP -> Bungee.slideUp(context)
-
-        UnoxAndroid.AnimationType.SLIDE_DOWN -> Bungee.slideDown(context)
-
-        UnoxAndroid.AnimationType.SLIDE_LEFT -> Bungee.slideLeft(context)
-
-        UnoxAndroid.AnimationType.SLIDE_RIGHT -> Bungee.slideRight(context)
-
-        UnoxAndroid.AnimationType.FADE -> Bungee.fade(context)
-
-        UnoxAndroid.AnimationType.ZOOM -> Bungee.zoom(context)
-
-        UnoxAndroid.AnimationType.WINDMILL -> Bungee.windmill(context)
-
-        UnoxAndroid.AnimationType.SPIN -> Bungee.spin(context)
-
-        UnoxAndroid.AnimationType.DIAGONAL -> Bungee.diagonal(context)
-
-        UnoxAndroid.AnimationType.NO_ANIMATION -> Unit
     }
 }
 

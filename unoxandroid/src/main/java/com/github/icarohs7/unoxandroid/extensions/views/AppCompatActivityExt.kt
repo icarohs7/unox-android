@@ -27,59 +27,17 @@ package com.github.icarohs7.unoxandroid.extensions.views
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.transaction
-import arrow.core.Try
 import com.github.icarohs7.unoxandroid.UnoxAndroid
-import com.github.icarohs7.unoxandroid.extensions.mapCatching
 import org.jetbrains.anko.inputMethodManager
-
-/**
- * Load a fragment adding it to the backstack
- */
-inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
-        destination: T,
-        containerId: Int,
-        allowLoadingFragmentTwiceInARow: Boolean = UnoxAndroid.allowLoadingFragmentTwiceInARow
-) {
-
-    if (!allowLoadingFragmentTwiceInARow) {
-        Try { supportFragmentManager.findFragmentById(containerId) }
-                .mapCatching { requireNotNull(it) }
-                .map { f -> if (destination::class == f::class) return }
-    }
-
-    fragmentTransactionAnimated {
-        replace(containerId, destination)
-        addToBackStack("fragment")
-    }
-}
-
-/**
- * Load a fragment without adding it to the backstack
- */
-inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
-        destination: T,
-        containerId: Int,
-        allowLoadingFragmentTwiceInARow: Boolean = UnoxAndroid.allowLoadingFragmentTwiceInARow
-) {
-
-    if (!allowLoadingFragmentTwiceInARow) {
-        Try { supportFragmentManager.findFragmentById(containerId) }
-                .mapCatching { requireNotNull(it) }
-                .map { f -> if (destination::class == f::class) return }
-    }
-
-    fragmentTransactionAnimated { replace(containerId, destination) }
-}
 
 /**
  * Execute a fragment transaction with an animation, defined by
  * the settings on the [UnoxAndroid.Companion]
  */
 fun AppCompatActivity.fragmentTransactionAnimated(fn: FragmentTransaction.() -> Unit) {
-    supportFragmentManager.transaction {
+    supportFragmentManager?.transaction {
         setCustomAnimations(
                 UnoxAndroid.enterAnim,
                 UnoxAndroid.exitAnim,
