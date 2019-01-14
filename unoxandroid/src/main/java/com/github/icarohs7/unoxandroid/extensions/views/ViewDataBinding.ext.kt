@@ -15,6 +15,7 @@ import org.jetbrains.anko.matchParent
  * Convert a binding to a dialog and show it, returning the
  * dialog object shown
  */
+@Deprecated(message = "Possibly being removed in future versions, use custom view from MaterialDialogs")
 fun <T : ViewDataBinding> T.toDialog(): Dialog {
     val dialog = Dialog(this.root.context)
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -26,6 +27,7 @@ fun <T : ViewDataBinding> T.toDialog(): Dialog {
  * Convert a binding to a dialog builder with the root
  * view set as the dialog's content
  */
+@Deprecated(message = "Possibly being removed in future versions, use custom view from MaterialDialogs")
 fun <T : ViewDataBinding> T.toDialogBuilder(): AlertDialog.Builder {
     return AlertDialog
             .Builder(this.root.context)
@@ -36,6 +38,7 @@ fun <T : ViewDataBinding> T.toDialogBuilder(): AlertDialog.Builder {
  * Convert a binding to an alert and show it, returning the
  * dialog interface
  */
+@Deprecated(message = "Possibly being removed in future versions, use custom view from MaterialDialogs")
 fun <T : ViewDataBinding> T.showAlert(): DialogInterface {
     return this.root.context.alert {
         customView {
@@ -47,6 +50,7 @@ fun <T : ViewDataBinding> T.showAlert(): DialogInterface {
 /**
  * Convert a binding to an alert builder
  */
+@Deprecated(message = "Possibly being removed in future versions, use custom view from MaterialDialogs")
 fun <T : ViewDataBinding> T.toAlertBuilder(): AlertBuilder<DialogInterface> {
     return this.root.context.alert {
         customView {

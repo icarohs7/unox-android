@@ -1,7 +1,6 @@
 object Deps {
     val core: List<String> = listOf(
             "androidx.appcompat:appcompat:${Versions.appCompat}",
-            "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}",
             "androidx.core:core-ktx:${Versions.androidxcore}",
             "androidx.fragment:fragment-ktx:${Versions.fragment}",
             "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}",
@@ -48,7 +47,6 @@ object Versions {
     const val appCompat: String = "1.0.2"
     const val arrow: String = "0.8.1"
     const val bungee: String = "master-SNAPSHOT"
-    const val constraintLayout: String = "1.1.3"
     const val coroutines: String = "1.1.0"
     const val fragment: String = "1.0.0"
     const val glide: String = "4.8.0"

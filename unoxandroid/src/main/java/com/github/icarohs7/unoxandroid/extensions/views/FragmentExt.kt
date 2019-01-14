@@ -26,14 +26,16 @@ package com.github.icarohs7.unoxandroid.extensions.views
 
 import android.content.DialogInterface
 import android.view.View
+import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import com.github.icarohs7.unoxandroid.databinding.DialogYesNoBinding
 import org.jetbrains.anko.inputMethodManager
 
 /**
  * Dismisses the soft keyboard
+ * @param containerId The id of the container within the keyboard is being shown
  */
-fun Fragment.hideKeyboard(containerId: Int) {
+fun Fragment.hideKeyboard(@IdRes containerId: Int) {
     requireActivity()
             .inputMethodManager
             .hideSoftInputFromWindow(requireActivity().findViewById<View>(containerId)?.windowToken, 0)
@@ -41,6 +43,7 @@ fun Fragment.hideKeyboard(containerId: Int) {
 
 /**
  * Dismisses the soft keyboard
+ * @param container The container within the keyboard is being shown
  */
 fun Fragment.hideKeyboard(container: View) {
     requireActivity()

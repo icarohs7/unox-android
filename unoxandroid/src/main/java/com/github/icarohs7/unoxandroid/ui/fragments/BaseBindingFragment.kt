@@ -11,7 +11,7 @@ import androidx.databinding.ViewDataBinding
 /**
  * Base fragment using databinding
  */
-abstract class BaseBindingFragment<B : ViewDataBinding> : ScopedFragment() {
+abstract class BaseBindingFragment<B : ViewDataBinding> : BaseScopedFragment() {
     /**
      * Initialized on [onCreateView]
      */

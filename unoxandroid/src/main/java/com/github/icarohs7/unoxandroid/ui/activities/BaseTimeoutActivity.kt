@@ -21,10 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.icarohs7.unoxandroid.extensions
 
-import arrow.core.Try
+package com.github.icarohs7.unoxandroid.ui.activities
 
-/** Convert a nullable item to a try of it, or a null pointer failure */
-fun <T> T?.toTry(): Try<T> =
-        Try { this@toTry!! }
+import android.os.Bundle
+import androidx.databinding.ViewDataBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+/**
+ * Base activity derivated from [BaseBindingActivity]
+ * with an embedded timeout and a hook called when it's
+ * finished
+ */
+abstract class BaseTimeoutActivity<DB : ViewDataBinding>(
+        val timeout: Int = 2000
+) : BaseBindingActivity<DB>() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(timeout.toLong())
+            onTimeout()
+        }
+    }
+
+    /** Called after the timeout is finished */
+    abstract fun onTimeout()
+}

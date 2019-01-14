@@ -5,7 +5,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-abstract class BaseBindingActivity<B : ViewDataBinding> : ScopedActivity() {
+abstract class BaseBindingActivity<B : ViewDataBinding> : BaseScopedActivity() {
     /**
      * Initialized in [onCreate]
      */
