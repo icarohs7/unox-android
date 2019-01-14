@@ -53,11 +53,6 @@ interface UnoxAndroid {
          */
         var animationType: AnimationType by mutableLazy { AnimationType.NO_ANIMATION }
 
-        /**
-         * Container used to home the fragments loaded
-         */
-        var masterContainer: Int by mutableLazy { R.id.container_activitybasestandardnx }
-
         /* Animations used on the animated fragment transitions -------------- */
         var enterAnim: Int by mutableLazy { R.anim.zoom_enter }     /* ------- */
         var exitAnim: Int by mutableLazy { R.anim.zoom_exit }       /* ------- */
