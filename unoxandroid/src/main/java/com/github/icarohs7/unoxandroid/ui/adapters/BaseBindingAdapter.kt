@@ -76,8 +76,8 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
      * Cancel all coroutines when detached from the recycler view
      */
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
         cancelCoroutineScope()
+        super.onDetachedFromRecyclerView(recyclerView)
     }
 
     /**

@@ -1,5 +1,3 @@
-@file:JvmName("StringExt")
-
 package com.github.icarohs7.unoxandroid.extensions
 
 import android.content.Context

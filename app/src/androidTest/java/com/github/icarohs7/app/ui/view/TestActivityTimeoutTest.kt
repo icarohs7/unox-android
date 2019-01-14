@@ -6,9 +6,7 @@ import com.github.icarohs7.app.testutils.blockingDelay
 import com.github.icarohs7.app.testutils.catchIntents
 import org.junit.Test
 
-class BaseNxTimeoutActivityImplTest : BaseActivityTestClass<BaseNxTimeoutActivityImpl>(
-        BaseNxTimeoutActivityImpl::class
-) {
+class TestActivityTimeoutTest : BaseActivityTestClass<TestActivityTimeout>(TestActivityTimeout::class) {
     @Test
     fun should_navigate_after_timeout() {
         catchIntents {
@@ -18,7 +16,7 @@ class BaseNxTimeoutActivityImplTest : BaseActivityTestClass<BaseNxTimeoutActivit
             //When
             blockingDelay(activity.timeout)
             //Then
-            assertNavigationToActivity<BaseStandardNxActivityImpl>()
+            assertNavigationToActivity<TestActivity>()
         }
     }
 }

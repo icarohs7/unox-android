@@ -22,26 +22,32 @@
  * SOFTWARE.
  */
 
-package com.github.icarohs7.unoxandroid.entities
+package com.github.icarohs7.unoxandroid.ui.activities
 
-import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
+import android.os.Bundle
+import androidx.databinding.ViewDataBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
- * Class used to store the resources of an Activity,
- * i.e the Views and Resources for the navDrawer,
- * bottomNavigation and toolbar
+ * Base activity derivated from [BaseBindingActivity]
+ * with an embedded timeout and a hook called when it's
+ * finished
  */
-class ActivityResources {
-    var navDrawerView: NavigationView? = null
-    var navDrawerMenuRes: Int? = null
-    var navDrawerHeaderRes: Int? = null
-    var bottomNavigationView: BottomNavigationView? = null
-    var bottomNavigationMenuRes: Int? = null
-    var toolbarTitle: String? = null
-    var toolbar: Toolbar? = null
-    var toolbarOpenDrawerMenuItemDrawableId: Int? = null
-    var drawerLayout: DrawerLayout? = null
+abstract class BaseTimeoutActivity<DB : ViewDataBinding>(
+        val timeout: Int = 2000
+) : BaseBindingActivity<DB>() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(timeout.toLong())
+            onTimeout()
+        }
+    }
+
+    /** Called after the timeout is finished */
+    abstract fun onTimeout()
 }

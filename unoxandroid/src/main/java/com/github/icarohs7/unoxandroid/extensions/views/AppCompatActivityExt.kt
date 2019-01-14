@@ -25,11 +25,14 @@
 package com.github.icarohs7.unoxandroid.extensions.views
 
 import android.view.View
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.transaction
+import arrow.core.Try
 import com.github.icarohs7.unoxandroid.UnoxAndroid
+import com.github.icarohs7.unoxandroid.extensions.mapCatching
 import org.jetbrains.anko.inputMethodManager
 
 /**
@@ -37,13 +40,14 @@ import org.jetbrains.anko.inputMethodManager
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
         destination: T,
-        containerId: Int = UnoxAndroid.masterContainer,
+        containerId: Int,
         allowLoadingFragmentTwiceInARow: Boolean = UnoxAndroid.allowLoadingFragmentTwiceInARow
 ) {
 
     if (!allowLoadingFragmentTwiceInARow) {
-        val loaded = supportFragmentManager.findFragmentById(containerId)
-        loaded?.let { f -> if (destination::class == f::class) return }
+        Try { supportFragmentManager.findFragmentById(containerId) }
+                .mapCatching { requireNotNull(it) }
+                .map { f -> if (destination::class == f::class) return }
     }
 
     fragmentTransactionAnimated {
@@ -57,13 +61,14 @@ inline fun <reified T : Fragment> AppCompatActivity.loadFragment(
  */
 inline fun <reified T : Fragment> AppCompatActivity.loadFragmentWithoutBack(
         destination: T,
-        containerId: Int = UnoxAndroid.masterContainer,
+        containerId: Int,
         allowLoadingFragmentTwiceInARow: Boolean = UnoxAndroid.allowLoadingFragmentTwiceInARow
 ) {
 
     if (!allowLoadingFragmentTwiceInARow) {
-        val loaded = supportFragmentManager.findFragmentById(containerId)
-        loaded?.let { f -> if (destination::class == f::class) return }
+        Try { supportFragmentManager.findFragmentById(containerId) }
+                .mapCatching { requireNotNull(it) }
+                .map { f -> if (destination::class == f::class) return }
     }
 
     fragmentTransactionAnimated { replace(containerId, destination) }
@@ -86,14 +91,16 @@ fun AppCompatActivity.fragmentTransactionAnimated(fn: FragmentTransaction.() -> 
 
 /**
  * Dismiss the soft keyboard
+ * @param containerId The id of the container within the keyboard is being shown
  */
-fun AppCompatActivity.hideKeyboard(containerId: Int) {
+fun AppCompatActivity.hideKeyboard(@IdRes containerId: Int) {
     inputMethodManager.hideSoftInputFromWindow(findViewById<View>(containerId)?.windowToken, 0)
 }
 
 
 /**
  * Dismiss the soft keyboard
+ * @param container The container within the keyboard is being shown
  */
 fun AppCompatActivity.hideKeyboard(container: View) {
     inputMethodManager.hideSoftInputFromWindow(container.windowToken, 0)

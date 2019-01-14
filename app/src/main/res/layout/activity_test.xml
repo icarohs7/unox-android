@@ -7,11 +7,9 @@
         android:background="@color/colorPrimaryDark"
         android:orientation="vertical">
 
-        <View
+        <FrameLayout
+            android:id="@+id/container_activitytest"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-            android:scaleX=".7"
-            android:scaleY=".7" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 </layout>

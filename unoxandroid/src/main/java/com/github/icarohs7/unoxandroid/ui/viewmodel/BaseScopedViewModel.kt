@@ -9,9 +9,9 @@ import kotlinx.coroutines.MainScope
  * Base viewmodel class with a coroutine scope,
  * cancelling all coroutines when cleared
  */
-abstract class ScopedViewModel : ViewModel(), CoroutineScope by MainScope() {
+abstract class BaseScopedViewModel : ViewModel(), CoroutineScope by MainScope() {
     override fun onCleared() {
-        super.onCleared()
         cancelCoroutineScope()
+        super.onCleared()
     }
 }

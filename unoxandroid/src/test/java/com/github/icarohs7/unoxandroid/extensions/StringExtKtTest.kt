@@ -3,7 +3,7 @@ package com.github.icarohs7.unoxandroid.extensions
 import org.junit.Test
 import se.lovef.assert.v1.shouldEqual
 
-class StringExtTest {
+class StringExtKtTest {
 
     @Test
     fun `should use a fallback string`() {
