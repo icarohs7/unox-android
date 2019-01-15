@@ -24,10 +24,10 @@
 
 package com.github.icarohs7.unoxandroid.extensions.views
 
-import android.content.DialogInterface
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
+import com.afollestad.materialdialogs.MaterialDialog
 import com.github.icarohs7.unoxandroid.databinding.DialogYesNoBinding
 import org.jetbrains.anko.inputMethodManager
 
@@ -93,13 +93,9 @@ val Fragment.argumentStringMap: Map<String, String>
 fun Fragment.showConfirmDialog(
         title: String = "",
         message: String = "",
-        builder: DialogYesNoBinding.(DialogInterface) -> Unit
+        builder: DialogYesNoBinding.(MaterialDialog) -> Unit
 ) {
-    val binding = DialogYesNoBinding.inflate(layoutInflater)
-    binding.title = title
-    binding.message = message
-    val dialog = binding.showAlert()
-    binding.setNoHandler { dialog.dismiss() }
+    val (binding, dialog) = requireContext().newConfirmDialog(title, message)
     binding.builder(dialog)
 }
 
@@ -109,11 +105,7 @@ fun Fragment.showConfirmDialog(
         message: String = "",
         yesHandler: View.OnClickListener
 ) {
-    val binding = DialogYesNoBinding.inflate(layoutInflater)
-    binding.title = title
-    binding.message = message
-    val dialog = binding.showAlert()
-    binding.setNoHandler { dialog.dismiss() }
+    val (binding, dialog) = requireContext().newConfirmDialog(title, message)
     binding.setYesHandler {
         yesHandler.onClick(it)
         dialog.dismiss()

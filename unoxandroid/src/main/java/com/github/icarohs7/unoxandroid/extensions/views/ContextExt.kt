@@ -28,13 +28,15 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import arrow.core.Tuple2
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.github.icarohs7.unoxandroid.UnoxAndroid
 import com.github.icarohs7.unoxandroid.databinding.DialogYesNoBinding
 import org.jetbrains.anko.layoutInflater
@@ -95,13 +97,9 @@ fun Context.dialogTimePicker(listener: (hour: Int, minute: Int) -> Unit): TimePi
 fun Context.showConfirmDialog(
         title: String = "",
         message: String = "",
-        builder: DialogYesNoBinding.(DialogInterface) -> Unit
+        builder: DialogYesNoBinding.(MaterialDialog) -> Unit
 ) {
-    val binding = DialogYesNoBinding.inflate(layoutInflater)
-    binding.title = title
-    binding.message = message
-    val dialog = binding.showAlert()
-    binding.setNoHandler { dialog.dismiss() }
+    val (binding, dialog) = newConfirmDialog(title, message)
     binding.builder(dialog)
 }
 
@@ -111,13 +109,24 @@ fun Context.showConfirmDialog(
         message: String = "",
         yesHandler: View.OnClickListener
 ) {
-    val binding = DialogYesNoBinding.inflate(layoutInflater)
-    binding.title = title
-    binding.message = message
-    val dialog = binding.showAlert()
-    binding.setNoHandler { dialog.dismiss() }
+    val (binding, dialog) = newConfirmDialog(title, message)
     binding.setYesHandler {
         yesHandler.onClick(it)
         dialog.dismiss()
     }
+}
+
+/** Helper used to create an instance of the dialog */
+internal fun Context.newConfirmDialog(
+        title: String = "",
+        message: String = ""
+): Tuple2<DialogYesNoBinding, MaterialDialog> {
+    val binding = DialogYesNoBinding.inflate(layoutInflater)
+    binding.title = title
+    binding.message = message
+    val dialog = MaterialDialog(this)
+            .customView(view = binding.linearLayoutDialogyesno, noVerticalPadding = true)
+            .apply { show() }
+    binding.setNoHandler { dialog.dismiss() }
+    return Tuple2(binding, dialog)
 }
