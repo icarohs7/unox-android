@@ -28,17 +28,18 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import arrow.core.Tuple2
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.github.icarohs7.unoxandroid.UnoxAndroid
 import com.github.icarohs7.unoxandroid.databinding.DialogYesNoBinding
 import org.jetbrains.anko.layoutInflater
-import spencerstudios.com.bungeelib.Bungee
 import java.util.Calendar
 import kotlin.reflect.KClass
 
@@ -54,48 +55,8 @@ fun <T : AppCompatActivity> Context.navigateTo(
     intent.putExtras(extras)
     startActivity(intent)
     if (this is Activity) {
-        executeAnimation(this)
+        UnoxAndroid.animationType.executeFn(this)
         if (UnoxAndroid.finishActivityOnNavigate || finishActivity) finish()
-    }
-}
-
-/**
- * Execute an activity transition animation
- */
-private fun executeAnimation(context: Context) {
-    when (UnoxAndroid.animationType) {
-
-        UnoxAndroid.AnimationType.SPLIT -> Bungee.split(context)
-
-        UnoxAndroid.AnimationType.SHRINK -> Bungee.shrink(context)
-
-        UnoxAndroid.AnimationType.CARD -> Bungee.card(context)
-
-        UnoxAndroid.AnimationType.INOUT -> Bungee.inAndOut(context)
-
-        UnoxAndroid.AnimationType.SWIPE_LEFT -> Bungee.swipeLeft(context)
-
-        UnoxAndroid.AnimationType.SWIPE_RIGHT -> Bungee.swipeRight(context)
-
-        UnoxAndroid.AnimationType.SLIDE_UP -> Bungee.slideUp(context)
-
-        UnoxAndroid.AnimationType.SLIDE_DOWN -> Bungee.slideDown(context)
-
-        UnoxAndroid.AnimationType.SLIDE_LEFT -> Bungee.slideLeft(context)
-
-        UnoxAndroid.AnimationType.SLIDE_RIGHT -> Bungee.slideRight(context)
-
-        UnoxAndroid.AnimationType.FADE -> Bungee.fade(context)
-
-        UnoxAndroid.AnimationType.ZOOM -> Bungee.zoom(context)
-
-        UnoxAndroid.AnimationType.WINDMILL -> Bungee.windmill(context)
-
-        UnoxAndroid.AnimationType.SPIN -> Bungee.spin(context)
-
-        UnoxAndroid.AnimationType.DIAGONAL -> Bungee.diagonal(context)
-
-        UnoxAndroid.AnimationType.NO_ANIMATION -> Unit
     }
 }
 
@@ -136,13 +97,9 @@ fun Context.dialogTimePicker(listener: (hour: Int, minute: Int) -> Unit): TimePi
 fun Context.showConfirmDialog(
         title: String = "",
         message: String = "",
-        builder: DialogYesNoBinding.(DialogInterface) -> Unit
+        builder: DialogYesNoBinding.(MaterialDialog) -> Unit
 ) {
-    val binding = DialogYesNoBinding.inflate(layoutInflater)
-    binding.title = title
-    binding.message = message
-    val dialog = binding.showAlert()
-    binding.setNoHandler { dialog.dismiss() }
+    val (binding, dialog) = newConfirmDialog(title, message)
     binding.builder(dialog)
 }
 
@@ -152,13 +109,24 @@ fun Context.showConfirmDialog(
         message: String = "",
         yesHandler: View.OnClickListener
 ) {
-    val binding = DialogYesNoBinding.inflate(layoutInflater)
-    binding.title = title
-    binding.message = message
-    val dialog = binding.showAlert()
-    binding.setNoHandler { dialog.dismiss() }
+    val (binding, dialog) = newConfirmDialog(title, message)
     binding.setYesHandler {
         yesHandler.onClick(it)
         dialog.dismiss()
     }
+}
+
+/** Helper used to create an instance of the dialog */
+internal fun Context.newConfirmDialog(
+        title: String = "",
+        message: String = ""
+): Tuple2<DialogYesNoBinding, MaterialDialog> {
+    val binding = DialogYesNoBinding.inflate(layoutInflater)
+    binding.title = title
+    binding.message = message
+    val dialog = MaterialDialog(this)
+            .customView(view = binding.linearLayoutDialogyesno, noVerticalPadding = true)
+            .apply { show() }
+    binding.setNoHandler { dialog.dismiss() }
+    return Tuple2(binding, dialog)
 }

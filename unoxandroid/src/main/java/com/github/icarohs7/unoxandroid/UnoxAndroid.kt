@@ -24,11 +24,13 @@
 
 package com.github.icarohs7.unoxandroid
 
+import android.content.Context
 import androidx.annotation.AnimRes
 import com.github.icarohs7.unoxandroid.delegates.mutableLazy
 import com.github.icarohs7.unoxandroid.domain.BungeeAnim
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import spencerstudios.com.bungeelib.Bungee
 
 interface UnoxAndroid {
     /**
@@ -53,60 +55,53 @@ interface UnoxAndroid {
          */
         var animationType: AnimationType by mutableLazy { AnimationType.NO_ANIMATION }
 
-        /* Animations used on the animated fragment transitions -------------- */
-        var enterAnim: Int by mutableLazy { R.anim.zoom_enter }     /* ------- */
-        var exitAnim: Int by mutableLazy { R.anim.zoom_exit }       /* ------- */
-        var popEnterAnim: Int by mutableLazy { R.anim.zoom_enter }  /* ------- */
-        var popExitAnim: Int by mutableLazy { R.anim.zoom_exit }    /* ------- */
-        /* ------------------------------------------------------------------- */
+        /* Animations to be used by, for example, fragment transitions */
+        var enterAnim: Int by mutableLazy { R.anim.zoom_enter }
+        var exitAnim: Int by mutableLazy { R.anim.zoom_exit }
+        var popEnterAnim: Int by mutableLazy { R.anim.zoom_enter }
+        var popExitAnim: Int by mutableLazy { R.anim.zoom_exit }
 
         /**
          * When set to true, every call to navigateTo from
          * an activity will also finish it after the navigation
          */
         var finishActivityOnNavigate: Boolean by mutableLazy { false }
-
-        /**
-         * When set to true, will allow a fragment to be loaded twice
-         * in succession
-         */
-        var allowLoadingFragmentTwiceInARow: Boolean by mutableLazy { true }
     }
 
     /**
      * Animations available at the [animationType]
      */
-    enum class AnimationType(@AnimRes val enterRes: Int, @AnimRes val exitRes: Int) {
-        SPLIT(BungeeAnim.split_enter, BungeeAnim.split_exit),
+    enum class AnimationType(@AnimRes val enterRes: Int, @AnimRes val exitRes: Int, val executeFn: (Context) -> Unit) {
+        SPLIT(BungeeAnim.split_enter, BungeeAnim.split_exit, Bungee::split),
 
-        SHRINK(BungeeAnim.shrink_enter, BungeeAnim.shrink_exit),
+        SHRINK(BungeeAnim.shrink_enter, BungeeAnim.shrink_exit, Bungee::shrink),
 
-        CARD(BungeeAnim.card_enter, BungeeAnim.card_exit),
+        CARD(BungeeAnim.card_enter, BungeeAnim.card_exit, Bungee::card),
 
-        INOUT(BungeeAnim.in_out_enter, BungeeAnim.in_out_exit),
+        INOUT(BungeeAnim.in_out_enter, BungeeAnim.in_out_exit, Bungee::inAndOut),
 
-        SWIPE_LEFT(BungeeAnim.swipe_left_enter, BungeeAnim.swipe_left_exit),
+        SWIPE_LEFT(BungeeAnim.swipe_left_enter, BungeeAnim.swipe_left_exit, Bungee::swipeLeft),
 
-        SWIPE_RIGHT(BungeeAnim.swipe_right_enter, BungeeAnim.swipe_right_exit),
+        SWIPE_RIGHT(BungeeAnim.swipe_right_enter, BungeeAnim.swipe_right_exit, Bungee::swipeRight),
 
-        SLIDE_UP(BungeeAnim.slide_up_enter, BungeeAnim.slide_up_exit),
+        SLIDE_UP(BungeeAnim.slide_up_enter, BungeeAnim.slide_up_exit, Bungee::slideUp),
 
-        SLIDE_DOWN(BungeeAnim.slide_down_enter, BungeeAnim.slide_down_exit),
+        SLIDE_DOWN(BungeeAnim.slide_down_enter, BungeeAnim.slide_down_exit, Bungee::slideDown),
 
-        SLIDE_LEFT(BungeeAnim.slide_left_enter, BungeeAnim.slide_left_exit),
+        SLIDE_LEFT(BungeeAnim.slide_left_enter, BungeeAnim.slide_left_exit, Bungee::slideLeft),
 
-        SLIDE_RIGHT(BungeeAnim.slide_in_left, BungeeAnim.slide_out_right),
+        SLIDE_RIGHT(BungeeAnim.slide_in_left, BungeeAnim.slide_out_right, Bungee::slideRight),
 
-        FADE(BungeeAnim.fade_enter, BungeeAnim.fade_exit),
+        FADE(BungeeAnim.fade_enter, BungeeAnim.fade_exit, Bungee::fade),
 
-        ZOOM(BungeeAnim.zoom_enter, BungeeAnim.zoom_exit),
+        ZOOM(BungeeAnim.zoom_enter, BungeeAnim.zoom_exit, Bungee::zoom),
 
-        WINDMILL(BungeeAnim.windmill_enter, BungeeAnim.windmill_exit),
+        WINDMILL(BungeeAnim.windmill_enter, BungeeAnim.windmill_exit, Bungee::windmill),
 
-        SPIN(BungeeAnim.spin_enter, BungeeAnim.spin_exit),
+        SPIN(BungeeAnim.spin_enter, BungeeAnim.spin_exit, Bungee::spin),
 
-        DIAGONAL(BungeeAnim.diagonal_right_enter, BungeeAnim.diagonal_right_exit),
+        DIAGONAL(BungeeAnim.diagonal_right_enter, BungeeAnim.diagonal_right_exit, Bungee::diagonal),
 
-        NO_ANIMATION(0, 0);
+        NO_ANIMATION(0, 0, {});
     }
 }
