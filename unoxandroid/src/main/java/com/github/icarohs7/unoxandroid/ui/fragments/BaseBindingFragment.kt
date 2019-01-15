@@ -24,6 +24,7 @@ abstract class BaseBindingFragment<B : ViewDataBinding> : BaseScopedFragment() {
                 .apply { setLifecycleOwner(this@BaseBindingFragment) }
 
         onBindingCreated(inflater, container, savedInstanceState)
+        afterInitialSetup()
         return binding.root
     }
 
@@ -31,6 +32,12 @@ abstract class BaseBindingFragment<B : ViewDataBinding> : BaseScopedFragment() {
      * Called after the databinding of the fragment is set
      */
     open fun onBindingCreated(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) {
+    }
+
+    /**
+     * Called after [onBindingCreated]
+     */
+    open fun afterInitialSetup() {
     }
 
     /**
