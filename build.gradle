@@ -23,6 +23,12 @@
  */
 
 buildscript {
+    ext {
+        scriptsDir = "${project.rootDir}/buildSrc/scripts"
+        commonAndroidSettings = "${scriptsDir}/common-android.gradle"
+        mavenAndroidPublish = "${scriptsDir}/maven-android-publish.gradle"
+        jacocoAndroidSettings = "${scriptsDir}/jacoco-android-settings.gradle"
+    }
     repositories {
         google()
         jcenter()
@@ -39,65 +45,7 @@ plugins {
     id("com.palantir.git-version") version "0.11.0"
 }
 
-project.with {
-    group = "com.github.icarohs7"
-    version = gitVersion().toString().find("(\\d\\.\\d\\.\\d)")
-}
-
-subprojects { proj ->
-    afterEvaluate {
-        android {
-            compileSdkVersion(28)
-
-            defaultConfig {
-                minSdkVersion(21)
-                targetSdkVersion(28)
-                testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
-                testInstrumentationRunnerArguments(clearPackageData: "true")
-            }
-
-            buildTypes {
-                debug {
-                    testCoverageEnabled(true)
-                }
-                release {
-                    minifyEnabled(false)
-                    proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-                }
-            }
-
-            dependencies {
-                testImplementation(TestDeps.core)
-                androidTestImplementation(AndroidTestDeps.core)
-                androidTestImplementation("com.schibsted.spain:barista:${Versions.barista}") {
-                    exclude(group: "com.android.support")
-                    exclude(group: "org.jetbrains.kotlin")
-                }
-            }
-
-            dataBinding {
-                enabled(true)
-            }
-
-            compileOptions {
-                sourceCompatibility(1.8)
-                targetCompatibility(1.8)
-            }
-
-            testOptions {
-                execution("ANDROIDX_TEST_ORCHESTRATOR")
-                unitTests {
-                    includeAndroidResources(true)
-                    returnDefaultValues(true)
-                }
-            }
-
-            packagingOptions {
-                pickFirst("META-INF/library_release.kotlin_module")
-            }
-        }
-    }
-}
+ext.gitTagVersion = gitVersion().toString().find("(\\d\\.\\d\\.\\d)")
 
 allprojects {
     repositories {
