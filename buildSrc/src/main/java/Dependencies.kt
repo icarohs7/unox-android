@@ -1,22 +1,21 @@
 object Deps {
-    val core: List<String> = listOf(
-            "androidx.appcompat:appcompat:${Versions.appCompat}",
-            "androidx.core:core-ktx:${Versions.androidxcore}",
-            "androidx.fragment:fragment-ktx:${Versions.fragment}",
-            "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}",
-            "androidx.recyclerview:recyclerview:${Versions.recyclerView}",
-            "com.github.Binary-Finery:Bungee:${Versions.bungee}",
-            "com.github.bumptech.glide:glide:${Versions.glide}",
-            "com.github.kobeumut:StateViews:${Versions.stateViews}",
-            "com.github.santalu:mask-edittext:${Versions.maskedEditText}",
-            "com.google.android.material:material:${Versions.materialDesign}",
-            "io.arrow-kt:arrow-core:${Versions.arrow}",
-            "io.reactivex.rxjava2:rxjava:${Versions.rxJava}",
-            "org.jetbrains.anko:anko-commons:${Versions.anko}",
-            "org.jetbrains.anko:anko-sdk25:${Versions.anko}",
-            "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}",
-            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
-    )
+    const val androidxcore: String = "androidx.core:core-ktx:${Versions.androidxcore}"
+    const val ankoCommons: String = "org.jetbrains.anko:anko-commons:${Versions.anko}"
+    const val ankoSdk25: String = "org.jetbrains.anko:anko-sdk25:${Versions.anko}"
+    const val appCompat: String = "androidx.appcompat:appcompat:${Versions.appCompat}"
+    const val arrowCore: String = "io.arrow-kt:arrow-core:${Versions.arrow}"
+    const val bungee: String = "com.github.Binary-Finery:Bungee:${Versions.bungee}"
+    const val coroutinesAndroid: String = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    const val fragmentKtx: String = "androidx.fragment:fragment-ktx:${Versions.fragment}"
+    const val glide: String = "com.github.bumptech.glide:glide:${Versions.glide}"
+    const val jsonIter: String = "com.jsoniter:jsoniter:${Versions.jsonIter}"
+    const val kotlinStdLib: String = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
+    const val lifecycleExtensions: String = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
+    const val maskedEditText: String = "com.github.santalu:mask-edittext:${Versions.maskedEditText}"
+    const val materialDesign: String = "com.google.android.material:material:${Versions.materialDesign}"
+    const val materialDialogs: String = "com.afollestad.material-dialogs:core:${Versions.materialDialogs}"
+    const val recyclerView: String = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
+    const val rxJava2: String = "io.reactivex.rxjava2:rxjava:${Versions.rxJava}"
 }
 
 object KaptDeps {
@@ -51,13 +50,14 @@ object Versions {
     const val coroutines: String = "1.1.0"
     const val fragment: String = "1.0.0"
     const val glide: String = "4.8.0"
+    const val jsonIter: String = "0.9.19"
     const val kotlin: String = "1.3.11"
     const val lifecycle: String = "2.0.0"
     const val maskedEditText: String = "1.1.1"
     const val materialDesign: String = "1.0.0"
+    const val materialDialogs: String = "2.0.0-rc7"
     const val recyclerView: String = "1.0.0"
     const val rxJava: String = "2.2.5"
-    const val stateViews = "0.5"
 
     const val barista: String = "2.7.1"
     const val fixd: String = "1.0.3"

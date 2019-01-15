@@ -17,7 +17,23 @@ android {
 
 dependencies {
     implementation(fileTree(dir: "libs", include: ["*.jar"]))
-    api(Deps.core)
+    api(Deps.androidxcore)
+    api(Deps.ankoCommons)
+    api(Deps.ankoSdk25)
+    api(Deps.appCompat)
+    api(Deps.arrowCore)
+    api(Deps.bungee)
+    api(Deps.coroutinesAndroid)
+    api(Deps.fragmentKtx)
+    api(Deps.glide)
+    api(Deps.jsonIter)
+    api(Deps.kotlinStdLib)
+    api(Deps.lifecycleExtensions)
+    api(Deps.maskedEditText)
+    api(Deps.materialDesign)
+    api(Deps.materialDialogs)
+    api(Deps.recyclerView)
+    api(Deps.rxJava2)
     kapt(KaptDeps.core)
 }
 
