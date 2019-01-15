@@ -17,12 +17,19 @@ abstract class BaseBindingActivity<B : ViewDataBinding> : BaseScopedActivity() {
         binding = DataBindingUtil.setContentView(this, getLayout())
         binding.setLifecycleOwner(this)
         onBindingCreated(savedInstanceState)
+        afterInitialSetup()
     }
 
     /**
      * Called after the databinding of the fragment is set
      */
     open fun onBindingCreated(savedInstanceState: Bundle?) {
+    }
+
+    /**
+     * Called after [onBindingCreated]
+     */
+    open fun afterInitialSetup() {
     }
 
     /**
