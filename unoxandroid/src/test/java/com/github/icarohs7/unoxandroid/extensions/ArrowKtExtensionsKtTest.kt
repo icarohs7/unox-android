@@ -280,4 +280,26 @@ class ArrowKtExtensionsKtTest {
         e3 typeIs Option.just("")::class
         e4 shouldEqual None
     }
+
+    @Test
+    fun `unwrap list of typeclasses containing only valid values`() {
+        //Given
+        val t1: List<Success<Int?>> = listOf(1, 2, 3, null, 5, 6, null, 8, 9).map(::Success)
+        val t2: List<Success<String?>> = listOf("a", "b", null, "d", "e").map(::Success)
+        val o1: List<Some<Int?>> = listOf(1, 2, 3, null, 5, 6, null, 8, 9).map(::Some)
+        val o2: List<Some<String?>> = listOf("a", "b", null, "d", "e").map(::Some)
+        val t3: Try<List<Int?>> = listOf(1, 2, 3, null, 5, 6, null, 8, 9).success()
+        val t4: Try<List<String?>> = listOf("a", "b", null, "d", "e").success()
+        val o3: Option<List<Int?>> = listOf(1, 2, 3, null, 5, 6, null, 8, 9).some()
+        val o4: Option<List<String?>> = listOf("a", "b", null, "d", "e").some()
+        //Then
+        t1.successValues() shouldEqual listOf(1, 2, 3, 5, 6, 8, 9)
+        t2.successValues() shouldEqual listOf("a", "b", "d", "e")
+        o1.existingValues() shouldEqual listOf(1, 2, 3, 5, 6, 8, 9)
+        o2.existingValues() shouldEqual listOf("a", "b", "d", "e")
+        t3.successValues() shouldEqual listOf(1, 2, 3, 5, 6, 8, 9)
+        t4.successValues() shouldEqual listOf("a", "b", "d", "e")
+        o3.existingValues() shouldEqual listOf(1, 2, 3, 5, 6, 8, 9)
+        o4.existingValues() shouldEqual listOf("a", "b", "d", "e")
+    }
 }

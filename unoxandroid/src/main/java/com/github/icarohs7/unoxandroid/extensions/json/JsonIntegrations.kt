@@ -19,3 +19,8 @@ fun Try<JsonInstance>.str(): String = this.mapCatching(JsonInstance::str).orEmpt
 
 /** Convert JSON element to int or return [default] in case of error */
 fun Try<JsonInstance>.int(default: Int = 0): Int = this.mapCatching { it.int() }.getOrElse { default }
+
+/** Map wrapped value to list */
+fun Try<JsonInstance>.asList(): Try<List<JsonInstance>> {
+    return this.mapCatching { it.asList() }
+}

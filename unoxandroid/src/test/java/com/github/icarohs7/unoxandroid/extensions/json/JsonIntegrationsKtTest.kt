@@ -1,6 +1,7 @@
 package com.github.icarohs7.unoxandroid.extensions.json
 
 import arrow.core.Try
+import com.github.icarohs7.unoxandroid.extensions.successValues
 import org.junit.Test
 import se.lovef.assert.v1.shouldEqual
 
@@ -41,5 +42,20 @@ class JsonIntegrationsKtTest {
         r1["age"].int() shouldEqual 21
         r2[0, "message"].str() shouldEqual "Omai wa mou shindeiru"
         r2[1, "answer"].int() shouldEqual 42
+    }
+
+    @Test
+    fun `wrapped value to list`() {
+        //Given
+        val j1 = "[1,2,3,4]"
+        val j2 = """["Icaro", "Geandro", "Filipe", "Isaque", "Hugo"]"""
+        //When
+        val r1 = j1.parseJson()
+        val r2 = j2.parseJson()
+        //Then
+        var c1 = 1
+        r1.asList().successValues().forEach { it.int() shouldEqual c1++ }
+        var c2 = 0
+        r2.asList().successValues().forEach { it.str() shouldEqual r2[c2++].str() }
     }
 }

@@ -28,6 +28,7 @@ import arrow.core.Option
 import arrow.core.Success
 import arrow.core.Try
 import arrow.core.getOrElse
+import arrow.core.orNull
 import arrow.core.toOption
 
 /** Convert a nullable item to a try of it, or a null pointer failure */
@@ -88,3 +89,23 @@ inline fun <A, B> Option<A>.nullMap(f: (A) -> B?): Option<B> =
 /** Wrap the nullable receiver into an [Option] and apply the [nullMap] operation */
 inline fun <A, B> A?.optionMap(f: (A) -> B?): Option<B> =
         this.toOption().nullMap(f)
+
+/** List with only the elements that are [Success] */
+fun <T : Any> Iterable<Try<T?>>.successValues(): List<T> {
+    return this.mapNotNull { it.orNull() }
+}
+
+/** List with only the elements that are Some */
+fun <T : Any> Iterable<Option<T?>>.existingValues(): List<T> {
+    return this.mapNotNull { it.orNull() }
+}
+
+/** List with only the elements that are [Success] */
+fun <T : Any> Try<Iterable<T?>>.successValues(): List<T> {
+    return this.map { it.filterNotNull() }.orEmpty()
+}
+
+/** List with only the elements that are Some */
+fun <T : Any> Option<Iterable<T?>>.existingValues(): List<T> {
+    return this.map { it.filterNotNull() }.orEmpty()
+}
