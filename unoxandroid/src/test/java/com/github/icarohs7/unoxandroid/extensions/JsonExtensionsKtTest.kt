@@ -1,11 +1,58 @@
-package com.github.icarohs7.unoxandroid.extensions.json
+package com.github.icarohs7.unoxandroid.extensions
 
 import arrow.core.Try
-import com.github.icarohs7.unoxandroid.extensions.successValues
 import org.junit.Test
 import se.lovef.assert.v1.shouldEqual
 
-class JsonIntegrationsKtTest {
+class JsonExtensionsKtTest {
+    @Test
+    fun `serialize object to json string`() {
+        //Given
+        val o1 = listOf(1, 2, 3)
+        val o2 = mapOf("name" to "Icaro", "age" to "21")
+        val o3 = listOf(mapOf("name" to "Icaro"), mapOf("name" to "Filipe"))
+        //When
+        val noSpaces: String.() -> String = { replace(" ", "").replace("\n", "") }
+        val r1 = o1.json().orThrow().noSpaces()
+        val r2 = o2.json().orThrow().noSpaces()
+        val r3 = o3.json().orThrow().noSpaces()
+        //Then
+        r1 shouldEqual """[1,2,3]"""
+        r2 shouldEqual """{"name":"Icaro","age":"21"}"""
+        r3 shouldEqual """[{"name":"Icaro"},{"name":"Filipe"}]"""
+    }
+
+    @Test
+    fun `parse json string`() {
+        //Given
+        val j1 = """[{"name": "Icaro"}, {"name": "Filipe"}]"""
+        val j2 = """{"name": "Icaro", "age": 21, "class":"Mage"}"""
+        //When
+        val r1 = j1.parseJson().orThrow()
+        val r2 = j2.parseJson().orThrow()
+        //Then
+        r1[0]["name"].str() shouldEqual "Icaro"
+        r1[1, "name"].str() shouldEqual "Filipe"
+        r2["name"].str() shouldEqual "Icaro"
+        r2["age"].int() shouldEqual 21
+        r2["class"].str() shouldEqual "Mage"
+    }
+
+    @Test
+    fun `access string and int properties`() {
+        //Given
+        val j1 = """{"name":"Icaro", "age":21}"""
+        val j2 = """[{"message":"Omai wa mou shindeiru"},{"answer":42}]"""
+        //When
+        val r1 = j1.parseJson().orThrow()
+        val r2 = j2.parseJson().orThrow()
+        //Then
+        r1["name"].str() shouldEqual "Icaro"
+        r1["age"].int() shouldEqual 21
+        r2[0, "message"].str() shouldEqual "Omai wa mou shindeiru"
+        r2[1, "answer"].int() shouldEqual 42
+    }
+
     @Test
     fun `access json keys inside try`() {
         //Given
@@ -30,7 +77,7 @@ class JsonIntegrationsKtTest {
     }
 
     @Test
-    fun `access string and int properties`() {
+    fun `access string and int properties from try`() {
         //Given
         val j1 = """{"name":"Icaro", "age":21}"""
         val j2 = """[{"message":"Omai wa mou shindeiru"},{"answer":42}]"""
