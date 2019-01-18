@@ -9,9 +9,6 @@ android {
     }
 
     buildTypes {
-        debug {
-            testCoverageEnabled(true)
-        }
         release {
             minifyEnabled(false)
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
@@ -19,16 +16,20 @@ android {
     }
 
     dependencies {
-        testImplementation(TestDeps.core)
+        testImplementation(TestDeps.androidCore)
         androidTestImplementation(AndroidTestDeps.core)
-        androidTestImplementation("com.schibsted.spain:barista:${Versions.barista}") {
+        androidTestUtil(AndroidTestDeps.testOrchestrator)
+        androidTestImplementation(AndroidTestDeps.barista) {
             exclude(group: "com.android.support")
             exclude(group: "org.jetbrains.kotlin")
         }
+
+        if (project.getPlugins().hasPlugin("com.android.application"))
+            debugImplementation("com.amitshekhar.android:debug-db:1.0.4")
     }
 
     dataBinding {
-        enabled(true)
+        enabled = true
     }
 
     compileOptions {
@@ -46,5 +47,6 @@ android {
 
     packagingOptions {
         pickFirst("META-INF/library_release.kotlin_module")
+        pickFirst("META-INF/lib_release.kotlin_module")
     }
 }
