@@ -59,10 +59,12 @@ class JsonExtensionsKtTest {
         val j1 = """[{"name": "Icaro"}, {"name": "Filipe"}]"""
         val j2 = """{"name": "Icaro", "age": 21, "class":"Mage"}"""
         val j3 = """[1,2,3,4,5]"""
+        val j4 = """[1.1, 2.2, 3.3, {"name": "Icaro", "age": 21.7}]"""
         //When
         val r1: Try<JsonInstance> = j1.parseJson()
         val r2: Try<JsonInstance> = j2.parseJson()
         val r3: Try<JsonInstance> = j3.parseJson()
+        val r4: Try<JsonInstance> = j4.parseJson()
         //Then
         r1[0]["name"].str() shouldEqual "Icaro"
         r1[1, "name"].str() shouldEqual "Filipe"
@@ -74,6 +76,11 @@ class JsonExtensionsKtTest {
         r3[2].int() shouldEqual 3
         r3[3].int() shouldEqual 4
         r3[4].int() shouldEqual 5
+        r4[0].double() shouldEqual 1.1
+        r4[1].double() shouldEqual 2.2
+        r4[2].double() shouldEqual 3.3
+        r4[3, "name"].str() shouldEqual "Icaro"
+        r4[3, "age"].double() shouldEqual 21.7
     }
 
     @Test

@@ -32,6 +32,7 @@ dependencies {
     api(AndroidDeps.materialDialogs)
     api(AndroidDeps.recyclerView)
     api(Deps.rxJava2)
+    api(AndroidDeps.splittiesArchLifecycle)
     kapt(AndroidKaptDeps.core)
 }
 
