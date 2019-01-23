@@ -25,9 +25,9 @@
 buildscript {
     ext {
         scriptsDir = "${project.rootDir}/buildSrc/scripts"
-        commonAndroidSettings = "${scriptsDir}/common-android.gradle"
-        mavenAndroidPublish = "${scriptsDir}/maven-android-publish.gradle"
-        jacocoAndroidSettings = "${scriptsDir}/jacoco-android-settings.gradle"
+        commonAndroidSettings = "${scriptsDir}/android-common-settings.gradle"
+        mavenAndroidPublish = "${scriptsDir}/android-publish-settings.gradle"
+        jacocoAndroidSettings = "${scriptsDir}/android-jacoco-settings.gradle"
     }
     repositories {
         google()
