@@ -1,6 +1,6 @@
 package com.github.icarohs7.unoxandroid.delegates
 
-import com.github.icarohs7.unoxandroid.mutableLiveDataOf
+import com.snakydesign.livedataextensions.liveDataOf
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -111,8 +111,8 @@ class LiveDataDelegateTest {
     }
 
     private object Eg {
-        val ld1 = mutableLiveDataOf(5)
-        val ld2 = mutableLiveDataOf("hi")
-        val ld3 = mutableLiveDataOf(mapOf("name" to "Icaro", "country" to "Brazil"))
+        val ld1 = liveDataOf(5)
+        val ld2 = liveDataOf("hi")
+        val ld3 = liveDataOf(mapOf("name" to "Icaro", "country" to "Brazil"))
     }
 }

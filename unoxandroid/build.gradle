@@ -26,6 +26,7 @@ dependencies {
     api(Deps.jsonIter)
     api(Deps.kotlinStdLib)
     api(AndroidDeps.lifecycleExtensions)
+    api(AndroidDeps.lives)
     api(AndroidDeps.maskedEditText)
     api(AndroidDeps.materialDesign)
     api(AndroidDeps.materialDialogs)
