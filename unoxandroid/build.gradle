@@ -23,7 +23,6 @@ dependencies {
     api(AndroidDeps.bungee)
     api(AndroidDeps.coroutinesAndroid)
     api(AndroidDeps.fragmentKtx)
-    api(AndroidDeps.glide)
     api(Deps.jsonIter)
     api(Deps.kotlinStdLib)
     api(AndroidDeps.lifecycleExtensions)
@@ -32,7 +31,6 @@ dependencies {
     api(AndroidDeps.materialDialogs)
     api(AndroidDeps.recyclerView)
     api(Deps.rxJava2)
-    api(AndroidDeps.splittiesArchLifecycle)
     kapt(AndroidKaptDeps.core)
 }
 
