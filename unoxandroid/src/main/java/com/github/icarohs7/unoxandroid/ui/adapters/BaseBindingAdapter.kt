@@ -47,6 +47,13 @@ abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
         diffCallback ?: AllRefreshDiffCallback()
 ), CoroutineScope by MainScope() {
     /**
+     * Current data set loaded in the
+     * adapter
+     */
+    val currentDataSet: List<T>
+        get() = (0 until itemCount).map { index -> getItem(index) }
+
+    /**
      * Function converting an list item to an actual view
      */
     abstract fun onBindItemToView(item: T, view: DB)
