@@ -42,7 +42,7 @@ import kotlinx.coroutines.MainScope
  */
 abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
         @LayoutRes val itemLayout: Int,
-        diffCallback: DiffUtil.ItemCallback<T>?
+        diffCallback: DiffUtil.ItemCallback<T>? = null
 ) : ListAdapter<T, BaseBindingAdapter.BaseBindingViewHolder<DB>>(
         diffCallback ?: AllRefreshDiffCallback()
 ), CoroutineScope by MainScope() {
