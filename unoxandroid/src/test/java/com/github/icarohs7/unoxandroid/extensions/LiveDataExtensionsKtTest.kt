@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.github.icarohs7.unoxandroid.TestApplication
 import com.github.icarohs7.unoxandroid.extensions.coroutines.onForeground
 import com.snakydesign.livedataextensions.emptyLiveData
-import com.snakydesign.livedataextensions.liveDataOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -39,18 +38,24 @@ class LiveDataExtensionsKtTest {
         val activity = Robolectric.setupActivity(AppCompatActivity::class.java)
         var count = 0
         var lastValue = ""
-        val liveData = liveDataOf("Omai wa mou shindeiru!")
-
+        val liveData = emptyLiveData<String>()
         liveData.observe(activity) {
             count++
             lastValue = it
         }
 
+        count shouldEqual 0
+        lastValue shouldEqual ""
+
+        liveData.value = "Omai wa mou shindeiru!"
         count shouldEqual 1
         lastValue shouldEqual "Omai wa mou shindeiru!"
 
         liveData.value = "NANI!?"
+        count shouldEqual 2
+        lastValue shouldEqual "NANI!?"
 
+        liveData.value = null
         count shouldEqual 2
         lastValue shouldEqual "NANI!?"
     }
