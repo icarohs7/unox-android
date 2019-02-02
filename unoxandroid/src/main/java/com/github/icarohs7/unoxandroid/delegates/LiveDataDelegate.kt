@@ -31,6 +31,6 @@ open class RedirectToLiveDataDelegate<T>(
             liveData.value ?: defaultValue
 
     operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
-        (liveData as? MutableLiveData)?.value = value
+        if (liveData is MutableLiveData) liveData.value = value
     }
 }
