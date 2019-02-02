@@ -1,15 +1,21 @@
 package com.github.icarohs7.unoxandroid.extensions
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
+import com.github.icarohs7.unoxandroid.TestApplication
 import com.github.icarohs7.unoxandroid.extensions.coroutines.onForeground
 import com.snakydesign.livedataextensions.emptyLiveData
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import se.lovef.assert.v1.shouldEqual
 
+
 @RunWith(RobolectricTestRunner::class)
+@Config(application = TestApplication::class)
 class LiveDataExtensionsKtTest {
     @Test
     fun `should return livedata value or fallback`(): Unit = runBlocking<Unit> {
@@ -25,5 +31,32 @@ class LiveDataExtensionsKtTest {
         onForeground { l3.value = null }
         l3.value shouldEqual null
         l3.valueOr("NANI!?") shouldEqual "NANI!?"
+    }
+
+    @Test
+    fun `should observe live data with lambda and non nullable value`() {
+        val activity = Robolectric.setupActivity(AppCompatActivity::class.java)
+        var count = 0
+        var lastValue = ""
+        val liveData = emptyLiveData<String>()
+        liveData.observe(activity) {
+            count++
+            lastValue = it
+        }
+
+        count shouldEqual 0
+        lastValue shouldEqual ""
+
+        liveData.value = "Omai wa mou shindeiru!"
+        count shouldEqual 1
+        lastValue shouldEqual "Omai wa mou shindeiru!"
+
+        liveData.value = "NANI!?"
+        count shouldEqual 2
+        lastValue shouldEqual "NANI!?"
+
+        liveData.value = null
+        count shouldEqual 2
+        lastValue shouldEqual "NANI!?"
     }
 }

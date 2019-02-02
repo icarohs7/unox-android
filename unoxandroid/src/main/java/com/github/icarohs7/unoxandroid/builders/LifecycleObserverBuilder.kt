@@ -13,7 +13,6 @@ class LifecycleObserverBuilder<T : LifecycleOwner> {
     internal var pause: T.() -> Unit = {}
     internal var stop: T.() -> Unit = {}
     internal var destroy: T.() -> Unit = {}
-    internal var any: T.() -> Unit = {}
 
     fun onCreate(fn: T.() -> Unit) {
         create = fn
@@ -37,9 +36,5 @@ class LifecycleObserverBuilder<T : LifecycleOwner> {
 
     fun onDestroy(fn: T.() -> Unit) {
         destroy = fn
-    }
-
-    fun onAny(fn: T.() -> Unit) {
-        any = fn
     }
 }

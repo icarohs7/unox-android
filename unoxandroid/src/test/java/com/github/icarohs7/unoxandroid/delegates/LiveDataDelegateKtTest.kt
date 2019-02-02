@@ -1,7 +1,6 @@
 package com.github.icarohs7.unoxandroid.delegates
 
 import com.snakydesign.livedataextensions.liveDataOf
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -10,7 +9,7 @@ import org.robolectric.RobolectricTestRunner
 import se.lovef.assert.v1.shouldEqual
 
 @RunWith(RobolectricTestRunner::class)
-class LiveDataDelegateTest {
+class LiveDataDelegateKtTest {
     @Test
     fun `should delegate get operations on livedata`() {
         runBlocking {
@@ -18,8 +17,6 @@ class LiveDataDelegateTest {
             val d1 by Eg.ld1
             val d2 by Eg.ld2
             val d3 by Eg.ld3
-
-            delay(1)
 
             //Then
             d1 shouldEqual 5
@@ -40,8 +37,6 @@ class LiveDataDelegateTest {
             d1 = 1532
             d2 = "omai wa mou shindeiru"
             d3 = mapOf("name" to "Bolsonaro")
-
-            delay(1)
 
             //Then
             Eg.ld1.value shouldEqual d1
@@ -66,8 +61,6 @@ class LiveDataDelegateTest {
             Eg.ld2.value = null
             Eg.ld3.value = null
 
-            delay(1)
-
             //Then
             Eg.ld1.value shouldEqual null
             Eg.ld2.value shouldEqual null
@@ -90,8 +83,6 @@ class LiveDataDelegateTest {
             d1 = 1532
             d2 = "omai wa mou shindeiru"
             d3 = mapOf("name" to "Bolsonaro")
-
-            delay(1)
 
             //Then
             Eg.ld1.value shouldEqual d1
