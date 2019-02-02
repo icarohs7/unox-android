@@ -13,5 +13,5 @@ fun <T> LiveData<T>.valueOr(fallback: T): T =
  * observation of a [LiveData]
  */
 fun <T> LiveData<T>.observe(owner: LifecycleOwner, observer: (T) -> Unit) {
-    this.observe(owner, Observer<T?> { it?.let { item -> observer(item) } })
+    this.observe(owner, Observer<T?> { it?.let(observer) })
 }
