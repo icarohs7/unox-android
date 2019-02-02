@@ -10,7 +10,7 @@ import org.robolectric.RobolectricTestRunner
 import se.lovef.assert.v1.shouldEqual
 
 @RunWith(RobolectricTestRunner::class)
-class LiveDataDelegateTest {
+class LiveDataDelegateKtTest {
     @Test
     fun `should delegate get operations on livedata`() {
         runBlocking {

@@ -3,7 +3,7 @@ package com.github.icarohs7.unoxandroid.delegates
 import org.junit.Test
 import se.lovef.assert.v1.shouldEqual
 
-class PropertyAccessDelegatorTest {
+class PropertyAccessDelegatorKtTest {
     private var target1 = "hello"
     private var mirror1 by delegateAccess(::target1, { target1 = it })
     private var target2 = "omai"

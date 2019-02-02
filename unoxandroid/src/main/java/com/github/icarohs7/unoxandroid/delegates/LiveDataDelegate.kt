@@ -1,5 +1,3 @@
-@file:JvmName("LiveDataDelegate")
-
 package com.github.icarohs7.unoxandroid.delegates
 
 import androidx.lifecycle.LiveData
