@@ -8,8 +8,9 @@ import kotlin.reflect.KProperty
 operator fun <T> LiveData<T>.getValue(thisRef: Any?, property: KProperty<*>): T? = value
 
 /** Delegate to redirect any set operation of the property to the mutable live data */
-operator fun <T> MutableLiveData<T>.setValue(thisRef: Any?, property: KProperty<*>, value: T?): Unit =
-        postValue(value)
+operator fun <T> MutableLiveData<T>.setValue(thisRef: Any?, property: KProperty<*>, value: T?) {
+    this.value = value
+}
 
 /** Helper for [RedirectToLiveDataDelegate] */
 fun <T> LiveData<T>.nonNullDelegate(
@@ -29,6 +30,7 @@ open class RedirectToLiveDataDelegate<T>(
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T =
             liveData.value ?: defaultValue
 
-    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T): Unit =
-            (liveData as? MutableLiveData)?.postValue(value) ?: Unit
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+        (liveData as? MutableLiveData)?.value = value
+    }
 }
