@@ -9,6 +9,7 @@ import com.github.icarohs7.unoxandroid.builders.LifecycleObserverBuilder
 /**
  * Attach an observable to the lifecycle of a given lifecycle owner using a builder DSL
  */
+@Suppress("unused")
 fun <T : LifecycleOwner> T.addLifecycleObserver(observer: LifecycleObserverBuilder<T>.() -> Unit) {
     val builder = LifecycleObserverBuilder<T>()
     builder.observer()
@@ -30,9 +31,6 @@ fun <T : LifecycleOwner> T.addLifecycleObserver(observer: LifecycleObserverBuild
 
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         fun onDestroy(): Unit = builder.destroy(this@addLifecycleObserver)
-
-        @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
-        fun onAny(): Unit = builder.any(this@addLifecycleObserver)
     })
 }
 
@@ -76,11 +74,4 @@ fun <T : LifecycleOwner> T.addOnStopObserver(observer: T.() -> Unit) {
  */
 fun <T : LifecycleOwner> T.addOnDestroyObserver(observer: T.() -> Unit) {
     addLifecycleObserver { onDestroy(observer) }
-}
-
-/**
- * Attach an observable to be called on every lifecycle event of the given [LifecycleOwner]
- */
-fun <T : LifecycleOwner> T.addOnAnyLifecycleEventObserver(observer: T.() -> Unit) {
-    addLifecycleObserver { onAny(observer) }
 }
