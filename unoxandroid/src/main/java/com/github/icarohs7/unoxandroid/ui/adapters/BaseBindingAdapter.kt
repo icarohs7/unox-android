@@ -42,10 +42,17 @@ import kotlinx.coroutines.MainScope
  */
 abstract class BaseBindingAdapter<T, DB : ViewDataBinding>(
         @LayoutRes val itemLayout: Int,
-        diffCallback: DiffUtil.ItemCallback<T>?
+        diffCallback: DiffUtil.ItemCallback<T>? = null
 ) : ListAdapter<T, BaseBindingAdapter.BaseBindingViewHolder<DB>>(
         diffCallback ?: AllRefreshDiffCallback()
 ), CoroutineScope by MainScope() {
+    /**
+     * Current data set loaded in the
+     * adapter
+     */
+    val currentDataSet: List<T>
+        get() = (0 until itemCount).map { index -> getItem(index) }
+
     /**
      * Function converting an list item to an actual view
      */

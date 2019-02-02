@@ -1,9 +1,11 @@
 package com.github.icarohs7.unoxandroid.extensions
 
+import arrow.core.Try
 import org.junit.Test
 import se.lovef.assert.v1.shouldEqual
+import se.lovef.assert.v1.throws
 
-class StringExtKtTest {
+class StringExtensionsKtTest {
 
     @Test
     fun `should use a fallback string`() {
@@ -24,6 +26,32 @@ class StringExtKtTest {
 
         (s3 ifBlankOrNull f3) shouldEqual s3
         (s3 ifEmptyOrNull f3) shouldEqual s3
+
+        val s4 = " "
+        val f4 = "leeeeeroy jeeeeenkins!"
+
+        (s4 ifBlankOrNull { f4 }) shouldEqual f4
+        (s4 ifEmptyOrNull { f4 }) shouldEqual s4
+
+        val s5: String? = null
+        val f5 = "test"
+
+        (s5 ifBlankOrNull { f5 }) shouldEqual f5
+        (s5 ifEmptyOrNull { f5 }) shouldEqual f5
+
+        val s6 = "hi"
+        val f6 = "nope"
+
+        (s6 ifBlankOrNull { f6 }) shouldEqual s6
+        (s6 ifEmptyOrNull { f6 }) shouldEqual s6
+
+        val s7 = " "
+        val r7 = Try { s7 ifBlankOrNull { throw IllegalStateException() } }
+        ;{ r7.orThrow() } throws IllegalStateException::class
+
+        val s8 = ""
+        val r8 = Try { s8 ifEmptyOrNull { throw IllegalArgumentException() } }
+        ;{ r8.orThrow() } throws IllegalArgumentException::class
     }
 
     @Test

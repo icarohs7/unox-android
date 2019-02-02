@@ -36,11 +36,11 @@ fun <T> T?.toTry(): Try<T> =
         Try { this@toTry!! }
 
 /** @return Typeclass safely mapped to the first element of the list */
-fun <T> Try<List<T>>.first(): Try<T> =
+fun <T> Try<Iterable<T>>.first(): Try<T> =
         this.mapCatching { it.first() }
 
 /** @return Typeclass safely mapped to the first element of the list */
-fun <T> Option<List<T>>.first(): Option<T> =
+fun <T> Option<Iterable<T>>.first(): Option<T> =
         this.nullMap { it.firstOrNull() }
 
 /** @return Wrapped string or empty */
