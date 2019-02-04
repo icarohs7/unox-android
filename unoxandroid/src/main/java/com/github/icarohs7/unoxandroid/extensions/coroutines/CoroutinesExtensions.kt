@@ -7,8 +7,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.ContinuationInterceptor
 import kotlin.coroutines.CoroutineContext
@@ -80,4 +82,44 @@ inline val CoroutineContext.dispatcher: CoroutineDispatcher
  */
 suspend inline fun <T> ReceiveChannel<T>.forEach(fn: (T) -> Unit) {
     for (item in this) fn(item)
+}
+
+private typealias Suspend<T> = suspend () -> T
+
+/**
+ * Execute both functions in parallel and suspend until
+ * both are complete, then returning the result of both
+ * wrapped in a [Pair]
+ */
+suspend fun <A, B> parallelPair(op1: Suspend<A>, op2: suspend () -> B): Pair<A, B> {
+    return coroutineScope {
+        val a = async { op1() }
+        val b = async { op2() }
+        Pair(a.await(), b.await()) //TODO test
+    }
+}
+
+/**
+ * Execute the three functions in parallel and suspend until
+ * they are complete, then returning the result wrapped in
+ * a [Triple]
+ */
+suspend fun <A, B, C> parallelTriple(op1: Suspend<A>, op2: Suspend<B>, op3: Suspend<C>): Triple<A, B, C> {
+    return coroutineScope {
+        val a = async { op1() }
+        val b = async { op2() }
+        val c = async { op3() }
+        Triple(a.await(), b.await(), c.await()) //TODO test
+    }
+}
+
+/**
+ * [Iterable.map] function executing
+ * each operation in parallel and then
+ * joining the result and returning it
+ */
+suspend fun <A, B> Iterable<A>.parallelMap(f: suspend (A) -> B): List<B> {
+    return coroutineScope {
+        map { async { f(it) } }.map { it.await() } //TODO test
+    }
 }
