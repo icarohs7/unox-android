@@ -5,14 +5,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.junit.Test
 import se.lovef.assert.v1.shouldBe
+import se.lovef.assert.v1.shouldBeCloseTo
 import se.lovef.assert.v1.shouldBeFalse
 import se.lovef.assert.v1.shouldBeTrue
 import se.lovef.assert.v1.shouldEqual
+import kotlin.system.measureTimeMillis
 
 class CoroutinesExtensionsKtTest {
     @Test
@@ -159,6 +162,62 @@ class CoroutinesExtensionsKtTest {
             coroutine.join()
             items shouldEqual mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
             Unit
+        }
+    }
+
+    @Test
+    fun `should create parallel pair`() {
+        runBlocking {
+            val time = measureTimeMillis { onBackground { parallelPair({ delay(1000) }, { delay(1000) }) } }
+            time shouldBeCloseTo 1499 tolerance 500
+
+            val numbers = parallelPair({ 10 }, { 20 })
+            val (first, second) = numbers
+            first shouldEqual 10
+            second shouldEqual 20
+
+            val time2 = measureTimeMillis { parallelPair({ delay(1500) }, { delay(1500) }) }
+            time2 shouldBeCloseTo 2249 tolerance 750
+        }
+    }
+
+    @Test
+    fun `should create parallel triple`() {
+        runBlocking {
+            val time = measureTimeMillis {
+                onBackground {
+                    parallelTriple({ delay(1000) }, { delay(1000) }, { delay(1000) })
+                }
+            }
+            time shouldBeCloseTo 1499 tolerance 500
+
+            val numbers = parallelTriple({ 10 }, { 20 }, { 30 })
+            val (first, second, third) = numbers
+            first shouldEqual 10
+            second shouldEqual 20
+            third shouldEqual 30
+
+            val time2 = measureTimeMillis { parallelTriple({ delay(1500) }, { delay(1500) }, { delay(1500) }) }
+            time2 shouldBeCloseTo 2249 tolerance 750
+        }
+    }
+
+    @Test
+    fun `should map collections in parallel`() {
+        runBlocking {
+            val c1 = listOf(1, 2, 3)
+            val r1 = c1.parallelMap { it * 10 }
+            r1 shouldEqual listOf(10, 20, 30)
+
+            val c2 = listOf('A', 'B', 'C')
+            val time = measureTimeMillis {
+                val r2 = c2.parallelMap {
+                    delay(1000)
+                    it + 1
+                }
+                r2 shouldEqual listOf('B', 'C', 'D')
+            }
+            time shouldBeCloseTo 1499 tolerance 500
         }
     }
 }

@@ -19,19 +19,12 @@ dependencies {
     api(AndroidDeps.ankoSdk25)
     api(AndroidDeps.appCompat)
     api(Deps.arrowCore)
-    api(AndroidDeps.bungee)
     api(AndroidDeps.coroutinesAndroid)
-    api(AndroidDeps.fragmentKtx)
     api(Deps.jsonIter)
     api(Deps.kotlinStdLib)
     api(AndroidDeps.lifecycleExtensions)
     api(AndroidDeps.lives)
-    api(AndroidDeps.maskedEditText)
-    api(AndroidDeps.materialDesign)
-    api(AndroidDeps.materialDialogs)
-    api(AndroidDeps.recyclerView)
     api(AndroidDeps.rxAndroid)
-    kapt(AndroidKaptDeps.core)
 }
 
 ext.groupId = "com.github.icarohs7"

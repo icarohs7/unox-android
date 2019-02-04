@@ -175,6 +175,7 @@ object AndroidDeps {
     const val stateViews = "com.github.kobeumut:StateViews:${Versions.stateViews}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
     const val unoxAndroid = "com.github.icarohs7:unox-android:${Versions.unoxAndroid}"
+    const val unoxAndroidArch = "com.github.icarohs7:unox-android-arch:${Versions.unoxAndroidArch}"
 }
 
 object AndroidKaptDeps {
@@ -185,7 +186,6 @@ object AndroidKaptDeps {
 
 object TestDeps {
     val core = listOf(
-            "io.mockk:mockk:${Versions.mockK}",
             "org.bigtesting:fixd:${Versions.fixd}",
             "org.koin:koin-test:${Versions.koin}",
             "se.lovef:kotlin-assert-utils:${Versions.kotlinAssertUtils}"
@@ -253,7 +253,7 @@ object Versions {
     const val playServicesPlaces = "16.0.0"
     const val preferenceKtx = "1.0.0"
     const val pugNotification = "1.8.1"
-    const val quantum = "1.0.0-RC.0"
+    const val quantum = "1.0.0"
     const val reactiveLocation2 = "2.1"
     const val reactiveNetwork = "3.0.2"
     const val recyclerView = "1.0.0"
@@ -274,12 +274,12 @@ object Versions {
     const val stetho = "1.5.0"
     const val timber = "4.7.1"
     const val tornadoFx = "1.7.17"
-    const val unoxAndroid = "6a944790c3"
+    const val unoxAndroid = "2.4.6"
+    const val unoxAndroidArch = "0.2"
 
     const val barista = "2.7.1"
     const val fixd = "1.0.3"
     const val kotlinAssertUtils = "0.8.0"
-    const val mockK = "1.9"
     const val robolectric = "4.1"
     const val testCore = "1.1.0"
 
