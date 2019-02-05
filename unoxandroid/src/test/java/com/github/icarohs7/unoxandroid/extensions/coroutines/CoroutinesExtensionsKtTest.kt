@@ -248,16 +248,16 @@ class CoroutinesExtensionsKtTest {
             }
             println("500_000 elements filter time => $t2")
 
-            val c3 = (1..9_000_000)
+            val c3 = (1..2_000_001)
             val t3 = measureTimeMillis {
                 withContext(Dispatchers.IO) {
                     val r3 = withContext(Dispatchers.IO) {
                         c3.parallelFilter { it % 3 == 0 }
                     }
-                    r3 shouldEqual (3..9_000_000 step 3).toList()
+                    r3 shouldEqual (3..2_000_001 step 3).toList()
                 }
             }
-            println("9_000_000 elements filter time => $t3")
+            println("2_000_001 elements filter time => $t3")
         }
     }
 }
