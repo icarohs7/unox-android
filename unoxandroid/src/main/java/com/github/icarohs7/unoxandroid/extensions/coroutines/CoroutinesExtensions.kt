@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.coroutineScope
@@ -114,13 +115,22 @@ suspend fun <A, B, C> parallelTriple(op1: Suspend<A>, op2: Suspend<B>, op3: Susp
 }
 
 /**
+ * Execute all the given operations in parallel
+ * using the coroutine context of the calling
+ * coroutine ([kotlin.coroutines.EmptyCoroutineContext])
+ */
+suspend inline fun parallelRun(vararg operations: suspend () -> Unit) {
+    coroutineScope { operations.map { async { it() } } }.awaitAll()
+}
+
+/**
  * [Iterable.map] function executing
  * each operation in parallel and then
  * joining the result and returning it
  */
 suspend fun <A, B> Iterable<A>.parallelMap(f: suspend (A) -> B): List<B> {
     return coroutineScope {
-        map { async { f(it) } }.map { it.await() }
+        map { async { f(it) } }.awaitAll()
     }
 }
 
