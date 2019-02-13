@@ -203,6 +203,54 @@ class CoroutinesExtensionsKtTest {
     }
 
     @Test
+    fun `should run operations in parallel`() {
+        runBlocking {
+            val delayedRun: (() -> Unit) -> suspend () -> Unit = {
+                {
+                    delay(3000)
+                    it()
+                }
+            }
+
+            var a = 0
+            var b = 0
+            var c = 0
+            var d = 0
+            var e = 0
+            var f = 0
+            var g = 0
+            var h = 0
+
+            val t = measureTimeMillis {
+                onBackground {
+                    parallelRun(
+                            delayedRun { a = 10 },
+                            delayedRun { b = 20 },
+                            delayedRun { c = 30 },
+                            delayedRun { d = 40 },
+                            delayedRun { e = 50 },
+                            delayedRun { f = 60 },
+                            delayedRun { g = 70 },
+                            delayedRun { h = 80 }
+                    )
+                }
+            }
+
+            a shouldEqual 10
+            b shouldEqual 20
+            c shouldEqual 30
+            d shouldEqual 40
+            e shouldEqual 50
+            f shouldEqual 60
+            g shouldEqual 70
+            h shouldEqual 80
+
+            println("Time to parallel run => $t")
+            t shouldBeCloseTo 3500 tolerance 750
+        }
+    }
+
+    @Test
     fun `should map collections in parallel`() {
         runBlocking {
             val c1 = listOf(1, 2, 3)
@@ -218,6 +266,46 @@ class CoroutinesExtensionsKtTest {
                 r2 shouldEqual listOf('B', 'C', 'D')
             }
             time shouldBeCloseTo 1499 tolerance 500
+        }
+    }
+
+    @Test
+    fun `should filter a collection in parallel`() {
+        runBlocking {
+            val c1 = (1..1_000)
+            val t = measureTimeMillis {
+                onBackground {
+                    val r1 = c1.parallelFilter {
+                        delay(500)
+                        it <= 10
+                    }
+                    r1 shouldEqual listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+                }
+            }
+            println("1_000 filters time => ${t}ms")
+            t shouldBeCloseTo 1500 tolerance 20000
+
+            val c2 = (1..5_000)
+            val t2 = measureTimeMillis {
+                withContext(Dispatchers.IO) {
+                    val r2 = withContext(Dispatchers.IO) {
+                        c2.parallelFilter { it % 2 == 0 }
+                    }
+                    r2 shouldEqual (2..5_000 step 2).toList()
+                }
+            }
+            println("5_000 elements filter time => $t2")
+
+            val c3 = (1..10_002)
+            val t3 = measureTimeMillis {
+                withContext(Dispatchers.IO) {
+                    val r3 = withContext(Dispatchers.IO) {
+                        c3.parallelFilter { it % 3 == 0 }
+                    }
+                    r3 shouldEqual (3..10_002 step 3).toList()
+                }
+            }
+            println("10_002 elements filter time => $t3")
         }
     }
 }

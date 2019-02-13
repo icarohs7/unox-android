@@ -4,7 +4,7 @@ plugins {
     id("kotlin-kapt")
 }
 
-apply(from: commonAndroidSettings)
+apply(from: androidCommonSettings)
 android {
     defaultConfig {
         versionCode(1)
@@ -28,6 +28,6 @@ dependencies {
 }
 
 ext.groupId = "com.github.icarohs7"
-ext.artifactId = "unoxandroid"
-apply(from: jacocoAndroidSettings)
-apply(from: mavenAndroidPublish)
+ext.artifactId = "unox-android"
+apply(from: androidJacocoSettings)
+apply(from: androidPublishSettings)
