@@ -68,4 +68,48 @@ class StringExtensionsKtTest {
         val exp3 = "dk32"
         s3 shouldEqual exp3
     }
+
+    @Test
+    fun `should return only matching part of string`() {
+        val s1 = "uuddlrlrba"
+        val r1 = "lrlr"
+        val rgx1 = Regex("""lr""")
+        s1.onlyMatching(rgx1) shouldEqual r1
+
+        val s2 = "aabbaaabababasfsfuzumymw"
+        val r2 = "abbababab"
+        val rgx2 = Regex("""ab+""")
+        s2.onlyMatching(rgx2) shouldEqual r2
+
+        val s3 = "afffzzabcxyaababxxffzauukkabc"
+        val r3 = "fzfz"
+        val rgx3 = Regex("""fz""")
+        s3.onlyMatching(rgx3) shouldEqual r3
+    }
+
+    @Test
+    fun `should return only the digits of a string`() {
+        val s1 = "123ajjkdsjakdj456dkjakjdkjasd789"
+        val r1 = "123456789"
+        s1.onlyNumbers() shouldEqual r1
+
+        val s2 = "dasdasdas12a21b456c654ajdksdjkajdkas"
+        val r2 = "1221456654"
+        s2.onlyNumbers() shouldEqual r2
+    }
+
+    @Test
+    fun `should get the digits in a string`() {
+        val s1 = "123ajjkdsjakdj456dkjakjdkjasd789"
+        val r1 = 123456789L
+        s1.digits() shouldEqual r1
+
+        val s2 = "dasdasdas12a21b456c654ajdksdjkajdkas"
+        val r2 = 1221456654L
+        s2.digits() shouldEqual r2
+
+        val s3 = "1dskadkokwo3oskodkaodkao4okoaskdokasodkod99daksokd1532oskdaokd"
+        val r3 = 134991532L
+        s3.digits() shouldEqual r3
+    }
 }

@@ -28,6 +28,6 @@ dependencies {
 }
 
 ext.groupId = "com.github.icarohs7"
-ext.artifactId = "unoxandroid"
+ext.artifactId = "unox-android"
 apply(from: androidJacocoSettings)
 apply(from: androidPublishSettings)

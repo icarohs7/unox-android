@@ -34,8 +34,35 @@ inline infix fun String?.ifEmptyOrNull(fallback: () -> String): String {
 }
 
 /**
- * Returns the first ocurrence of the substring
+ * Return the first ocurrence of the substring
  * matching the Regex
  */
 fun String.find(regex: Regex): String? =
         regex.find(this)?.value
+
+/**
+ * Return only the parts of the
+ * string matching the given regex
+ */
+fun String.onlyMatching(regex: Regex): String {
+    return regex.findAll(this).joinToString(separator = "") { it.value }
+}
+
+/**
+ * Return a string with only the
+ * digits contained in the original
+ * string
+ */
+fun String.onlyNumbers(): String {
+    val regex = Regex("""\d""")
+    return this.onlyMatching(regex)
+}
+
+/**
+ * Return all digits contained in
+ * string, with the order retained
+ */
+@Suppress("NOTHING_TO_INLINE")
+inline fun String.digits(): Long? {
+    return onlyNumbers().toLongOrNull()
+}
