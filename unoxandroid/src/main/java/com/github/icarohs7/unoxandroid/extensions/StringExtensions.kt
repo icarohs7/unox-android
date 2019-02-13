@@ -62,7 +62,6 @@ fun String.onlyNumbers(): String {
  * Return all digits contained in
  * string, with the order retained
  */
-@Suppress("NOTHING_TO_INLINE")
-inline fun String.digits(): Long? {
+fun String.digits(): Long? {
     return onlyNumbers().toLongOrNull()
 }

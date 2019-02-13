@@ -52,6 +52,11 @@ class StringExtensionsKtTest {
         val s8 = ""
         val r8 = Try { s8 ifEmptyOrNull { throw IllegalArgumentException() } }
         ;{ r8.orThrow() } throws IllegalArgumentException::class
+
+        val s9 = ""
+        val f9 = "NANI!?"
+        (s9 ifBlankOrNull f9) shouldEqual f9
+        (s9 ifEmptyOrNull f9) shouldEqual f9
     }
 
     @Test
@@ -67,6 +72,9 @@ class StringExtensionsKtTest {
         val s3 = "15lsdkasdklskdlklsadk32osdaklkdlksdlksld99".find(Regex("\\w{2}\\d+"))
         val exp3 = "dk32"
         s3 shouldEqual exp3
+
+        val s4 = "djaskdjsakdjkmudamudamudamudamudadkjajdsoraoraoraoraoraoraora".find(Regex("NANI!"))
+        s4 shouldEqual null
     }
 
     @Test

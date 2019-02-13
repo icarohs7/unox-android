@@ -10,8 +10,7 @@ import io.reactivex.schedulers.Schedulers
  * with subscribeOn and the mainThread scheduler
  * to the downstream with observeOn
  */
-@Suppress("NOTHING_TO_INLINE")
-inline fun <T> Observable<T>.subscribeOnComputationObserveOnMainThread(
+fun <T> Observable<T>.subscribeOnComputationObserveOnMainThread(
         subscribeScheduler: Scheduler = Schedulers.computation(),
         observeScheduler: Scheduler = AndroidSchedulers.mainThread()
 ): Observable<T> = this.subscribeOn(subscribeScheduler).observeOn(observeScheduler)
