@@ -19,6 +19,7 @@ dependencies {
     api(AndroidDeps.ankoSdk25)
     api(AndroidDeps.appCompat)
     api(Deps.arrowCore)
+    api(Deps.arrowEffects)
     api(AndroidDeps.coroutinesAndroid)
     api(Deps.jsonIter)
     api(Deps.kotlinStdLib)
