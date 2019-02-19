@@ -30,6 +30,7 @@ import arrow.core.Try
 import arrow.effects.IO
 import com.github.icarohs7.unoxandroid.extensions.coroutines.onBackground
 
+
 /**
  * Execute the block right away if on main thread, or schedule it
  * to be executed on the main thread otherwise
@@ -47,7 +48,9 @@ fun mustRunOnMainThread(fn: () -> Unit) {
  * returning its result wrapped in an [IO] instance
  */
 fun <A> sideEffect(f: () -> A): IO<A> {
-    return Try { f() }.fold({ IO.raiseError(it) }, { IO.just(it) })
+    return Try { f() }
+            .fold({ IO.raiseError<A>(it) }, { IO.just(it) })
+            .also(::logI)
 }
 
 /**
@@ -57,7 +60,8 @@ fun <A> sideEffect(f: () -> A): IO<A> {
  */
 suspend fun <A> sideEffectBg(f: suspend () -> A): IO<A> {
     return onBackground {
-        val result = Try { f() }
-        result.fold({ IO.raiseError<A>(it) }, { IO.just(it) })
+        Try { f() }
+                .fold({ IO.raiseError<A>(it) }, { IO.just(it) })
+                .also(::logI)
     }
 }

@@ -28,6 +28,7 @@ dependencies {
     api(AndroidDeps.lifecycleExtensions)
     api(AndroidDeps.lives)
     api(AndroidDeps.rxAndroid)
+    api(AndroidDeps.timber)
 }
 
 ext.groupId = "com.github.icarohs7"
