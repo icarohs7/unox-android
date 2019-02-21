@@ -7,6 +7,8 @@ import arrow.core.Tuple5
 import arrow.core.Tuple6
 import io.reactivex.Flowable
 import io.reactivex.subscribers.TestSubscriber
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import se.lovef.assert.v1.shouldContain
 
@@ -17,12 +19,7 @@ class RxJavaExtensionsKtTest {
         val f2 = Flowable.just(20)
         val comb = f1 + f2
 
-        val subs = getSubscriber<Tuple2<Int, Int>>()
-        comb.subscribe(subs)
-
-        subs.assertComplete()
-        subs.assertValueCount(1)
-        subs.events.first() shouldContain Tuple2(10, 20)
+        testFlowable(comb, 1, Tuple2(10, 20))
     }
 
     @Test
@@ -32,12 +29,7 @@ class RxJavaExtensionsKtTest {
         val f3 = Flowable.just("C")
         val comb = f1 + f2 + f3
 
-        val subs = getSubscriber<Tuple3<String, String, String>>()
-        comb.subscribe(subs)
-
-        subs.assertComplete()
-        subs.assertValueCount(1)
-        subs.events.first() shouldContain Tuple3("A", "B", "C")
+        testFlowable(comb, 1, Tuple3("A", "B", "C"))
     }
 
     @Test
@@ -48,12 +40,7 @@ class RxJavaExtensionsKtTest {
         val f4 = Flowable.just(40L)
         val comb = f1 + f2 + f3 + f4
 
-        val subs = getSubscriber<Tuple4<Long, Long, Long, Long>>()
-        comb.subscribe(subs)
-
-        subs.assertComplete()
-        subs.assertValueCount(1)
-        subs.events.first() shouldContain Tuple4(10L, 20L, 30L, 40L)
+        testFlowable(comb, 1, Tuple4(10L, 20L, 30L, 40L))
     }
 
     @Test
@@ -65,12 +52,7 @@ class RxJavaExtensionsKtTest {
         val f5 = Flowable.just(5.00)
         val comb = f1 + f2 + f3 + f4 + f5
 
-        val subs = getSubscriber<Tuple5<Double, Double, Double, Double, Double>>()
-        comb.subscribe(subs)
-
-        subs.assertComplete()
-        subs.assertValueCount(1)
-        subs.events.first() shouldContain Tuple5(1.60, 2.70, 3.80, 4.90, 5.00)
+        testFlowable(comb, 1, Tuple5(1.60, 2.70, 3.80, 4.90, 5.00))
     }
 
     @Test
@@ -83,12 +65,44 @@ class RxJavaExtensionsKtTest {
         val f6 = Flowable.just("NANI!?")
         val comb = f1 + f2 + f3 + f4 + f5 + f6
 
-        val subs = getSubscriber<Tuple6<Boolean, Boolean, Int, Int, String, String>>()
-        comb.subscribe(subs)
+        testFlowable(comb, 1, Tuple6(true, false, 10, 20, "Omai wa mou shindeiru!", "NANI!?"))
+    }
 
-        subs.assertComplete()
-        subs.assertValueCount(1)
-        subs.events.first() shouldContain Tuple6(true, false, 10, 20, "Omai wa mou shindeiru!", "NANI!?")
+    @Test
+    fun `should suspend map a flowable`() {
+        val f1 = Flowable.just(10).suspendMap { it * 2 }
+        testFlowable(f1, valueCount = 1, expectedEmissions = *arrayOf(20))
+
+        val f2 = Flowable.just('A', 'B').suspendMap { it + 1 }
+        testFlowable(f2, 2, 'B', 'C')
+
+        val f3 = Flowable.just(true, false, true, false).suspendMap { !it }
+        testFlowable(f3, 4, false, true, false, true)
+    }
+
+    @Test
+    fun `should suspend filter a flowable`() {
+        val f1 = Flowable.just(1, 2, 3, 4, 5, 6).suspendFilter { it % 2 == 0 }
+        testFlowable(f1, valueCount = 3, expectedEmissions = *arrayOf(2, 4, 6))
+
+        val f2 = Flowable.just("Omai", "Wa", "Mou", "Shindeiru", "NANI!?").suspendFilter { it == "NANI!?" }
+        testFlowable(f2, 1, "NANI!?")
+
+        val f3 = Flowable.just(false, true, false, true, false, true).suspendFilter { it }
+        testFlowable(f3, 3, true, true, true)
+    }
+
+    private fun <T> testFlowable(flowable: Flowable<T>, valueCount: Int, vararg expectedEmissions: T) {
+        val subscriber = getSubscriber<T>()
+        flowable.subscribe(subscriber)
+
+        runBlocking { delay(250) }
+        subscriber.assertComplete()
+        subscriber.assertValueCount(valueCount)
+
+        val emissions = subscriber.events.first()
+        expectedEmissions.forEach { emissions shouldContain it }
+        subscriber.dispose()
     }
 
     private fun <T> getSubscriber(): TestSubscriber<T> {

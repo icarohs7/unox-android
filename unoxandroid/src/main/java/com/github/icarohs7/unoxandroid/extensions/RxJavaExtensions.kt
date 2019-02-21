@@ -7,6 +7,8 @@ import arrow.core.Tuple5
 import arrow.core.Tuple6
 import io.reactivex.Flowable
 import io.reactivex.functions.BiFunction
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.runBlocking
 
 /**
  * Combine 2 Flowables into a Tuple using
@@ -68,4 +70,24 @@ operator fun <A, B, C, D, E, F> Flowable<Tuple5<A, B, C, D, E>>.plus(
     return Flowable.combineLatest(this, f, BiFunction { t1, t2 ->
         Tuple6(t1.a, t1.b, t1.c, t1.d, t1.e, t2)
     })
+}
+
+/**
+ * Execute the given suspend map operation and the
+ * upstream on the computation scheduler
+ */
+fun <T : Any, R : Any> Flowable<T>.suspendMap(transform: suspend (T) -> R): Flowable<R> {
+    return this
+            .map { item -> runBlocking { transform(item) } }
+            .subscribeOn(Schedulers.computation())
+}
+
+/**
+ * Execute the given suspend map operation and the
+ * upstream on the computation scheduler
+ */
+fun <T : Any> Flowable<T>.suspendFilter(predicate: suspend (T) -> Boolean): Flowable<T> {
+    return this
+            .filter { item -> runBlocking { predicate(item) } }
+            .subscribeOn(Schedulers.computation())
 }
