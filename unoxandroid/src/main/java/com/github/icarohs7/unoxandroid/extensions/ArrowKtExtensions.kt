@@ -30,6 +30,7 @@ import arrow.core.Try
 import arrow.core.getOrElse
 import arrow.core.orNull
 import arrow.core.toOption
+import arrow.effects.IO
 
 /** Convert a nullable item to a try of it, or a null pointer failure */
 fun <T> T?.toTry(): Try<T> =
@@ -108,4 +109,12 @@ fun <T : Any> Try<Iterable<T?>>.successValues(): List<T> {
 /** List with only the elements that are Some */
 fun <T : Any> Option<Iterable<T?>>.existingValues(): List<T> {
     return this.map { it.filterNotNull() }.orEmpty()
+}
+
+/**
+ * Run an [IO] synchronously, wrapping
+ * the result in an instace of [Try]
+ */
+fun <T> IO<T>.tryIO(): Try<T> {
+    return this.attempt().unsafeRunSync().fold(::Failure, ::Success)
 }

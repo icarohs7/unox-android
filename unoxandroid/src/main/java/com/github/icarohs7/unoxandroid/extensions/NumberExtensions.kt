@@ -20,6 +20,7 @@ fun Double.asCurrency(): String =
                 .getOrElse { this.toString() }
 
 /** @return The receiver or 0 if it's null */
+@Suppress("UNCHECKED_CAST")
 fun <T : Number> T?.orZero(): T {
     return this ?: 0 as T
 }

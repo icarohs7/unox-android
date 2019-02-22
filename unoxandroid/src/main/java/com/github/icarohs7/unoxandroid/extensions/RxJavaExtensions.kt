@@ -1,16 +1,93 @@
 package com.github.icarohs7.unoxandroid.extensions
 
-import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
+import arrow.core.Tuple2
+import arrow.core.Tuple3
+import arrow.core.Tuple4
+import arrow.core.Tuple5
+import arrow.core.Tuple6
+import io.reactivex.Flowable
+import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.runBlocking
 
 /**
- * Apply the computation scheduler do the upstream
- * with subscribeOn and the mainThread scheduler
- * to the downstream with observeOn
+ * Combine 2 Flowables into a Tuple using
+ * [Flowable.combineLatest]
  */
-fun <T> Observable<T>.subscribeOnComputationObserveOnMainThread(
-        subscribeScheduler: Scheduler = Schedulers.computation(),
-        observeScheduler: Scheduler = AndroidSchedulers.mainThread()
-): Observable<T> = this.subscribeOn(subscribeScheduler).observeOn(observeScheduler)
+operator fun <A, B> Flowable<A>.plus(
+        b: Flowable<B>
+): Flowable<Tuple2<A, B>> {
+    return Flowable.combineLatest(this, b, BiFunction(::Tuple2))
+}
+
+/**
+ * Combine 3 Flowables into a Tuple using
+ * [Flowable.combineLatest]
+ */
+@JvmName("plus2")
+operator fun <A, B, C> Flowable<Tuple2<A, B>>.plus(
+        c: Flowable<C>
+): Flowable<Tuple3<A, B, C>> {
+    return Flowable.combineLatest(this, c, BiFunction { t1, t2 ->
+        Tuple3(t1.a, t1.b, t2)
+    })
+}
+
+/**
+ * Combine 4 Flowables into a Tuple using
+ * [Flowable.combineLatest]
+ */
+@JvmName("plus3")
+operator fun <A, B, C, D> Flowable<Tuple3<A, B, C>>.plus(
+        d: Flowable<D>
+): Flowable<Tuple4<A, B, C, D>> {
+    return Flowable.combineLatest(this, d, BiFunction { t1, t2 ->
+        Tuple4(t1.a, t1.b, t1.c, t2)
+    })
+}
+
+/**
+ * Combine 5 Flowables into a Tuple using
+ * [Flowable.combineLatest]
+ */
+@JvmName("plus4")
+operator fun <A, B, C, D, E> Flowable<Tuple4<A, B, C, D>>.plus(
+        e: Flowable<E>
+): Flowable<Tuple5<A, B, C, D, E>> {
+    return Flowable.combineLatest(this, e, BiFunction { t1, t2 ->
+        Tuple5(t1.a, t1.b, t1.c, t1.d, t2)
+    })
+}
+
+/**
+ * Combine 6 Flowables into a Tuple using
+ * [Flowable.combineLatest]
+ */
+@JvmName("plus5")
+operator fun <A, B, C, D, E, F> Flowable<Tuple5<A, B, C, D, E>>.plus(
+        f: Flowable<F>
+): Flowable<Tuple6<A, B, C, D, E, F>> {
+    return Flowable.combineLatest(this, f, BiFunction { t1, t2 ->
+        Tuple6(t1.a, t1.b, t1.c, t1.d, t1.e, t2)
+    })
+}
+
+/**
+ * Execute the given suspend map operation and the
+ * upstream on the computation scheduler
+ */
+fun <T : Any, R : Any> Flowable<T>.suspendMap(transform: suspend (T) -> R): Flowable<R> {
+    return this
+            .map { item -> runBlocking { transform(item) } }
+            .subscribeOn(Schedulers.computation())
+}
+
+/**
+ * Execute the given suspend map operation and the
+ * upstream on the computation scheduler
+ */
+fun <T : Any> Flowable<T>.suspendFilter(predicate: suspend (T) -> Boolean): Flowable<T> {
+    return this
+            .filter { item -> runBlocking { predicate(item) } }
+            .subscribeOn(Schedulers.computation())
+}

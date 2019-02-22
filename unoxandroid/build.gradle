@@ -14,17 +14,21 @@ android {
 
 dependencies {
     implementation(fileTree(dir: "libs", include: ["*.jar"]))
-    api(AndroidDeps.coreKtx)
+    api(Deps.arrowCore)
+    api(Deps.arrowEffects)
+    api(Deps.jsonIter)
+    api(Deps.kotlinStdLib)
+    api(Deps.rxKotlin)
+
     api(AndroidDeps.ankoCommons)
     api(AndroidDeps.ankoSdk25)
     api(AndroidDeps.appCompat)
-    api(Deps.arrowCore)
+    api(AndroidDeps.coreKtx)
     api(AndroidDeps.coroutinesAndroid)
-    api(Deps.jsonIter)
-    api(Deps.kotlinStdLib)
     api(AndroidDeps.lifecycleExtensions)
     api(AndroidDeps.lives)
     api(AndroidDeps.rxAndroid)
+    api(AndroidDeps.timber)
 }
 
 ext.groupId = "com.github.icarohs7"
