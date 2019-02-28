@@ -21,7 +21,9 @@ import kotlinx.coroutines.runBlocking
 operator fun <A, B> Flowable<A>.plus(
         b: Flowable<B>
 ): Flowable<Tuple2<A, B>> {
-    return Flowable.combineLatest(this, b, BiFunction(::Tuple2))
+    return Flowable.combineLatest(this, b, BiFunction { a, b ->
+        Tuple2(a, b)
+    })
 }
 
 /**

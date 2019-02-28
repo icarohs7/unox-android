@@ -20,6 +20,12 @@ class RxJavaExtensionsKtTest {
         val comb = f1 + f2
 
         testFlowable(comb, 1, Tuple2(10, 20))
+
+        val f3 = Flowable.just("Omai wa")
+        val f4 = Flowable.just("mou shindeiru!")
+        val comb2 = f3 + f4
+
+        testFlowable(comb2, 1, Tuple2("Omai wa", "mou shindeiru!"))
     }
 
     @Test
