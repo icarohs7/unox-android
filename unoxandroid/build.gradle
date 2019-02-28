@@ -19,6 +19,7 @@ dependencies {
     api(Deps.jsonIter)
     api(Deps.kotlinStdLib)
     api(Deps.rxKotlin)
+    api(Deps.rxRelay)
 
     api(AndroidDeps.ankoCommons)
     api(AndroidDeps.ankoSdk25)

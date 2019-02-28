@@ -115,6 +115,16 @@ fun <T, R> Flowable<List<T>>.innerMap(transform: (T) -> R): Flowable<List<R>> {
 }
 
 /**
+ * Helper used to setup the subscription and
+ * observation threads
+ */
+private fun <T> Flowable<T>.setupThreads(): Flowable<T> {
+    return this
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+}
+
+/**
  * Standard process of subscribing to a flowable
  * subscribing on the computation scheduler,
  * observing on the main thread scheduler and
@@ -123,8 +133,7 @@ fun <T, R> Flowable<List<T>>.innerMap(transform: (T) -> R): Flowable<List<R>> {
  */
 fun <T> Flowable<T>.observe(lifecycle: LifecycleOwner, onNext: (T) -> Unit) {
     this
-            .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
+            .setupThreads()
             .subscribe(onNext)
             .disposeBy(lifecycle.onDestroy)
 }
@@ -138,8 +147,7 @@ fun <T> Flowable<T>.observe(lifecycle: LifecycleOwner, onNext: (T) -> Unit) {
  */
 fun <T> Flowable<T>.observe(lifecycle: LifecycleOwner, onNext: (T) -> Unit, onError: (Throwable) -> Unit) {
     this
-            .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
+            .setupThreads()
             .subscribe(onNext, onError)
             .disposeBy(lifecycle.onDestroy)
 }
@@ -158,8 +166,7 @@ fun <T> Flowable<T>.observe(
         onComplete: () -> Unit
 ) {
     this
-            .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
+            .setupThreads()
             .subscribe(onNext, onError, onComplete)
             .disposeBy(lifecycle.onDestroy)
 }
