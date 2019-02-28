@@ -29,6 +29,7 @@ import android.os.Looper
 import arrow.core.Try
 import arrow.effects.IO
 import com.github.icarohs7.unoxandroid.extensions.coroutines.onBackground
+import kotlinx.coroutines.CoroutineScope
 
 
 /**
@@ -58,7 +59,7 @@ fun <A> sideEffect(f: () -> A): IO<A> {
  * on a background coroutine, returning its result wrapped
  * in an [IO] instance
  */
-suspend fun <A> sideEffectBg(f: suspend () -> A): IO<A> {
+suspend fun <A> sideEffectBg(f: suspend CoroutineScope.() -> A): IO<A> {
     return onBackground {
         Try { f() }
                 .fold({ IO.raiseError<A>(it) }, { IO.just(it) })
