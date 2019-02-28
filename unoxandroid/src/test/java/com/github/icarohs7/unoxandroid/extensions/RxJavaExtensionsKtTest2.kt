@@ -80,6 +80,8 @@ class RxJavaExtensionsKtTest2 {
         var latest2 = 0
         var e2 = 0
         var cp2 = 0
+
+        runBlocking { delay(400) }
         testFlowableOnActivity<Int>({ c2++;latest2 = it }, { e2 = 1532 }, { cp2++ },
                 actions = listOf(
                         act { onNext(10) },
@@ -88,6 +90,7 @@ class RxJavaExtensionsKtTest2 {
                         act { onError(NumberFormatException()) },
                         act { onNext(40) }
                 ))
+        runBlocking { delay(400) }
 
         c2 shouldEqual 3
         latest2 shouldEqual 30
