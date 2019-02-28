@@ -96,12 +96,15 @@ object AndroidDeps {
     const val currencyEditText = "com.github.BlacKCaT27:CurrencyEditText:${Versions.currencyEditText}"
     const val disposer = "io.sellmair:disposer:${Versions.disposer}"
     const val drawableToolbox = "com.github.duanhong169:drawabletoolbox:${Versions.drawableToolbox}"
+    const val epoxy = "com.airbnb.android:epoxy:${Versions.epoxy}"
+    const val epoxyDatabinding = "com.airbnb.android:epoxy-databinding:${Versions.epoxy}"
     const val expansionPanel = "com.github.florent37:expansionpanel:${Versions.expansionPanel}"
     const val flashbar = "com.andrognito.flashbar:flashbar:${Versions.flashBar}"
     const val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.fragment}"
     const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     const val inputMask = "com.redmadrobot:inputmask:${Versions.inputMask}"
     const val kFormMaster = "com.thejuki:k-form-master:${Versions.kFormMaster}"
+    const val kidAdapter = "com.link184:kid-adapter:${Versions.kidAdapter}"
     const val koinAndroidxViewmodel = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
     const val kotpref = "com.chibatching.kotpref:kotpref:${Versions.kotpref}"
     const val kotprefGson = "com.chibatching.kotpref:gson-support:${Versions.kotpref}"
@@ -119,6 +122,7 @@ object AndroidDeps {
     const val materialSpinner = "com.jaredrummler:material-spinner:${Versions.materialSpinner}"
     const val multiLineRadioGroup = "com.github.Gavras:MultiLineRadioGroup:${Versions.multiLineRadioGroup}"
     const val mural = "com.irozon.mural:mural:${Versions.mural}"
+    const val mvRx = "com.airbnb.android:mvrx:${Versions.mvRx}"
     const val navigationFragment = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}"
     const val navigationUi = "android.arch.navigation:navigation-ui-ktx:${Versions.navigation}"
     const val passcodeView = "in.arjsna:passcodeview:${Versions.passcodeView}"
@@ -203,7 +207,8 @@ object AndroidDeps {
 
 object AndroidKaptDeps {
     val core = listOf(
-            "androidx.room:room-compiler:${Versions.room}"
+            "androidx.room:room-compiler:${Versions.room}",
+            "com.airbnb.android:epoxy-processor:${Versions.epoxy}"
     )
 }
 
@@ -211,6 +216,7 @@ object TestDeps {
     val core = listOf(
             "org.bigtesting:fixd:${Versions.fixd}",
             "org.koin:koin-test:${Versions.koin}",
+            "io.mockk:mockk:${Versions.mockK}",
             "se.lovef:kotlin-assert-utils:${Versions.kotlinAssertUtils}"
     )
 
@@ -248,6 +254,7 @@ object Versions {
     const val disposer = "2.0.0"
     const val drawableToolbox = "1.0.7"
     const val expansionPanel = "1.2.2"
+    const val epoxy = "3.3.0"
     const val flashBar = "1.0.3"
     const val fragment = "1.0.0"
     const val fuel = "2.0.0"
@@ -258,6 +265,7 @@ object Versions {
     const val jsonIter = "0.9.23"
     const val kFormMaster = "6.1.1"
     const val khronos = "0.9.0"
+    const val kidAdapter = "1.1.5"
     const val koin = "1.0.2"
     const val kotlin = "1.3.21"
     const val kotlinxSerialization = "0.10.0"
@@ -267,12 +275,13 @@ object Versions {
     const val lives = "1.2.1"
     const val maskEditText = "1.1.1"
     const val materialDesign = "1.0.0"
-    const val materialDialogs = "2.0.0"
+    const val materialDialogs = "2.0.3"
     const val materialFabSpeedDial = "2.0.0-RC1"
     const val materialSpinner = "1.3.1"
     const val multiLineRadioGroup = "1.0.0.6"
     const val mural = "1.0.1"
-    const val navigation = "1.0.0-rc01"
+    const val mvRx = "0.7.2"
+    const val navigation = "1.0.0-rc02"
     const val okHttp = "3.13.1"
     const val okio = "2.2.2"
     const val passcodeView = "1.2.1"
@@ -287,16 +296,16 @@ object Versions {
     const val reactiveNetwork = "3.0.2"
     const val recyclerView = "1.0.0"
     const val retrofit = "2.5.1-SNAPSHOT"
-    const val retrofitKotlinxSerializationConverter = "0.2.0"
+    const val retrofitKotlinxSerializationConverter = "0.3.0"
     const val room = "2.1.0-alpha04"
     const val rxAndroid = "2.1.0"
     const val rxBinding = "3.0.0-alpha2"
-    const val rxJava = "2.2.6"
+    const val rxJava = "2.2.7"
     const val rxKotlin = "2.3.0"
     const val rxPermissions = "0.7.0"
     const val rxRelay = "2.1.0"
     const val simpleAuthFacebook = "2.1.4"
-    const val simpleBarcodeScanner = "1.0.21"
+    const val simpleBarcodeScanner = "1.0.22"
     const val smartScheduler = "0.0.14"
     const val snakeYaml = "1.23"
     const val spinkit = "1.2.0"
@@ -306,12 +315,13 @@ object Versions {
     const val stetho = "1.5.0"
     const val timber = "4.7.1"
     const val tornadoFx = "1.7.17"
-    const val unoxAndroid = "32b101df03"
-    const val unoxAndroidArch = "18445c0f49"
+    const val unoxAndroid = "2.4.9"
+    const val unoxAndroidArch = "603b670e65"
 
     const val barista = "2.7.1"
     const val fixd = "1.0.3"
-    const val kotlinAssertUtils = "0.8.0"
+    const val kotlinAssertUtils = "0.8.2"
+    const val mockK = "1.9.1"
     const val robolectric = "4.1"
     const val testCore = "1.1.0"
 

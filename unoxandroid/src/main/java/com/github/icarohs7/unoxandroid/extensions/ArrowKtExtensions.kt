@@ -118,3 +118,20 @@ fun <T : Any> Option<Iterable<T?>>.existingValues(): List<T> {
 fun <T> IO<T>.tryIO(): Try<T> {
     return this.attempt().unsafeRunSync().fold(::Failure, ::Success)
 }
+
+/**
+ * Synchronously run the IO and return it's
+ * result or the default value if it fails
+ */
+fun <T> IO<T>.syncGetOr(default: T): T {
+    return this.tryIO().getOrElse { default }
+}
+
+/**
+ * Synchronously run the IO and return it's
+ * result or the result of the given function
+ * if it fails
+ */
+inline fun <T> IO<T>.syncGetOr(default: () -> T): T {
+    return this.tryIO().getOrElse { default() }
+}

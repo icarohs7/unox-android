@@ -20,6 +20,12 @@ class RxJavaExtensionsKtTest {
         val comb = f1 + f2
 
         testFlowable(comb, 1, Tuple2(10, 20))
+
+        val f3 = Flowable.just("Omai wa")
+        val f4 = Flowable.just("mou shindeiru!")
+        val comb2 = f3 + f4
+
+        testFlowable(comb2, 1, Tuple2("Omai wa", "mou shindeiru!"))
     }
 
     @Test
@@ -90,6 +96,28 @@ class RxJavaExtensionsKtTest {
 
         val f3 = Flowable.just(false, true, false, true, false, true).suspendFilter { it }
         testFlowable(f3, 3, true, true, true)
+    }
+
+    @Test
+    fun `should inner filter a flowable`() {
+        val f1 = Flowable.just(listOf(1, 2, 3, 4, 5, 6))
+        val r1 = f1.innerFilter { it % 2 == 0 }
+        testFlowable(r1, 1, listOf(2, 4, 6))
+
+        val f2 = Flowable.just(listOf("A", "B", "C", "A"), listOf("B", "C"))
+        val r2 = f2.innerFilter { it == "A" }
+        testFlowable(r2, 2, listOf("A", "A"), listOf())
+    }
+
+    @Test
+    fun `should inner map a flowable`() {
+        val f1 = Flowable.just(listOf(1, 2, 3, 4, 5, 6))
+        val r1 = f1.innerMap { it * it }
+        testFlowable(r1, 1, listOf(1, 4, 9, 16, 25, 36))
+
+        val f2 = Flowable.just(listOf("A", "B", "C", "A"), listOf("B", "C"))
+        val r2 = f2.innerMap { "NANI!?" }
+        testFlowable(r2, 2, listOf("NANI!?", "NANI!?", "NANI!?", "NANI!?"), listOf("NANI!?", "NANI!?"))
     }
 
     private fun <T> testFlowable(flowable: Flowable<T>, valueCount: Int, vararg expectedEmissions: T) {
