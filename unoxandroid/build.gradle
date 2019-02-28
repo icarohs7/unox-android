@@ -25,6 +25,7 @@ dependencies {
     api(AndroidDeps.appCompat)
     api(AndroidDeps.coreKtx)
     api(AndroidDeps.coroutinesAndroid)
+    api(AndroidDeps.disposer)
     api(AndroidDeps.lifecycleExtensions)
     api(AndroidDeps.lives)
     api(AndroidDeps.rxAndroid)

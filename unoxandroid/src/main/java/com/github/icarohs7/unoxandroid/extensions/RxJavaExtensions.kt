@@ -1,13 +1,17 @@
 package com.github.icarohs7.unoxandroid.extensions
 
+import androidx.lifecycle.LifecycleOwner
 import arrow.core.Tuple2
 import arrow.core.Tuple3
 import arrow.core.Tuple4
 import arrow.core.Tuple5
 import arrow.core.Tuple6
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
+import io.sellmair.disposer.disposeBy
+import io.sellmair.disposer.onDestroy
 import kotlinx.coroutines.runBlocking
 
 /**
@@ -90,4 +94,72 @@ fun <T : Any> Flowable<T>.suspendFilter(predicate: suspend (T) -> Boolean): Flow
     return this
             .filter { item -> runBlocking { predicate(item) } }
             .subscribeOn(Schedulers.computation())
+}
+
+/**
+ * Map the flowable to the filteing of
+ * the emitted list using the given
+ * predicate
+ */
+fun <T> Flowable<List<T>>.innerFilter(predicate: (T) -> Boolean): Flowable<List<T>> {
+    return this.map { it.filter(predicate) }
+}
+
+/**
+ * Map the flowable to the mapping of
+ * the emitted list using the given
+ * transformer
+ */
+fun <T, R> Flowable<List<T>>.innerMap(transform: (T) -> R): Flowable<List<R>> {
+    return this.map { it.map(transform) }
+}
+
+/**
+ * Standard process of subscribing to a flowable
+ * subscribing on the computation scheduler,
+ * observing on the main thread scheduler and
+ * auto disposing the subscription when the
+ * given lifecycle reaches the destroyed state
+ */
+fun <T> Flowable<T>.observe(lifecycle: LifecycleOwner, onNext: (T) -> Unit) {
+    this
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(onNext)
+            .disposeBy(lifecycle.onDestroy)
+}
+
+/**
+ * Standard process of subscribing to a flowable
+ * subscribing on the computation scheduler,
+ * observing on the main thread scheduler and
+ * auto disposing the subscription when the
+ * given lifecycle reaches the destroyed state
+ */
+fun <T> Flowable<T>.observe(lifecycle: LifecycleOwner, onNext: (T) -> Unit, onError: (Throwable) -> Unit) {
+    this
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(onNext, onError)
+            .disposeBy(lifecycle.onDestroy)
+}
+
+/**
+ * Standard process of subscribing to a flowable
+ * subscribing on the computation scheduler,
+ * observing on the main thread scheduler and
+ * auto disposing the subscription when the
+ * given lifecycle reaches the destroyed state
+ */
+fun <T> Flowable<T>.observe(
+        lifecycle: LifecycleOwner,
+        onNext: (T) -> Unit,
+        onError: (Throwable) -> Unit,
+        onComplete: () -> Unit
+) {
+    this
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(onNext, onError, onComplete)
+            .disposeBy(lifecycle.onDestroy)
 }
