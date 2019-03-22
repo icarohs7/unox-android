@@ -14,7 +14,6 @@ android {
 }
 
 dependencies {
-    implementation(fileTree(dir: "libs", include: ["*.jar"]))
     api(Deps.arrowCore)
     api(Deps.arrowEffects)
     api(Deps.jsonIter)

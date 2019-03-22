@@ -2,7 +2,7 @@
 
 package com.github.icarohs7.unoxandroid.extensions.coroutines
 
-import com.github.icarohs7.unoxandroid.UnoxAndroid
+import com.github.icarohs7.unoxandroid.UnoxAndroid.Companion.forceContextSwitchToBackground
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,12 +27,14 @@ import kotlin.coroutines.coroutineContext
  */
 suspend fun <T> onBackground(
         backgroundContext: CoroutineDispatcher = Dispatchers.Default,
-        foregroundContext: CoroutineDispatcher = UnoxAndroid.foregroundDispatcher,
+        foregroundContext: CoroutineDispatcher = Dispatchers.Main,
         block: suspend CoroutineScope.() -> T
 ): T {
-    return when (coroutineContext.dispatcher == foregroundContext.dispatcher) {
-        true -> withContext(backgroundContext, block)
-        false -> withContext(coroutineContext, block)
+    val runningOnUi = coroutineContext.dispatcher == foregroundContext.dispatcher
+    return when {
+        forceContextSwitchToBackground -> withContext(backgroundContext, block)
+        runningOnUi -> withContext(backgroundContext, block)
+        else -> withContext(coroutineContext, block)
     }
 }
 
@@ -44,7 +46,7 @@ suspend fun <T> onBackground(
  * @param foregroundContext The context in that the operation will be run
  */
 suspend fun <T> onForeground(
-        foregroundContext: CoroutineDispatcher = UnoxAndroid.foregroundDispatcher,
+        foregroundContext: CoroutineDispatcher = Dispatchers.Main,
         block: suspend CoroutineScope.() -> T
 ): T {
     return when (coroutineContext.dispatcher == foregroundContext.dispatcher) {

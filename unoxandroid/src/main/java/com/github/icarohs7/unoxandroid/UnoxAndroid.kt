@@ -9,8 +9,17 @@ interface UnoxAndroid {
      * Companion object storing the settings of the module
      */
     companion object {
+        /**
+         * Coroutine dispatcher used to execute work on
+         * background
+         */
+        var backgroundDispatcher: CoroutineDispatcher by mutableLazy { Dispatchers.Default }
 
-        /** Coroutine dispatcher that should be avoided for heavy work */
-        var foregroundDispatcher: CoroutineDispatcher by mutableLazy { Dispatchers.Main }
+        /**
+         * Whether or not the library should for the context
+         * switch to the background dispatcher when running on
+         * another background dispatcher or not
+         */
+        var forceContextSwitchToBackground: Boolean by mutableLazy { false }
     }
 }
