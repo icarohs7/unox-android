@@ -21,7 +21,6 @@ android {
 dependencies {
     api(Deps.arrowCore)
     api(Deps.arrowEffects)
-    api(Deps.jsonIter)
     api(Deps.kotlinStdLib)
     api(Deps.rxKotlin)
     api(Deps.rxRelay)
