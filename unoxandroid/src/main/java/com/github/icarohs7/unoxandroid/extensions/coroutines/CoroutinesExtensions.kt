@@ -2,7 +2,7 @@
 
 package com.github.icarohs7.unoxandroid.extensions.coroutines
 
-import com.github.icarohs7.unoxandroid.UnoxAndroid.Companion.forceContextSwitchToBackground
+import com.github.icarohs7.unoxandroid.UnoxAndroid
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,13 +26,13 @@ import kotlin.coroutines.coroutineContext
  * @param foregroundContext The context that will be avoided for the execution of the task
  */
 suspend fun <T> onBackground(
-        backgroundContext: CoroutineDispatcher = Dispatchers.Default,
+        backgroundContext: CoroutineDispatcher = UnoxAndroid.backgroundDispatcher,
         foregroundContext: CoroutineDispatcher = Dispatchers.Main,
         block: suspend CoroutineScope.() -> T
 ): T {
     val runningOnUi = coroutineContext.dispatcher == foregroundContext.dispatcher
     return when {
-        forceContextSwitchToBackground -> withContext(backgroundContext, block)
+        UnoxAndroid.forceContextSwitchToBackground -> withContext(backgroundContext, block)
         runningOnUi -> withContext(backgroundContext, block)
         else -> withContext(coroutineContext, block)
     }
