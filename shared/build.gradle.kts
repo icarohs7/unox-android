@@ -55,7 +55,6 @@ kotlin {
                 api(Deps.arrowEffects)
                 api(Deps.coroutinesRx2)
                 api(Deps.rxKotlin)
-                api(Deps.rxRelay)
             }
         }
 
