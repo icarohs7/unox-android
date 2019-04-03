@@ -1,11 +1,21 @@
 @file:Suppress("UNUSED_VARIABLE")
 
+import com.jfrog.bintray.gradle.BintrayExtension
+
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("com.github.dcendents.android-maven") version "2.1"
     id("jacoco")
+    id("maven-publish")
+    id("com.jfrog.bintray") version "1.8.4"
+    id("com.github.b3er.local.properties") version "1.1"
     defaults.`android-module`
+}
+
+with(project) {
+    group = "com.github.icarohs7"
+    version = "3.00"
+    description = "Library aggregating extensions, utility functions and some QOL features"
 }
 
 android {
@@ -29,9 +39,18 @@ android {
 }
 
 kotlin {
-    jvm()
-    js()
-    android()
+    jvm {
+        mavenPublication { artifactId = "unoxcore-jvm" }
+    }
+
+    js {
+        mavenPublication { artifactId = "unoxcore-js" }
+    }
+
+    android {
+        mavenPublication { artifactId = "unoxcore-android" }
+        publishLibraryVariants("debug")
+    }
 
     sourceSets {
         val commonMain by getting {
@@ -155,4 +174,21 @@ tasks {
         executionData("$buildDir/jacoco/testDebugUnitTest.exec")
         executionData("$buildDir/jacoco/jvmTest.exec")
     }
+}
+
+fun findProperty(s: String) = project.findProperty(s) as String?
+bintray {
+    user = findProperty("bintrayUser")
+    key = findProperty("bintrayApiKey")
+    publish = true
+    setPublications("js", "jvm", "androidDebug")
+    pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
+        repo = "libraries"
+        name = "unox-core"
+        githubRepo = "icarohs7/unox-core"
+        vcsUrl = "https://github.com/icarohs7/unox-core.git"
+        setLabels("kotlin")
+        setLicenses("MIT")
+        desc = description
+    })
 }

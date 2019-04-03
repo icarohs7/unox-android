@@ -22,4 +22,5 @@ pluginManagement {
     }
 }
 
-enableFeaturePreview("GRADLE_METADATA")
+//TODO re-enable when https://youtrack.jetbrains.com/issue/KT-29758 is fixed
+//enableFeaturePreview("GRADLE_METADATA")
