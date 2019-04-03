@@ -75,7 +75,6 @@ kotlin {
                 api(AndroidDeps.lifecycleExtensions)
                 api(AndroidDeps.lives)
                 api(AndroidDeps.rxAndroid)
-                api(AndroidDeps.timber)
             }
         }
 
