@@ -1,5 +1,9 @@
 @file:Suppress("PublicApiImplicitType", "MemberVisibilityCanBePrivate", "unused")
 
+object CommonDeps {
+    const val coroutinesCoreCommon = "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:${Versions.coroutines}"
+}
+
 object Deps {
     const val arrowCore = "io.arrow-kt:arrow-core:${Versions.arrow}"
     const val arrowData = "io.arrow-kt:arrow-data:${Versions.arrow}"
@@ -256,6 +260,10 @@ object AndroidTestDeps {
 
     const val barista = "com.schibsted.spain:barista:${Versions.barista}"
     const val testOrchestrator = "androidx.test:orchestrator:${Versions.testRules}"
+}
+
+object JSDeps {
+    const val coroutinesJs = "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:${Versions.coroutines}"
 }
 
 object Versions {
