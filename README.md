@@ -56,14 +56,14 @@ repositories {
     maven { url "https://dl.bintray.com/icarohs7/libraries" }
 }
 dependencies {
-    // When using on Android
-    implementation "com.github.icarohs7:unoxcore-android:$unoxcore_version"
+    //When using on Kotlin/JS
+    implementation "com.github.icarohs7:unoxcore-js:$unoxcore_version"
     
     //When using on a JVM project (or Android, with a subset of features from the Android artifact)
     implementation "com.github.icarohs7:unoxcore-jvm:$unoxcore_version"
-    
-    //When using on Kotlin/JS
-    implementation "com.github.icarohs7:unoxcore-js:$unoxcore_version"
+
+    // When using on Android
+    implementation "com.github.icarohs7:unoxcore-android:$unoxcore_version"
 }
 ```
 
@@ -73,13 +73,13 @@ repositories {
     maven("https://dl.bintray.com/icarohs7/libraries")
 }
 dependencies {
-    // When using on Android
-    implementation("com.github.icarohs7:unoxcore-android:$unoxcore_version")
+    //When using on Kotlin/JS
+    implementation("com.github.icarohs7:unoxcore-js:$unoxcore_version")
     
     //When using on a JVM project (or Android, with a subset of features from the Android artifact)
     implementation("com.github.icarohs7:unoxcore-jvm:$unoxcore_version")
-    
-    //When using on Kotlin/JS
-    implementation("com.github.icarohs7:unoxcore-js:$unoxcore_version")
+
+    // When using on Android
+    implementation("com.github.icarohs7:unoxcore-android:$unoxcore_version")
 }
 ```
