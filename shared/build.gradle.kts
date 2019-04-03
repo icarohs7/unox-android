@@ -14,7 +14,7 @@ plugins {
 
 with(project) {
     group = "com.github.icarohs7"
-    version = "3.00"
+    version = "3.00-next.1"
     description = "Library aggregating extensions, utility functions and some QOL features"
 }
 
@@ -39,6 +39,10 @@ android {
 }
 
 kotlin {
+    metadata {
+        mavenPublication { artifactId = "unoxcore-metadata" }
+    }
+
     js {
         mavenPublication { artifactId = "unoxcore-js" }
     }
@@ -181,7 +185,7 @@ bintray {
     user = findProperty("bintrayUser")
     key = findProperty("bintrayApiKey")
     publish = true
-    setPublications("js", "jvm", "androidDebug")
+    setPublications("metadata", "js", "jvm", "androidDebug")
     pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
         repo = "libraries"
         name = "unox-core"
