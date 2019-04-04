@@ -14,7 +14,7 @@ plugins {
 
 with(project) {
     group = "com.github.icarohs7"
-    version = "3.00"
+    version = "3.00-next.1"
     description = "Library aggregating extensions, utility functions and some QOL features"
 }
 
@@ -39,12 +39,16 @@ android {
 }
 
 kotlin {
-    jvm {
-        mavenPublication { artifactId = "unoxcore-jvm" }
+    metadata {
+        mavenPublication { artifactId = "unoxcore-metadata" }
     }
 
     js {
         mavenPublication { artifactId = "unoxcore-js" }
+    }
+
+    jvm {
+        mavenPublication { artifactId = "unoxcore-jvm" }
     }
 
     android {
@@ -64,6 +68,19 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
+            }
+        }
+
+        val jsMain by getting {
+            dependencies {
+                api(kotlin("stdlib-js"))
+                api(JSDeps.coroutinesJs)
+            }
+        }
+
+        val jsTest by getting {
+            dependencies {
+                implementation(kotlin("test-js"))
             }
         }
 
@@ -114,19 +131,6 @@ kotlin {
             when {
                 sourceSet.name == "androidTest" -> return@forEach
                 sourceSet.name.matches(pattern) -> sourceSet.dependsOn(androidTest)
-            }
-        }
-
-        val jsMain by getting {
-            dependencies {
-                api(kotlin("stdlib-js"))
-                api(JSDeps.coroutinesJs)
-            }
-        }
-
-        val jsTest by getting {
-            dependencies {
-                implementation(kotlin("test-js"))
             }
         }
     }
@@ -181,14 +185,16 @@ bintray {
     user = findProperty("bintrayUser")
     key = findProperty("bintrayApiKey")
     publish = true
-    setPublications("js", "jvm", "androidDebug")
+    setPublications("metadata", "js", "jvm", "androidDebug")
     pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
         repo = "libraries"
         name = "unox-core"
         githubRepo = "icarohs7/unox-core"
+        websiteUrl = "https://github.com/icarohs7/unox-core"
         vcsUrl = "https://github.com/icarohs7/unox-core.git"
+        issueTrackerUrl = "https://github.com/icarohs7/unox-core/issues"
+        desc = description
         setLabels("kotlin")
         setLicenses("MIT")
-        desc = description
     })
 }

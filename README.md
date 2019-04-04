@@ -8,7 +8,7 @@ https://forthebadge.com/)
 [![Not a Lie](https://forthebadge.com/images/badges/its-not-a-lie-if-you-believe-it.svg)](
 https://forthebadge.com)
 
-[![Bintray](https://api.bintray.com/packages/icarohs7/libraries/unox-core/images/download.svg)](
+[![Jcenter](https://api.bintray.com/packages/icarohs7/libraries/unox-core/images/download.svg)](
 https://bintray.com/icarohs7/libraries/unox-core/_latestVersion)
 [![Build Status](https://travis-ci.org/icarohs7/unox-core.svg?branch=master)](
 https://travis-ci.org/icarohs7/unox-core)
@@ -53,33 +53,33 @@ Multiplatform library aggregating extensions, utility functions and some QOL fea
 Groovy DSL
 ```groovy
 repositories {
-    maven { url "https://dl.bintray.com/icarohs7/libraries" }
+    jcenter()
 }
 dependencies {
-    // When using on Android
-    implementation "com.github.icarohs7:unoxcore-android:$unoxcore_version"
+    //When using on Kotlin/JS
+    implementation "com.github.icarohs7:unoxcore-js:$unoxcore_version"
     
     //When using on a JVM project (or Android, with a subset of features from the Android artifact)
     implementation "com.github.icarohs7:unoxcore-jvm:$unoxcore_version"
-    
-    //When using on Kotlin/JS
-    implementation "com.github.icarohs7:unoxcore-js:$unoxcore_version"
+
+    // When using on Android
+    implementation "com.github.icarohs7:unoxcore-android:$unoxcore_version"
 }
 ```
 
 Kotlin DSL
 ```kotlin
 repositories {
-    maven("https://dl.bintray.com/icarohs7/libraries")
+    jcenter()
 }
 dependencies {
-    // When using on Android
-    implementation("com.github.icarohs7:unoxcore-android:$unoxcore_version")
+    //When using on Kotlin/JS
+    implementation("com.github.icarohs7:unoxcore-js:$unoxcore_version")
     
     //When using on a JVM project (or Android, with a subset of features from the Android artifact)
     implementation("com.github.icarohs7:unoxcore-jvm:$unoxcore_version")
-    
-    //When using on Kotlin/JS
-    implementation("com.github.icarohs7:unoxcore-js:$unoxcore_version")
+
+    // When using on Android
+    implementation("com.github.icarohs7:unoxcore-android:$unoxcore_version")
 }
 ```
