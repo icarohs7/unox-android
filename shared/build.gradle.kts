@@ -14,7 +14,7 @@ plugins {
 
 with(project) {
     group = "com.github.icarohs7"
-    version = "3.00-next.1"
+    version = "3.01"
     description = "Library aggregating extensions, utility functions and some QOL features"
 }
 
