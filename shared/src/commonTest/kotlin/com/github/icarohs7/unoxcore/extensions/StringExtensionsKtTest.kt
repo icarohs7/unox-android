@@ -125,4 +125,19 @@ class StringExtensionsKtTest {
         val r3 = 134991532L
         s3.digits() shouldEqual r3
     }
+
+    @Test
+    fun should_capitalize_the_words_of_a_string() {
+        val s1 = "HELLO WORLD!"
+        val r1 = "Hello World!"
+        s1.capitalizeWords() shouldEqual r1
+
+        val s2 = "HE.LL.O.WO.R.LD"
+        val r2 = "He.Ll.O.Wo.R.Ld"
+        s2.capitalizeWords(".") shouldEqual r2
+
+        val s3 = "OMAI_WA_mOU_sHINDEIRU!"
+        val r3 = "Omai_Wa_Mou_Shindeiru!"
+        s3.capitalizeWords("_") shouldEqual r3
+    }
 }

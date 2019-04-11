@@ -65,3 +65,14 @@ fun String.onlyNumbers(): String {
 fun String.digits(): Long? {
     return onlyNumbers().toLongOrNull()
 }
+
+/**
+ * Split the string on each ocurrence of the given
+ * [separator] and join each part using the same
+ * separator, but capitalizing the first letter
+ * of each element while converting the rest of
+ * the letters on the element to lowercase
+ */
+fun String.capitalizeWords(separator: String = " "): String {
+    return split(separator).joinToString(separator) { it.toLowerCase().capitalize() }
+}
