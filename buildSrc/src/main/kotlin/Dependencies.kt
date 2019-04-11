@@ -49,6 +49,7 @@ object Deps {
     const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlin}"
     const val rxRelay = "com.jakewharton.rxrelay2:rxrelay:${Versions.rxRelay}"
     const val snakeYaml = "org.yaml:snakeyaml:${Versions.snakeYaml}"
+    const val unoxCoreJvm = "com.github.icarohs7:unoxcore-jvm:${Versions.unoxCore}"
 }
 
 object JavaFxDeps {
@@ -118,11 +119,13 @@ object AndroidDeps {
     const val kaml = "com.charleskorn.kaml:kaml:${Versions.kaml}"
     const val kFormMaster = "com.thejuki:k-form-master:${Versions.kFormMaster}"
     const val kidAdapter = "com.link184:kid-adapter:${Versions.kidAdapter}"
+    const val koinAndroid = "org.koin:koin-android:${Versions.koin}"
     const val koinAndroidxViewmodel = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
     const val kotpref = "com.chibatching.kotpref:kotpref:${Versions.kotpref}"
     const val kotprefGson = "com.chibatching.kotpref:gson-support:${Versions.kotpref}"
     const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
     const val lifecycleReactiveStreamsKtx = "androidx.lifecycle:lifecycle-reactivestreams-ktx:${Versions.lifecycle}"
+    const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     const val lightCalendarView = "jp.co.recruit_mp:LightCalendarView:${Versions.lightCalendarView}"
     const val lives = "com.snakydesign.livedataextensions:lives:${Versions.lives}"
     const val maskedEditText = "com.github.santalu:mask-edittext:${Versions.maskEditText}"
@@ -171,7 +174,7 @@ object AndroidDeps {
     const val rxBindingSwipeRefreshLayout = "com.jakewharton.rxbinding3:rxbinding-swiperefreshlayout:${Versions.rxBinding}"
     const val rxBindingViewPager = "com.jakewharton.rxbinding3:rxbinding-viewpager:${Versions.rxBinding}"
     const val rxPermission = "com.github.vanniktech:RxPermission:${Versions.rxPermissions}"
-    const val simpleAuth = "com.jaychang:simpleauth-facebook:${Versions.simpleAuthFacebook}"
+    const val simpleAuthFacebook = "com.jaychang:simpleauth-facebook:${Versions.simpleAuthFacebook}"
     const val simpleBarcodeScanner = "com.github.bobekos:SimpleBarcodeScanner:${Versions.simpleBarcodeScanner}"
     const val smartScheduler = "io.hypertrack:smart-scheduler:${Versions.smartScheduler}"
     const val spinKit = "com.github.ybq:Android-SpinKit:${Versions.spinkit}"
@@ -220,9 +223,11 @@ object AndroidDeps {
     const val stateViews = "com.github.kobeumut:StateViews:${Versions.stateViews}"
     const val stetho = "com.facebook.stetho:stetho:${Versions.stetho}"
     const val stethoOkHttp = "com.facebook.stetho:stetho-okhttp3:${Versions.stetho}"
+    const val stickyTimelineView = "com.github.sangcomz:StickyTimeLine:${Versions.stickyTimelineView}"
+    const val textViewDotsAnimation = "com.github.rajputkapil:textviewdotsanimation:${Versions.textViewDotsAnimation}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
-    const val unoxAndroid = "com.github.icarohs7:unox-android:${Versions.unoxAndroid}"
     const val unoxAndroidArch = "com.github.icarohs7:unox-android-arch:${Versions.unoxAndroidArch}"
+    const val unoxCoreAndroid = "com.github.icarohs7:unoxcore-android:${Versions.unoxCore}"
     const val viewAnimator = "com.github.florent37:viewanimator:${Versions.viewAnimator}"
     const val workManagerKtx = "androidx.work:work-runtime-ktx:${Versions.workManager}"
     const val workManagerRx = "androidx.work:work-rxjava2:${Versions.workManager}"
@@ -233,6 +238,8 @@ object AndroidKaptDeps {
             "androidx.room:room-compiler:${Versions.room}",
             "com.airbnb.android:epoxy-processor:${Versions.epoxy}"
     )
+
+    const val epoxy = "com.airbnb.android:epoxy-processor:${Versions.epoxy}"
 }
 
 object TestDeps {
@@ -264,6 +271,7 @@ object AndroidTestDeps {
 
 object JSDeps {
     const val coroutinesJs = "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:${Versions.coroutines}"
+    const val unoxCoreAndroid = "com.github.icarohs7:unoxcore-js:${Versions.unoxCore}"
 }
 
 object Versions {
@@ -284,7 +292,7 @@ object Versions {
     const val currencyEditText = "2.0.2"
     const val disposer = "2.0.0"
     const val drawableToolbox = "1.0.7"
-    const val epoxy = "3.3.1"
+    const val epoxy = "3.4.0"
     const val expansionPanel = "1.2.2"
     const val firebaseCore = "16.0.8"
     const val firebaseMessaging = "17.4.0"
@@ -303,8 +311,8 @@ object Versions {
     const val khronos = "0.9.0"
     const val kidAdapter = "1.1.5"
     const val kodaTime = "2.0.0"
-    const val koin = "1.0.2"
-    const val kotlin = "1.3.21"
+    const val koin = "2.0.0-rc-3"
+    const val kotlin = "1.3.30"
     const val kotlinxSerialization = "0.10.0"
     const val kotpref = "2.6.0"
     const val lifecycle = "2.0.0"
@@ -312,7 +320,7 @@ object Versions {
     const val lives = "1.2.1"
     const val maskEditText = "1.1.1"
     const val materialDesign = "1.0.0"
-    const val materialDialogs = "2.6.0"
+    const val materialDialogs = "2.7.0"
     const val materialDrawer = "6.1.2"
     const val materialDrawerKt = "2.0.1"
     const val materialDrawerMaterialTypeface = "2.2.0.5"
@@ -322,9 +330,9 @@ object Versions {
     const val materialSpinner = "1.3.1"
     const val multiLineRadioGroup = "1.0.0.6"
     const val mural = "1.0.1"
-    const val mvRx = "0.7.2"
+    const val mvRx = "1.0.0"
     const val navigation = "2.0.0"
-    const val okHttp = "3.14.0"
+    const val okHttp = "3.14.1"
     const val okio = "2.2.2"
     const val passcodeView = "1.2.1"
     const val picasso = "2.71828"
@@ -340,7 +348,7 @@ object Versions {
     const val retrofit = "2.5.1-SNAPSHOT"
     const val retrofitKotlinxSerializationConverter = "0.3.0"
     const val room = "2.1.0-alpha04"
-    const val rxAndroid = "2.1.0"
+    const val rxAndroid = "2.1.1"
     const val rxBinding = "3.0.0-alpha2"
     const val rxJava = "2.2.8"
     const val rxKotlin = "2.3.0"
@@ -355,12 +363,14 @@ object Versions {
     const val spotsdialog = "1.1"
     const val stateViews = "0.5"
     const val stetho = "1.5.1"
+    const val stickyTimelineView = "v0.0.20"
+    const val textViewDotsAnimation = "v1.0"
     const val timber = "4.7.1"
     const val tornadoFx = "1.7.17"
-    const val unoxAndroid = "fa609db7d4"
-    const val unoxAndroidArch = "f7cab1cff7"
+    const val unoxAndroidArch = "2a03f8715a"
+    const val unoxCore = "3.00-next.1"
     const val viewAnimator = "1.1.1"
-    const val workManager = "2.0.0"
+    const val workManager = "2.0.1"
 
     const val barista = "2.10.0"
     const val fixd = "1.0.5"
