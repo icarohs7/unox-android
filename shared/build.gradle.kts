@@ -14,7 +14,7 @@ plugins {
 
 with(project) {
     group = "com.github.icarohs7"
-    version = "3.01"
+    version = "3.01-next.1"
     description = "Library aggregating extensions, utility functions and some QOL features"
 }
 
@@ -49,11 +49,21 @@ kotlin {
 
     jvm {
         mavenPublication { artifactId = "unoxcore-jvm" }
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "1.6"
+            }
+        }
     }
 
     android {
         mavenPublication { artifactId = "unoxcore-android" }
         publishLibraryVariants("debug")
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "1.6"
+            }
+        }
     }
 
     sourceSets {
