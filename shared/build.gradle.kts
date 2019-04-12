@@ -14,7 +14,7 @@ plugins {
 
 with(project) {
     group = "com.github.icarohs7"
-    version = "3.01-next.1"
+    version = "3.01-next.2"
     description = "Library aggregating extensions, utility functions and some QOL features"
 }
 
@@ -112,8 +112,8 @@ kotlin {
         }
 
         val androidMain by getting {
-            dependsOn(jvmMain)
             dependencies {
+                api(Deps.unoxCoreJvm) //TODO use dependsOn when it works
                 api(AndroidDeps.appCompat)
                 api(AndroidDeps.coreKtx)
                 api(AndroidDeps.coroutinesAndroid)
@@ -124,23 +124,22 @@ kotlin {
             }
         }
 
-        val androidTest by getting {
-            dependsOn(androidMain)
-            dependencies {
-                implementation(kotlin("test-junit"))
-                TestDeps.androidCore.forEach {
-                    implementation(it) {
-                        exclude(group = "org.apache.maven")
-                    }
-                }
-            }
+        val androidModules = Regex("(.*)android(?!Main)(.*)")
+        filter { it.name.matches(androidModules) }.forEach { sourceSet ->
+            sourceSet.dependsOn(androidMain)
         }
 
-        val pattern = Regex("(.*)android(.*)[tT]est(.*)")
-        forEach { sourceSet ->
-            when {
-                sourceSet.name == "androidTest" -> return@forEach
-                sourceSet.name.matches(pattern) -> sourceSet.dependsOn(androidTest)
+        val androidTestModules = Regex("(.*)android(.*)[tT]est(.*)")
+        filter { it.name.matches(androidTestModules) }.forEach { sourceSet ->
+            with(sourceSet) {
+                dependencies {
+                    implementation(kotlin("test-junit"))
+                    TestDeps.androidCore.forEach {
+                        implementation(it) {
+                            exclude(group = "org.apache.maven")
+                        }
+                    }
+                }
             }
         }
     }
