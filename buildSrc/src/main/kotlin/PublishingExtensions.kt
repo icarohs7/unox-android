@@ -19,8 +19,12 @@ fun Project.setupBintrayPublish(
         bintrayExtension: BintrayExtension,
         block: BintrayExtension.() -> Unit = {}
 ): Unit = with(bintrayExtension) {
-    user = project.findProperty("bintray_user") as String?
-    key = project.findProperty("bintray_api_key") as String?
+    try {
+        user = project.findProp("bintray_user")
+        key = project.findProp("bintray_api_key")
+    } catch (e: TypeCastException) {
+        return@with
+    }
     publish = true
 
     setConfigurations("archives")
@@ -81,7 +85,6 @@ fun Project.setupAndroidPublication(name: String, android: AndroidBlock, artifac
                     withXml {
                         val dependenciesNode = asNode().appendNode("dependencies")
                         fun addDependency(dep: Dependency, scope: String) {
-                            println(dep)
 
                             if (dep.group == null || dep.version == null || dep.name == "unspecified")
                                 return
