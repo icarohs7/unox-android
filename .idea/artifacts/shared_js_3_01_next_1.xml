@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="shared-js-3.01-next.1">
-    <output-path>C:\Projetos\UNox\unox-core\shared\build\libs</output-path>
-    <root id="archive" name="shared-js-3.01-next.1.jar">
-      <element id="module-output" name="com.github.icarohs7.shared.jsMain" />
-    </root>
-  </artifact>
-</component>

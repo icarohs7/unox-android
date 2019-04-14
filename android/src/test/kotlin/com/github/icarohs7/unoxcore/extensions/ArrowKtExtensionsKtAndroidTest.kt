@@ -206,6 +206,7 @@ class ArrowKtExtensionsKtAndroidTest {
         r3 shouldEqual Some("Hey you, out there in the cold")
     }
 
+    @Suppress("DIVISION_BY_ZERO")
     @Test
     fun should_return_the_list_inside_a_try_or_empty_list() {
         //Given
