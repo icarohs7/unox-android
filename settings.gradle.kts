@@ -1,7 +1,8 @@
 rootProject.name = "unox-core"
 
 include(":shared")
-include(":android")
+include(":jvm")
+//include(":android")
 
 pluginManagement {
     resolutionStrategy {
@@ -24,4 +25,4 @@ pluginManagement {
 }
 
 //TODO re-enable when https://youtrack.jetbrains.com/issue/KT-29758 is fixed
-enableFeaturePreview("GRADLE_METADATA")
+//enableFeaturePreview("GRADLE_METADATA")

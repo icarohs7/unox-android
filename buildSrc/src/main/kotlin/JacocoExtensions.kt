@@ -35,16 +35,21 @@ fun Project.setupJacocoMultimodule(block: JacocoReport.() -> Unit = {}): Unit = 
     }
 }.let { Unit }
 
-fun Project.setupJacoco(block: JacocoReport.() -> Unit = {}): Unit = tasks {
+fun Project.setupJacoco(block: JacocoReport.() -> Unit = {}) {
     configure<JacocoPluginExtension> {
         toolVersion = "0.8.3"
     }
 
-    withType<Test> {
+    tasks.withType<Test> {
         extensions.getByType<JacocoTaskExtension>().setIncludeNoLocationClasses(true)
     }
 
-    create<JacocoReport>("jacocoTestReport") {
+    val jacocoTask = when (getTasksByName("jacocoTestReport", false).isNotEmpty()) {
+        true -> tasks.getByName("jacocoTestReport")
+        false -> tasks.create("jacocoTestReport")
+    } as? JacocoReport ?: return
+
+    with(jacocoTask) {
         val getTasks = { names: List<String> -> names.flatMap { name -> getTasksByName(name, false) } }
         dependsOn(getTasks(listOf("testDebugUnitTest", "check", "createDebugCoverageReport")))
 
@@ -78,5 +83,4 @@ fun Project.setupJacoco(block: JacocoReport.() -> Unit = {}): Unit = tasks {
 
         block()
     }
-
-}.let { Unit }
+}

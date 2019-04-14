@@ -5,6 +5,7 @@ import org.gradle.api.internal.artifacts.dependencies.AbstractModuleDependency
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPom
 import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.javadoc.Javadoc
 import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.configure
@@ -26,6 +27,7 @@ fun Project.setupBintrayPublish(
         return@with
     }
     publish = true
+    override = true
 
     setConfigurations("archives")
     pkg {
@@ -46,6 +48,31 @@ fun Project.setupBintrayPublish(
 
 fun BintrayExtension.pkg(block: BintrayExtension.PackageConfig.() -> Unit) {
     pkg(delegateClosureOf(block))
+}
+
+fun Project.setupKotlinJvmPublication(
+        name: String,
+        sources: SourceSetContainer,
+        artifact: String
+) {
+    with(tasks) {
+        create<Jar>("sourcesJar") {
+            archiveClassifier.set("sources")
+            from(sources["main"].allSource)
+        }
+
+        create<Jar>("javadocJar") {
+            dependsOn("javadoc")
+            archiveClassifier.set("javadoc")
+            from(getByName<Javadoc>("javadoc").destinationDir)
+        }
+    }
+
+    setupPublication(name, artifact) {
+        from(components["java"])
+        artifact(tasks["sourcesJar"])
+        artifact(tasks["javadocJar"])
+    }
 }
 
 fun Project.setupAndroidPublication(name: String, android: AndroidBlock, artifact: String): Unit = afterEvaluate {
@@ -73,15 +100,19 @@ fun Project.setupAndroidPublication(name: String, android: AndroidBlock, artifac
         }
     }
 
+    setupPublication(name, artifact) { pom ->
+        pom.packaging = "aar"
+        artifact(tasks["bundleDebugAar"])
+        artifact(tasks["sourcesJar"])
+        artifact(tasks["javadocJar"])
+    }
+}
+
+fun Project.setupPublication(name: String, artifact: String, block: MavenPublication.(MavenPom) -> Unit = {}) {
     configure<PublishingExtension> {
         publications {
             create<MavenPublication>(name) {
                 setupPom(artifact, project) {
-                    packaging = "aar"
-                    artifact(tasks["bundleDebugAar"])
-                    artifact(tasks["sourcesJar"])
-                    artifact(tasks["javadocJar"])
-
                     withXml {
                         val dependenciesNode = asNode().appendNode("dependencies")
                         fun addDependency(dep: Dependency, scope: String) {
@@ -116,6 +147,8 @@ fun Project.setupAndroidPublication(name: String, android: AndroidBlock, artifac
                         configurations["compile"].dependencies.forEach { dep -> addDependency(dep, "compile") }
                         configurations["api"].dependencies.forEach { dep -> addDependency(dep, "compile") }
                         configurations["implementation"].dependencies.forEach { dep -> addDependency(dep, "runtime") }
+
+                        block(this@setupPom)
                     }
                 }
             }

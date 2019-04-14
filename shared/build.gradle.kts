@@ -10,15 +10,15 @@ plugins {
 
 kotlin {
     metadata {
-        mavenPublication { artifactId = "unoxcore-metadata" }
+        mavenPublication { artifactId = "unoxcore-common" }
     }
 
     js {
-        mavenPublication { artifactId = "unoxcore-js" }
+        mavenPublication { artifactId = "unoxcore-common-js" }
     }
 
     jvm {
-        mavenPublication { artifactId = "unoxcore-jvm" }
+        mavenPublication { artifactId = "unoxcore-common-jvm" }
         compilations.all {
             kotlinOptions {
                 jvmTarget = "1.6"
@@ -59,8 +59,7 @@ kotlin {
                 api(Deps.kotlinStdLib)
                 api(Deps.arrowCore)
                 api(Deps.arrowEffects)
-                api(Deps.coroutinesRx2)
-                api(Deps.rxKotlin)
+                api(Deps.coroutinesCore)
             }
         }
 
