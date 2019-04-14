@@ -287,7 +287,7 @@ object Versions {
     const val circularImageView = "1.4"
     const val clikt = "1.7.0"
     const val constraintLayout = "1.1.3"
-    const val coroutines = "1.1.1"
+    const val coroutines = "1.2.0"
     const val crunchyCalendar = "1.1.0"
     const val currencyEditText = "2.0.2"
     const val disposer = "2.0.0"
