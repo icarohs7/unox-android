@@ -31,7 +31,7 @@ kotlin {
         val androidMain by getting {
             kotlin.srcDir("src/main/kotlin")
             dependencies {
-                api(project(":shared"))
+                api(project(":jvm"))
                 api(AndroidDeps.appCompat)
                 api(AndroidDeps.coreKtx)
                 api(AndroidDeps.coroutinesAndroid)
@@ -43,6 +43,7 @@ kotlin {
         }
 
         val androidTest by getting {
+            dependsOn(androidMain)
             kotlin.srcDir("src/test/kotlin")
             dependencies {
                 TestDeps.androidCore.forEach {

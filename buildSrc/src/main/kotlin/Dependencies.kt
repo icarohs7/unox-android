@@ -314,7 +314,7 @@ object Versions {
     const val kodaTime = "2.0.0"
     const val koin = "2.0.0-rc-3"
     const val kotlin = "1.3.30"
-    const val kotlinxSerialization = "0.10.0"
+    const val kotlinxSerialization = "0.11.0"
     const val kotpref = "2.6.0"
     const val lifecycle = "2.0.0"
     const val lightCalendarView = "1.0.1"
@@ -369,7 +369,7 @@ object Versions {
     const val timber = "4.7.1"
     const val tornadoFx = "1.7.17"
     const val unoxAndroidArch = "b378d1b5f2"
-    const val unoxCore = "3.01-next.1"
+    const val unoxCore = "3.01-next.3"
     const val viewAnimator = "1.1.1"
     const val workManager = "2.0.1"
 
