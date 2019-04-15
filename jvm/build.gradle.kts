@@ -17,13 +17,14 @@ dependencies {
     TestDeps.core.forEach(::implementation)
 }
 
+
 setupJacoco {
     sourceDirectories.setFrom(files(
             "src/main/kotlin"
     ))
 }
 
-setupKotlinJvmPublication("kotlinJvm", sourceSets, "unoxcore-jvm")
+setupKotlinJvmPublication("kotlinJvm", sourceSets["main"].allJava, "unoxcore-jvm")
 
 setupBintrayPublish(bintray) {
     setPublications("kotlinJvm")

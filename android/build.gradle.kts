@@ -48,8 +48,8 @@ setupJacoco {
     ))
 }
 
-setupAndroidPublication("android", android, "unoxcore-android")
+setupAndroidPublication("kotlinAndroid", android, "unoxcore-android")
 
 setupBintrayPublish(bintray) {
-    setPublications("android")
+    setPublications("kotlinAndroid")
 }

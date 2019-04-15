@@ -2,7 +2,7 @@ rootProject.name = "unox-core"
 
 include(":shared")
 include(":jvm")
-//include(":android")
+include(":android")
 
 pluginManagement {
     resolutionStrategy {

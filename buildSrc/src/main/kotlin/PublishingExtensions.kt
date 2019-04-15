@@ -5,7 +5,6 @@ import org.gradle.api.internal.artifacts.dependencies.AbstractModuleDependency
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPom
 import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.javadoc.Javadoc
 import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.configure
@@ -52,13 +51,13 @@ fun BintrayExtension.pkg(block: BintrayExtension.PackageConfig.() -> Unit) {
 
 fun Project.setupKotlinJvmPublication(
         name: String,
-        sources: SourceSetContainer,
+        sources: Any,
         artifact: String
 ) {
     with(tasks) {
         create<Jar>("sourcesJar") {
             archiveClassifier.set("sources")
-            from(sources["main"].allSource)
+            from(sources)
         }
 
         create<Jar>("javadocJar") {
