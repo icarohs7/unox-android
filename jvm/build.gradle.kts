@@ -11,11 +11,7 @@ kotlin {
 
     jvm {
         mavenPublication { artifactId = "unoxcore-jvm" }
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.6"
-            }
-        }
+        compilations.all { kotlinOptions.jvmTarget = "1.6" }
     }
 
     @Suppress("UNUSED_VARIABLE")

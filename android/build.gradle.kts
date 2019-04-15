@@ -24,6 +24,7 @@ kotlin {
     android {
         mavenPublication { artifactId = "unoxcore-android" }
         publishLibraryVariants("debug")
+        compilations.all { kotlinOptions.jvmTarget = "1.6" }
     }
 
     @Suppress("UNUSED_VARIABLE")
