@@ -1,6 +1,6 @@
 plugins {
+    kotlin("multiplatform")
     id("com.android.library")
-    id("kotlin-android")
     id("jacoco")
     id("maven-publish")
     id("com.jfrog.bintray")
@@ -16,27 +16,39 @@ android {
     dataBinding {
         isEnabled = false
     }
-
-    buildTypes {
-        getByName("debug") {
-            isTestCoverageEnabled = true
-        }
-    }
 }
 
-dependencies {
-    api("${findProp("group")}:unoxcore-jvm:${findProp("version")}")
-    api(AndroidDeps.appCompat)
-    api(AndroidDeps.coreKtx)
-    api(AndroidDeps.coroutinesAndroid)
-    api(AndroidDeps.disposer)
-    api(AndroidDeps.lifecycleExtensions)
-    api(AndroidDeps.lives)
-    api(AndroidDeps.rxAndroid)
+kotlin {
+    android {
+        mavenPublication { artifactId = "unoxcore-android" }
+        publishLibraryVariants("debug")
+    }
 
-    TestDeps.androidCore.forEach {
-        implementation(it) {
-            exclude(group = "org.apache.maven")
+    @Suppress("UNUSED_VARIABLE")
+    sourceSets {
+        val androidMain by getting {
+            kotlin.srcDir("src/main/kotlin")
+            dependencies {
+                api(project(":shared"))
+                api(AndroidDeps.appCompat)
+                api(AndroidDeps.coreKtx)
+                api(AndroidDeps.coroutinesAndroid)
+                api(AndroidDeps.disposer)
+                api(AndroidDeps.lifecycleExtensions)
+                api(AndroidDeps.lives)
+                api(AndroidDeps.rxAndroid)
+            }
+        }
+
+        val androidTest by getting {
+            kotlin.srcDir("src/test/kotlin")
+            dependencies {
+                TestDeps.androidCore.forEach {
+                    implementation(it) {
+                        exclude(group = "org.apache.maven")
+                    }
+                }
+            }
         }
     }
 }
@@ -48,8 +60,4 @@ setupJacoco {
     ))
 }
 
-setupAndroidPublication("kotlinAndroid", android, "unoxcore-android")
-
-setupBintrayPublish(bintray) {
-    setPublications("kotlinAndroid")
-}
+setupBintrayPublish(bintray, "androidDebug")

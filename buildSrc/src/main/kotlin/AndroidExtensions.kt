@@ -14,6 +14,9 @@ fun AndroidBlock.defaultSettings() {
     }
 
     buildTypes {
+        getByName("debug") {
+            isTestCoverageEnabled = true
+        }
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")

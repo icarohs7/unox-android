@@ -2,7 +2,7 @@ rootProject.name = "unox-core"
 
 include(":shared")
 include(":jvm")
-//include(":android")
+include(":android")
 
 pluginManagement {
     resolutionStrategy {
@@ -24,4 +24,4 @@ pluginManagement {
     }
 }
 
-enableFeaturePreview("GRADLE_METADATA")
+//enableFeaturePreview("GRADLE_METADATA")
