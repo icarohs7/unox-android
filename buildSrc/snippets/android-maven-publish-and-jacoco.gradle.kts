@@ -8,10 +8,50 @@ plugins {
     defaults.`android-module`
 }
 
+android {
+    defaultSettings()
+    sourceSets["main"].java.srcDir("src/main/kotlin")
+    sourceSets["test"].java.srcDir("src/test/kotlin")
+
+    dataBinding {
+        isEnabled = false
+    }
+}
+
 kotlin {
+    metadata { mavenPublication { artifactId = "unoxcore-android-metadata" } }
+
     android {
         mavenPublication { artifactId = "unoxcore-android" }
         publishLibraryVariants("debug")
+    }
+
+    @Suppress("UNUSED_VARIABLE")
+    sourceSets {
+        val androidMain by getting {
+            kotlin.srcDir("src/main/kotlin")
+            dependencies {
+                api(project(":shared"))
+                api(AndroidDeps.appCompat)
+                api(AndroidDeps.coreKtx)
+                api(AndroidDeps.coroutinesAndroid)
+                api(AndroidDeps.disposer)
+                api(AndroidDeps.lifecycleExtensions)
+                api(AndroidDeps.lives)
+                api(AndroidDeps.rxAndroid)
+            }
+        }
+
+        val androidTest by getting {
+            kotlin.srcDir("src/test/kotlin")
+            dependencies {
+                TestDeps.androidCore.forEach {
+                    implementation(it) {
+                        exclude(group = "org.apache.maven")
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -22,4 +62,4 @@ setupJacoco {
     ))
 }
 
-setupBintrayPublish(bintray, "androidDebug")
+setupBintrayPublish(bintray, "metadata", "androidDebug")
