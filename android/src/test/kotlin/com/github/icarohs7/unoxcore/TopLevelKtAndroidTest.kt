@@ -9,6 +9,8 @@ import kotlinx.coroutines.withContext
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import se.lovef.assert.v1.shouldBeGreaterThan
+import se.lovef.assert.v1.shouldBeLessThan
 import se.lovef.assert.v1.shouldBeTrue
 import se.lovef.assert.v1.shouldEqual
 import se.lovef.assert.v1.shouldNotEqual
@@ -46,5 +48,14 @@ class TopLevelKtAndroidTest {
         delay(1000)
         check1Done.shouldBeTrue()
         check2Done.shouldBeTrue()
+    }
+
+    @Test
+    fun should_generate_random_colors() {
+        repeat(1_000_000) {
+            val color = randomColor()
+            color shouldBeLessThan 1
+            color shouldBeGreaterThan -16777217
+        }
     }
 }

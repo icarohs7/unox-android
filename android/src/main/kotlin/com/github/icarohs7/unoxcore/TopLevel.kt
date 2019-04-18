@@ -2,8 +2,10 @@
 
 package com.github.icarohs7.unoxcore
 
+import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
+import androidx.annotation.ColorInt
 
 /**
  * Execute the block right away if on main thread, or schedule it
@@ -15,4 +17,13 @@ fun mustRunOnMainThread(fn: () -> Unit) {
 
     if (isOnMainLooper) fn()
     else Handler(mainLooper).post(fn)
+}
+
+/**
+ * @return A randomly generated color
+ */
+@ColorInt
+fun randomColor(): Int {
+    val nextInt = { (0..255).random() }
+    return Color.rgb(nextInt(), nextInt(), nextInt())
 }
