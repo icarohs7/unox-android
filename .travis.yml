@@ -28,7 +28,7 @@ before_install:
     - chmod +x gradlew
 
 script:
-    - ./gradlew clean build jacocoTestReport
+    - ./gradlew clean build jacocoRootReport -x lint
 
 after_success:
     - bash <(curl -s https://codecov.io/bash)
