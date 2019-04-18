@@ -70,7 +70,7 @@ kotlin {
 
 setupJacoco {
     sourceDirectories.setFrom(files(
-            "src/main/kotlin"
+            "src/jvmMain/kotlin"
     ))
 }
 
