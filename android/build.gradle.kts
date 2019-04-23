@@ -10,8 +10,6 @@ plugins {
 
 android {
     defaultSettings()
-    sourceSets["main"].java.srcDir("src/main/kotlin")
-    sourceSets["test"].java.srcDir("src/test/kotlin")
 
     dataBinding {
         isEnabled = false
