@@ -21,8 +21,8 @@ kotlin {
             dependencies {
                 api(project(":shared"))
                 api(Deps.kotlinStdLib)
-                api(Deps.arrowCore)
-                api(Deps.arrowEffects)
+                api(Deps.arrowCoreData)
+                api(Deps.arrowEffectsData)
                 api(Deps.coroutinesRx2)
                 api(Deps.rxKotlin)
             }

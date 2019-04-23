@@ -39,8 +39,8 @@ kotlin {
 
         val jsMain by getting {
             dependencies {
-                api(kotlin("stdlib-js"))
-                api(JSDeps.coroutinesJs)
+                implementation(kotlin("stdlib-js"))
+                implementation(JSDeps.coroutinesJs)
             }
         }
 
@@ -52,10 +52,10 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
-                api(Deps.kotlinStdLib)
-                api(Deps.arrowCore)
-                api(Deps.arrowEffects)
-                api(Deps.coroutinesCore)
+                implementation(Deps.kotlinStdLib)
+                implementation(Deps.arrowCoreData)
+                implementation(Deps.arrowEffectsData)
+                implementation(Deps.coroutinesCore)
             }
         }
 
