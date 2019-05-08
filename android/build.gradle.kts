@@ -35,8 +35,8 @@ kotlin {
                 api(AndroidDeps.coreKtx)
                 api(AndroidDeps.coroutinesAndroid)
                 api(AndroidDeps.disposer)
-                api(AndroidDeps.lifecycleExtensions)
-                api(AndroidDeps.lives)
+                api(AndroidDeps.lifecycleReactiveStreamsKtx)
+                api(AndroidDeps.lifecycleViewModel)
                 api(AndroidDeps.rxAndroid)
             }
         }

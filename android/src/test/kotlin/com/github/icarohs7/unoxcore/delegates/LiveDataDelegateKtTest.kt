@@ -1,6 +1,6 @@
 package com.github.icarohs7.unoxcore.delegates
 
-import com.snakydesign.livedataextensions.liveDataOf
+import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -105,5 +105,11 @@ class LiveDataDelegateKtTest {
         val ld1 = liveDataOf(5)
         val ld2 = liveDataOf("hi")
         val ld3 = liveDataOf(mapOf("name" to "Icaro", "country" to "Brazil"))
+
+        private fun <T> liveDataOf(value: T): MutableLiveData<T> {
+            return MutableLiveData<T>().apply {
+                this.value = value
+            }
+        }
     }
 }

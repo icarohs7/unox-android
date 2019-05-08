@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.github.icarohs7.unoxcore.TestApplication
 import com.github.icarohs7.unoxcore.UnoxCore
 import com.github.icarohs7.unoxcore.extensions.coroutines.onForeground
-import com.snakydesign.livedataextensions.emptyLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
@@ -26,11 +25,11 @@ class LiveDataExtensionsKtTest {
         l1.value shouldEqual null
         l1.valueOr("Omai wa mou shindeiru!") shouldEqual "Omai wa mou shindeiru!"
 
-        val l2 = emptyLiveData<Int>()
+        val l2 = MutableLiveData<Int>()
         onForeground { l2.value = 42 }
         l2.valueOr(1532) shouldEqual 42
 
-        val l3 = emptyLiveData<String>()
+        val l3 = MutableLiveData<String>()
         onForeground { l3.value = null }
         l3.value shouldEqual null
         l3.valueOr("NANI!?") shouldEqual "NANI!?"
@@ -41,7 +40,7 @@ class LiveDataExtensionsKtTest {
         val activity = Robolectric.setupActivity(AppCompatActivity::class.java)
         var count = 0
         var lastValue = ""
-        val liveData = emptyLiveData<String>()
+        val liveData = MutableLiveData<String>()
         liveData.observe(activity) {
             count++
             lastValue = it
