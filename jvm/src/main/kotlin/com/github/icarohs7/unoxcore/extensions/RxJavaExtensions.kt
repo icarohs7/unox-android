@@ -7,8 +7,9 @@ import arrow.core.Tuple5
 import arrow.core.Tuple6
 import io.reactivex.Flowable
 import io.reactivex.functions.BiFunction
-import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.rx2.rxMaybe
+import kotlinx.coroutines.rx2.rxSingle
 
 /**
  * Combine 2 Flowables into a Tuple using
@@ -79,9 +80,11 @@ operator fun <A, B, C, D, E, F> Flowable<Tuple5<A, B, C, D, E>>.plus(
  * upstream on the computation scheduler
  */
 fun <T : Any, R : Any> Flowable<T>.suspendMap(transform: suspend (T) -> R): Flowable<R> {
-    return this
-            .map { item -> runBlocking { transform(item) } }
-            .subscribeOn(Schedulers.computation())
+    return flatMapSingle { value ->
+        GlobalScope.rxSingle {
+            transform(value)
+        }
+    }
 }
 
 /**
@@ -89,9 +92,12 @@ fun <T : Any, R : Any> Flowable<T>.suspendMap(transform: suspend (T) -> R): Flow
  * upstream on the computation scheduler
  */
 fun <T : Any> Flowable<T>.suspendFilter(predicate: suspend (T) -> Boolean): Flowable<T> {
-    return this
-            .filter { item -> runBlocking { predicate(item) } }
-            .subscribeOn(Schedulers.computation())
+    return flatMapMaybe { value ->
+        GlobalScope.rxMaybe {
+            if (predicate(value)) value
+            else null
+        }
+    }
 }
 
 /**
@@ -99,7 +105,7 @@ fun <T : Any> Flowable<T>.suspendFilter(predicate: suspend (T) -> Boolean): Flow
  * the emitted list using the given
  * predicate
  */
-fun <T> Flowable<List<T>>.innerFilter(predicate: (T) -> Boolean): Flowable<List<T>> {
+fun <T> Flowable<out Iterable<T>>.innerFilter(predicate: (T) -> Boolean): Flowable<List<T>> {
     return this.map { it.filter(predicate) }
 }
 
@@ -108,6 +114,6 @@ fun <T> Flowable<List<T>>.innerFilter(predicate: (T) -> Boolean): Flowable<List<
  * the emitted list using the given
  * transformer
  */
-fun <T, R> Flowable<List<T>>.innerMap(transform: (T) -> R): Flowable<List<R>> {
+fun <T, R> Flowable<out Iterable<T>>.innerMap(transform: (T) -> R): Flowable<List<R>> {
     return this.map { it.map(transform) }
 }
