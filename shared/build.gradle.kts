@@ -54,7 +54,6 @@ kotlin {
             dependencies {
                 implementation(Deps.kotlinStdLib)
                 implementation(Deps.arrowCoreData)
-                implementation(Deps.arrowEffectsData)
                 implementation(Deps.coroutinesCore)
             }
         }
