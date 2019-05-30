@@ -140,4 +140,17 @@ class StringExtensionsKtTest {
         val r3 = "Omai_Wa_Mou_Shindeiru!"
         s3.capitalizeWords("_") shouldEqual r3
     }
+
+    @Test
+    fun should_convert_string_or_use_fallback() {
+        val s1 = "15"
+        s1.toIntOr(0) shouldEqual 15
+        val s2 = "NANI!?21"
+        s2.toIntOr(1532) shouldEqual 1532
+
+        val s3 = "2.4"
+        s3.toDoubleOr(99.0) shouldEqual 2.4
+        val s4 = "1.0OMAI WA MOU SHINDEIRU"
+        s4.toDoubleOr(15.32) shouldEqual 15.32
+    }
 }
