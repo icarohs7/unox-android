@@ -2,14 +2,15 @@ package com.github.icarohs7.unoxcore.extensions
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
-import com.github.icarohs7.unoxcore.TestApplication
 import com.github.icarohs7.unoxcore.UnoxCore
 import com.github.icarohs7.unoxcore.extensions.coroutines.onForeground
+import com.github.icarohs7.unoxcore.testutils.TestApplication
+import com.github.icarohs7.unoxcore.testutils.mockActivity
+import io.reactivex.subscribers.TestSubscriber
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import se.lovef.assert.v1.shouldEqual
@@ -37,7 +38,8 @@ class LiveDataExtensionsKtTest {
 
     @Test
     fun should_observe_live_data_with_lambda_and_non_nullable_value() {
-        val activity = Robolectric.setupActivity(AppCompatActivity::class.java)
+        val (controller, activity) = mockActivity<AppCompatActivity>()
+        controller.resume()
         var count = 0
         var lastValue = ""
         val liveData = MutableLiveData<String>()
@@ -60,5 +62,18 @@ class LiveDataExtensionsKtTest {
         liveData.value = null
         count shouldEqual 2
         lastValue shouldEqual "NANI!?"
+    }
+
+    @Test
+    fun should_convert_live_data_to_flowable() {
+        val (controller, act) = mockActivity<AppCompatActivity>()
+        controller.resume()
+        val ld1 = MutableLiveData<String>("NANI!?")
+        val f1 = ld1.toFlowable(act)
+        val subs1 = TestSubscriber.create<String>()
+        f1.subscribe(subs1)
+        subs1.assertNotComplete()
+        ld1.value = "OMAI WA MOU SHINDEIRU!"
+        subs1.assertValues("NANI!?", "OMAI WA MOU SHINDEIRU!")
     }
 }

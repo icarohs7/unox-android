@@ -1,7 +1,7 @@
 package com.github.icarohs7.unoxcore.extensions
 
 import androidx.appcompat.app.AppCompatActivity
-import com.github.icarohs7.unoxcore.TestApplication
+import com.github.icarohs7.unoxcore.testutils.TestApplication
 import io.reactivex.BackpressureStrategy
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
