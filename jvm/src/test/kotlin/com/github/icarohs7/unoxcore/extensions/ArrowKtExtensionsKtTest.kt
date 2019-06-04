@@ -325,4 +325,13 @@ class ArrowKtExtensionsKtTest {
         val r4 = i4.syncGetOr { 20 }
         r4 shouldEqual 1532
     }
+
+    @Test
+    fun should_get_a_Try_value_or_a_default() {
+        val t1 = Try { 1532 }
+        t1.getOrElse(20) shouldEqual 1532
+
+        val t2 = Try { throw Exception() }
+        t2.getOrElse(42) shouldEqual 42
+    }
 }

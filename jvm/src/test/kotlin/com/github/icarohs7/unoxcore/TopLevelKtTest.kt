@@ -1,6 +1,8 @@
 package com.github.icarohs7.unoxcore
 
+import arrow.core.Try
 import arrow.effects.IO
+import com.github.icarohs7.unoxcore.extensions.orThrow
 import io.reactivex.subscribers.TestSubscriber
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -189,5 +191,18 @@ class TopLevelKtTest {
         obj4.isClosed.shouldBeTrue()
         obj5.isClosed.shouldBeTrue()
         num shouldEqual 1532
+    }
+
+    @Test
+    fun should_wrap_execution_of_background_code() {
+        runBlocking {
+            var v1 = 0
+            val r1 = tryBg { v1 = 10; v1 }
+            v1 shouldEqual 10
+            r1 shouldEqual Try.just(10)
+
+            val r2 = tryBg { throw IllegalArgumentException() }
+            ;{ r2.orThrow() } throws IllegalArgumentException::class
+        }
     }
 }

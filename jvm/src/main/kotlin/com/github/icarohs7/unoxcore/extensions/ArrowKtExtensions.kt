@@ -112,3 +112,8 @@ fun <T> IO<T>.syncGetOr(default: T): T {
 inline fun <T> IO<T>.syncGetOr(default: () -> T): T {
     return this.tryIO().getOrElse { default() }
 }
+
+/** Unwrap the given value or return the fallback if it's a [Failure] */
+fun <T : Any> Try<T>.getOrElse(fallback: T): T {
+    return this.getOrElse { fallback }
+}
