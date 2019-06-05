@@ -2,19 +2,8 @@ package com.github.icarohs7.unoxcore
 
 import arrow.core.Try
 import com.github.icarohs7.unoxcore.extensions.coroutines.onBackground
-import io.reactivex.Single
-import io.reactivex.SingleEmitter
 import kotlinx.coroutines.CoroutineScope
 import java.io.Closeable
-
-/**
- * Create a [Single] using the given configuration
- * lambda
- */
-@Suppress("FunctionName")
-fun <T> Single(config: SingleEmitter<T>.() -> Unit): Single<T> {
-    return Single.create(config)
-}
 
 /**
  * Execute the given block using the resource

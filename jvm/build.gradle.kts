@@ -22,7 +22,6 @@ kotlin {
                 api(project(":shared"))
                 api(Deps.kotlinStdLib)
                 api(Deps.arrowCoreData)
-                api(Deps.arrowEffectsData)
                 api(Deps.coroutinesRx2)
                 api(Deps.rxKotlin)
             }

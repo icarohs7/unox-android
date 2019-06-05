@@ -2,8 +2,6 @@ package com.github.icarohs7.unoxcore
 
 import arrow.core.Try
 import com.github.icarohs7.unoxcore.extensions.orThrow
-import io.reactivex.subscribers.TestSubscriber
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import se.lovef.assert.v1.shouldBe
@@ -14,32 +12,6 @@ import se.lovef.assert.v1.throws
 import java.io.Closeable
 
 class TopLevelKtTest {
-
-    @Test
-    fun should_create_rx_java_single() {
-        val subscriber = TestSubscriber.create<Int>()
-        val single1 = Single<Int> {
-            onSuccess(10)
-        }
-
-        single1.toFlowable().subscribe(subscriber)
-
-        val emissions = subscriber.events.first()
-        emissions shouldEqual listOf(10)
-        subscriber.assertComplete()
-        subscriber.assertValueCount(1)
-
-        val single2 = Single<Int> {
-            onError(NumberFormatException("NANI!?"))
-        }
-
-        var errored = false
-        single2.toFlowable().subscribe({}, { errored = true })
-        runBlocking { delay(400) }
-        errored.shouldBeTrue()
-        subscriber.dispose()
-    }
-
     class SomeCloseable : Closeable {
         var isClosed = false
             private set
