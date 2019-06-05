@@ -6,6 +6,7 @@ import arrow.core.Option
 import arrow.core.Some
 import arrow.core.Success
 import arrow.core.Try
+import arrow.core.getOrElse
 import arrow.core.some
 import arrow.core.success
 import arrow.core.toOption
@@ -13,6 +14,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import se.lovef.assert.throws
+import se.lovef.assert.typeIs
+import se.lovef.assert.v1.shouldBeTrue
+import se.lovef.assert.v1.shouldEqual
 
 /**
  * Test class used to check if the
@@ -20,6 +24,14 @@ import se.lovef.assert.throws
  */
 @RunWith(RobolectricTestRunner::class)
 class ArrowKtExtensionsKtAndroidTest {
+    @Test
+    fun helper_fix_imports() {
+        10 typeIs Int::class
+        true.shouldBeTrue()
+        Try { 10 }.getOrElse { 5 } shouldEqual 10
+
+    }
+
     @Test
     fun should_create_a_failure_instance_using_shorthand() {
         val f = Try.never

@@ -10,7 +10,6 @@ import arrow.core.getOrElse
 import arrow.core.some
 import arrow.core.success
 import arrow.core.toOption
-import arrow.effects.IO
 import org.junit.Test
 import se.lovef.assert.throws
 import se.lovef.assert.typeIs
@@ -285,32 +284,6 @@ class ArrowKtExtensionsKtTest {
         t4.successValues() shouldEqual listOf("a", "b", "d", "e")
         o3.existingValues() shouldEqual listOf(1, 2, 3, 5, 6, 8, 9)
         o4.existingValues() shouldEqual listOf("a", "b", "d", "e")
-    }
-
-    @Test
-    fun should_convert_an_IO_instance_to_Try() {
-        val io1 = IO.just(10).tryIO()
-        val res1 = Try.just(10)
-        io1 shouldEqual res1
-
-        val io2 = IO.invoke { throw Exception() }.tryIO()
-        io2 typeIs Failure::class
-        ;{ io2.orThrow() } throws Exception::class
-
-        val io3 = IO.invoke { throw RuntimeException() }.tryIO()
-        io3 typeIs Failure::class
-        ;{ io3.orThrow() } throws RuntimeException::class
-
-        val io4 = IO.invoke { throw IllegalStateException() }.tryIO()
-        io4 typeIs Failure::class
-        ;{ io4.orThrow() } throws IllegalStateException::class
-
-        var eff1 = 10
-        val io5 = IO.invoke { eff1 = 20;1532 }
-        eff1 shouldEqual 10
-        val res5 = Try { 1532 }
-        io5.tryIO() shouldEqual res5
-        eff1 shouldEqual 20
     }
 
     @Test
