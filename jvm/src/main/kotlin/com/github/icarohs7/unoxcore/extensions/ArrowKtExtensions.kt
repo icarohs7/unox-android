@@ -9,6 +9,12 @@ import arrow.core.orNull
 import arrow.core.toOption
 import arrow.effects.IO
 
+/**
+ * Shorthand to a [Failure] instance
+ */
+val Try.Companion.never: Failure
+    get() = Failure(IllegalAccessException("Never"))
+
 /** Convert a nullable item to a try of it, or a null pointer failure */
 fun <T> T?.toTry(): Try<T> =
         Try { this@toTry!! }

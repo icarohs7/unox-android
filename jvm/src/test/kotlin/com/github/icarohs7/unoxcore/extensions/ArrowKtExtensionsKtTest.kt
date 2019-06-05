@@ -18,6 +18,12 @@ import se.lovef.assert.v1.shouldBeTrue
 import se.lovef.assert.v1.shouldEqual
 
 class ArrowKtExtensionsKtTest {
+    @Test
+    fun should_create_a_failure_instance_using_shorthand() {
+        val f = Try.never
+        f typeIs Failure::class
+        f.exception typeIs IllegalAccessException::class
+    }
 
     @Test
     fun convert_nullable_value_to_Try() {
