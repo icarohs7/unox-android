@@ -314,25 +314,6 @@ class ArrowKtExtensionsKtTest {
     }
 
     @Test
-    fun should_get_an_IO_value_or_a_default() {
-        val i1 = IO { throw Exception() }
-        val r1 = i1.syncGetOr(10)
-        r1 shouldEqual 10
-
-        val i2 = IO { 1532 }
-        val r2 = i2.syncGetOr(20)
-        r2 shouldEqual 1532
-
-        val i3 = IO { throw Exception() }
-        val r3 = i3.syncGetOr { 10 }
-        r3 shouldEqual 10
-
-        val i4 = IO { 1532 }
-        val r4 = i4.syncGetOr { 20 }
-        r4 shouldEqual 1532
-    }
-
-    @Test
     fun should_get_a_Try_value_or_a_default() {
         val t1 = Try { 1532 }
         t1.getOrElse(20) shouldEqual 1532

@@ -104,14 +104,6 @@ fun <T> IO<T>.tryIO(): Try<T> {
 
 /**
  * Synchronously run the IO and return it's
- * result or the default value if it fails
- */
-fun <T> IO<T>.syncGetOr(default: T): T {
-    return this.tryIO().getOrElse { default }
-}
-
-/**
- * Synchronously run the IO and return it's
  * result or the result of the given function
  * if it fails
  */
