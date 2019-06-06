@@ -17,6 +17,8 @@ android {
 }
 
 kotlin {
+    setupMetaInfoNameOnAll(rootProject, project)
+
     metadata { mavenPublication { artifactId = "unoxcore-android-metadata" } }
 
     android {

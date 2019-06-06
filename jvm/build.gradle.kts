@@ -7,6 +7,8 @@ plugins {
 }
 
 kotlin {
+    setupMetaInfoNameOnAll(rootProject, project)
+
     metadata { mavenPublication { artifactId = "unoxcore-jvm-metadata" } }
 
     jvm {

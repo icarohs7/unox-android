@@ -10,6 +10,7 @@ plugins {
 
 kotlin {
     metadata {
+        setupMetaInfoName(rootProject, project)
         mavenPublication { artifactId = "unoxcore-common" }
     }
 
@@ -18,6 +19,7 @@ kotlin {
     }
 
     jvm {
+        setupMetaInfoName(rootProject, project)
         mavenPublication { artifactId = "unoxcore-common-jvm" }
         compilations.all { kotlinOptions.jvmTarget = "1.6" }
     }
