@@ -53,7 +53,6 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(Deps.kotlinStdLib)
-                implementation(Deps.arrowCoreData)
                 implementation(Deps.coroutinesCore)
             }
         }
@@ -61,6 +60,7 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
+                implementation(Deps.arrowCoreData)
                 TestDeps.core.forEach(::implementation)
             }
         }

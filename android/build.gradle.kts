@@ -32,11 +32,9 @@ kotlin {
             dependencies {
                 api(project(":jvm"))
                 api(AndroidDeps.appCompat)
-                api(AndroidDeps.coreKtx)
                 api(AndroidDeps.coroutinesAndroid)
                 api(AndroidDeps.disposer)
                 api(AndroidDeps.lifecycleReactiveStreamsKtx)
-                api(AndroidDeps.lifecycleViewModel)
                 api(AndroidDeps.rxAndroid)
             }
         }
@@ -45,6 +43,7 @@ kotlin {
             dependsOn(androidMain)
             kotlin.srcDir("src/test/kotlin")
             dependencies {
+                implementation(AndroidDeps.coreKtx)
                 TestDeps.androidCore.forEach {
                     implementation(it) {
                         exclude(group = "org.apache.maven")

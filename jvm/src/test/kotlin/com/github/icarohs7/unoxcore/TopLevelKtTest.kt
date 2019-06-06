@@ -1,6 +1,7 @@
 package com.github.icarohs7.unoxcore
 
 import arrow.core.Try
+import com.github.icarohs7.unoxcore.extensions.getOrElse
 import com.github.icarohs7.unoxcore.extensions.orThrow
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
@@ -150,6 +151,8 @@ class TopLevelKtTest {
             r1 shouldEqual Try.just(10)
 
             val r2 = tryBg { throw IllegalArgumentException() }
+            r2.isFailure().shouldBeTrue()
+            r2.getOrElse(10) shouldEqual 10
             ;{ r2.orThrow() } throws IllegalArgumentException::class
         }
     }
