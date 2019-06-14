@@ -37,34 +37,6 @@ class LiveDataExtensionsKtTest {
     }
 
     @Test
-    fun should_observe_live_data_with_lambda_and_non_nullable_value() {
-        val (controller, activity) = mockActivity<AppCompatActivity>()
-        controller.resume()
-        var count = 0
-        var lastValue = ""
-        val liveData = MutableLiveData<String>()
-        liveData.observe(activity) {
-            count++
-            lastValue = it
-        }
-
-        count shouldEqual 0
-        lastValue shouldEqual ""
-
-        liveData.value = "Omai wa mou shindeiru!"
-        count shouldEqual 1
-        lastValue shouldEqual "Omai wa mou shindeiru!"
-
-        liveData.value = "NANI!?"
-        count shouldEqual 2
-        lastValue shouldEqual "NANI!?"
-
-        liveData.value = null
-        count shouldEqual 2
-        lastValue shouldEqual "NANI!?"
-    }
-
-    @Test
     fun should_convert_live_data_to_flowable() {
         val (controller, act) = mockActivity<AppCompatActivity>()
         controller.resume()
