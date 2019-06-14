@@ -76,3 +76,21 @@ fun String.digits(): Long? {
 fun String.capitalizeWords(separator: String = " "): String {
     return split(separator).joinToString(separator) { it.toLowerCase().capitalize() }
 }
+
+/**
+ * Convert the given string to int
+ * or return the [fallback] if not
+ * possible
+ */
+fun String.toIntOr(fallback: Int): Int {
+    return this.toIntOrNull().valueOr(fallback)
+}
+
+/**
+ * Convert the given string to double
+ * or return the [fallback] if not
+ * possible
+ */
+fun String.toDoubleOr(fallback: Double): Double {
+    return this.toDoubleOrNull().valueOr(fallback)
+}

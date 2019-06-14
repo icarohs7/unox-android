@@ -10,8 +10,6 @@ plugins {
 
 android {
     defaultSettings()
-    sourceSets["main"].java.srcDir("src/main/kotlin")
-    sourceSets["test"].java.srcDir("src/test/kotlin")
 
     dataBinding {
         isEnabled = false
@@ -19,6 +17,8 @@ android {
 }
 
 kotlin {
+    setupMetaInfoNameOnAll(rootProject, project)
+
     metadata { mavenPublication { artifactId = "unoxcore-android-metadata" } }
 
     android {
@@ -34,11 +34,9 @@ kotlin {
             dependencies {
                 api(project(":jvm"))
                 api(AndroidDeps.appCompat)
-                api(AndroidDeps.coreKtx)
                 api(AndroidDeps.coroutinesAndroid)
                 api(AndroidDeps.disposer)
-                api(AndroidDeps.lifecycleExtensions)
-                api(AndroidDeps.lives)
+                api(AndroidDeps.lifecycleReactiveStreamsKtx)
                 api(AndroidDeps.rxAndroid)
             }
         }
@@ -47,6 +45,7 @@ kotlin {
             dependsOn(androidMain)
             kotlin.srcDir("src/test/kotlin")
             dependencies {
+                implementation(AndroidDeps.coreKtx)
                 TestDeps.androidCore.forEach {
                     implementation(it) {
                         exclude(group = "org.apache.maven")

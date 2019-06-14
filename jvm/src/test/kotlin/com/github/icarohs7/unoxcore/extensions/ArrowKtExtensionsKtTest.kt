@@ -10,7 +10,6 @@ import arrow.core.getOrElse
 import arrow.core.some
 import arrow.core.success
 import arrow.core.toOption
-import arrow.effects.IO
 import org.junit.Test
 import se.lovef.assert.throws
 import se.lovef.assert.typeIs
@@ -18,6 +17,12 @@ import se.lovef.assert.v1.shouldBeTrue
 import se.lovef.assert.v1.shouldEqual
 
 class ArrowKtExtensionsKtTest {
+    @Test
+    fun should_create_a_failure_instance_using_shorthand() {
+        val f = Try.never
+        f typeIs Failure::class
+        f.exception typeIs IllegalAccessException::class
+    }
 
     @Test
     fun convert_nullable_value_to_Try() {
@@ -282,47 +287,11 @@ class ArrowKtExtensionsKtTest {
     }
 
     @Test
-    fun should_convert_an_IO_instance_to_Try() {
-        val io1 = IO.just(10).tryIO()
-        val res1 = Try.just(10)
-        io1 shouldEqual res1
+    fun should_get_a_Try_value_or_a_default() {
+        val t1 = Try { 1532 }
+        t1.getOrElse(20) shouldEqual 1532
 
-        val io2 = IO.invoke { throw Exception() }.tryIO()
-        io2 typeIs Failure::class
-        ;{ io2.orThrow() } throws Exception::class
-
-        val io3 = IO.invoke { throw RuntimeException() }.tryIO()
-        io3 typeIs Failure::class
-        ;{ io3.orThrow() } throws RuntimeException::class
-
-        val io4 = IO.invoke { throw IllegalStateException() }.tryIO()
-        io4 typeIs Failure::class
-        ;{ io4.orThrow() } throws IllegalStateException::class
-
-        var eff1 = 10
-        val io5 = IO.invoke { eff1 = 20;1532 }
-        eff1 shouldEqual 10
-        val res5 = Try { 1532 }
-        io5.tryIO() shouldEqual res5
-        eff1 shouldEqual 20
-    }
-
-    @Test
-    fun should_get_an_IO_value_or_a_default() {
-        val i1 = IO { throw Exception() }
-        val r1 = i1.syncGetOr(10)
-        r1 shouldEqual 10
-
-        val i2 = IO { 1532 }
-        val r2 = i2.syncGetOr(20)
-        r2 shouldEqual 1532
-
-        val i3 = IO { throw Exception() }
-        val r3 = i3.syncGetOr { 10 }
-        r3 shouldEqual 10
-
-        val i4 = IO { 1532 }
-        val r4 = i4.syncGetOr { 20 }
-        r4 shouldEqual 1532
+        val t2 = Try { throw Exception() }
+        t2.getOrElse(42) shouldEqual 42
     }
 }

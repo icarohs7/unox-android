@@ -7,7 +7,12 @@ import arrow.core.Try
 import arrow.core.getOrElse
 import arrow.core.orNull
 import arrow.core.toOption
-import arrow.effects.IO
+
+/**
+ * Shorthand to a [Failure] instance
+ */
+val Try.Companion.never: Failure
+    get() = Failure(IllegalAccessException("Never"))
 
 /** Convert a nullable item to a try of it, or a null pointer failure */
 fun <T> T?.toTry(): Try<T> =
@@ -88,27 +93,7 @@ fun <T : Any> Option<Iterable<T?>>.existingValues(): List<T> {
     return this.map { it.filterNotNull() }.orEmpty()
 }
 
-/**
- * Run an [IO] synchronously, wrapping
- * the result in an instace of [Try]
- */
-fun <T> IO<T>.tryIO(): Try<T> {
-    return this.attempt().unsafeRunSync().fold(::Failure, ::Success)
-}
-
-/**
- * Synchronously run the IO and return it's
- * result or the default value if it fails
- */
-fun <T> IO<T>.syncGetOr(default: T): T {
-    return this.tryIO().getOrElse { default }
-}
-
-/**
- * Synchronously run the IO and return it's
- * result or the result of the given function
- * if it fails
- */
-inline fun <T> IO<T>.syncGetOr(default: () -> T): T {
-    return this.tryIO().getOrElse { default() }
+/** Unwrap the given value or return the fallback if it's a [Failure] */
+fun <T : Any> Try<T>.getOrElse(fallback: T): T {
+    return this.getOrElse { fallback }
 }

@@ -13,7 +13,7 @@ import io.sellmair.disposer.onDestroy
  * Helper used to setup the subscription and
  * observation threads
  */
-private fun <T> Flowable<T>.setupThreads(): Flowable<T> {
+fun <T> Flowable<T>.setupAndroidSchedulers(): Flowable<T> {
     return this
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
@@ -28,7 +28,7 @@ private fun <T> Flowable<T>.setupThreads(): Flowable<T> {
  */
 fun <T> Flowable<T>.observe(lifecycle: LifecycleOwner, onNext: (T) -> Unit) {
     this
-            .setupThreads()
+            .setupAndroidSchedulers()
             .subscribe(onNext)
             .disposeBy(lifecycle.onDestroy)
 }
@@ -42,7 +42,7 @@ fun <T> Flowable<T>.observe(lifecycle: LifecycleOwner, onNext: (T) -> Unit) {
  */
 fun <T> Flowable<T>.observe(lifecycle: LifecycleOwner, onNext: (T) -> Unit, onError: (Throwable) -> Unit) {
     this
-            .setupThreads()
+            .setupAndroidSchedulers()
             .subscribe(onNext, onError)
             .disposeBy(lifecycle.onDestroy)
 }
@@ -61,7 +61,7 @@ fun <T> Flowable<T>.observe(
         onComplete: () -> Unit
 ) {
     this
-            .setupThreads()
+            .setupAndroidSchedulers()
             .subscribe(onNext, onError, onComplete)
             .disposeBy(lifecycle.onDestroy)
 }

@@ -7,6 +7,8 @@ plugins {
 }
 
 kotlin {
+    setupMetaInfoNameOnAll(rootProject, project)
+
     metadata { mavenPublication { artifactId = "unoxcore-jvm-metadata" } }
 
     jvm {
@@ -21,8 +23,7 @@ kotlin {
             dependencies {
                 api(project(":shared"))
                 api(Deps.kotlinStdLib)
-                api(Deps.arrowCore)
-                api(Deps.arrowEffects)
+                api(Deps.arrowCoreData)
                 api(Deps.coroutinesRx2)
                 api(Deps.rxKotlin)
             }

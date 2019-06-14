@@ -10,6 +10,7 @@ plugins {
 
 kotlin {
     metadata {
+        setupMetaInfoName(rootProject, project)
         mavenPublication { artifactId = "unoxcore-common" }
     }
 
@@ -18,6 +19,7 @@ kotlin {
     }
 
     jvm {
+        setupMetaInfoName(rootProject, project)
         mavenPublication { artifactId = "unoxcore-common-jvm" }
         compilations.all { kotlinOptions.jvmTarget = "1.6" }
     }
@@ -39,8 +41,8 @@ kotlin {
 
         val jsMain by getting {
             dependencies {
-                api(kotlin("stdlib-js"))
-                api(JSDeps.coroutinesJs)
+                implementation(kotlin("stdlib-js"))
+                implementation(JSDeps.coroutinesJs)
             }
         }
 
@@ -52,16 +54,15 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
-                api(Deps.kotlinStdLib)
-                api(Deps.arrowCore)
-                api(Deps.arrowEffects)
-                api(Deps.coroutinesCore)
+                implementation(Deps.kotlinStdLib)
+                implementation(Deps.coroutinesCore)
             }
         }
 
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
+                implementation(Deps.arrowCoreData)
                 TestDeps.core.forEach(::implementation)
             }
         }
