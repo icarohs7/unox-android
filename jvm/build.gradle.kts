@@ -22,10 +22,11 @@ kotlin {
             kotlin.srcDir("src/main/kotlin")
             dependencies {
                 api(project(":shared"))
-                api(Deps.kotlinStdLib)
-                api(Deps.arrowCoreData)
-                api(Deps.coroutinesRx2)
-                api(Deps.rxKotlin)
+
+                implementation(Deps.kotlinStdLib)
+                implementation(Deps.arrowCoreData)
+                implementation(Deps.coroutinesRx2)
+                implementation(Deps.rxKotlin)
             }
         }
 

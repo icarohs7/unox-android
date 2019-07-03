@@ -33,11 +33,17 @@ kotlin {
             kotlin.srcDir("src/main/kotlin")
             dependencies {
                 api(project(":jvm"))
-                api(AndroidDeps.appCompat)
-                api(AndroidDeps.coroutinesAndroid)
-                api(AndroidDeps.disposer)
-                api(AndroidDeps.lifecycleReactiveStreamsKtx)
-                api(AndroidDeps.rxAndroid)
+
+                implementation(Deps.kotlinStdLib)
+                implementation(Deps.arrowCoreData)
+                implementation(Deps.coroutinesRx2)
+                implementation(Deps.rxKotlin)
+
+                implementation(AndroidDeps.appCompat)
+                implementation(AndroidDeps.coroutinesAndroid)
+                implementation(AndroidDeps.disposer)
+                implementation(AndroidDeps.lifecycleReactiveStreamsKtx)
+                implementation(AndroidDeps.rxAndroid)
             }
         }
 
