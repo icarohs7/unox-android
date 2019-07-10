@@ -146,3 +146,43 @@ suspend fun <A : Any> Iterable<A>.parallelFilter(predicate: suspend (A) -> Boole
         parallelMap { if (predicate(it)) it else null }.filterNotNull()
     }
 }
+
+/**
+ * [let] being executed on another coroutine context.
+ * Credits to [pablisco](https://github.com/pablisco) for the
+ * [implementation](https://gist.github.com/pablisco/f83f98e427acb55435a02880f1efbff2)
+ */
+suspend fun <T, R> T.letOn(
+        context: CoroutineContext,
+        block: suspend CoroutineScope.(T) -> R
+): R = withContext(context) { block(this@letOn) }
+
+/**
+ * [also] being executed on another coroutine context.
+ * Credits to [pablisco](https://github.com/pablisco) for the
+ * [implementation](https://gist.github.com/pablisco/f83f98e427acb55435a02880f1efbff2)
+ */
+suspend fun <T> T.alsoOn(
+        context: CoroutineContext,
+        block: suspend CoroutineScope.(T) -> Unit
+): T = also { withContext(context) { block(this@alsoOn) } }
+
+/**
+ * [apply] being executed on another coroutine context.
+ * Credits to [pablisco](https://github.com/pablisco) for the
+ * [implementation](https://gist.github.com/pablisco/f83f98e427acb55435a02880f1efbff2)
+ */
+suspend fun <T> T.applyOn(
+        context: CoroutineContext,
+        block: suspend T.(CoroutineScope) -> Unit
+): T = apply { withContext(context) { this@applyOn.block(this) } }
+
+/**
+ * [run] being executed on another coroutine context.
+ * Credits to [pablisco](https://github.com/pablisco) for the
+ * [implementation](https://gist.github.com/pablisco/f83f98e427acb55435a02880f1efbff2)
+ */
+suspend fun <T, R> T.runOn(
+        context: CoroutineContext,
+        block: suspend T.(CoroutineScope) -> R
+): R = withContext(context) { this@runOn.block(this) }

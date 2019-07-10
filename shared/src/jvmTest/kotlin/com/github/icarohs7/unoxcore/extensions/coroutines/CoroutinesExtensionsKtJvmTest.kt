@@ -16,7 +16,7 @@ import se.lovef.assert.v1.shouldBeTrue
 import se.lovef.assert.v1.shouldEqual
 import kotlin.system.measureTimeMillis
 
-class CoroutinesExtensionsKtTest {
+class CoroutinesExtensionsKtJvmTest {
     @Test
     fun should_run_operations_on_background(): Unit = runBlocking {
         withContext(Dispatchers.Default) {
@@ -302,5 +302,35 @@ class CoroutinesExtensionsKtTest {
             }
             println("10_002 elements filter time => $t3")
         }
+    }
+
+    @Test
+    fun should_use_scope_functions_with_different_coroutine_context(): Unit = runBlocking {
+        val ioD = Dispatchers.IO
+
+        val v1 = 10.letOn(ioD) {
+            coroutineContext.dispatcher shouldEqual ioD
+            it * 10
+        }
+        v1 shouldEqual 100
+
+        val v2 = 20.alsoOn(ioD) {
+            coroutineContext.dispatcher shouldEqual ioD
+            it + 2
+        }
+        v2 shouldEqual 20
+
+        val v3 = 30.applyOn(ioD) {
+            it.coroutineContext.dispatcher shouldEqual ioD
+            this * 3
+        }
+        v3 shouldEqual 30
+
+        val v4 = 40.runOn(ioD) {
+            it.coroutineContext.dispatcher shouldEqual ioD
+            this * this
+        }
+        v4 shouldEqual 1600
+        Unit
     }
 }
