@@ -6,6 +6,8 @@ import arrow.core.Tuple4
 import arrow.core.Tuple5
 import arrow.core.Tuple6
 import io.reactivex.Flowable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.rx2.rxMaybe
@@ -116,4 +118,12 @@ fun <T> Flowable<out Iterable<T>>.innerFilter(predicate: (T) -> Boolean): Flowab
  */
 fun <T, R> Flowable<out Iterable<T>>.innerMap(transform: (T) -> R): Flowable<List<R>> {
     return this.map { it.map(transform) }
+}
+
+/**
+ * Add the receiving disposable to the [compositeDisposable]
+ * passed as a parameter
+ */
+fun Disposable.addTo(compositeDisposable: CompositeDisposable): Disposable {
+    return this.apply { compositeDisposable.add(this) }
 }

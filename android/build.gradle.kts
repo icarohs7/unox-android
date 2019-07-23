@@ -8,8 +8,10 @@ plugins {
     defaults.`android-module`
 }
 
+useExperimentalFeatures()
+
 android {
-    defaultSettings()
+    defaultSettings(project)
 
     dataBinding {
         isEnabled = false
@@ -37,7 +39,7 @@ kotlin {
                 implementation(Deps.kotlinStdLib)
                 implementation(Deps.arrowCoreData)
                 implementation(Deps.coroutinesRx2)
-                implementation(Deps.rxKotlin)
+                implementation(Deps.rxJava2)
 
                 implementation(AndroidDeps.appCompat)
                 implementation(AndroidDeps.coroutinesAndroid)

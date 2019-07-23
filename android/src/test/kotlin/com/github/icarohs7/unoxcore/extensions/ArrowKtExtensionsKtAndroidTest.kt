@@ -1,5 +1,6 @@
 package com.github.icarohs7.unoxcore.extensions
 
+import android.os.Build
 import arrow.core.Failure
 import arrow.core.None
 import arrow.core.Option
@@ -13,6 +14,7 @@ import arrow.core.toOption
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import se.lovef.assert.throws
 import se.lovef.assert.typeIs
 import se.lovef.assert.v1.shouldBeTrue
@@ -23,6 +25,7 @@ import se.lovef.assert.v1.shouldEqual
  * jvm main dependency is working
  */
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O])
 class ArrowKtExtensionsKtAndroidTest {
     @Test
     fun helper_fix_imports() {

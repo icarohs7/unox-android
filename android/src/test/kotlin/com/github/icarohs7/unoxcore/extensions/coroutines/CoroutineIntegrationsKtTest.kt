@@ -3,6 +3,7 @@ package com.github.icarohs7.unoxcore.extensions.coroutines
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import androidx.core.os.bundleOf
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.async
@@ -11,10 +12,12 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import se.lovef.assert.v1.shouldBeTrue
 import se.lovef.assert.v1.shouldEqual
 
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O])
 class CoroutineIntegrationsKtTest {
     @Test
     fun should_receive_broadcasts_using_receive_channel() {

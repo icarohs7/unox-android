@@ -1,5 +1,6 @@
 package com.github.icarohs7.unoxcore.extensions
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import com.github.icarohs7.unoxcore.UnoxCore
@@ -17,7 +18,7 @@ import se.lovef.assert.v1.shouldEqual
 
 
 @RunWith(RobolectricTestRunner::class)
-@Config(application = TestApplication::class)
+@Config(application = TestApplication::class, sdk = [Build.VERSION_CODES.O])
 class LiveDataExtensionsKtTest {
     @Test
     fun should_return_livedata_value_or_fallback(): Unit = runBlocking<Unit> {

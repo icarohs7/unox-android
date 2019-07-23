@@ -1,5 +1,6 @@
 package com.github.icarohs7.unoxcore
 
+import android.os.Build
 import android.os.Looper
 import com.github.icarohs7.unoxcore.extensions.coroutines.onForeground
 import kotlinx.coroutines.Dispatchers
@@ -9,6 +10,7 @@ import kotlinx.coroutines.withContext
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import se.lovef.assert.v1.shouldBeGreaterThan
 import se.lovef.assert.v1.shouldBeLessThan
 import se.lovef.assert.v1.shouldBeTrue
@@ -16,6 +18,7 @@ import se.lovef.assert.v1.shouldEqual
 import se.lovef.assert.v1.shouldNotEqual
 
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O])
 class TopLevelKtAndroidTest {
     @Test
     fun should_switch_to_main_thread_if_not_already_on_it_and_run_operation(): Unit = runBlocking<Unit> {

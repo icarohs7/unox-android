@@ -1,5 +1,6 @@
 package com.github.icarohs7.unoxcore.extensions.coroutines
 
+import android.os.Build
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -11,6 +12,7 @@ import kotlinx.coroutines.withContext
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import se.lovef.assert.v1.shouldBe
 import se.lovef.assert.v1.shouldBeCloseTo
 import se.lovef.assert.v1.shouldBeFalse
@@ -23,6 +25,7 @@ import kotlin.system.measureTimeMillis
  * jvm main dependency is working
  */
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O])
 class CoroutinesExtensionsKtAndroidTest {
     @Test
     fun should_run_operations_on_background(): Unit = runBlocking {

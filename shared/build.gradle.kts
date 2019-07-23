@@ -8,6 +8,8 @@ plugins {
     id("com.github.b3er.local.properties") version "1.1"
 }
 
+useExperimentalFeatures()
+
 kotlin {
     metadata {
         setupMetaInfoName(rootProject, project)

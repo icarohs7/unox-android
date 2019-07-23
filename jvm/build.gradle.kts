@@ -6,6 +6,8 @@ plugins {
     id("com.github.b3er.local.properties") version "1.1"
 }
 
+useExperimentalFeatures()
+
 kotlin {
     setupMetaInfoNameOnAll(rootProject, project)
 
@@ -26,7 +28,7 @@ kotlin {
                 implementation(Deps.kotlinStdLib)
                 implementation(Deps.arrowCoreData)
                 implementation(Deps.coroutinesRx2)
-                implementation(Deps.rxKotlin)
+                implementation(Deps.rxJava2)
             }
         }
 

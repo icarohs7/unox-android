@@ -1,5 +1,6 @@
 package com.github.icarohs7.unoxcore.extensions
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import com.github.icarohs7.unoxcore.testutils.TestApplication
 import io.reactivex.BackpressureStrategy
@@ -15,7 +16,7 @@ import org.robolectric.annotation.Config
 import se.lovef.assert.v1.shouldEqual
 
 @RunWith(RobolectricTestRunner::class)
-@Config(application = TestApplication::class)
+@Config(application = TestApplication::class, sdk = [Build.VERSION_CODES.O])
 class RxJavaExtensionsKtAndroidTest {
 
     @Test
