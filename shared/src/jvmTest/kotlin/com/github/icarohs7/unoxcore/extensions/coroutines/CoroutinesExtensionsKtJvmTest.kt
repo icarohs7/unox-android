@@ -3,10 +3,14 @@ package com.github.icarohs7.unoxcore.extensions.coroutines
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.withContext
 import org.junit.Test
 import se.lovef.assert.v1.shouldBe
@@ -332,5 +336,26 @@ class CoroutinesExtensionsKtJvmTest {
         }
         v4 shouldEqual 1600
         Unit
+    }
+
+    @Test
+    fun should_convert_channel_to_flow(): Unit = runBlockingTest {
+        val channel = Channel<Int>().apply { offer(1) }
+        val flow = channel.asFlow()
+
+        var v = 0
+        val job = flow.onEach { v = it }.launchIn(this)
+
+        //Assert that flow won't cache values
+        delay(1)
+        v shouldEqual 0
+
+        channel.offer(1532)
+        v shouldEqual 1532
+
+        channel.offer(42)
+        v shouldEqual 42
+
+        job.cancelAndJoin()
     }
 }
