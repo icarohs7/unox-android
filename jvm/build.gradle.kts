@@ -27,8 +27,7 @@ kotlin {
 
                 implementation(Deps.kotlinStdLib)
                 implementation(Deps.arrowCoreData)
-                implementation(Deps.coroutinesRx2)
-                implementation(Deps.rxJava2)
+                implementation(Deps.coroutinesCore)
             }
         }
 
