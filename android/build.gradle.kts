@@ -36,16 +36,13 @@ kotlin {
             dependencies {
                 api(project(":jvm"))
 
-                implementation(Deps.kotlinStdLib)
                 implementation(Deps.arrowCoreData)
-                implementation(Deps.coroutinesRx2)
-                implementation(Deps.rxJava2)
+                implementation(Deps.coroutinesCore)
+                implementation(Deps.kotlinStdLib)
 
                 implementation(AndroidDeps.appCompat)
                 implementation(AndroidDeps.coroutinesAndroid)
-                implementation(AndroidDeps.disposer)
-                implementation(AndroidDeps.lifecycleReactiveStreamsKtx)
-                implementation(AndroidDeps.rxAndroid)
+                implementation(AndroidDeps.lifecycleLivedataKtx)
             }
         }
 
