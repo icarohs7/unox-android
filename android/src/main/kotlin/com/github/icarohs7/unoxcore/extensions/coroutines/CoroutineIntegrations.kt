@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import arrow.core.Tuple2
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
@@ -16,19 +18,15 @@ import kotlin.coroutines.resume
  * a [ReceiveChannel], exposing the instance
  * of the receiver and the received intent
  */
-fun Context.broadcastChannel(
-        intentFilter: IntentFilter,
-        capacity: Int = 1
-): ReceiveChannel<Tuple2<Intent, BroadcastReceiver>> {
-    return Channel<Tuple2<Intent, BroadcastReceiver>>(capacity).apply {
-        val receiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                offer(Tuple2(intent, this))
-            }
+fun Context.broadcastReceiverFlow(intentFilter: IntentFilter): Flow<Tuple2<Intent, BroadcastReceiver>> = callbackFlow {
+    val receiver = object : BroadcastReceiver() {
+        val receiver: BroadcastReceiver = this
+        override fun onReceive(context: Context, intent: Intent) {
+            offer(Tuple2(intent, receiver))
         }
-        registerReceiver(receiver, intentFilter)
-        invokeOnClose { unregisterReceiver(receiver) }
     }
+    registerReceiver(receiver, intentFilter)
+    awaitClose { unregisterReceiver(receiver) }
 }
 
 /**
