@@ -2,10 +2,13 @@ package com.github.icarohs7.unoxcore.extensions.coroutines
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -147,6 +150,30 @@ class CoroutinesExtensionsKtJvmTest {
     }
 
     @Test
+    fun should_add_children_to_parent_scope() {
+        val channel = Channel<Int>()
+        val flow = channel.asFlow()
+        var lastValue = 0
+
+        val parent = CoroutineScope(Job())
+        val children = flow.onEach { lastValue = it }.launchIn(GlobalScope).addTo(parent)
+
+        lastValue shouldEqual 0
+
+        channel.offer(1532)
+        lastValue shouldEqual 1532
+
+        channel.offer(42)
+        lastValue shouldEqual 42
+
+        parent.cancelCoroutineScope()
+        channel.offer(31415)
+        lastValue shouldEqual 42
+        channel.offer(1234)
+        lastValue shouldEqual 42
+    }
+
+    @Test
     fun should_iterate_over_the_emmited_items_of_a_channel() {
         runBlocking {
             val channel = Channel<Int>()
@@ -269,6 +296,23 @@ class CoroutinesExtensionsKtJvmTest {
     }
 
     @Test
+    fun should_map_inner_list_of_flow() {
+        val flow = flowOf(
+                listOf(1, 2, 3),
+                listOf(4, 5, 6),
+                listOf(7, 8, 9)
+        )
+        val mapped = flow.innerMap { it * 10 }
+        val emittedItems = mutableListOf<List<Int>>()
+        runBlockingTest { mapped.collect { emittedItems += it } }
+        emittedItems shouldEqual listOf(
+                listOf(10, 20, 30),
+                listOf(40, 50, 60),
+                listOf(70, 80, 90)
+        )
+    }
+
+    @Test
     fun should_filter_a_collection_in_parallel() {
         runBlocking {
             val c1 = (1..1_000)
@@ -306,6 +350,23 @@ class CoroutinesExtensionsKtJvmTest {
             }
             println("10_002 elements filter time => $t3")
         }
+    }
+
+    @Test
+    fun should_filter_inner_inner_content_of_list_flow() {
+        val flow = flowOf(
+                listOf(1, 2, 3),
+                listOf(4, 5, 6),
+                listOf(7, 8, 9)
+        )
+        val filtered = flow.innerFilter { it % 2 == 0 }
+        val emittedItems = mutableListOf<List<Int>>()
+        runBlockingTest { filtered.collect { emittedItems += it } }
+        emittedItems shouldEqual listOf(
+                listOf(2),
+                listOf(4, 6),
+                listOf(8)
+        )
     }
 
     @Test

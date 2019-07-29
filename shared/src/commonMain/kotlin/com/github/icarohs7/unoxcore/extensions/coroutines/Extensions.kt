@@ -8,6 +8,8 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.ContinuationInterceptor
 import kotlin.coroutines.CoroutineContext
@@ -36,6 +38,15 @@ inline val CoroutineScope.dispatcher: CoroutineDispatcher
 inline val CoroutineContext.dispatcher: CoroutineDispatcher
     get() = this[ContinuationInterceptor] as? CoroutineDispatcher ?: error("Coroutine dispatcher not found")
 
+/**
+ * Add the current Job as a child
+ * of the given [parent] scope,
+ * cancelling it when the parent
+ * completes
+ */
+fun Job.addTo(parent: CoroutineScope) {
+    parent.job.invokeOnCompletion { this.cancel() }
+}
 
 /**
  * Consume each element sent by the channel, suspending when there's
@@ -57,6 +68,15 @@ suspend fun <A, B> Iterable<A>.parallelMap(f: suspend (A) -> B): List<B> {
 }
 
 /**
+ * Map the flow to the mapping of
+ * the emitted list using the given
+ * transformer
+ */
+fun <T, R> Flow<Iterable<T>>.innerMap(transform: (T) -> R): Flow<List<R>> {
+    return this.map { it.map(transform) }
+}
+
+/**
  * [Iterable.filter] function executing
  * each operation in parallel and then
  * joining the resulting elements market
@@ -67,6 +87,15 @@ suspend fun <A : Any> Iterable<A>.parallelFilter(predicate: suspend (A) -> Boole
     return coroutineScope {
         parallelMap { if (predicate(it)) it else null }.filterNotNull()
     }
+}
+
+/**
+ * Map the flow to the filteing of
+ * the emitted list using the given
+ * predicate
+ */
+fun <T> Flow<Iterable<T>>.innerFilter(predicate: (T) -> Boolean): Flow<List<T>> {
+    return this.map { it.filter(predicate) }
 }
 
 /**
