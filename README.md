@@ -50,36 +50,17 @@ Multiplatform library aggregating extensions, utility functions and some QOL fea
 
 ## Adding to the project
 
-Groovy DSL
-```groovy
-repositories {
-    jcenter()
-}
-dependencies {
-    //When using on Kotlin/JS
-    implementation "com.github.icarohs7:unoxcore-js:$unoxcore_version"
-    
-    //When using on a JVM project (or Android, with a subset of features from the Android artifact)
-    implementation "com.github.icarohs7:unoxcore-jvm:$unoxcore_version"
-
-    // When using on Android
-    implementation "com.github.icarohs7:unoxcore-android:$unoxcore_version"
-}
-```
-
-Kotlin DSL
 ```kotlin
 repositories {
     jcenter()
 }
 dependencies {
-    //When using on Kotlin/JS
-    implementation("com.github.icarohs7:unoxcore-js:$unoxcore_version")
+    //Artifacts of common module
+    implementation("com.github.icarohs7:unoxcore-common:$unoxcore_version") //Multiplatform
+    implementation("com.github.icarohs7:unoxcore-common-js:$unoxcore_version") //JS
+    implementation("com.github.icarohs7:unoxcore-common-jvm:$unoxcore_version") //JVM
     
-    //When using on a JVM project (or Android, with a subset of features from the Android artifact)
+    //Common module + JVM specific features
     implementation("com.github.icarohs7:unoxcore-jvm:$unoxcore_version")
-
-    // When using on Android
-    implementation("com.github.icarohs7:unoxcore-android:$unoxcore_version")
 }
 ```
