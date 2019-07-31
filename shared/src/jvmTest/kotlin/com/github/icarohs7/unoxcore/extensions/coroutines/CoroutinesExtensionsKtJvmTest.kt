@@ -167,8 +167,10 @@ class CoroutinesExtensionsKtJvmTest {
         channel.offer(42)
         lastValue shouldEqual 42
 
-        parent.cancelCoroutineScope()
-        while (!parent.isActive) runBlockingTest { delay(5) }
+        while (parent.isActive) runBlockingTest {
+            parent.cancelCoroutineScope()
+            delay(100)
+        }
 
         channel.offer(31415)
         lastValue shouldEqual 42
