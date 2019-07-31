@@ -28,4 +28,9 @@ object UnoxCore {
      * Function used to log various events of the library
      */
     var logger: (Any) -> Unit = {}
+
+    /**
+     * Function used to log various error events of the library
+     */
+    var errorLogger: (Throwable) -> Unit = {}
 }

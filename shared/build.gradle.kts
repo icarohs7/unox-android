@@ -8,6 +8,8 @@ plugins {
     id("com.github.b3er.local.properties") version "1.1"
 }
 
+useExperimentalFeatures()
+
 kotlin {
     metadata {
         setupMetaInfoName(rootProject, project)
@@ -28,7 +30,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-common"))
-                api(CommonDeps.coroutinesCoreCommon)
+                implementation(CommonDeps.coroutinesCoreCommon)
             }
         }
 

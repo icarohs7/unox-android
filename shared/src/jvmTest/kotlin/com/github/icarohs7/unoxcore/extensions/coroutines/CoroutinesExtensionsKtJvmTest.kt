@@ -2,15 +2,21 @@ package com.github.icarohs7.unoxcore.extensions.coroutines
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.withContext
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 import se.lovef.assert.v1.shouldBe
 import se.lovef.assert.v1.shouldBeCloseTo
 import se.lovef.assert.v1.shouldBeFalse
@@ -18,12 +24,7 @@ import se.lovef.assert.v1.shouldBeTrue
 import se.lovef.assert.v1.shouldEqual
 import kotlin.system.measureTimeMillis
 
-/**
- * Test class used to check if the
- * jvm main dependency is working
- */
-@RunWith(RobolectricTestRunner::class)
-class CoroutinesExtensionsKtAndroidTest {
+class CoroutinesExtensionsKtJvmTest {
     @Test
     fun should_run_operations_on_background(): Unit = runBlocking {
         withContext(Dispatchers.Default) {
@@ -150,6 +151,36 @@ class CoroutinesExtensionsKtAndroidTest {
     }
 
     @Test
+    fun should_add_children_to_parent_scope() {
+        val channel = Channel<Int>()
+        val flow = channel.asFlow()
+        var lastValue = 0
+
+        val parent = CoroutineScope(Job())
+        val children = flow.onEach { lastValue = it }.launchIn(GlobalScope).addTo(parent)
+
+        lastValue shouldEqual 0
+
+        runBlockingTest { channel.send(1532) }
+        runBlockingTest { delay(100) }
+        lastValue shouldEqual 1532
+
+        runBlockingTest { channel.send(42) }
+        runBlockingTest { delay(100) }
+        lastValue shouldEqual 42
+
+        while (parent.isActive) runBlockingTest {
+            parent.cancelCoroutineScope()
+            delay(100)
+        }
+
+        channel.offer(31415)
+        lastValue shouldEqual 42
+        channel.offer(1234)
+        lastValue shouldEqual 42
+    }
+
+    @Test
     fun should_iterate_over_the_emmited_items_of_a_channel() {
         runBlocking {
             val channel = Channel<Int>()
@@ -272,6 +303,23 @@ class CoroutinesExtensionsKtAndroidTest {
     }
 
     @Test
+    fun should_map_inner_list_of_flow() {
+        val flow = flowOf(
+                listOf(1, 2, 3),
+                listOf(4, 5, 6),
+                listOf(7, 8, 9)
+        )
+        val mapped = flow.innerMap { it * 10 }
+        val emittedItems = mutableListOf<List<Int>>()
+        runBlockingTest { mapped.collect { emittedItems += it } }
+        emittedItems shouldEqual listOf(
+                listOf(10, 20, 30),
+                listOf(40, 50, 60),
+                listOf(70, 80, 90)
+        )
+    }
+
+    @Test
     fun should_filter_a_collection_in_parallel() {
         runBlocking {
             val c1 = (1..1_000)
@@ -309,5 +357,73 @@ class CoroutinesExtensionsKtAndroidTest {
             }
             println("10_002 elements filter time => $t3")
         }
+    }
+
+    @Test
+    fun should_filter_inner_inner_content_of_list_flow() {
+        val flow = flowOf(
+                listOf(1, 2, 3),
+                listOf(4, 5, 6),
+                listOf(7, 8, 9)
+        )
+        val filtered = flow.innerFilter { it % 2 == 0 }
+        val emittedItems = mutableListOf<List<Int>>()
+        runBlockingTest { filtered.collect { emittedItems += it } }
+        emittedItems shouldEqual listOf(
+                listOf(2),
+                listOf(4, 6),
+                listOf(8)
+        )
+    }
+
+    @Test
+    fun should_use_scope_functions_with_different_coroutine_context(): Unit = runBlocking {
+        val ioD = Dispatchers.IO
+
+        val v1 = 10.letOn(ioD) {
+            coroutineContext.dispatcher shouldEqual ioD
+            it * 10
+        }
+        v1 shouldEqual 100
+
+        val v2 = 20.alsoOn(ioD) {
+            coroutineContext.dispatcher shouldEqual ioD
+            it + 2
+        }
+        v2 shouldEqual 20
+
+        val v3 = 30.applyOn(ioD) {
+            it.coroutineContext.dispatcher shouldEqual ioD
+            this * 3
+        }
+        v3 shouldEqual 30
+
+        val v4 = 40.runOn(ioD) {
+            it.coroutineContext.dispatcher shouldEqual ioD
+            this * this
+        }
+        v4 shouldEqual 1600
+        Unit
+    }
+
+    @Test
+    fun should_convert_channel_to_flow(): Unit = runBlockingTest {
+        val channel = Channel<Int>().apply { offer(1) }
+        val flow = channel.asFlow()
+
+        var v = 0
+        val job = flow.onEach { v = it }.launchIn(this)
+
+        //Assert that flow won't cache values
+        delay(1)
+        v shouldEqual 0
+
+        channel.offer(1532)
+        v shouldEqual 1532
+
+        channel.offer(42)
+        v shouldEqual 42
+
+        job.cancelAndJoin()
     }
 }
