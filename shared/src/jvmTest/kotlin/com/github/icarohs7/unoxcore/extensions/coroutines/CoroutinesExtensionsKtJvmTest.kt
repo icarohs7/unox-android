@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
@@ -167,6 +168,8 @@ class CoroutinesExtensionsKtJvmTest {
         lastValue shouldEqual 42
 
         parent.cancelCoroutineScope()
+        while (!parent.isActive) runBlockingTest { delay(5) }
+
         channel.offer(31415)
         lastValue shouldEqual 42
         channel.offer(1234)
