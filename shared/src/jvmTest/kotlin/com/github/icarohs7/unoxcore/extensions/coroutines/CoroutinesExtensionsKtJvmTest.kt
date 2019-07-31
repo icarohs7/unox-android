@@ -161,10 +161,12 @@ class CoroutinesExtensionsKtJvmTest {
 
         lastValue shouldEqual 0
 
-        channel.offer(1532)
+        runBlockingTest { channel.send(1532) }
+        runBlockingTest { delay(100) }
         lastValue shouldEqual 1532
 
-        channel.offer(42)
+        runBlockingTest { channel.send(42) }
+        runBlockingTest { delay(100) }
         lastValue shouldEqual 42
 
         while (parent.isActive) runBlockingTest {
