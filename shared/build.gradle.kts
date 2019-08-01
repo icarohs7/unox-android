@@ -64,7 +64,6 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation(Deps.arrowCoreData)
                 TestDeps.core.forEach(::implementation)
             }
         }

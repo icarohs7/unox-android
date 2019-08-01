@@ -1,7 +1,5 @@
 package com.github.icarohs7.unoxcore.extensions
 
-import arrow.core.Failure
-import arrow.core.Try
 import com.github.icarohs7.unoxcore.utils.shouldEqual
 import org.junit.Test
 import se.lovef.assert.v1.throws
@@ -34,11 +32,11 @@ class NumberExtensionsJvmKtTest {
         n6.ifZeroOrLess { f6 } shouldEqual 42
 
         val n7 = 0
-        val r7 = Try { n7.ifZeroOrLess { throw IllegalArgumentException() } }
-        ;{ if (r7 is Failure) throw r7.exception } throws IllegalArgumentException::class
+        val r7 = runCatching { n7.ifZeroOrLess { throw IllegalArgumentException() } }
+        ;{ r7.getOrThrow() } throws IllegalArgumentException::class
 
         val n8 = -24
-        val r8 = Try { n8.ifZeroOrLess { throw NegativeArraySizeException() } }
-        ;{ if (r8 is Failure) throw r8.exception } throws NegativeArraySizeException::class
+        val r8 = runCatching { n8.ifZeroOrLess { throw NegativeArraySizeException() } }
+        ;{ r8.getOrThrow() } throws NegativeArraySizeException::class
     }
 }

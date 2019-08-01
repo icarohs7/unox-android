@@ -157,19 +157,19 @@ class CoroutinesExtensionsKtJvmTest {
         var lastValue = 0
 
         val parent = CoroutineScope(Job())
-        val children = flow.onEach { lastValue = it }.launchIn(GlobalScope).addTo(parent)
+        flow.onEach { lastValue = it }.launchIn(GlobalScope).addTo(parent)
 
         lastValue shouldEqual 0
 
-        runBlockingTest { channel.send(1532) }
-        runBlockingTest { delay(100) }
+        runBlocking { channel.send(1532) }
+        runBlocking { delay(100) }
         lastValue shouldEqual 1532
 
-        runBlockingTest { channel.send(42) }
-        runBlockingTest { delay(100) }
+        runBlocking { channel.send(42) }
+        runBlocking { delay(100) }
         lastValue shouldEqual 42
 
-        while (parent.isActive) runBlockingTest {
+        while (parent.isActive) runBlocking {
             parent.cancelCoroutineScope()
             delay(100)
         }

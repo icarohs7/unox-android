@@ -44,7 +44,7 @@ inline val CoroutineContext.dispatcher: CoroutineDispatcher
  * cancelling it when the parent
  * completes
  */
-fun Job.addTo(parent: CoroutineScope) {
+fun Job.addTo(parent: CoroutineScope): Job = apply {
     parent.job.invokeOnCompletion { this.cancel() }
 }
 
