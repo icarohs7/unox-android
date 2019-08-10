@@ -45,9 +45,6 @@ https://github.com/ellerbrock/open-source-badges/)
 [![GitHub last commit](https://img.shields.io/github/last-commit/icarohs7/unox-core.svg)](
 https://github.com/icarohs7/unox-core/commits/master)
 
-## Description
-Multiplatform library aggregating extensions, utility functions and some QOL features
-
 ## Adding to the project
 
 ```kotlin
