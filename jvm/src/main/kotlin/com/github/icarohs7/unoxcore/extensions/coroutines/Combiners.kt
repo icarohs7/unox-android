@@ -6,6 +6,7 @@ import arrow.core.Tuple4
 import arrow.core.Tuple5
 import arrow.core.Tuple6
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.combineLatest
 
 /**
@@ -15,7 +16,7 @@ import kotlinx.coroutines.flow.combineLatest
 operator fun <A, B> Flow<A>.plus(
         b: Flow<B>
 ): Flow<Tuple2<A, B>> {
-    return combineLatest(b) { t1, t2 ->
+    return combine(b) { t1, t2 ->
         Tuple2(t1, t2)
     }
 }
@@ -28,7 +29,7 @@ operator fun <A, B> Flow<A>.plus(
 operator fun <A, B, C> Flow<Tuple2<A, B>>.plus(
         c: Flow<C>
 ): Flow<Tuple3<A, B, C>> {
-    return combineLatest(c) { t1, t2 ->
+    return combine(c) { t1, t2 ->
         Tuple3(t1.a, t1.b, t2)
     }
 }
@@ -41,7 +42,7 @@ operator fun <A, B, C> Flow<Tuple2<A, B>>.plus(
 operator fun <A, B, C, D> Flow<Tuple3<A, B, C>>.plus(
         d: Flow<D>
 ): Flow<Tuple4<A, B, C, D>> {
-    return combineLatest(d) { t1, t2 ->
+    return combine(d) { t1, t2 ->
         Tuple4(t1.a, t1.b, t1.c, t2)
     }
 }
@@ -54,7 +55,7 @@ operator fun <A, B, C, D> Flow<Tuple3<A, B, C>>.plus(
 operator fun <A, B, C, D, E> Flow<Tuple4<A, B, C, D>>.plus(
         e: Flow<E>
 ): Flow<Tuple5<A, B, C, D, E>> {
-    return combineLatest(e) { t1, t2 ->
+    return combine(e) { t1, t2 ->
         Tuple5(t1.a, t1.b, t1.c, t1.d, t2)
     }
 }
@@ -67,7 +68,7 @@ operator fun <A, B, C, D, E> Flow<Tuple4<A, B, C, D>>.plus(
 operator fun <A, B, C, D, E, F> Flow<Tuple5<A, B, C, D, E>>.plus(
         f: Flow<F>
 ): Flow<Tuple6<A, B, C, D, E, F>> {
-    return combineLatest(f) { t1, t2 ->
+    return combine(f) { t1, t2 ->
         Tuple6(t1.a, t1.b, t1.c, t1.d, t1.e, t2)
     }
 }
