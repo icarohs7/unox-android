@@ -10,6 +10,8 @@ https://forthebadge.com)
 
 [![Jcenter](https://api.bintray.com/packages/icarohs7/libraries/unox-core/images/download.svg)](
 https://bintray.com/icarohs7/libraries/unox-core/_latestVersion)
+[![Actions Status](https://github.com/icarohs7/unox-core/workflows/ci/badge.svg)](
+https://github.com/icarohs7/unox-core/actions)
 [![GitHub top language](https://img.shields.io/github/languages/top/icarohs7/unox-core.svg)](
 https://github.com/icarohs7/unox-core/search?l=kotlin)
 [![HitCount](http://hits.dwyl.io/icarohs7/unox-core.svg)](
