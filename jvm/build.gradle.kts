@@ -12,12 +12,11 @@ compileKotlin {
 
 kotlin {
     setupMetaInfoNameOnAll(rootProject, project)
-
-    metadata { mavenPublication { artifactId = "unoxcore-jvm-metadata" } }
-
+    val artifact = "unoxcore-jvm"
+    metadata { mavenPublication { artifactId = "$artifact-metadata" } }
     jvm {
-        mavenPublication { artifactId = "unoxcore-jvm" }
-        compilations.all { kotlinOptions.jvmTarget = "1.6" }
+        mavenPublication { artifactId = artifact }
+        compilations.all { kotlinOptions.jvmTarget = "1.8" }
     }
 
     @Suppress("UNUSED_VARIABLE")
