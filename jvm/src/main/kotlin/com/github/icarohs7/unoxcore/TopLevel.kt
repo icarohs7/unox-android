@@ -3,6 +3,7 @@ package com.github.icarohs7.unoxcore
 import arrow.core.Try
 import com.github.icarohs7.unoxcore.extensions.coroutines.onBackground
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 import java.io.Closeable
 
 /**
@@ -101,5 +102,5 @@ inline fun <A : Closeable, B : Closeable, C : Closeable, D : Closeable, E : Clos
  * its result wrapped on a [Try] instance
  */
 suspend fun <A> tryBg(f: suspend CoroutineScope.() -> A): Try<A> {
-    return onBackground { Try { f() }.also(UnoxCore.logger) }
+    return coroutineScope { onBackground { Try { f() }.also(UnoxCore.logger) } }
 }
