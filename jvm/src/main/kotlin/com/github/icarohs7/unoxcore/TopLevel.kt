@@ -101,6 +101,8 @@ inline fun <A : Closeable, B : Closeable, C : Closeable, D : Closeable, E : Clos
  * Run the given block on a background coroutine, and return
  * its result wrapped on a [Try] instance
  */
-suspend fun <A> tryBg(f: suspend CoroutineScope.() -> A): Try<A> {
-    return coroutineScope { onBackground { Try { f() }.also(UnoxCore.logger) } }
+suspend fun <A> tryBg(func: suspend CoroutineScope.() -> A): Try<A> {
+    return Try {
+        coroutineScope { onBackground(block = func) }
+    }.also(UnoxCore.logger)
 }

@@ -81,6 +81,6 @@ suspend fun <A, B, C> parallelTriple(op1: Suspend<A>, op2: Suspend<B>, op3: Susp
  * using the coroutine context of the calling
  * coroutine ([kotlin.coroutines.EmptyCoroutineContext])
  */
-suspend inline fun parallelRun(vararg operations: suspend () -> Unit) {
-    coroutineScope { operations.map { async { it() } } }.awaitAll()
+suspend inline fun <T> parallelRun(vararg operations: suspend () -> T): List<T> {
+    return coroutineScope { operations.map { async { it() } } }.awaitAll()
 }

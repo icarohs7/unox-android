@@ -280,6 +280,15 @@ class CoroutinesExtensionsKtJvmTest {
 
             println("Time to parallel run => $t")
             t shouldBeCloseTo 3500 tolerance 750
+
+            val (r1, r2, r3) = parallelRun(
+                    { "Omai wa mou" },
+                    { "Shindeiru!" },
+                    { 1532 }
+            )
+            r1 shouldEqual "Omai wa mou"
+            r2 shouldEqual "Shindeiru!"
+            r3 shouldEqual 1532
         }
     }
 
