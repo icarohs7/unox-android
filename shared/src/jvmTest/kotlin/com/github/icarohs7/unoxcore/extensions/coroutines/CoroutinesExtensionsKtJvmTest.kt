@@ -318,7 +318,7 @@ class CoroutinesExtensionsKtJvmTest {
                 listOf(4, 5, 6),
                 listOf(7, 8, 9)
         )
-        val mapped = flow.innerMap { it * 10 }
+        val mapped = flow.innerMap { suspend { it * 10 }() }
         val emittedItems = mutableListOf<List<Int>>()
         runBlockingTest { mapped.collect { emittedItems += it } }
         emittedItems shouldEqual listOf(
@@ -375,7 +375,7 @@ class CoroutinesExtensionsKtJvmTest {
                 listOf(4, 5, 6),
                 listOf(7, 8, 9)
         )
-        val filtered = flow.innerFilter { it % 2 == 0 }
+        val filtered = flow.innerFilter { suspend { it % 2 == 0 }() }
         val emittedItems = mutableListOf<List<Int>>()
         runBlockingTest { filtered.collect { emittedItems += it } }
         emittedItems shouldEqual listOf(

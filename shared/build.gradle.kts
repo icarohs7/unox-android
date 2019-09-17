@@ -25,7 +25,7 @@ kotlin {
     jvm {
         setupMetaInfoName(rootProject, project)
         mavenPublication { artifactId = "unoxcore-common-jvm" }
-        compilations.all { kotlinOptions.jvmTarget = "1.6" }
+        compilations.all { kotlinOptions.jvmTarget = "1.8" }
     }
 
     sourceSets {
