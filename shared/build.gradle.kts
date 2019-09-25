@@ -5,10 +5,12 @@ plugins {
     id("jacoco")
     id("maven-publish")
     id("com.jfrog.bintray")
-    id("com.github.b3er.local.properties") version "1.1"
+    id("com.github.b3er.local.properties")
 }
 
-useExperimentalFeatures()
+compileKotlin {
+    useExperimentalFeatures()
+}
 
 kotlin {
     metadata {
@@ -23,7 +25,7 @@ kotlin {
     jvm {
         setupMetaInfoName(rootProject, project)
         mavenPublication { artifactId = "unoxcore-common-jvm" }
-        compilations.all { kotlinOptions.jvmTarget = "1.6" }
+        compilations.all { kotlinOptions.jvmTarget = "1.8" }
     }
 
     sourceSets {
@@ -64,7 +66,6 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation(Deps.arrowCoreData)
                 TestDeps.core.forEach(::implementation)
             }
         }

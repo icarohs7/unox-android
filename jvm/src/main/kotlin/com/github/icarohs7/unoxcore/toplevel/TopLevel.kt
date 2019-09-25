@@ -1,8 +1,10 @@
-package com.github.icarohs7.unoxcore
+package com.github.icarohs7.unoxcore.toplevel
 
 import arrow.core.Try
+import com.github.icarohs7.unoxcore.UnoxCore
 import com.github.icarohs7.unoxcore.extensions.coroutines.onBackground
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 import java.io.Closeable
 
 /**
@@ -100,6 +102,8 @@ inline fun <A : Closeable, B : Closeable, C : Closeable, D : Closeable, E : Clos
  * Run the given block on a background coroutine, and return
  * its result wrapped on a [Try] instance
  */
-suspend fun <A> tryBg(f: suspend CoroutineScope.() -> A): Try<A> {
-    return onBackground { Try { f() }.also(UnoxCore.logger) }
+suspend fun <A> tryBg(func: suspend CoroutineScope.() -> A): Try<A> {
+    return Try {
+        coroutineScope { onBackground(block = func) }
+    }.also(UnoxCore.logger)
 }

@@ -3,19 +3,20 @@ plugins {
     id("jacoco")
     id("maven-publish")
     id("com.jfrog.bintray")
-    id("com.github.b3er.local.properties") version "1.1"
+    id("com.github.b3er.local.properties")
 }
 
-useExperimentalFeatures()
+compileKotlin {
+    useExperimentalFeatures()
+}
 
 kotlin {
     setupMetaInfoNameOnAll(rootProject, project)
-
-    metadata { mavenPublication { artifactId = "unoxcore-jvm-metadata" } }
-
+    val artifact = "unoxcore-jvm"
+    metadata { mavenPublication { artifactId = "$artifact-metadata" } }
     jvm {
-        mavenPublication { artifactId = "unoxcore-jvm" }
-        compilations.all { kotlinOptions.jvmTarget = "1.6" }
+        mavenPublication { artifactId = artifact }
+        compilations.all { kotlinOptions.jvmTarget = "1.8" }
     }
 
     @Suppress("UNUSED_VARIABLE")

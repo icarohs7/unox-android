@@ -157,19 +157,19 @@ class CoroutinesExtensionsKtJvmTest {
         var lastValue = 0
 
         val parent = CoroutineScope(Job())
-        val children = flow.onEach { lastValue = it }.launchIn(GlobalScope).addTo(parent)
+        flow.onEach { lastValue = it }.launchIn(GlobalScope).addTo(parent)
 
         lastValue shouldEqual 0
 
-        runBlockingTest { channel.send(1532) }
-        runBlockingTest { delay(100) }
+        runBlocking { channel.send(1532) }
+        runBlocking { delay(100) }
         lastValue shouldEqual 1532
 
-        runBlockingTest { channel.send(42) }
-        runBlockingTest { delay(100) }
+        runBlocking { channel.send(42) }
+        runBlocking { delay(100) }
         lastValue shouldEqual 42
 
-        while (parent.isActive) runBlockingTest {
+        while (parent.isActive) runBlocking {
             parent.cancelCoroutineScope()
             delay(100)
         }
@@ -280,6 +280,15 @@ class CoroutinesExtensionsKtJvmTest {
 
             println("Time to parallel run => $t")
             t shouldBeCloseTo 3500 tolerance 750
+
+            val (r1, r2, r3) = parallelRun(
+                    { "Omai wa mou" },
+                    { "Shindeiru!" },
+                    { 1532 }
+            )
+            r1 shouldEqual "Omai wa mou"
+            r2 shouldEqual "Shindeiru!"
+            r3 shouldEqual 1532
         }
     }
 
@@ -309,7 +318,7 @@ class CoroutinesExtensionsKtJvmTest {
                 listOf(4, 5, 6),
                 listOf(7, 8, 9)
         )
-        val mapped = flow.innerMap { it * 10 }
+        val mapped = flow.innerMap { suspend { it * 10 }() }
         val emittedItems = mutableListOf<List<Int>>()
         runBlockingTest { mapped.collect { emittedItems += it } }
         emittedItems shouldEqual listOf(
@@ -366,7 +375,7 @@ class CoroutinesExtensionsKtJvmTest {
                 listOf(4, 5, 6),
                 listOf(7, 8, 9)
         )
-        val filtered = flow.innerFilter { it % 2 == 0 }
+        val filtered = flow.innerFilter { suspend { it % 2 == 0 }() }
         val emittedItems = mutableListOf<List<Int>>()
         runBlockingTest { filtered.collect { emittedItems += it } }
         emittedItems shouldEqual listOf(

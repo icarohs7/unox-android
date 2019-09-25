@@ -1,5 +1,6 @@
 package com.github.icarohs7.unoxcore.extensions.coroutines
 
+import com.github.icarohs7.unoxcore.UnoxCore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -9,6 +10,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.ContinuationInterceptor
@@ -44,7 +46,7 @@ inline val CoroutineContext.dispatcher: CoroutineDispatcher
  * cancelling it when the parent
  * completes
  */
-fun Job.addTo(parent: CoroutineScope) {
+fun Job.addTo(parent: CoroutineScope): Job = apply {
     parent.job.invokeOnCompletion { this.cancel() }
 }
 
@@ -72,8 +74,8 @@ suspend fun <A, B> Iterable<A>.parallelMap(f: suspend (A) -> B): List<B> {
  * the emitted list using the given
  * transformer
  */
-fun <T, R> Flow<Iterable<T>>.innerMap(transform: (T) -> R): Flow<List<R>> {
-    return this.map { it.map(transform) }
+fun <T, R> Flow<Iterable<T>>.innerMap(transform: suspend (T) -> R): Flow<List<R>> {
+    return this.map { it.map { item -> transform(item) } }
 }
 
 /**
@@ -94,8 +96,16 @@ suspend fun <A : Any> Iterable<A>.parallelFilter(predicate: suspend (A) -> Boole
  * the emitted list using the given
  * predicate
  */
-fun <T> Flow<Iterable<T>>.innerFilter(predicate: (T) -> Boolean): Flow<List<T>> {
-    return this.map { it.filter(predicate) }
+fun <T> Flow<Iterable<T>>.innerFilter(predicate: suspend (T) -> Boolean): Flow<List<T>> {
+    return this.map { it.filter { item -> predicate(item) } }
+}
+
+/**
+ * Typealias for operator
+ * `flowOn(UnoxCore.backgroundDispatcher)`
+ */
+fun <T> Flow<T>.flowOnBackground(): Flow<T> {
+    return flowOn(UnoxCore.backgroundDispatcher)
 }
 
 /**

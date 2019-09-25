@@ -1,9 +1,13 @@
-package com.github.icarohs7.unoxcore
+package com.github.icarohs7.unoxcore.toplevel
 
 import arrow.core.Try
 import com.github.icarohs7.unoxcore.extensions.getOrElse
 import com.github.icarohs7.unoxcore.extensions.orThrow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.junit.Test
 import se.lovef.assert.v1.shouldBe
 import se.lovef.assert.v1.shouldBeFalse
@@ -150,10 +154,12 @@ class TopLevelKtTest {
             v1 shouldEqual 10
             r1 shouldEqual Try.just(10)
 
-            val r2 = tryBg { throw IllegalArgumentException() }
+            val testScope = CoroutineScope(Job())
+            val r2 = withContext(testScope.coroutineContext) { tryBg { throw IllegalArgumentException() } }
             r2.isFailure().shouldBeTrue()
             r2.getOrElse(10) shouldEqual 10
             ;{ r2.orThrow() } throws IllegalArgumentException::class
+            testScope.isActive.shouldBeTrue()
         }
     }
 }
