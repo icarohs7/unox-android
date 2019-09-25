@@ -1,6 +1,7 @@
-package com.github.icarohs7.unoxcore
+package com.github.icarohs7.unoxcore.toplevel
 
 import arrow.core.Try
+import com.github.icarohs7.unoxcore.UnoxCore
 import com.github.icarohs7.unoxcore.extensions.coroutines.onBackground
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
